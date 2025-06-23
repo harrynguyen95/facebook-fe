@@ -50,35 +50,47 @@ global.tapImage = function (name, threshold = 0.9) {
     }
 };
 
-global.hasImage = function (name, threshold = 0.9) {
-    const options = {
-        targetImagePath: "image/" + name,
-        threshold: threshold,
-    };
-    const [result, error] = at.findImage(options);
+global.hasImage = function (name, maxWait = 5, threshold = 0.9) {
+    maxWait = maxWait <= 1 ? 2 : maxWait
 
-    if (error) {
-        return false;
-    } else if (result.length == 0) {
-        return false;
-    } else {
-        return true;
+    wait(1)
+    for (let i = 1; i <= maxWait - 1; i++) {
+        wait(1)
+        const options = {
+            targetImagePath: "image/" + name,
+            threshold: threshold,
+        };
+        const [result, error] = at.findImage(options);
+
+        if (error || result.length === 0) {
+            // return false;
+        } else {
+            return true;
+        }
     }
+
+    return false;
 };
 
-global.hasText = function (txt) {
-    const [result, error] = at.findText(
-        {},
-        (text) => text.toLowerCase() === txt.toLowerCase()
-    );
+global.hasText = function (txt, maxWait = 5) {
+    maxWait = maxWait <= 1 ? 2 : maxWait
 
-    if (error) {
-        return false;
-    } else if (result.length === 0) {
-        return false;
-    } else {
-        return true;
+    wait(1)
+    for (let i = 1; i <= maxWait - 1; i++) {
+        wait(1)
+        const [result, error] = at.findText(
+            {},
+            (text) => text.toLowerCase() === txt.toLowerCase()
+        );
+
+        if (error || result.length === 0) {
+            // return false;
+        } else {
+            return true;
+        }
     }
+
+    return false;
 };
 
 global.tapText = function (txt) {
@@ -119,17 +131,83 @@ global.randomDOB = function () {
 
 global.selectDobValue = function (x, y, target, maxValue) {
     const diff = maxValue - target;
-    for (let i = 0; i < diff; i++) {
+    absDiff = diff < 0 ? diff * -1 : diff
+
+    for (let i = 0; i < absDiff; i++) {
         press(x, y - 70); // kéo lên
         wait(0.1);
     }
 };
 
-global.typeText = function (text) {
-    for (let i = 0; i < text.length; i++) {
-        const ch = text[i];
-        at.inputText(ch);
-        wait(0.2);
+// global.typeText = function (text) {
+//     for (let i = 0; i < text.length; i++) {
+//         const ch = text[i];
+//         at.inputText(ch);
+//         wait(0.2);
+//     }
+// };
+
+global.typeText = function (inputText) {
+    const keyMap = {
+        q: [28, 948], w: [102, 947], e: [178, 946], r: [254, 946], t: [331, 945],
+        y: [405, 951], u: [481, 950], i: [554, 947], o: [629, 955], p: [706, 952],
+        a: [72, 1060], s: [146, 1058], d: [221, 1059], f: [296, 1056], g: [366, 1059],
+        h: [443, 1056], j: [523, 1059], k: [592, 1054], l: [671, 1053],
+        z: [145, 1166], x: [218, 1166], c: [290, 1167], v: [369, 1166],
+        b: [445, 1162], n: [522, 1166], m: [595, 1163],
+        ' ': [259, 1279], '.': [115, 1167], '!': [467, 1165], '@': [605, 1028]
+    };
+
+    const shiftKey = [36, 1162];        // Shift để viết hoa
+    const numSwitchKey = [72, 1273];    // Đổi sang bàn phím số
+
+    const numKeyMap = {
+        '0': [704, 945], '1': [29, 947], '2': [105, 947], '3': [179, 946],
+        '4': [257, 954], '5': [328, 952], '6': [406, 953], '7': [479, 953],
+        '8': [557, 950], '9': [629, 950]
+    };
+
+    const stringX = String(inputText);
+    for (let i = 0; i < stringX.length; i++) {
+        const ch = stringX[i];
+        const isFirst = i === 0;
+
+        const x = Math.floor(Math.random() * 21) - 10;
+        const y = Math.floor(Math.random() * 21) - 10;
+        const timecho = Math.floor(Math.random() * 100001) + 200000;
+        const timechobatbuoc = Math.floor(Math.random() * 100001) + 300000;
+
+        // Gõ số
+        if (numKeyMap[ch]) {
+            at.tap(numSwitchKey[0] + x, numSwitchKey[1] + y); // Bật bàn phím số
+            at.usleep(timechobatbuoc);
+            const [bx, by] = numKeyMap[ch];
+            at.tap(bx + x, by + y);
+            at.usleep(timecho);
+            at.tap(numSwitchKey[0] + x, numSwitchKey[1] + y); // Tắt bàn phím số
+            at.usleep(timechobatbuoc);
+        }
+
+        // Gõ ký tự thường
+        else if (keyMap[ch]) {
+            const [bx, by] = keyMap[ch];
+            at.tap(bx + x, by + y);
+            at.usleep(timecho);
+        }
+
+        // Gõ chữ hoa (A–Z)
+        else if (ch >= 'A' && ch <= 'Z') {
+            const lower = ch.toLowerCase();
+            if (keyMap[lower]) {
+                if (!isFirst) {
+                    at.tap(shiftKey[0] + x, shiftKey[1] + y); // Nhấn Shift
+                    at.usleep(1);
+                }
+                const [bx, by] = keyMap[lower];
+                at.tap(bx + x, by + y);
+                at.usleep(timecho);
+            }
+        }
     }
 };
 
@@ -212,7 +290,7 @@ global.logAllText = function () {
 };
 
 // Find current actived mail
-// axios.get(MAIL_DOMAIN + "rentals" + "?api_key=" + MAIL_API_KEY)
+// axios.get(MAIL_THUEMAIL_DOMAIN + "rentals" + "?api_key=" + MAIL_API_KEY)
 //     .then(function (response) {
 //         const res = response.data
 //         if (res.data) {
@@ -250,12 +328,12 @@ global.decodeBase64QR = function (base64String) {
     let uid = null;
     let secret = null;
 
-    for (let i = 1; i <= 3; i++) {
+    for (let i = 1; i <= 10; i++) {
+        wait(2)
         if (uid && secret) {
             return [uid, secret]
         } else {
             toast("times: " + i, 2, "bottom");
-            wait(2)
 
             axios({
                 method: "post",
@@ -295,9 +373,7 @@ global.decodeBase64QR = function (base64String) {
         }
     }
 
-    if (uid && secret) {
-        return [uid, secret]
-    }
+    return [uid, secret]
 };
 
 global.get2FAOTP = function (secret) {
@@ -350,6 +426,11 @@ global.removeAccount = function () {
                 tapImage("remove_btn.png");
                 wait(2);
             }
+
+            if (hasImage("remove_btn_red.png")) {
+                tapImage("remove_btn_red.png");
+                wait(2);
+            }
         }
     }
 };
@@ -379,7 +460,7 @@ global.logoutAndRemoveAccount = function () {
         press(690, 1300); // menu icon
 
         wait(3);
-        swipe(600, 600, 600, 450);
+        swipe(600, 600, 600, 400);
 
         wait(1);
         if (hasText("Log out")) {
@@ -448,4 +529,43 @@ global.backWhenNotMail = function () {
         tapText('Stop creating account')
         wait(2);
     }
+}
+
+global.saveOutputData = function () {
+    if (terminateApp) return
+
+    log('saveOutputData()')
+    toast('saveOutputData()', 3, 'top')
+
+    wait(2);
+    if (!hasFullData()) {
+        return;
+    }
+
+    const row = `${profileUid}|${mailYagisongs}|${password}|${twoFA}|${mail}`;
+    const accountOutput = at.rootDir() + "/Facebook/output.txt";
+    const command = `echo '${row}' >> ${accountOutput}`;
+
+    at.exec(command);
+
+    wait(2);
+    toast("Saved account: " + mail, 3);
+}
+
+global.randomEmailYagisongs = function () {
+    const letters = 'abcdefghijklmnopqrstuvwxyz';
+    const digits = '0123456789';
+
+    let part1 = '';
+    for (let i = 0; i < 12; i++) {
+        part1 += letters.charAt(Math.floor(Math.random() * letters.length));
+    }
+
+    let part2 = '';
+    for (let i = 0; i < 5; i++) {
+        part2 += digits.charAt(Math.floor(Math.random() * digits.length));
+    }
+
+    return 'iyxmtuiudvka84837@yagisongs.com';
+    return `${part1}${part2}@yagisongs.com`;
 }

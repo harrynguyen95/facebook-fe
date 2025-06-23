@@ -1,6 +1,7 @@
 const QR_CODE_SERVER = "https://tuongtacthongminh.com";
 const MAIL_API_KEY = "94a3a21c-40b5-4c48-a690-f1584c390e3e";
-const MAIL_DOMAIN = "https://api.thuemails.com/api/";
+const MAIL_THUEMAIL_DOMAIN = "https://api.thuemails.com/api/";
+const MAIL_BUILUC_DOMAIN = "http://mail.builuc1998.com/"
 
 const axios = require("axios");
 require("utils");
@@ -10,37 +11,41 @@ var mail = "";
 var password = "";
 var twoFA = "";
 var profileUid = "";
+const mailYagisongs = randomEmailYagisongs()
 
-// thuemailId = 1169
-// mail = 'morrowzahirpn6411@gmail.com'
-// password = '0nm0PVTZ'
+// thuemailId = 2200
+// mail = 'porteralecqb7064@gmail.com'
+// password = 'lzKfkVVe'
 
 var terminateApp = false;
 
 // FEATURE FUNCTION
 function openFacebook() {
     log('----------------------------------------------------------')
+    log("-> Mail yagisongs: " + mailYagisongs);
+
     pressHome();
 
-    if (hasImage("fb.png")) {
-        tapImage("fb.png");
+    if (hasImage("fb_logo_2.png") || hasText("facebook")) {
+        tapImage("fb_logo_2.png");
         wait(3);
 
         press(380, 250)
-        wait(0.5)
-
-        logoutAndRemoveAccount()
-        check282Checkpoint()
+        wait(1)
     }
 
     if (hasText("Create new account")) {
         tapText("Create new account");
-        wait(8);
+        wait(5);
+    } else {
+        logoutAndRemoveAccount()
+        check282Checkpoint()
     }
 
     wait(2);
-    if (hasImage("join_facebook.png") && hasImage("create_account_blue.png")) {
-        tapImage("create_account_blue.png");
+    if (hasImage("join_facebook.png", 8) || hasImage("create_account_blue.png", 8) || hasText("Get started")) {
+        hasImage("create_account_blue.png", 1) ? tapImage("create_account_blue.png") : null;
+        hasText("Get started", 1) ? tapText("Get started") : null;
         wait(2);
     }
 }
@@ -49,25 +54,23 @@ function setFirstName() {
     log('setFirstName()')
     toast('setFirstName()', 3, 'top')
 
+    wait(3)
     if (hasText("What's your name?")) {
         const [first, last] = getRandomName();
         wait(1);
 
         press(140, 380);
-        wait(0.5);
+        wait(1);
         typeText(first);
         wait(1);
 
         press(500, 380);
-        wait(0.5);
+        wait(1);
         typeText(last);
         wait(1);
 
         tapImage("next.png");
-        wait(4);
-    } else {
-        toast("Not in setFirstName.");
-        return;
+        wait(3);
     }
 }
 
@@ -75,7 +78,8 @@ function setBirthday() {
     log('setBirthday()')
     toast('setBirthday()', 3, 'top')
 
-    if (hasText("What's your birthday?")) {
+    wait(2)
+    if (hasText("What's your birthday?"), 15) {
         press(200, 470);
         wait(1);
 
@@ -89,12 +93,15 @@ function setBirthday() {
         const [day, month, year] = randomDOB();
         const [d, m, y] = getToday();
 
+        log([day, month, year])
+        log([d, m, y])
+
         press(x_year, y_year);
         selectDobValue(x_year, y_year, year, y);
         wait(1);
 
         press(x_month, y_month);
-        selectDobValue(x_month, y_month, month, m);
+        selectDobValue(x_month, y_month, month, m, 'month');
         wait(1);
 
         press(x_day, y_day);
@@ -102,10 +109,7 @@ function setBirthday() {
         wait(2);
 
         tapImage("next.png");
-        wait(5);
-    } else {
-        toast("Not in setBirthday.");
-        return;
+        wait(3);
     }
 }
 
@@ -113,7 +117,8 @@ function setGender() {
     log('setGender()')
     toast('setGender()', 3, 'top')
 
-    if (hasText("What's your gender?")) {
+    wait(2)
+    if (hasText("What's your gender?", 10)) {
         const x = 590;
         let y = 420;
 
@@ -128,9 +133,6 @@ function setGender() {
 
         tapImage("next.png");
         wait(3);
-    } else {
-        toast("Not in step setGender.");
-        return;
     }
 }
 
@@ -140,11 +142,11 @@ function signUpEmail() {
 
     if (hasText("What's your mobile number?")) {
         tapText("Sign up with email");
-        wait(7);
+        wait(2);
     }
 
-    if (hasText("What's your email?")) {
-        wait(0.5);
+    if (hasText("What's your email?", 10)) {
+        wait(1);
 
         isBreak = false;
         const postData = {
@@ -154,10 +156,10 @@ function signUpEmail() {
             quantity: 1,
         };
         for (let i = 1; i <= 5; i++) {
-            toast("times: " + i, 3, "bottom");
+            toast("Request times: " + i, 3, "bottom");
             wait(1);
             axios
-                .post(MAIL_DOMAIN + "rentals" + "?api_key=" + MAIL_API_KEY, postData)
+                .post(MAIL_THUEMAIL_DOMAIN + "rentals" + "?api_key=" + MAIL_API_KEY, postData)
                 .then(function (response) {
                     const res = response.data;
                     if (res.data.length > 0) {
@@ -184,32 +186,34 @@ function signUpEmail() {
         }
 
         wait(10);
-        toast(mail || '-', 4);
+        toast(mail || '-No mail.', 4);
         log("-> Mail: " + mail + " thuemail_id: " + thuemailId);
 
         if (!mail) {
             toast('Not found mail, Back.', 5, 'bottom')
             backWhenNotMail()
             terminateApp = true
-            return
+            return;
+        } else {
+            press(110, 410);
+            wait(1);
+            typeText(mail);
+            wait(1);
+            tapImage("next.png");
+            wait(5);
         }
-
-        press(110, 410);
-        wait(1);
-        typeText(mail);
-        wait(1);
-        tapImage("next.png");
-        wait(5);
     }
 }
 
 function setPassword() {
+    if (terminateApp) return
+
     log('setPassword()')
     toast('setPassword()', 5, 'top')
 
     wait(8);
     if (hasText("Create a password")) {
-        wait(0.5);
+        wait(1);
         press(120, 450);
         wait(1);
 
@@ -224,8 +228,8 @@ function setPassword() {
         wait(5);
     }
 
-    wait(8)
-    if (hasText("Save your login info?")) {
+    wait(3)
+    if (hasText("Save your login info?", 8)) {
         tapText("Not now");
         wait(2);
     }
@@ -253,68 +257,116 @@ function setPassword() {
 }
 
 function setConfirmationCode() {
+    if (terminateApp) return
+
     log('setConfirmationCode()')
     toast('setConfirmationCode()', 5, 'top')
 
-    wait(10);
-    if (!hasText("Enter the confirmation code")) {
-        toast("Not in setConfirmationCode.");
-        return;
-    }
+    wait(5);
+    if (hasText("Enter the confirmation code", 10)) {
 
-    toast("Wait code mail...", 3);
-    if (mail && thuemailId) {
-        isBreak = false;
-        for (let i = 1; i <= 10; i++) {
-            toast("times: " + i, 3, "bottom");
-            wait(3);
-            axios
-                .get(MAIL_DOMAIN + "rentals/" + thuemailId + "?api_key=" + MAIL_API_KEY)
-                .then(function (response) {
-                    const res = response.data;
-                    if (res.id && res.otp) {
-                        isBreak = true;
+        toast("Wait code mail...", 3);
+        if (mail && thuemailId) {
+            isBreak = false;
+            let isMailActive = null;
+            for (let i = 1; i <= 10; i++) {
 
-                        wait(0.5);
-                        press(130, 410);
-                        wait(1);
-                        typeText(res.otp);
-                        wait(1);
-                        tapImage("next.png");
-                        wait(3)
-                    } else {
-                        toast("Empty OTP code, times: " + i);
+                toast("Request times: " + i, 3, "bottom");
+                axios
+                    .get(MAIL_THUEMAIL_DOMAIN + "rentals/" + thuemailId + "?api_key=" + MAIL_API_KEY)
+                    .then(function (response) {
+                        const res = response.data;
+                        isMailActive = res.status
+        
+                        if (res.id && res.otp) {
+                            isBreak = true;
+
+                            wait(1);
+                            press(130, 410);
+                            wait(1);
+                            typeText(res.otp);
+                            wait(1);
+                            tapImage("next.png");
+                            wait(3)
+                        } else {
+                            toast("Empty OTP code, times: " + i);
+                        }
+                    })
+                    .catch(function (error) {
+                        toast("Failed to make http request, error: " + error.message);
+                        log(error.message, "Failed to make http request, error: ");
+                    });
+
+                wait(3);
+                if (isBreak) break;
+            }
+
+            wait(2);
+            if (!isBreak) {
+                if (hasText("I didn't get the code") && isMailActive == 'active') {
+                    tapText("I didn't get the code")
+                    wait(2)
+
+                    tapText("Resend confirmation code")
+                    wait(3)
+
+                    isBreak = false;
+                    for (let i = 1; i <= 10; i++) {
+
+                        toast("Request times: " + i, 3, "bottom");
+                        axios
+                            .get(MAIL_THUEMAIL_DOMAIN + "rentals/" + thuemailId + "?api_key=" + MAIL_API_KEY)
+                            .then(function (response) {
+                                const res = response.data;
+                                if (res.id && res.otp) {
+                                    isBreak = true;
+
+                                    wait(1);
+                                    press(130, 410);
+                                    wait(1);
+                                    typeText(res.otp);
+                                    wait(1);
+                                    tapImage("next.png");
+                                    wait(3)
+                                } else {
+                                    toast("Empty OTP code, times: " + i);
+                                }
+                            })
+                            .catch(function (error) {
+                                toast("Failed to make http request, error: " + error.message);
+                                log(error.message, "Failed to make http request, error: ");
+                            });
+
+                        wait(3);
+                        if (isBreak) break;
                     }
-                })
-                .catch(function (error) {
-                    toast("Failed to make http request, error: " + error.message);
-                    log(error.message, "Failed to make http request, error: ");
-                });
 
-            wait(1);
-            if (isBreak) break;
-        }
-
-        wait(2);
-        if (!isBreak) {
-            toast("Can not get OTP code thuemail", 2, "bottom");
+                }
+            }
         }
     }
+    
 }
 
 function setNormalAccount() {
+    if (terminateApp) return
+
     log('setNormalAccount()')
     toast('setNormalAccount()', 5, 'top')
 
-    wait(15);
+    wait(5);
+    if (hasText("Choose from Camera Roll", 8)) {
+        press(55, 415)
+        wait(1)
+    }
 
-    if (hasText("Add a profile picture") || hasText("Add a profile photo")) {
+    if (hasText("Add a profile picture")) {
         press(380, 1260)
         wait(7);
     }
 
     wait(5)
-    if (hasText("Turn on contact uploading to")) {
+    if (hasText("Turn on contact uploading to", 10) || hasText("find friends faster", 10)) {
         tapImage("next.png");
         wait(2);
 
@@ -351,16 +403,18 @@ function goPersonalSetting() {
     ignoreMessenger()
     wait(2)
 
-    if (hasText("what's on your mind?")) {
+    if (hasText("what's on your mind?") || hasImage("home_fb_logo.png")) {
         press(690, 1300); // menu icon
-
         wait(3);
+
         tapImage("setting_icon.png");
-
         wait(3);
-        tapText("See more in Accounts Center");
 
-        wait(3);
+        if (hasText("See more in Accounts Center", 5)) {
+            tapText("See more in Accounts Center");
+            wait(3);
+        }
+
         swipe(600, 600, 600, 550);
 
         wait(2);
@@ -376,10 +430,9 @@ function get2FAstring() {
     log('get2FAstring()')
     toast('get2FAstring()', 5, 'top')
 
-    wait(2);
-    if (hasText("Identity confirmation")) {
+    if (hasText("Identity confirmation", 15)) {
         tapText("Identity confirmation");
-        wait(3);
+        wait(2);
     }
 
     if (hasText("Confirm your identity")) {
@@ -390,7 +443,7 @@ function get2FAstring() {
         wait(3);
 
         if (hasText("Please re-enter your")) {
-            wait(0.5);
+            wait(1);
             press(120, 600);
             wait(1);
 
@@ -401,148 +454,207 @@ function get2FAstring() {
         }
     }
 
-    if (hasText("Help protect your account")) {
+    if (hasText("Help protect your account", 5)) {
         tapImage("next.png");
-        wait(5);
+        wait(2);
     }
 
-    wait(3);
-    if (hasText("Instructions for setup")) {
+    if (hasText("Instructions for setup", 5)) {
         swipe(600, 600, 600, 550);
         wait(1);
-    }
 
-    if (hasImage("qr_code_btn.png")) {
-        tapImage("qr_code_btn.png");
-        wait(2);
+        if (hasImage("qr_code_btn.png")) {
+            tapImage("qr_code_btn.png");
+            wait(2);
 
-        const now = new Date();
-        const pad = (n) => n.toString().padStart(2, "0");
-        const formattedDate = `${now.getFullYear()}${pad(
-            now.getMonth() + 1
-        )}${pad(now.getDate())}`;
-        const formattedTime = `${pad(now.getHours())}${pad(
-            now.getMinutes()
-        )}${pad(now.getSeconds())}`;
+            const now = new Date();
+            const pad = (n) => n.toString().padStart(2, "0");
+            const formattedDate = `${now.getFullYear()}${pad(
+                now.getMonth() + 1
+            )}${pad(now.getDate())}`;
+            const formattedTime = `${pad(now.getHours())}${pad(
+                now.getMinutes()
+            )}${pad(now.getSeconds())}`;
 
-        const qrCodeImage = `${formattedDate}-${formattedTime}-${thuemailId}.png`;
-        const qrPathScreenshot = `screenshot/${qrCodeImage}`;
-        const qrPath = at.rootDir() + "/Facebook/" + qrPathScreenshot;
+            const qrCodeImage = `${formattedDate}-${formattedTime}-${thuemailId}.png`;
+            const qrPathScreenshot = `screenshot/${qrCodeImage}`;
+            const qrPath = at.rootDir() + "/Facebook/" + qrPathScreenshot;
 
-        wait(6);
-        at.screenshot(qrPathScreenshot, {
-            x: 160,
-            y: 500,
-            width: 420,
-            height: 420,
-        });
-        wait(3);
-        toast('Screenshot captured')
+            wait(8)
+            at.screenshot(qrPathScreenshot, {
+                x: 160,
+                y: 500,
+                width: 420,
+                height: 420,
+            });
+            wait(3);
+            toast('Screenshot captured')
 
-        const base64String = at.exec(`base64 ${qrPath}`);
-        wait(5);
+            const base64String = at.exec(`base64 ${qrPath}`);
+            wait(5);
 
-        if (base64String) {
-            toast('Got base64String.')
-            log('Got base64String.')
-        } else {
-            toast('Does not got base64String.')
-            log('Does not got base64String.')
-        }
+            const [uid, secret] = decodeBase64QR(base64String);
+            wait(10)
 
-        const [uid, secret] = decodeBase64QR(base64String);
-        wait(10)
+            toast([uid, secret]);
+            log("-> Mail: " + mail + " uid: " + uid + " 2FA: " + secret);
 
-        toast([uid, secret]);
-        log("-> Mail: " + mail + " uid: " + uid + " 2FA: " + secret);
+            profileUid = uid;
+            twoFA = secret;
 
-        profileUid = uid;
-        twoFA = secret;
-
-        wait(2);
-        press(50, 410);
-        wait(1);
-
-        tapImage("next.png");
-        wait(5);
-
-        if (hasText("Please re-enter your")) {
-            wait(0.5);
-            press(120, 600);
-            wait(1);
-
-            typeText(password);
-            wait(1);
-            tapText("Continue");
-            wait(4);
-        }
-
-        wait(2);
-        if (hasText("Enter code")) {
-            wait(0.5);
-            press(140, 520);
-            wait(1);
-
-            const token = get2FAOTP(twoFA);
-            wait(1)
-
-            typeText(token);
+            wait(2);
+            press(50, 410);
             wait(1);
 
             tapImage("next.png");
             wait(5);
 
-            tapImage("done.png");
-            wait(5);
-
-            if (hasText("Accounts Center")) {
-                // go back home
-                press(60, 150);
+            if (hasText("Please re-enter your")) {
+                wait(1);
+                press(120, 600);
                 wait(1);
 
-                press(40, 85);
+                typeText(password);
+                wait(1);
+                tapText("Continue");
+                wait(4);
+            }
+
+            wait(2);
+            if (hasText("Enter code")) {
+                wait(1);
+                press(140, 520);
                 wait(1);
 
-                press(40, 85);
+                const token = get2FAOTP(twoFA);
+                wait(1)
+
+                typeText(token);
                 wait(1);
 
-                press(40, 85);
-                wait(1);
+                tapImage("next.png");
+                wait(5);
 
-                press(60, 1280); // click to home screen
-                wait(3);
+                tapImage("done.png");
+                wait(5);
+
+                saveOutputData()
+
+                if (hasText("Accounts Center")) {
+                    // go back home
+                    press(60, 150);
+                    wait(1);
+
+                    press(40, 85);
+                    wait(1);
+                }
             }
         }
     }
 }
 
-function saveOutputData() {
+function setNewGmail() {
     if (terminateApp) return
 
-    log('saveOutputData()')
-    toast('saveOutputData()', 3, 'top')
+    if (hasText("Personal details") || hasText("Contact info")) {
+        tapText("Contact info")
+        wait(3);
+        if (hasText("Contact information")) {
+            tapText("Add new contact")
+            wait(5)
 
-    // mail = mail || "test@example.com"
-    // password = password || "123456"
-    // twoFA = twoFA || 'HJGK OWED DFHR DSRE HGRT F5GF DWE4 HJH9'
-    // profileUid = profileUid || '123456789'
+            if (hasText('Which would you like to add?') || hasText("Add email")) {
+                tapText("Add email")
+                wait(3)
+                if (hasText("Add an email address")) {
+                    press(100, 550)
+                    wait(1)
+                    typeText(mailYagisongs)
+                    wait(1)
 
-    wait(2);
-    if (!hasFullData()) {
-        return;
+                    press(650, 1290)
+                    wait(1)
+
+                    tapImage("next.png");
+                    wait(2)
+                }
+
+                if (hasText("Enter your confirmation code")) {
+                    wait(5)
+
+                    isBreak = false;
+                    for (let i = 1; i <= 15; i++) {
+
+                        log("Times request: " + i)
+                        toast("Request times: " + i, 3, "bottom");
+                        axios
+                            .get(MAIL_BUILUC_DOMAIN + "?type=getcode&mail=" + mailYagisongs)
+                            .then(function (response) {
+                                const res = response.data;
+                                if (res && res.length > 0 && res[0].code) {
+                                    isBreak = true;
+
+                                    log(res[0].code)
+
+                                    wait(1);
+                                    press(100, 480);
+                                    wait(1);
+
+                                    typeText(res[0].code);
+                                    wait(1);
+
+                                    press(100, 600)
+                                    wait(1)
+
+                                    tapImage("next.png");
+                                    wait(3)
+
+                                    tapImage("close_btn.png");
+                                    wait(1)
+
+                                    // remove old mail
+                                    if (hasText("Contact information")) {
+                                        press(660, 630)
+                                        wait(3)
+
+                                        tapText("Delete email")
+                                        wait(1)
+
+                                        tapImage("delete_btn.png")
+                                        wait(1)
+
+                                        press(50, 155)
+                                        wait(1)
+                                    }
+
+                                    // back to home page
+                                    press(50, 155)
+                                    wait(1)
+
+                                    press(55, 150)
+                                    wait(1)
+
+                                    press(60, 1280); // click to home screen
+                                    wait(3);
+
+                                    // back
+                                } else {
+                                    toast("Empty OTP code, times: " + i);
+                                }
+                            })
+                            .catch(function (error) {
+                                toast("Failed to make http request, error: " + error.message);
+                                log(error.message, "Failed to make http request, error: ");
+                            });
+                
+                        wait(3);
+                        if (isBreak) break;
+                    }
+                }
+            }
+        }
     }
-
-    const row = `${profileUid}|${mail}|${password}|${twoFA}`;
-    const accountOutput = at.rootDir() + "/Facebook/output.txt";
-    const command = `echo '${row}' >> ${accountOutput}`;
-
-    at.exec(command);
-
-    wait(2);
-    toast("Saved account: " + mail, 3);
 }
-
-function setNewGmail() { }
 
 function swipeRandom() {
     if (terminateApp) return
@@ -554,7 +666,7 @@ function swipeRandom() {
     press(60, 1280); // click to home screen
     wait(3);
 
-    if (hasText("what's on your mind?")) {
+    if (hasText("what's on your mind?") || hasImage("home_fb_logo.png")) {
         swipe(680, 500, 680, 450);
         wait(1);
         swipe(650, 400, 650, 250);
@@ -576,7 +688,7 @@ function searchRandomKeyword() {
     toast('searchRandomKeyword()', 5, 'top')
 
     wait(3);
-    if (hasText("what's on your mind?")) {
+    if (hasText("what's on your mind?") || hasImage("home_fb_logo.png")) {
         press(600, 90); // search icon
         wait(2);
 
@@ -629,7 +741,7 @@ function resetWifi() {
     log('resetWifi()')
     toast('resetWifi()', 3, 'top')
 
-    wait(0.5);
+    wait(1);
     pressHome();
 
     if (hasImage("iphone_setting.png")) {
@@ -675,8 +787,7 @@ function main() {
 
     goPersonalSetting();
     get2FAstring();
-
-    saveOutputData();
+    setNewGmail()
 
     swipeRandom();
     searchRandomKeyword();
