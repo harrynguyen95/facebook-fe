@@ -1,0 +1,814 @@
+json = require "json"
+curl = require('lcurl')
+ltn12 = require("ltn12")
+
+DEBUG_IMAGE = false
+THRESHOLD = 0.99
+
+function sleep(timeout)
+    usleep(timeout * 1000000)
+end
+
+function exit()
+    stop()
+end
+
+function toastr(value, time)
+    if time == nil then
+        time = 2
+    end
+
+    if value == nil then
+        value = 'null'
+    end
+
+    if type(value) == "table" or type(value) == "boolean" then
+        toast(jsonStringify(value), time)
+    else
+        toast(value, time)
+    end
+end
+
+function shuffle(tbl)
+    math.randomseed(os.time())
+    for i = #tbl, 2, -1 do
+        local j = math.random(i)
+        tbl[i], tbl[j] = tbl[j], tbl[i]
+    end
+end
+
+function jsonStringify(tbl)
+    local function encode(val)
+        if type(val) == "table" then
+            local isArray = #val > 0
+            local result = {}
+            if isArray then
+                for _, v in ipairs(val) do
+                    table.insert(result, encode(v))
+                end
+                return "[" .. table.concat(result, ",") .. "]"
+            else
+                for k, v in pairs(val) do
+                    table.insert(result, '"' .. k .. '":' .. encode(v))
+                end
+                return "{" .. table.concat(result, ",") .. "}"
+            end
+        elseif type(val) == "string" then
+            return '"' .. val .. '"'
+        elseif type(val) == "number" or type(val) == "boolean" then
+            return tostring(val)
+        else
+            return 'null'
+        end
+    end
+    return encode(tbl)
+end
+
+function log(value, prefix)
+    if prefix == nil then
+        prefix = ':'
+    end
+    if type(value) == "table" then
+        print(prefix .. ": " .. jsonStringify(value))
+    elseif type(value) == "string" then
+        print(prefix .. ": " .. value)
+    else
+        print(prefix .. ": " .. tostring(value))
+    end
+end
+
+function press(x, y, duration)
+    duration = duration or 0.5
+    local randOffset = function()
+        return math.random(-5, 5)
+    end
+    local randX = x + randOffset()
+    local randY = y + randOffset()
+    tap(randX, randY)
+    sleep(duration)
+end
+
+function split(str, delimiter)
+    local result = {}
+    for match in (str .. delimiter):gmatch("(.-)" .. delimiter) do
+        table.insert(result, match)
+    end
+    return result
+end
+
+function trim(s)
+    return (s:gsub("^%s*(.-)%s*$", "%1"))
+end
+
+function floor(num)
+    return math.floor(num)
+end
+
+function writeFile(path, data)
+    local f = io.open(path, "w")
+    for i, v in ipairs(data) do
+        f:write(v, "\n")
+    end
+    f:close()
+end
+
+function addLineToFile(path, line)
+    io.open(path, "a"):write(line, "\n"):close()
+end
+
+function readFile(path)
+    local file = io.open(path, "r")
+    if not file then
+        log("File không tồn tại, tạo mới: " .. path, 3)
+        
+        -- Tạo file mới
+        file = io.open(path, "w")
+        if not file then
+            log("Không thể tạo file: " .. path, 3)
+            return {}
+        end
+        file:close()
+
+        -- Mở lại ở chế độ đọc
+        file = io.open(path, "r")
+        if not file then
+            log("Không thể mở file vừa tạo: " .. path, 3)
+            return {}
+        end
+    end
+
+    local lines = {}
+    for line in file:lines() do
+        if line and line ~= "" then
+            line = line:gsub("\r", "")
+            table.insert(lines, line)
+        end
+    end
+    file:close()
+    return lines
+end
+
+function readLinesFromFile(filename)
+    local names = {}
+    for name in io.lines(filename) do
+        table.insert(names, name)
+    end
+    return names
+end
+
+function getRandomLineInFile(filename)
+    local lines = readLinesFromFile(filename)
+    local index = math.random(#lines)
+
+    return trim(lines[index])
+end
+
+function findAndClickByImage(paths, threshold)
+    if threshold == nil then
+        threshold = THRESHOLD
+    end
+
+    sleep(0.5)
+
+    if type(paths) == "table" then
+        for i = 1, #paths do
+            local result = findImage(paths[i], 1, threshold, nil, DEBUG_IMAGE, 1)
+            for i, v in pairs(result) do
+                if v ~= nil then
+                    local x = v[1]
+                    local y = v[2]
+                    tap(x, y)
+                    sleep(0.016)
+                    return true
+                end
+            end
+        end
+    elseif type(paths) == "string" then
+        local result = findImage(paths, 1, threshold, nil, DEBUG_IMAGE, 1)
+        for i, v in pairs(result) do
+            if v ~= nil then
+                local x = v[1]
+                local y = v[2]
+                tap(x, y)
+                sleep(0.5)
+                return true
+            end
+        end
+    end
+    return false
+end
+
+function checkImageIsExist(path, threshold)
+    if threshold == nil then
+        threshold = THRESHOLD
+    end
+    local result = findImage(path, 1, threshold, nil, DEBUG_IMAGE, 1)
+    for i, v in pairs(result) do
+        if v ~= nil then
+            return true
+        end
+    end
+    return false
+end
+
+function checkImageIsExists(paths, threshold)
+    if threshold == nil then
+        threshold = THRESHOLD
+    end
+    for i = 1, #paths do
+        local isExist = checkImageIsExist(paths[i], threshold)
+        if isExist then
+            return paths[i]
+        end
+    end
+
+    return false
+end
+
+function waitImageVisible(paths, timeout)
+    if timeout == nil then
+        timeout = 5
+    end
+
+    for i = 1, timeout do
+        if checkImageIsExists(paths) ~= false then
+            return true
+        end
+        sleep(1)
+    end
+    return false
+end
+
+function waitImageNotVisible(paths, timeout)
+    if timeout == nil then
+        timeout = 10
+    end
+
+    for i = 1, timeout do
+        if checkImageIsExists(paths) == false then
+            return true
+        end
+        sleep(1)
+    end
+    return false
+end
+
+function randomBetween(min, max)
+    return math.random() * (max - min) + min
+end
+
+function randomPointInRect(rect)
+    local x = randomBetween(rect.topLeft.x, rect.bottomRight.x)
+    local y = randomBetween(rect.topLeft.y, rect.bottomRight.y)
+    return { x = x, y = y }
+end
+
+function getToday()
+    local now = os.date("*t")
+    return { now.day, now.month, now.year }
+end
+
+function randomDOB()
+    local day = math.random(1, 28)
+    local month = math.random(1, 12)
+    local year = math.random(1990, 2003)
+    return { day, month, year }
+end
+
+function selectDobValue(x, y, target, maxValue)
+    local diff = maxValue - target
+    local absDiff = math.abs(diff)
+    for i = 1, absDiff do
+        press(x, y - 70)
+        sleep(0.1)
+    end
+end
+
+function getRandomString(length)
+    local characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+    local result = ""
+    for i = 1, length do
+        local randomIndex = math.random(1, #characters)
+        result = result .. string.sub(characters, randomIndex, randomIndex)
+    end
+    return result
+end
+
+function randomPassword(length)
+    length = length or 8
+    local chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    local pass = ""
+
+    math.randomseed(os.time() + math.random()) -- đảm bảo random khác nhau mỗi lần
+
+    for i = 1, length do
+        local index = math.random(1, #chars)
+        pass = pass .. string.sub(chars, index, index)
+    end
+
+    return pass
+end
+
+function getRandomName()
+    local firstname = getRandomLineInFile(currentPath() .. "/input/firstname.txt")
+    local lastname = getRandomLineInFile(currentPath() .. "/input/lastname.txt")
+    return { firstname, lastname }
+end
+
+function randomEmailLogin()
+    local letters = "abcdefghijklmnopqrstuvwxyz"
+    local digits = "0123456789"
+    local part1, part2 = "", ""
+    for i = 1, 12 do
+        local idx = math.random(1, #letters)
+        part1 = part1 .. letters:sub(idx, idx)
+    end
+    for i = 1, 5 do
+        local idx = math.random(1, #digits)
+        part2 = part2 .. digits:sub(idx, idx)
+    end
+    return part1 .. part2 .. "@yagisongs.com"
+end
+
+function swipe(x1, y1, x2, y2, duration)
+    duration = duration or 300
+    touchDown(0, x1, y1)
+    usleep(50000)
+    touchMove(0, x2, y2)
+    usleep(duration * 1000)
+    touchUp(0, x2, y2)
+    usleep(100000)
+end
+
+function swipeVertically(n)
+    math.randomseed(os.time());
+    local x = math.random(5, 15)
+    local x1 = math.random(200, 250)
+    local y = math.random(850, 1150)
+    local y1 = math.random(90, 115)
+    local timecholuot = math.random(5000, 10000)
+    for i = 1, n, 1 do
+        -- toast("vuot:"..i.."/"..n);
+        touchDown(x, x1, y);
+        usleep(timecholuot);
+        for i = y, y1 + 20, -30 do
+            usleep(timecholuot);
+            touchMove(x, x1, i);
+        end
+        for i = y1 + 20, y1, -2 do
+            usleep(timecholuot);
+            touchMove(x, x1, i);
+        end
+        usleep(timecholuot);
+        touchUp(x, x1, y1);
+
+        usleep(1500000, 2000000);
+    end
+end
+
+function getRandomSearchText(count)
+    count = count or 3
+    local searchtext = require("input/searchtext")
+    local text = searchtext()
+    if count > 10 then count = 10 end
+    local shuffled = {}
+    for i = 1, #text do shuffled[i] = text[i] end
+    for i = #shuffled, 2, -1 do
+        local j = math.random(1, i)
+        shuffled[i], shuffled[j] = shuffled[j], shuffled[i]
+    end
+    local result = {}
+    for i = 1, count do
+        table.insert(result, shuffled[i])
+    end
+    return result
+end
+
+function pressHome ()
+    sleep(0.5)
+    keyDown(KEY_TYPE.HOME_BUTTON)
+    sleep(1)
+    keyUp(KEY_TYPE.HOME_BUTTON)
+    sleep(1)
+end
+
+function lockScreen()
+    keyDown(KEY_TYPE.POWER_BUTTON);
+    keyUp(KEY_TYPE.POWER_BUTTON);
+end
+
+function unlockScreen()
+    keyDown(KEY_TYPE.POWER_BUTTON);
+    keyUp(KEY_TYPE.POWER_BUTTON);
+
+    usleep(1000000);
+
+    local w, h = getScreenResolution();
+
+    local x = 10;
+    local gap = 120;
+    touchDown(0, x, 200);
+    while x < w do
+        x = x + gap;
+        usleep(16000);
+        touchMove(0, x, 200);
+    end
+    touchUp(0, x, 200);
+end
+
+function lockAndUnlockScreen()
+    lockScreen()
+    sleep(1)
+    local i = 0;
+    while true do
+        -- if checkImageIsExists(btn_cancel) then
+        --     findAndClickByImage(btn_cancel)
+        -- end
+        i = i + 1;
+        if getColor(711, 17) == 16777215 and i > 5 then
+            break
+        end
+
+        keyDown(KEY_TYPE.HOME_BUTTON)
+        keyUp(KEY_TYPE.HOME_BUTTON)
+        sleep(1)
+    end
+end
+
+function cutCharacters(input, num)
+    -- Kiểm tra nếu num lớn hơn độ dài chuỗi, trả về chuỗi rỗng
+    if num > #input then
+        return ""
+    end
+
+    -- Cắt chuỗi từ ký tự num+1 đến hết
+    return input:sub(num + 1)
+end
+
+function isNullOrEmpty(str)
+    return str == nil or str == ''
+end
+
+local function urlEncode(tbl)
+    local t = {}
+    for k, v in pairs(tbl) do
+        table.insert(t, k .. "=" .. tostring(v):gsub("([^%w%.%-_])",
+                     function(c) return string.format("%%%02X", string.byte(c)) end))
+    end
+    return table.concat(t, "&")
+end
+
+function httpRequest(params)
+    if not params.url then
+        error("URL là bắt buộc")
+    end
+
+    local method = params.method or "GET"
+    local headers = params.headers or {}
+    local data = params.data or nil
+    local file = params.file or nil
+    local isForm = params.isForm or false
+    local isEncodedParam = params.isEncodedParam or false
+    local response = "" -- Khởi tạo biến chuỗi để lưu phản hồi
+
+    local c = curl.easy {
+        url = params.url,
+        ssl_verifypeer = params.ssl_verifypeer or false,
+        ssl_verifyhost = params.ssl_verifyhost or false,
+        customrequest = method,
+        writefunction = function(chunk)
+            response = response .. tostring(chunk) -- Đảm bảo `chunk` là chuỗi
+            return #chunk
+        end
+    }
+
+    -- Thêm headers
+    for key, value in pairs(headers) do
+        c:setopt(curl.OPT_HTTPHEADER, {key .. ": " .. value})
+    end
+
+    -- Xử lý file nếu có
+    if file then
+        local post = curl.form()
+
+        if file then
+            local filePath = file
+            local fileName = filePath:match("^.+/(.+)$")
+            post:add_file("file", filePath, "application/octet-stream", fileName)
+        end
+        c:setopt(curl.OPT_HTTPPOST, post)
+
+    -- Xử lý data json nếu có
+    elseif data then
+        if isForm then
+            local post = curl.form()
+            if data then
+                for k, v in pairs(data) do
+                    post:add_content(k, tostring(v))
+                end
+            end
+            c:setopt(curl.OPT_HTTPPOST, post)
+        elseif isEncodedParam then
+            c:setopt(curl.OPT_POST, true)
+            local postBody = urlEncode(data)
+            print(postBody)
+            c:setopt_postfields(urlEncode(data))
+        else
+            c:setopt(curl.OPT_POST, true)
+            c:setopt_postfields(jsonStringify(data))
+        end
+    end
+
+    -- Thực hiện request
+    local success, err = pcall(function()
+        c:perform()
+    end)
+
+    -- Đóng curl
+    c:close()
+
+    if not success then
+        return nil, "Lỗi khi thực hiện request: " .. tostring(err)
+    end
+
+    return response, nil
+end
+
+function typeText(text)
+    if text == nil then return end
+    sleep(0.3)
+    if checkImageIsExists(num_keyboard) then
+        -- toast('number keyboard', 3)
+        typeNumber(text)
+    elseif checkImageIsExists(space_short) then
+        -- toast('short keyboard', 3)
+        typeTextShortSpace(text)
+    else 
+        -- toast('long keyboard', 3)
+        typeTextLongSpace(text)
+    end
+end
+
+function typeTextShortSpace(text)
+    local keymap = {
+        q = {28, 948}, w = {102, 947}, e = {178, 946}, r = {254, 946}, t = {331, 945},
+        y = {405, 951}, u = {481, 950}, i = {554, 947}, o = {629, 955}, p = {706, 952},
+        a = {72, 1060}, s = {146, 1058}, d = {221, 1059}, f = {296, 1056}, g = {366, 1059},
+        h = {443, 1056}, j = {523, 1059}, k = {592, 1054}, l = {671, 1053},
+        z = {145, 1166}, x = {218, 1166}, c = {290, 1167}, v = {369, 1166}, b = {445, 1162},
+        n = {522, 1166}, m = {595, 1163},
+        [" "] = {317, 1282}
+    }
+
+    local shiftKey = {36, 1162}
+    local numberToggleKey = {72, 1273}
+    local symbolMap = {
+        ["0"] = {704, 945}, ["1"] = {29, 947}, ["2"] = {105, 947}, ["3"] = {179, 946},
+        ["4"] = {257, 954}, ["5"] = {328, 952}, ["6"] = {406, 953}, ["7"] = {479, 953},
+        ["8"] = {557, 950}, ["9"] = {629, 950}, ["@"] = {422, 1282}, ["!"] = {467, 1165},
+        ["."] = {180, 1180}
+    }
+
+    math.randomseed(os.time())
+
+    local function randomTap(pos)
+        local x = math.random(-10, 10)
+        local y = math.random(-10, 10)
+        tap(pos[1] + x, pos[2] + y)
+        usleep(math.random(200000, 300000))
+    end
+
+    local function tapSymbol(ch)
+        randomTap(numberToggleKey)
+        usleep(math.random(300000, 400000))
+        randomTap(symbolMap[ch])
+        usleep(math.random(200000, 300000))
+        randomTap(numberToggleKey)
+        usleep(math.random(300000, 400000))
+    end
+
+    if (checkImageIsExists(shift_keyboard_on)) then
+        if isLower then 
+            randomTap(shiftKey) -- click shift
+            sleep(1)
+        end
+    end
+
+    for i = 1, #text do
+        local ch = text:sub(i, i)
+        local lowerCh = ch:lower()
+        local isLower = ch == lowerCh
+        local isUpper = ch ~= lowerCh
+
+        if keymap[lowerCh] then
+            if isUpper then
+                randomTap(shiftKey) -- click shift
+                usleep(math.random(600000, 800000))
+            end
+
+            randomTap(keymap[lowerCh])
+        elseif symbolMap[ch] then
+            tapSymbol(ch)
+        elseif ch == " " then
+            randomTap(keymap[" "])
+        end
+    end
+end
+
+function typeTextLongSpace(text)
+    local keymap = {
+        q = {28, 948}, w = {102, 947}, e = {178, 946}, r = {254, 946}, t = {331, 945},
+        y = {405, 951}, u = {481, 950}, i = {554, 947}, o = {629, 955}, p = {706, 952},
+        a = {72, 1060}, s = {146, 1058}, d = {221, 1059}, f = {296, 1056}, g = {366, 1059},
+        h = {443, 1056}, j = {523, 1059}, k = {592, 1054}, l = {671, 1053},
+        z = {145, 1166}, x = {218, 1166}, c = {290, 1167}, v = {369, 1166}, b = {445, 1162},
+        n = {522, 1166}, m = {595, 1163},
+        [" "] = {317, 1282}
+    }
+
+    local shiftKey = {36, 1162}
+    local numberToggleKey = {72, 1273}
+    local symbolMap = {
+        ["0"] = {704, 945}, ["1"] = {29, 947}, ["2"] = {105, 947}, ["3"] = {179, 946},
+        ["4"] = {257, 954}, ["5"] = {328, 952}, ["6"] = {406, 953}, ["7"] = {479, 953},
+        ["8"] = {557, 950}, ["9"] = {635, 965}, ["@"] = {625, 1070}, ["!"] = {467, 1165},
+        ["."] = {115, 1167}
+    }
+
+    math.randomseed(os.time())
+
+    local function randomTap(pos)
+        local x = math.random(-10, 10)
+        local y = math.random(-10, 10)
+        tap(pos[1] + x, pos[2] + y)
+        usleep(math.random(200000, 300000))
+    end
+
+    local function tapSymbol(ch)
+        randomTap(numberToggleKey)
+        usleep(math.random(300000, 400000))
+        randomTap(symbolMap[ch])
+        usleep(math.random(200000, 300000))
+        randomTap(numberToggleKey)
+        usleep(math.random(300000, 400000))
+    end
+
+    if (checkImageIsExists(shift_keyboard_on)) then
+        if isLower then 
+            randomTap(shiftKey) -- click shift
+            sleep(1)
+        end
+    end
+
+    for i = 1, #text do
+        local ch = text:sub(i, i)
+        local lowerCh = ch:lower()
+        local isLower = ch == lowerCh
+        local isUpper = ch ~= lowerCh
+
+        if keymap[lowerCh] then
+            if isUpper then
+                randomTap(shiftKey) -- click shift
+                usleep(math.random(600000, 800000))
+            end
+            randomTap(keymap[lowerCh])
+        elseif symbolMap[ch] then
+            tapSymbol(ch)
+        elseif ch == " " then
+            randomTap(keymap[" "])
+        end
+    end
+end
+
+function typeNumber(so)
+    stringSo = " " .. so;
+    for i = 1, #stringSo do
+        dayso = string.sub(stringSo, i, i);
+        math.randomseed(os.time());
+        local x = math.random(-5, 5)
+        local y = math.random(-5, 5)
+        local timecho = math.random(300000, 500000)
+        if string.sub(stringSo, i, i) == "0" then
+            tap(356 + x, 1265 + y);
+            usleep(timecho)
+        elseif string.sub(stringSo, i, i) == "1" then
+            tap(107 + x, 946 + y);
+            usleep(timecho)
+        elseif string.sub(stringSo, i, i) == "2" then
+            tap(359 + x, 945 + y);
+            usleep(timecho)
+        elseif string.sub(stringSo, i, i) == "3" then
+            tap(613 + x, 941 + y);
+            usleep(timecho)
+        elseif string.sub(stringSo, i, i) == "4" then
+            tap(116 + x, 1051 + y);
+            usleep(timecho)
+        elseif string.sub(stringSo, i, i) == "5" then
+            tap(359 + x, 1046 + y);
+            usleep(timecho)
+        elseif string.sub(stringSo, i, i) == "6" then
+            tap(599 + x, 1048 + y);
+            usleep(timecho)
+        elseif string.sub(stringSo, i, i) == "7" then
+            tap(126 + x, 1159 + y);
+            usleep(timecho)
+        elseif string.sub(stringSo, i, i) == "8" then
+            tap(358 + x, 1157 + y);
+            usleep(timecho)
+        elseif string.sub(stringSo, i, i) == "9" then
+            tap(610 + x, 1152 + y);
+            usleep(timecho)
+        elseif string.sub(stringSo, i, i) == "+" then
+            tap(126 + x, 1273 + y); -- phim doi
+            usleep(timecho)
+            tap(372 + x, 1282 + y); -- phim +
+            usleep(timecho)
+        end
+    end
+end
+
+function getUIDFBLogin()
+    local plist = require("plist")
+    local result = appInfo("com.facebook.Facebook")
+    local path = string.gsub(result["dataContainerPath"] .. "Library/Preferences/com.facebook.Facebook.plist",
+        "file://", "")
+
+    local luaTable = plist.read(path);
+
+    return luaTable["kFBQPLLoggingPolicyLastKnownOwnerFbID"] or nil
+end
+
+function checkInternetAndPublicIP()
+    local url = "https://api.myip.com/?v=" .. math.random(1, 65535)
+    local resultTable = {}
+
+    local response, error = httpRequest {
+        url = url,
+        method = "GET",
+        headers = {
+            ["Content-Type"] = "application/json"
+        }
+    }
+
+    if error then
+        log("No internet connection. Error: " .. tostring(error))
+        toast("No Internet. Error: " .. tostring(error), 3)
+    else
+        local data = json.decode(response)
+        if data.ip and data.country then
+            log("Connected to the Internet. Public IP: " .. data.ip .. ", Country: " .. data.country)
+            toast(data.country .. " - " .. data.ip, 3)
+        else
+            log("Connected, but failed to fetch public IP.")
+            toast("Internet OK, but no public IP detected.", 3)
+        end
+    end
+end
+
+function onOffAirplaneMode()
+    toast('onOffAirplaneMode')
+    io.popen("activator send switch-off.com.a3tweaks.switch.vpn")
+    sleep(0.5)
+    io.popen('activator send switch-on.com.a3tweaks.switch.airplane-mode');
+    sleep(0.5)
+    io.popen('activator send switch-on.com.a3tweaks.switch.airplane-mode');
+    sleep(0.5)
+    io.popen('activator send switch-off.com.a3tweaks.switch.airplane-mode');
+    sleep(0.5)
+    io.popen('activator send switch-off.com.a3tweaks.switch.airplane-mode');
+    sleep(0.5)
+    io.popen('activator send switch-off.com.a3tweaks.switch.wifi');
+    sleep(0.5)
+    io.popen('activator send switch-off.com.a3tweaks.switch.wifi');
+    sleep(0.5)
+    io.popen('activator send switch-on.com.a3tweaks.switch.cellular-data');
+    sleep(0.5)
+    sleep(1)
+end
+
+function respring()
+    usleep(math.random(3000000, 4000000));
+    io.popen('killall -9 SpringBoard');
+end
+
+function swipeCloseApp()
+    keyPress(KEY_TYPE.HOME_BUTTON);
+    sleep(0.1)
+    keyPress(KEY_TYPE.HOME_BUTTON);
+    sleep(2)
+    for i = 1, 20, 1 do
+        touchDown(1, 200, 800);
+        for i = 800, 200, -30 do
+            usleep(300);
+            touchMove(1, 200, i);
+        end
+        touchUp(1, 200, 200);
+        usleep(500000);
+        checkmau = getColor(711, 17); -- 16777215, 0xFFFFFF
+        if checkmau == 16777215 then
+            break
+        end
+    end
+    keyPress(KEY_TYPE.HOME_BUTTON);
+    sleep(math.random(1, 2));
+end
