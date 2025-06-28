@@ -49,11 +49,11 @@ function archiveCurrentAccount()
             info.password     = info.password or splitted[4]
             info.profileUid   = info.profileUid or splitted[5]
             info.twoFA        = info.twoFA or splitted[6]
-            if splitted[7] and splitted[7] ~= '' then info.mailRegister = splitted[7]
-            if splitted[8] and splitted[8] ~= '' then info.thuemailId = splitted[8] 
-            if splitted[9] and splitted[9] ~= '' then info.hotmailRefreshToken = splitted[9] 
-            if splitted[10] and splitted[10] ~= '' then info.hotmailClientId = splitted[10] 
-            if splitted[11] and splitted[11] ~= '' then info.hotmailPassword = splitted[11] 
+            if splitted[7] and splitted[7] ~= '' then info.mailRegister = splitted[7] end
+            if splitted[8] and splitted[8] ~= '' then info.thuemailId = splitted[8] end
+            if splitted[9] and splitted[9] ~= '' then info.hotmailRefreshToken = splitted[9] end
+            if splitted[10] and splitted[10] ~= '' then info.hotmailClientId = splitted[10] end
+            if splitted[11] and splitted[11] ~= '' then info.hotmailPassword = splitted[11] end
 
             -- info.mailRegister        =  info.mailRegister or splitted[7]
             -- info.thuemailId          =  info.thuemailId or splitted[8]
