@@ -49,17 +49,18 @@ function archiveCurrentAccount()
             info.password     = info.password or splitted[4]
             info.profileUid   = info.profileUid or splitted[5]
             info.twoFA        = info.twoFA or splitted[6]
-            if splitted[7] and splitted[7] ~= '' then info.mailRegister = splitted[7] end
-            if splitted[8] and splitted[8] ~= '' then info.thuemailId = splitted[8] end
-            if splitted[9] and splitted[9] ~= '' then info.hotmailRefreshToken = splitted[9] end
-            if splitted[10] and splitted[10] ~= '' then info.hotmailClientId = splitted[10] end
-            if splitted[11] and splitted[11] ~= '' then info.hotmailPassword = splitted[11] end
 
-            -- info.mailRegister        =  info.mailRegister or splitted[7]
-            -- info.thuemailId          =  info.thuemailId or splitted[8]
-            -- info.hotmailRefreshToken = info.hotmailRefreshToken or splitted[9]
-            -- info.hotmailClientId     = info.hotmailClientId or splitted[10]
-            -- info.hotmailPassword     = info.hotmailPassword or splitted[11]
+            -- if splitted[7] and splitted[7] ~= '' then info.mailRegister = splitted[7] end
+            -- if splitted[8] and splitted[8] ~= '' then info.thuemailId = splitted[8] end
+            -- if splitted[9] and splitted[9] ~= '' then info.hotmailRefreshToken = splitted[9] end
+            -- if splitted[10] and splitted[10] ~= '' then info.hotmailClientId = splitted[10] end
+            -- if splitted[11] and splitted[11] ~= '' then info.hotmailPassword = splitted[11] end
+
+            info.mailRegister        =  info.mailRegister or splitted[7]
+            info.thuemailId          =  info.thuemailId or splitted[8]
+            info.hotmailRefreshToken = info.hotmailRefreshToken or splitted[9]
+            info.hotmailClientId     = info.hotmailClientId or splitted[10]
+            info.hotmailPassword     = info.hotmailPassword or splitted[11]
 
             local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
             accounts[#accounts] = line
