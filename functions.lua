@@ -37,6 +37,7 @@ end
 function archiveCurrentAccount()
     local accounts = readFile(accountFilePath)
     
+    info.uuid = 1
     info.password = readFile(defaultPasswordFilePath)[1]
 
     if #accounts > 0 then
