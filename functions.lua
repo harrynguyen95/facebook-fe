@@ -301,11 +301,11 @@ end
 function getHotmailFromDongVanFb()
     -- https://api.dongvanfb.net/user/buy?apikey=36458879248967a36&account_type=1&quality=1&type=full
     
-    local account_type = {1, 5, 59, 6, 60} -- $ 50|650|650|650|650
+    local account_type = {1, 2, 3, 5, 59, 60}
     for i, service_id in pairs(account_type) do
-        local tries = 2
+        local tries = 1
         for i = 1, tries do 
-            toast(i .. '-' .. service_id)
+            toast(service_id)
             sleep(3)
 
             local response, error = httpRequest {
@@ -379,7 +379,7 @@ function getDongvanfbConfirmCode()
     local tries = 10
     for i = 1, tries do 
         toast(i)
-        sleep(2)
+        sleep(3)
 
         local postData = {
             email = info.mailRegister,
@@ -529,10 +529,16 @@ function removeAccount()
     end
 end
 
-function checkSuspended()
+function checkSuspended(isPushData)
     toast('checkSuspended')
     if waitImageVisible(confirm_human) then
         failedCurrentAccount()
+
+        if isPushData == 'push' then
+            local infoClone = info
+            infoClone.checkpoint = 1
+            saveToGoogleForm()
+        end
 
         press(680, 90) sleep(1) -- help text
         if waitImageVisible(logout_suspend_icon) then

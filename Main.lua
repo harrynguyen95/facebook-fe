@@ -193,7 +193,7 @@ function main()
         end
 
         waitImageNotVisible(enter_the_confirmation_code)
-        checkSuspended()
+        checkSuspended('push')
     end
 
     if waitImageVisible(profile_picture, 3) then
@@ -206,7 +206,7 @@ function main()
         
         waitImageNotVisible(profile_picture)
         sleep(2)
-        checkSuspended()
+        checkSuspended('push')
     end
 
     if waitImageVisible(dont_allow, 2) then
@@ -237,7 +237,7 @@ function main()
         waitImageVisible(no_friend)
     end
 
-    checkSuspended()
+    checkSuspended('push')
 
     if waitImageVisible(add_phone_number, 3) then
         toast("add_phone_number")
@@ -551,7 +551,7 @@ function main()
 
         removeAccount()
     else 
-        if checkSuspended() == false then
+        if checkSuspended('push') == false then
             swipeCloseApp() sleep(1)
         end
     end
