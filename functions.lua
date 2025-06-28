@@ -534,9 +534,8 @@ function checkSuspended(isPushData)
     if waitImageVisible(confirm_human) then
         failedCurrentAccount()
 
-        if isPushData == 'push' then
-            local infoClone = info
-            infoClone.checkpoint = 1
+        if isPushData ~= nil and isPushData == 'push' then
+            info.checkpoint = 1
             saveToGoogleForm()
         end
 
@@ -566,8 +565,8 @@ function birthdayAndGender()
         for i = 1, math.random(3, 10) do
             press(400, math.random(1003, 1008))
         end
-        for i = 1, math.random(20, 40) do
-            press(600, 1055)
+        for i = 1, math.random(12, 18) do
+            press(600, math.random(1003, 1008))
         end
         findAndClickByImage(next)
         waitImageNotVisible(what_is_birthday)

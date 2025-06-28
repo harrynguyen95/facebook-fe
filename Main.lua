@@ -37,7 +37,7 @@ function main()
 
     if info.profileUid == nil then
         homeAndUnlockScreen()
-        onOffAirplaneMode()
+        -- onOffAirplaneMode()
     end
 
     openFacebook()
@@ -94,7 +94,6 @@ function main()
 
         if info.mailRegister and info.mailRegister ~= '' then 
             press(660, 410) -- X icon click
-            press(660, 410)
             typeText(info.mailRegister) sleep(0.5)
             findAndClickByImage(next)
 
