@@ -1,7 +1,7 @@
 
 get_started = {currentPath() .. "/images/get_started.png"}
 what_is_your_name = {currentPath() .. "/images/what_is_your_name.png"}
-what_is_birthday = {currentPath() .. "/images/what_is_your_birthday.png", currentPath() .. "/images/what_is_your_birthday2.png"}
+what_is_birthday = {currentPath() .. "/images/what_is_your_birthday.png", currentPath() .. "/images/what_is_your_birthday2.png", currentPath() .. "/images/what_is_your_birthday11.png"}
 next = {currentPath() .. "/images/next.png", currentPath() .. "/images/next2.png", currentPath() .. "/images/next3.png"}
 what_is_gender = {currentPath() .. "/images/what_is_your_gender.png"}
 what_is_mobile_number = {currentPath() .. "/images/what_is_your_phone2.png"}
@@ -20,7 +20,7 @@ input_email = {currentPath() .. "/images/input_email2.png"}
 profile_picture = {currentPath() .. "/images/profile_picture.png", currentPath() .. "/images/profile_picture2.png"}
 turn_on_contact = {currentPath() .. "/images/turn_on_contact.png"}
 skip = {currentPath() .. "/images/skip.png", currentPath() .. "/images/skip2.png", currentPath() .. "/images/skip3.png"}
-not_now = {currentPath() .. "/images/not_now4.png", currentPath() .. "/images/not_now2.png", currentPath() .. "/images/not_now3.png", currentPath() .. "/images/not_now.png", currentPath() .. "/images/not_now5.png"}
+not_now = {currentPath() .. "/images/not_now4.png", currentPath() .. "/images/not_now2.png", currentPath() .. "/images/not_now3.png", currentPath() .. "/images/not_now.png", currentPath() .. "/images/not_now5.png", currentPath() .. "/images/not_now6.png"}
 turn_on_contact2 = {currentPath() .. "/images/turn_on_contact2.png"}
 no_friend = {currentPath() .. "/images/no_friend2.png", currentPath() .. "/images/no_friend.png"}
 input_confirm_code = {currentPath() .. "/images/input_confirm_code.png"}
@@ -80,3 +80,4 @@ email_used_added = {currentPath() .. "/images/email_used_added.png"}
 do_you_already_have_account = {currentPath() .. "/images/do_you_already_have_account.png"}
 x_icon_search = {currentPath() .. "/images/x_icon_search.png"}
 fb_logo_2 = {currentPath() .. "/images/fb_logo_2.png"}
+to_sign_up_agree = {currentPath() .. "/images/to_sign_up_agree.png"}

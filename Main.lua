@@ -94,6 +94,7 @@ function main()
 
         if info.mailRegister and info.mailRegister ~= '' then 
             press(660, 410) -- X icon click
+            press(660, 410)
             typeText(info.mailRegister) sleep(0.5)
             findAndClickByImage(next)
 
@@ -129,12 +130,12 @@ function main()
         waitImageNotVisible(create_a_password)
     end
     
-    if waitImageVisible(you_are_logged_in, 3) then
+    if waitImageVisible(you_are_logged_in, 2) then
         toast("you_are_logged_in")
         press(375, 805) -- OK btn
     end
 
-    if waitImageVisible(save_your_login_info, 5) then
+    if waitImageVisible(save_your_login_info, 8) then
         toast("save_your_login_info")
         press(370, 510)
         findAndClickByImage(not_now)
@@ -147,7 +148,7 @@ function main()
         findAndClickByImage(continue_creating_account)
     end
 
-    if waitImageVisible(agree_facebook_term, 1) and waitImageVisible(i_agree_btn, 1) then
+    if waitImageVisible(i_agree_btn) and (waitImageVisible(to_sign_up_agree) or waitImageVisible(agree_facebook_term)) then
         toast("i_agree_btn")
 
         if waitImageVisible(dont_allow, 2) then
