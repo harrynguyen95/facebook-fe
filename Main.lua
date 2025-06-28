@@ -3,7 +3,7 @@ MAIL_MODE = 1  -- 1|2 hotmail-dongvanfb|gmail-thuemails.com
 THUE_LAI_MAIL_THUEMAILS = true -- 1-true|2-false
 ADD_MAIL_DOMAIN = false
 REMOVE_REGISTER_MAIL = true
-TIMES_XOA_INFO = 1
+TIMES_XOA_INFO = 3
 
 -- ====== INFO ======
 info = {
@@ -48,7 +48,7 @@ function main()
     if waitImageVisible(create_new_account, 30) then
         toast('create_new_account')
         findAndClickByImage(create_new_account)
-        waitImageNotVisible(logo_facebook_2)
+        waitImageNotVisible(logo_facebook_2, 20)
     end
 
     if waitImageVisible(join_facebook, 3) then
@@ -114,7 +114,10 @@ function main()
             goto continue
         end
 
-        waitImageNotVisible(what_is_your_email)
+        if not waitImageNotVisible(what_is_your_email) then 
+            swipeCloseApp() sleep(1)
+            goto openFacebook
+        end
     end
 
     if waitImageVisible(already_have_account, 2) then

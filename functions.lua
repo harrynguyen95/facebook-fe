@@ -49,11 +49,17 @@ function archiveCurrentAccount()
             info.password     = info.password or splitted[4]
             info.profileUid   = info.profileUid or splitted[5]
             info.twoFA        = info.twoFA or splitted[6]
-            info.mailRegister = splitted[7] or info.mailRegister 
-            info.thuemailId   = splitted[8] or info.thuemailId 
-            info.hotmailRefreshToken = splitted[9] or info.hotmailRefreshToken
-            info.hotmailClientId     = splitted[10] or info.hotmailClientId 
-            info.hotmailPassword     = splitted[11] or info.hotmailPassword 
+            if splitted[7] and splitted[7] ~= '' then info.mailRegister = splitted[7]
+            if splitted[8] and splitted[8] ~= '' then info.thuemailId = splitted[8] 
+            if splitted[9] and splitted[9] ~= '' then info.hotmailRefreshToken = splitted[9] 
+            if splitted[10] and splitted[10] ~= '' then info.hotmailClientId = splitted[10] 
+            if splitted[11] and splitted[11] ~= '' then info.hotmailPassword = splitted[11] 
+
+            -- info.mailRegister        =  info.mailRegister or splitted[7]
+            -- info.thuemailId          =  info.thuemailId or splitted[8]
+            -- info.hotmailRefreshToken = info.hotmailRefreshToken or splitted[9]
+            -- info.hotmailClientId     = info.hotmailClientId or splitted[10]
+            -- info.hotmailPassword     = info.hotmailPassword or splitted[11]
 
             local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
             accounts[#accounts] = line
@@ -611,9 +617,9 @@ function openFacebook()
         findAndClickByImage(fb_logo_2)
         waitImageNotVisible(fb_logo_2)
     else
-        toast('Not foun Icon facebook', 3)
+        toast('Not found Icon facebook', 3)
     end
-    sleep(2)
+    sleep(1)
 end
 
 function executeXoaInfo()

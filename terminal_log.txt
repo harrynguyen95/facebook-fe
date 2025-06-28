@@ -1,0 +1,11 @@
+total 80
+drwxr-xr-x  10 mobile mobile   320 Jun 28 13:32 .
+drwxrwxrwx   8 root   mobile   256 Jun 28 12:03 ..
+-rw-r--r--   1 mobile wheel  19837 Jun 28 13:21 Main.lua
+-rw-r--r--   1 mobile wheel    161 Jun 28 13:32 Setup.lua
+-rw-r--r--   1 mobile wheel  20619 Jun 28 13:20 functions.lua
+drwxr-xr-x 115 mobile mobile  3680 Jun 28 12:58 images
+-rw-r--r--   1 mobile wheel   7114 Jun 28 12:58 images.lua
+drwxr-xr-x   6 mobile mobile   192 Jun 28 12:03 input
+-rw-r--r--   1 mobile mobile     0 Jun 28 13:32 terminal.txt
+-rw-r--r--   1 mobile wheel  23106 Jun 28 13:20 utils.lua
