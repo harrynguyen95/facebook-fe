@@ -1,16 +1,17 @@
 
 -- ====== CONFIG ======
 PHP_SERVER = "https://tuongtacthongminh.com/"
-MAIL_API_KEY = "94a3a21c-40b5-4c48-a690-f1584c390e3e"
-MAIL_THUEMAIL_DOMAIN = "https://api.thuemails.com/api/"
+MAIL_THUEMAILS_THUEMAILS_API_KEY = "94a3a21c-40b5-4c48-a690-f1584c390e3e"
+MAIL_THUEMAILS_DOMAIN = "https://api.thuemails.com/api/"
+MAIL_DONGVANFB_API_KEY = "iFI7ppA8JNDJ52yVedbPlMpSh"
 URL_2FA_FACEBOOK = "https://2fa.live/tok/"
 MAIL_FREE_DOMAIN = "https://api.temp-mailfree.com/"
 
--- accountFilePath = currentPath() .. "/output/" .. os.date("%Y-%m-%d") .. ".txt"
-accountFilePath = currentPath() .. "/accounts.txt"
-mailFilePath = currentPath() .. "/thuemails.txt"
 defaultPasswordFilePath = currentPath() .. "/input/password.txt"
 searchTextFilePath = currentPath() .. "/input/searchtext.txt"
+accountFilePath = rootDir() .. "/Device/accounts.txt"
+mailFilePath = rootDir() .. "/Device/thuemails.txt"
+localIPFilePath = rootDir() .. "/Device/local_ip.txt"
 
 -- ====== LOGIC FUNCTION ======
 function homeAndUnlockScreen()
@@ -33,9 +34,7 @@ function homeAndUnlockScreen()
 end
 
 function archiveCurrentAccount()
-    -- 1|SUCCESS|test@yagisongs.com|1995|test@gmail.com|Sik51@mmo|UID|2FA
     local accounts = readFile(accountFilePath)
-
     
     info.password = readFile(defaultPasswordFilePath)[1]
 
@@ -45,28 +44,31 @@ function archiveCurrentAccount()
         if splitted[2] == 'INPROGRESS' then
             info.uuid         = splitted[1]
             info.status       = info.status or splitted[2]
-            info.thuemailId   = info.thuemailId or splitted[3]
-            info.mailRegister = info.mailRegister or splitted[4]
-            info.password     = info.password or splitted[5]
-            info.mailLogin    = splitted[6] or info.mailLogin
-            info.profileUid   = info.profileUid or splitted[7]
-            info.twoFA        = info.twoFA or splitted[8]
+            info.mailLogin    = info.mailLogin or splitted[3]
+            info.password     = info.password or splitted[4]
+            info.profileUid   = info.profileUid or splitted[5]
+            info.twoFA        = info.twoFA or splitted[6]
+            info.mailRegister = info.mailRegister or splitted[7]
+            info.thuemailId   = info.thuemailId or splitted[8]
+            info.hotmailRefreshToken = info.hotmailRefreshToken or splitted[9]
+            info.hotmailClientId     = info.hotmailClientId or splitted[10]
+            info.hotmailPassword     = info.hotmailPassword or splitted[11]
 
-            local line = info.uuid .. "|" .. info.status .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailRegister or '') .. "|" .. info.password .. "|" .. (info.mailLogin or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '')
+            local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
             accounts[#accounts] = line
             writeFile(accountFilePath, accounts)
         else
             info.uuid = floor(splitted[1] + 1)
             info.status = 'INPROGRESS'
-            info.mailLogin = randomEmailLogin()
-            local line = info.uuid .. "|" .. info.status .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailRegister or '') .. "|" .. info.password .. "|" .. (info.mailLogin or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '')
+            if ADD_MAIL_DOMAIN then info.mailLogin = randomEmailLogin() end 
+            local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
             addLineToFile(accountFilePath, line)
         end 
     else 
         info.uuid = 1
         info.status = 'INPROGRESS'
-        info.mailLogin = randomEmailLogin()
-        local line = info.uuid .. "|" .. info.status .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailRegister or '') .. "|" .. info.password .. "|" .. (info.mailLogin or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '')
+        if ADD_MAIL_DOMAIN then info.mailLogin = randomEmailLogin() end 
+        local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
         addLineToFile(accountFilePath, line)
     end
 
@@ -79,7 +81,7 @@ function failedCurrentAccount()
 
     if splitted[2] ~= 'SUCCESS' then 
         info.status = "FAILED"
-        local line = info.uuid .. "|" .. info.status .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailRegister or '') .. "|" .. info.password .. "|" .. (info.mailLogin or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '')
+        local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
         accounts[#accounts] = line
 
         writeFile(accountFilePath, accounts)
@@ -92,13 +94,41 @@ function finishCurrentAccount()
     local accounts = readFile(accountFilePath)
 
     info.status = "SUCCESS"
-    local line = info.uuid .. "|" .. info.status .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailRegister or '') .. "|" .. info.password .. "|" .. (info.mailLogin or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '')
+    local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
     accounts[#accounts] = line
 
     writeFile(accountFilePath, accounts)
     saveToGoogleForm()
 
     resetInfoObject()
+end
+
+function saveToGoogleForm()
+    local localIP = readFile(localIPFilePath)
+    local infoClone = info
+    infoClone.localIP = localIP[#localIP]
+
+    local tries = 2
+    for i = 1, tries do 
+        toast(i)
+        sleep(3)
+
+        local response, error = httpRequest {
+            url = PHP_SERVER .. "google_form.php",
+            method = "POST",
+            headers = {
+                ["Content-Type"] = "application/json",
+            },
+            data = infoClone
+        }
+
+        if response then
+            log(info, "Sent request to Google Form" )
+            return
+        else
+            log(error, "Error: Failed to send request. Reason")
+        end
+    end
 end
 
 function resetInfoObject()
@@ -111,31 +141,10 @@ function resetInfoObject()
         profileUid = nil,
         mailLogin = nil,
         password = nil,
+        hotmailRefreshToken = nil,
+        hotmailClientId = nil,
+        hotmailPassword = nil,
     }
-end
-
-function saveToGoogleForm()
-    local tries = 2
-    for i = 1, tries do 
-        toast(i)
-        sleep(3)
-
-        local response, error = httpRequest {
-            url = PHP_SERVER .. "google_form.php",
-            method = "POST",
-            headers = {
-                ["Content-Type"] = "application/json",
-            },
-            data = info
-        }
-
-        if response then
-            log(info, "Sent request to Google Form" )
-            return
-        else
-            log(error, "Error: Failed to send request. Reason")
-        end
-    end
 end
 
 function saveMailThueMail()
@@ -190,7 +199,7 @@ function removeMailThueMail(invalidMail)
     writeFile(mailFilePath, mails)
 end
 
-function executeThueMailRequest()
+function getGmailFromThueMail()
     local rerentMaxTries = 5
     local rerentTime = 1
     local autoCreateNew = true
@@ -199,7 +208,7 @@ function executeThueMailRequest()
     local rerentSuccess = false
     local mailRerent = retrieveMailThueMail()
 
-    if THUE_LAI_MAIL and mailRerent then
+    if THUE_LAI_MAIL_THUEMAILS and mailRerent then
         rerentTime = floor(rerentTime + 1)
         log('Times mail rerent: ' .. rerentTime .. ' - ' .. mailRerent)
 
@@ -209,12 +218,12 @@ function executeThueMailRequest()
             sleep(3)
 
             local postData = {
-                api_key = MAIL_API_KEY,
+                api_key = MAIL_THUEMAILS_API_KEY,
                 service_id = 1,
                 email = mailRerent,
             }
             local response, error = httpRequest {
-                url = MAIL_THUEMAIL_DOMAIN .. "rentals/re-rent",
+                url = MAIL_THUEMAILS_DOMAIN .. "rentals/re-rent",
                 method = "POST",
                 headers = {
                     ["Content-Type"] = "application/json",
@@ -248,20 +257,19 @@ function executeThueMailRequest()
     end
 
     if (not mailRerent) or (not rerentSuccess) then
-        toast('Create new mail.')
         local tries = 2
         for i = 1, tries do 
             toast(i)
             sleep(3)
 
             local postData = {
-                api_key = MAIL_API_KEY,
+                api_key = MAIL_THUEMAILS_API_KEY,
                 service_id = 1,
                 provider_id = 1,
                 quantity = 1,
             }
             local response, error = httpRequest {
-                url = MAIL_THUEMAIL_DOMAIN .. "rentals?api_key=" .. MAIL_API_KEY,
+                url = MAIL_THUEMAILS_DOMAIN .. "rentals?api_key=" .. MAIL_THUEMAILS_API_KEY,
                 method = "POST",
                 headers = {
                     ["Content-Type"] = "application/json",
@@ -290,6 +298,53 @@ function executeThueMailRequest()
     end
 end
 
+function getHotmailFromDongVanFb()
+    -- https://api.dongvanfb.net/user/buy?apikey=36458879248967a36&account_type=1&quality=1&type=full
+    
+    local account_type = {1, 5, 59, 6, 60} -- $ 50|650|650|650|650
+    for i, service_id in pairs(account_type) do
+        local tries = 2
+        for i = 1, tries do 
+            toast(i .. '-' .. service_id)
+            sleep(3)
+
+            local response, error = httpRequest {
+                url = "https://api.dongvanfb.net/user/buy?apikey=" .. MAIL_DONGVANFB_API_KEY .. "&account_type=" .. service_id .. "&quality=1&type=full",
+            }
+
+            if response then
+                response = json.decode(response)
+                if response.status or response.status == 'true' then
+                    local mailString = response.data.list_data[1]
+                    local splitted = split(mailString, '|')
+
+                    info.mailLogin = splitted[1]
+                    info.mailRegister = splitted[1]
+                    info.hotmailPassword = splitted[2]
+                    info.hotmailRefreshToken = splitted[3]
+                    info.hotmailClientId = splitted[4]
+                    return
+                else
+                    toastr(response.message)
+                    log(response.message)
+                end
+            else
+                log("Error: Failed to send request. Reason: " .. tostring(error))
+            end
+        end
+    end
+end
+
+function executeGetMailRequest()
+    if MAIL_MODE == 1 then 
+        getHotmailFromDongVanFb()
+    elseif MAIL_MODE == 2 then
+        getGmailFromThueMail()
+    else 
+        toast('MAIL_MODE invalid.', 5)
+    end
+end
+
 function getThuemailConfirmCode()
     local tries = 10
     for i = 1, tries do 
@@ -297,7 +352,7 @@ function getThuemailConfirmCode()
         sleep(10)
 
         local response, error = httpRequest {
-            url = MAIL_THUEMAIL_DOMAIN .. "rentals/" .. info.thuemailId .. "?api_key=" .. MAIL_API_KEY,
+            url = MAIL_THUEMAILS_DOMAIN .. "rentals/" .. info.thuemailId .. "?api_key=" .. MAIL_THUEMAILS_API_KEY,
             headers = {
                 ["Content-Type"] = "application/json",
             },
@@ -318,24 +373,51 @@ function getThuemailConfirmCode()
     return nil
 end
 
-function get2FACode()
-    local response, error = httpRequest {
-        url = "https://2fa.live/tok/" .. info.twoFA,
-        headers = {
-            ["Content-Type"] = "application/json",
-        },
-    }
+function getDongvanfbConfirmCode()
+    sleep(3)
 
-    if response then
-        response = json.decode(response)
-        if response.token then
-            return response.token
+    local tries = 10
+    for i = 1, tries do 
+        toast(i)
+        sleep(2)
+
+        local postData = {
+            email = info.mailRegister,
+            refresh_token = info.hotmailRefreshToken,
+            client_id = info.hotmailClientId,
+            type = "facebook",
+        }
+        local response, error = httpRequest {
+            url = "https://tools.dongvanfb.net/api/get_code_oauth2",
+            method = "POST",
+            headers = {
+                ["Content-Type"] = "application/json",
+            },
+            data = postData
+        }
+
+        if response then
+            response = json.decode(response)
+            if response.status or response.status == 'true' then
+                return response.code
+            else
+                toast('Empty dongvanfb code.')
+                log('Empty dongvanfb code.')
+            end
         else
-            toast("Empty response get 2FA OTP.");
-            log("Empty response get 2FA OTP.");
+            log("Error: Failed to send request. Reason: " .. tostring(error))
         end
-    else
-        log("Error: Failed to send request. Reason: " .. tostring(error))
+    end
+    return nil
+end
+
+function getCodeMailRegister()
+    if MAIL_MODE == 1 then 
+        return getDongvanfbConfirmCode()
+    elseif MAIL_MODE == 2 then
+        return getThuemailConfirmCode()
+    else 
+        toast('MAIL_MODE invalid.', 5)
     end
 end
 
@@ -386,6 +468,37 @@ function getFreeMailConfirmCode()
     end
 end
 
+function getCodeMailConfirm()
+    if MAIL_MODE == 1 then 
+        return getDongvanfbConfirmCode()
+    elseif MAIL_MODE == 2 then
+        return getFreeMailConfirmCodeSecondTime()
+    else 
+        toast('MAIL_MODE invalid.', 5)
+    end
+end
+
+function get2FACode()
+    local response, error = httpRequest {
+        url = "https://2fa.live/tok/" .. info.twoFA,
+        headers = {
+            ["Content-Type"] = "application/json",
+        },
+    }
+
+    if response then
+        response = json.decode(response)
+        if response.token then
+            return response.token
+        else
+            toast("Empty response get 2FA OTP.");
+            log("Empty response get 2FA OTP.");
+        end
+    else
+        log("Error: Failed to send request. Reason: " .. tostring(error))
+    end
+end
+
 function getSearchText(no)
     if no == nil then
         no = 3
@@ -406,9 +519,9 @@ end
 function removeAccount()
     if waitImageVisible(avatar_picture) or waitImageVisible(create_new_account) then
         press(695, 90) sleep(2) -- three dots icon
-        press(300, 1250) sleep(2) -- remove profiles from this device
-        press(600, 330) sleep(2) -- btn remove gray
-        press(400, 1150) sleep(2) -- btn remove blue confirm
+        press(300, 1250) sleep(3) -- remove profiles from this device
+        press(600, 330) sleep(3) -- btn remove gray
+        press(400, 1150) sleep(1) -- btn remove blue confirm
 
         if waitImageVisible(avatar_picture) or waitImageVisible(create_new_account) then 
             swipeCloseApp() sleep(1)
@@ -417,72 +530,39 @@ function removeAccount()
 end
 
 function checkSuspended()
-    if checkImageIsExists(confirm_human) then
-        print("confirm_human")
+    toast('checkSuspended')
+    if waitImageVisible(confirm_human) then
         failedCurrentAccount()
-        press(680, 90) sleep(3) -- help text
 
+        press(680, 90) sleep(1) -- help text
         if waitImageVisible(logout_suspend_icon) then
             findAndClickByImage(logout_suspend_icon)
             press(520, 840) sleep(1) --logout text
+
+            if waitImageVisible(logout_btn) then
+                findAndClickByImage(logout_btn)
+                sleep(3)
+            end
             removeAccount()
         end
     end
+    return false
 end
 
 function birthdayAndGender()
     if waitImageVisible(what_is_birthday, 1) then
         toast("what_is_birthday")
         press(270, 470) sleep(0.5)
-        
-        math.randomseed(os.time() + math.random())
-        time = math.random(200000, 250000)
-        tap(math.random(487, 577), math.random(909, 940))
-        usleep(time)
-        tap(math.random(152, 195), math.random(909, 1278))
-        usleep(time)
-        tap(math.random(487, 577), math.random(909, 940))
-        usleep(time)
-        tap(math.random(263, 395), math.random(909, 1321))
-        usleep(time)
-        tap(math.random(152, 195), math.random(909, 1321))
-        usleep(time)
-        tap(math.random(487, 577), math.random(909, 940))
-        usleep(time)
-        tap(math.random(152, 195), math.random(909, 1321))
-        usleep(time)
-        tap(math.random(487, 577), math.random(909, 940))
-        usleep(time)
-        tap(math.random(487, 577), math.random(909, 940))
-        usleep(time)
-        tap(math.random(263, 395), math.random(909, 1321))
-        usleep(time)
-        tap(math.random(152, 195), math.random(909, 1321))
-        usleep(time)
-        tap(math.random(487, 577), math.random(909, 940))
-        usleep(time)
-        tap(math.random(152, 195), math.random(909, 1321))
-        usleep(time)
-        tap(math.random(487, 577), math.random(909, 1079))
-        usleep(time)
-        tap(math.random(487, 577), math.random(909, 1079))
-        usleep(time)
-        tap(math.random(263, 395), math.random(909, 1321))
-        usleep(time)
-        tap(math.random(152, 195), math.random(909, 1321))
-        usleep(time)
-        tap(math.random(487, 577), math.random(909, 1321))
-        usleep(time * 3)
 
-        -- for i = 1, math.random(5, 10) do
-        --     press(200, 1055)
-        -- end
-        -- for i = 1, math.random(10, 15) do
-        --     press(400, 1055)
-        -- end
-        -- for i = 1, math.random(20, 35) do
-        --     press(600, 1055)
-        -- end
+        for i = 1, math.random(2, 5) do
+            press(200, math.random(1003, 1008))
+        end
+        for i = 1, math.random(3, 10) do
+            press(400, math.random(1003, 1008))
+        end
+        for i = 1, math.random(20, 40) do
+            press(600, 1055)
+        end
         findAndClickByImage(next)
         waitImageNotVisible(what_is_birthday)
     end
@@ -490,7 +570,17 @@ function birthdayAndGender()
     if waitImageVisible(what_is_gender, 1) then
         toast("what_is_gender")
         sleep(1)
-        press(math.random(80, 525), math.random(365, 525))
+
+        local x = 590
+        local y = 420
+        math.randomseed(os.time() + math.random())
+
+        local xRandom = math.random(1, 2)
+        if xRandom == 2 then
+            y = 520
+        end
+        press(x, y)
+
         findAndClickByImage(next)
         waitImageNotVisible(what_is_gender)
     end
@@ -512,5 +602,8 @@ function openFacebook()
     if waitImageVisible(fb_logo_2) then
         findAndClickByImage(fb_logo_2)
         waitImageNotVisible(fb_logo_2)
+    else
+        toast('Not foun Icon facebook', 3)
     end
+    sleep(2)
 end

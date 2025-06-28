@@ -389,16 +389,18 @@ function pressHome ()
     keyDown(KEY_TYPE.HOME_BUTTON)
     sleep(1)
     keyUp(KEY_TYPE.HOME_BUTTON)
-    sleep(1)
+    sleep(0.5)
 end
 
 function lockScreen()
     keyDown(KEY_TYPE.POWER_BUTTON);
+    sleep(0.3)
     keyUp(KEY_TYPE.POWER_BUTTON);
 end
 
 function unlockScreen()
     keyDown(KEY_TYPE.POWER_BUTTON);
+    sleep(0.3)
     keyUp(KEY_TYPE.POWER_BUTTON);
 
     usleep(1000000);
@@ -476,6 +478,7 @@ function httpRequest(params)
         ssl_verifypeer = params.ssl_verifypeer or false,
         ssl_verifyhost = params.ssl_verifyhost or false,
         customrequest = method,
+        followlocation   = true,
         writefunction = function(chunk)
             response = response .. tostring(chunk) -- Đảm bảo `chunk` là chuỗi
             return #chunk
@@ -510,12 +513,10 @@ function httpRequest(params)
             c:setopt(curl.OPT_HTTPPOST, post)
         elseif isEncodedParam then
             c:setopt(curl.OPT_POST, true)
-            local postBody = urlEncode(data)
-            print(postBody)
-            c:setopt_postfields(urlEncode(data))
+            c:setopt(curl.OPT_POSTFIELDS, urlEncode(data))
         else
             c:setopt(curl.OPT_POST, true)
-            c:setopt_postfields(jsonStringify(data))
+            c:setopt(curl.OPT_POSTFIELDS, jsonStringify(data))
         end
     end
 
@@ -783,7 +784,7 @@ function onOffAirplaneMode()
     sleep(0.5)
     io.popen('activator send switch-on.com.a3tweaks.switch.cellular-data');
     sleep(0.5)
-    sleep(1)
+    sleep(2)
 end
 
 function respring()
