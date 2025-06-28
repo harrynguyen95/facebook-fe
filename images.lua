@@ -81,3 +81,8 @@ do_you_already_have_account = {currentPath() .. "/images/do_you_already_have_acc
 x_icon_search = {currentPath() .. "/images/x_icon_search.png"}
 fb_logo_2 = {currentPath() .. "/images/fb_logo_2.png"}
 to_sign_up_agree = {currentPath() .. "/images/to_sign_up_agree.png"}
+
+xoainfo_logo = {currentPath() .. "/images/xoainfo_logo.png"}
+xoainfo_reset_data = {currentPath() .. "/images/xoainfo_reset_data.png"}
+xoainfo_info_fake = {currentPath() .. "/images/xoainfo_info_fake.png"}
+logo_facebook_2 = {currentPath() .. "/images/logo_facebook_2.png"}

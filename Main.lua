@@ -1,8 +1,9 @@
 -- ====== CONFIG ======
-MAIL_MODE = 1  -- 1-hotmail-dongvanfb|2-gmail-thuemails.com
+MAIL_MODE = 1  -- 1|2 hotmail-dongvanfb|gmail-thuemails.com
 THUE_LAI_MAIL_THUEMAILS = true -- 1-true|2-false
 ADD_MAIL_DOMAIN = false
 REMOVE_REGISTER_MAIL = true
+TIMES_XOA_INFO = 1
 
 -- ====== INFO ======
 info = {
@@ -35,20 +36,22 @@ function main()
     -- goto get2FA
     -- ::debug::
 
-    if info.profileUid == nil then
+    if info.profileUid == nil or info.profileUid == '' then
         homeAndUnlockScreen()
-        -- onOffAirplaneMode()
+        executeXoaInfo() sleep(1)
     end
 
+    ::openFacebook::
     openFacebook()
-    checkSuspended()
+    -- checkSuspended()
 
-    if waitImageVisible(create_new_account) then
+    if waitImageVisible(create_new_account, 30) then
         toast('create_new_account')
         findAndClickByImage(create_new_account)
+        waitImageNotVisible(logo_facebook_2)
     end
 
-    if waitImageVisible(join_facebook, 2) then
+    if waitImageVisible(join_facebook, 3) then
         toast('join_facebook')
         swipeCloseApp() sleep(1)
         goto continue
@@ -97,12 +100,12 @@ function main()
             press(660, 410)
             typeText(info.mailRegister) sleep(0.5)
             findAndClickByImage(next)
+            archiveCurrentAccount()
 
             if waitImageVisible(exist_account_in_mail, 8) then
                 swipeCloseApp() sleep(2)
                 goto continue
             end
-            archiveCurrentAccount()
         else
             toast("Không có mail. Continue.", 10)
             sleep(6)
@@ -148,7 +151,7 @@ function main()
         findAndClickByImage(continue_creating_account)
     end
 
-    if waitImageVisible(i_agree_btn) and (waitImageVisible(to_sign_up_agree) or waitImageVisible(agree_facebook_term)) then
+    if  waitImageVisible(to_sign_up_agree) or waitImageVisible(agree_facebook_term) or waitImageVisible(i_agree_btn) then
         toast("i_agree_btn")
 
         if waitImageVisible(dont_allow, 2) then

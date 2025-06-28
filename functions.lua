@@ -15,11 +15,12 @@ localIPFilePath = rootDir() .. "/Device/local_ip.txt"
 
 -- ====== LOGIC FUNCTION ======
 function homeAndUnlockScreen()
+    toast("Check Unlock Screen")
+
     local i = 0
     while true do
-        toast("Check Unlock Screen")
         i = i + 1
-        if getColor(711, 17) == 16777215 and i > 5 then
+        if getColor(711, 17) == 16777215 and i > 3 then
             break
         end
         if i > 5 then
@@ -48,11 +49,11 @@ function archiveCurrentAccount()
             info.password     = info.password or splitted[4]
             info.profileUid   = info.profileUid or splitted[5]
             info.twoFA        = info.twoFA or splitted[6]
-            info.mailRegister = info.mailRegister or splitted[7]
-            info.thuemailId   = info.thuemailId or splitted[8]
-            info.hotmailRefreshToken = info.hotmailRefreshToken or splitted[9]
-            info.hotmailClientId     = info.hotmailClientId or splitted[10]
-            info.hotmailPassword     = info.hotmailPassword or splitted[11]
+            info.mailRegister = splitted[7] or info.mailRegister 
+            info.thuemailId   = splitted[8] or info.thuemailId 
+            info.hotmailRefreshToken = splitted[9] or info.hotmailRefreshToken
+            info.hotmailClientId     = splitted[10] or info.hotmailClientId 
+            info.hotmailPassword     = splitted[11] or info.hotmailPassword 
 
             local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
             accounts[#accounts] = line
@@ -199,7 +200,7 @@ function removeMailThueMail(invalidMail)
     writeFile(mailFilePath, mails)
 end
 
-function getGmailFromThueMail()
+function executeGmailFromThueMail()
     local rerentMaxTries = 5
     local rerentTime = 1
     local autoCreateNew = true
@@ -298,14 +299,14 @@ function getGmailFromThueMail()
     end
 end
 
-function getHotmailFromDongVanFb()
+function executeHotmailFromDongVanFb()
     -- https://api.dongvanfb.net/user/buy?apikey=36458879248967a36&account_type=1&quality=1&type=full
     
     local account_type = {1, 2, 3, 5, 59, 60}
     for i, service_id in pairs(account_type) do
         local tries = 1
         for i = 1, tries do 
-            toast(service_id)
+            toast('Mail id: ' .. service_id)
             sleep(3)
 
             local response, error = httpRequest {
@@ -337,9 +338,9 @@ end
 
 function executeGetMailRequest()
     if MAIL_MODE == 1 then 
-        getHotmailFromDongVanFb()
+        executeHotmailFromDongVanFb()
     elseif MAIL_MODE == 2 then
-        getGmailFromThueMail()
+        executeGmailFromThueMail()
     else 
         toast('MAIL_MODE invalid.', 5)
     end
@@ -379,7 +380,7 @@ function getDongvanfbConfirmCode()
     local tries = 10
     for i = 1, tries do 
         toast(i)
-        sleep(3)
+        sleep(5)
 
         local postData = {
             email = info.mailRegister,
@@ -602,6 +603,8 @@ function goBackToCreateNewAccount()
 end
 
 function openFacebook()
+    toast('openFacebook')
+
     -- appActivate("com.facebook.Facebook")
     pressHome()
     if waitImageVisible(fb_logo_2) then
@@ -611,4 +614,29 @@ function openFacebook()
         toast('Not foun Icon facebook', 3)
     end
     sleep(2)
+end
+
+function executeXoaInfo()
+    toast('executeXoaInfo')
+
+    if waitImageVisible(xoainfo_logo) then
+        findAndClickByImage(xoainfo_logo)
+        waitImageNotVisible(xoainfo_logo)
+
+        if waitImageVisible(xoainfo_reset_data) then
+            for i = 1, TIMES_XOA_INFO do
+                findAndClickByImage(xoainfo_reset_data)
+                sleep(1)
+                
+                if waitImageVisible(xoainfo_info_fake, 30) then
+                    if i == TIMES_XOA_INFO then
+                        pressHome()
+                    end
+                end
+            end
+        end
+    else
+        toast('Not found logo Xoainfo, Airplane mode.')
+        onOffAirplaneMode()
+    end
 end
