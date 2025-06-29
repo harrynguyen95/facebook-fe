@@ -435,8 +435,14 @@ function main()
         if waitImageVisible(account_center) then
             toast('account_center')
             swipe(600, 800, 610, 650) sleep(1)
-            findAndClickByImage(personal_details_btn)
-            findAndClickByImage(your_information_and_permission)
+
+            if waitImageVisible(personal_details_btn) then
+                findAndClickByImage(personal_details_btn)
+            else
+                if waitImageVisible(your_information_and_permission) then
+                    findAndClickByImage(your_information_and_permission)
+                end
+            end
         end
 
         if waitImageVisible(personal_details_page) or waitImageVisible(your_information_and_2) then
