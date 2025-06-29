@@ -37,7 +37,7 @@ function main()
     ::debug::
 
     if info.mailRegister == nil or info.mailRegister == '' then 
-        -- chưa lấy đc mail mới mới reset. Lấy được rồi thì thôi
+        -- Chưa lấy đc mail mới mới reset. Lấy được rồi thì thôi
 
         homeAndUnlockScreen()
         executeXoaInfo() sleep(1)
@@ -130,6 +130,8 @@ function main()
             swipeCloseApp()
             goto openFacebook
         end
+    else
+        toast('Not found what_is_your_email')
     end
 
     if waitImageVisible(already_have_account, 2) then
@@ -182,7 +184,7 @@ function main()
         end
     end
 
-    if waitImageVisible(enter_the_confirmation_code) then
+    if waitImageVisible(enter_the_confirmation_code, 10) then
         toast("enter_the_confirmation_code")
         sleep(3)
 
@@ -290,8 +292,10 @@ function main()
 
             if waitImageVisible(account_center) then
                 toast('account_center')
-                swipe(600, 800, 610, 650) sleep(1)
-                findAndClickByImage(personal_details_btn)
+                swipe(600, 800, 610, 650)
+                if waitImageVisible(personal_details_btn) then
+                    findAndClickByImage(personal_details_btn)
+                end
             end
 
             if waitImageVisible(personal_details_page) then
@@ -530,12 +534,12 @@ function main()
     if waitImageVisible(what_on_your_mind) then
         toast('Search what_on_your_mind')
         press(600, 90) -- go to search screen
-        local searchTexts = getSearchText(3)
+
+        local searchTexts = getSearchText(math.random(4, 6))
         for i, line in ipairs(searchTexts) do
             typeText(line) sleep(0.5)
             press(700, 1300) sleep(2) -- btn search blue
             swipe(500, 900, 500, 800) sleep(2)
-            swipe(550, 600, 550, 450) sleep(4)
             if i < #searchTexts then
                 press(300, 90); -- click back into search box
 
@@ -570,6 +574,7 @@ function main()
         end
 
         removeAccount()
+        toast('Done nick live')
     else 
         if checkSuspended() then goto continue end
     end
@@ -578,6 +583,7 @@ function main()
     if info.status == 'INPROGRESS' then 
         goto openFacebook
     else 
+        resetInfoObject()
         goto continue
     end
 end

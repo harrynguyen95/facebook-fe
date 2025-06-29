@@ -513,11 +513,10 @@ function removeAccount()
 end
 
 function handleSuspended()
-    failedCurrentAccount()
-
     info.checkpoint = 1
     saveToGoogleForm()
-    info.checkpoint = nil
+
+    failedCurrentAccount()
 
     press(680, 90) sleep(1) -- help text
     if waitImageVisible(logout_suspend_icon) then
@@ -533,12 +532,14 @@ function handleSuspended()
 end
 
 function checkSuspended()
-    toast('checkSuspended')
     if waitImageVisible(confirm_human) then
         handleSuspended()
+        toast('Die')
         return true
+    else 
+        toast('Live')
+        return false
     end
-    return false
 end
 
 function birthdayAndGender()
