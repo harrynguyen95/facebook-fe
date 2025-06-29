@@ -138,11 +138,9 @@ function main()
         findAndClickByImage(continue_creating_account)
     end
 
-    exit()
-
     birthdayAndGender()
 
-    if waitImageVisible(create_a_password, 2) then
+    if waitImageVisible(create_a_password) then
         toast("create_a_password")
         press(135, 450)
         press(660, 450)
