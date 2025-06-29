@@ -436,9 +436,10 @@ function main()
             toast('account_center')
             swipe(600, 800, 610, 650) sleep(1)
             findAndClickByImage(personal_details_btn)
+            findAndClickByImage(your_information_and_permission)
         end
 
-        if waitImageVisible(personal_details_page) then
+        if waitImageVisible(personal_details_page) or waitImageVisible(your_information_and_2) then
             toast('personal_details_page')
             findAndClickByImage(identify_confirmation_btn)
         end
