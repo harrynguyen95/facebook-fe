@@ -3,7 +3,7 @@ MAIL_MODE = 1  -- 1|2 hotmail-dongvanfb|gmail-thuemails.com
 THUE_LAI_MAIL_THUEMAILS = true -- 1-true|2-false
 ADD_MAIL_DOMAIN = false
 REMOVE_REGISTER_MAIL = true
-TIMES_XOA_INFO = 3
+TIMES_XOA_INFO = 3 -- 0|1|2|3
 
 -- ====== INFO ======
 info = {
@@ -18,6 +18,7 @@ info = {
     hotmailRefreshToken =nil,
     hotmailClientId = nil,
     hotmailPassword = nil,
+    checkpoint = nil,
 }
 
 -- ====== LIB REQUIRED ======
@@ -29,32 +30,39 @@ require('functions')
 function main()
 
     ::continue::
+    log('----------------------------------- Main running ---------------------------------------')
     archiveCurrentAccount()
 
-    log('----------------------------------- Main running ---------------------------------------')
-    toast('Running...')
-    -- goto get2FA
-    -- ::debug::
+    goto debug
+    ::debug::
 
-    if info.profileUid == nil or info.profileUid == '' then
+    if info.mailRegister == nil or info.mailRegister == '' then 
+        -- chưa lấy đc mail mới mới reset. Lấy được rồi thì thôi
+
         homeAndUnlockScreen()
         executeXoaInfo() sleep(1)
     end
 
     ::openFacebook::
     openFacebook()
-    -- checkSuspended()
 
     if waitImageVisible(create_new_account, 30) then
-        toast('create_new_account')
+        if checkImageIsExists(fb_logo_mode_new) then 
+            swipeCloseApp()
+            goto continue
+        end
+
         findAndClickByImage(create_new_account)
-        waitImageNotVisible(logo_facebook_2, 20)
+        waitImageNotVisible(logo_facebook_2, 20) 
+        sleep(3)
     end
 
+    if checkSuspended('push') then goto continue end
+
     if waitImageVisible(join_facebook, 3) then
-        toast('join_facebook')
-        swipeCloseApp() sleep(1)
-        goto continue
+        toast('facebook mode new.')
+        swipeCloseApp()
+        goto openFacebook
     end
 
     if waitImageVisible(get_started) then
@@ -92,9 +100,8 @@ function main()
 
     if waitImageVisible(what_is_your_email, 6) then
         toast("what_is_your_email")
-        executeGetMailRequest()
-        sleep(1)
 
+        ::findnewemmail::
         if info.mailRegister and info.mailRegister ~= '' then 
             press(660, 410) -- X icon click
             press(660, 410)
@@ -103,19 +110,24 @@ function main()
             archiveCurrentAccount()
 
             if waitImageVisible(exist_account_in_mail, 8) then
-                swipeCloseApp() sleep(2)
+                info.mailRegister = nil
+                swipeCloseApp()
                 goto continue
             end
         else
-            toast("Không có mail. Continue.", 10)
-            sleep(6)
+            executeGetMailRequest()
+            if info.mailRegister and info.mailRegister ~= '' then 
+                goto findnewemmail
+            else 
+                toast("Không có mail. Continue.", 10) sleep(6)
 
-            swipeCloseApp() sleep(1)
-            goto continue
+                swipeCloseApp()
+                goto continue
+            end
         end
 
         if not waitImageNotVisible(what_is_your_email) then 
-            swipeCloseApp() sleep(1)
+            swipeCloseApp()
             goto openFacebook
         end
     end
@@ -127,7 +139,7 @@ function main()
 
     birthdayAndGender()
 
-    if waitImageVisible(create_a_password, 1) then
+    if waitImageVisible(create_a_password, 2) then
         toast("create_a_password")
         press(135, 450)
         press(660, 450)
@@ -135,7 +147,7 @@ function main()
         findAndClickByImage(next)
         waitImageNotVisible(create_a_password)
     end
-    
+
     if waitImageVisible(you_are_logged_in, 2) then
         toast("you_are_logged_in")
         press(375, 805) -- OK btn
@@ -162,7 +174,7 @@ function main()
         end
 
         findAndClickByImage(i_agree_btn)
-        waitImageNotVisible(agree_facebook_term, 30)
+        waitImageNotVisible(agree_facebook_term, 60)
 
         if waitImageVisible(do_you_already_have_account) then
             press(380, 600)
@@ -184,7 +196,6 @@ function main()
             press(660, 450)
             typeText(OTPcode) sleep(1)
             findAndClickByImage(next)
-            sleep(5)
         else
             toast('empty OTP', 6)
             press(55, 90) sleep(1) -- X back icon
@@ -199,7 +210,11 @@ function main()
         end
 
         waitImageNotVisible(enter_the_confirmation_code)
-        checkSuspended('push')
+
+        info.profileUid = getUIDFBLogin()
+        archiveCurrentAccount()
+
+        if checkSuspended('push') then goto continue end
     end
 
     if waitImageVisible(profile_picture, 3) then
@@ -212,7 +227,7 @@ function main()
         
         waitImageNotVisible(profile_picture)
         sleep(2)
-        checkSuspended('push')
+        if checkSuspended('push') then goto continue end
     end
 
     if waitImageVisible(dont_allow, 2) then
@@ -243,7 +258,7 @@ function main()
         waitImageVisible(no_friend)
     end
 
-    checkSuspended('push')
+    if checkSuspended('push') then goto continue end
 
     if waitImageVisible(add_phone_number, 3) then
         toast("add_phone_number")
@@ -251,10 +266,10 @@ function main()
         waitImageVisible(add_phone_number)
     end
 
-    if waitImageVisible(what_on_your_mind) then
-        info.profileUid = getUIDFBLogin()
-        archiveCurrentAccount()
-    end
+    if waitImageVisible(page_not_available_now) then 
+        swipeCloseApp()
+        goto openFacebook
+    end 
 
     ::changemail::
     if ADD_MAIL_DOMAIN then
@@ -511,7 +526,6 @@ function main()
         end
     end
 
-    -- ::debug::
     ::searchtext::
     if waitImageVisible(what_on_your_mind) then
         toast('Search what_on_your_mind')
@@ -557,13 +571,15 @@ function main()
 
         removeAccount()
     else 
-        if checkSuspended('push') == false then
-            swipeCloseApp() sleep(1)
-        end
+        if checkSuspended('push') then goto continue end
     end
 
     sleep(2)
-    goto continue
+    if info.status == 'INPROGRESS' then 
+        goto openFacebook
+    else 
+        goto continue
+    end
 end
 
 main()

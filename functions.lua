@@ -14,25 +14,6 @@ mailFilePath = rootDir() .. "/Device/thuemails.txt"
 localIPFilePath = rootDir() .. "/Device/local_ip.txt"
 
 -- ====== LOGIC FUNCTION ======
-function homeAndUnlockScreen()
-    toast("Check Unlock Screen")
-
-    local i = 0
-    while true do
-        i = i + 1
-        if getColor(711, 17) == 16777215 and i > 3 then
-            break
-        end
-        if i > 5 then
-            lockAndUnlockScreen()
-            i = 0
-        end
-
-        keyDown(KEY_TYPE.HOME_BUTTON)
-        keyUp(KEY_TYPE.HOME_BUTTON)
-        sleep(1)
-    end
-end
 
 function archiveCurrentAccount()
     local accounts = readFile(accountFilePath)
@@ -50,15 +31,8 @@ function archiveCurrentAccount()
             info.password     = info.password or splitted[4]
             info.profileUid   = info.profileUid or splitted[5]
             info.twoFA        = info.twoFA or splitted[6]
-
-            -- if splitted[7] and splitted[7] ~= '' then info.mailRegister = splitted[7] end
-            -- if splitted[8] and splitted[8] ~= '' then info.thuemailId = splitted[8] end
-            -- if splitted[9] and splitted[9] ~= '' then info.hotmailRefreshToken = splitted[9] end
-            -- if splitted[10] and splitted[10] ~= '' then info.hotmailClientId = splitted[10] end
-            -- if splitted[11] and splitted[11] ~= '' then info.hotmailPassword = splitted[11] end
-
-            info.mailRegister        =  info.mailRegister or splitted[7]
-            info.thuemailId          =  info.thuemailId or splitted[8]
+            info.mailRegister        = info.mailRegister or splitted[7]
+            info.thuemailId          = info.thuemailId or splitted[8]
             info.hotmailRefreshToken = info.hotmailRefreshToken or splitted[9]
             info.hotmailClientId     = info.hotmailClientId or splitted[10]
             info.hotmailPassword     = info.hotmailPassword or splitted[11]
@@ -119,7 +93,6 @@ function saveToGoogleForm()
 
     local tries = 2
     for i = 1, tries do 
-        toast(i)
         sleep(3)
 
         local response, error = httpRequest {
@@ -132,7 +105,7 @@ function saveToGoogleForm()
         }
 
         if response then
-            log(info, "Sent request to Google Form" )
+            log(infoClone, "Sent request to Google Form" )
             return
         else
             log(error, "Error: Failed to send request. Reason")
@@ -153,6 +126,7 @@ function resetInfoObject()
         hotmailRefreshToken = nil,
         hotmailClientId = nil,
         hotmailPassword = nil,
+        checkpoint = nil,
     }
 end
 
@@ -538,27 +512,33 @@ function removeAccount()
     end
 end
 
+function handleSuspended()
+    failedCurrentAccount()
+
+    if isPushData ~= nil and isPushData == 'push' then
+        info.checkpoint = 1
+        saveToGoogleForm()
+        info.checkpoint = nil
+    end
+
+    press(680, 90) sleep(1) -- help text
+    if waitImageVisible(logout_suspend_icon) then
+        findAndClickByImage(logout_suspend_icon)
+        press(520, 840) sleep(1) --logout text
+
+        if waitImageVisible(logout_btn) then
+            findAndClickByImage(logout_btn)
+            sleep(3)
+        end
+        removeAccount()
+    end
+end
+
 function checkSuspended(isPushData)
     toast('checkSuspended')
     if waitImageVisible(confirm_human) then
-        failedCurrentAccount()
-
-        if isPushData ~= nil and isPushData == 'push' then
-            info.checkpoint = 1
-            saveToGoogleForm()
-        end
-
-        press(680, 90) sleep(1) -- help text
-        if waitImageVisible(logout_suspend_icon) then
-            findAndClickByImage(logout_suspend_icon)
-            press(520, 840) sleep(1) --logout text
-
-            if waitImageVisible(logout_btn) then
-                findAndClickByImage(logout_btn)
-                sleep(3)
-            end
-            removeAccount()
-        end
+        handleSuspended()
+        return true
     end
     return false
 end
@@ -613,21 +593,41 @@ end
 function openFacebook()
     toast('openFacebook')
 
-    -- appActivate("com.facebook.Facebook")
-    pressHome()
-    if waitImageVisible(fb_logo_2) then
-        findAndClickByImage(fb_logo_2)
-        waitImageNotVisible(fb_logo_2)
-    else
-        toast('Not found Icon facebook', 3)
+    appActivate("com.facebook.Facebook")
+    -- pressHome()
+    -- if waitImageVisible(fb_logo_2) then
+    --     findAndClickByImage(fb_logo_2)
+    --     waitImageNotVisible(fb_logo_2)
+    -- else
+    --     toast('Not found Icon facebook', 3)
+    -- end
+    -- sleep(1)
+end
+
+function homeAndUnlockScreen()
+    toast("Check Unlock Screen")
+
+    local i = 0
+    while true do
+        i = i + 1
+        if getColor(711, 17) == 16777215 and i > 3 then
+            break
+        end
+        if i > 5 then
+            lockAndUnlockScreen()
+            i = 0
+        end
+
+        keyDown(KEY_TYPE.HOME_BUTTON)
+        keyUp(KEY_TYPE.HOME_BUTTON)
+        sleep(1)
     end
-    sleep(1)
 end
 
 function executeXoaInfo()
-    toast('executeXoaInfo')
+    if TIMES_XOA_INFO > 0 and waitImageVisible(xoainfo_logo) then
+        toast('executeXoaInfo')
 
-    if waitImageVisible(xoainfo_logo) then
         findAndClickByImage(xoainfo_logo)
         waitImageNotVisible(xoainfo_logo)
 
@@ -644,7 +644,6 @@ function executeXoaInfo()
             end
         end
     else
-        toast('Not found logo Xoainfo, Airplane mode.')
         onOffAirplaneMode()
     end
 end

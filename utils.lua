@@ -2,7 +2,7 @@ json = require "json"
 curl = require('lcurl')
 ltn12 = require("ltn12")
 
-DEBUG_IMAGE = false
+DEBUG_IMAGE = true
 THRESHOLD = 0.99
 
 function sleep(timeout)

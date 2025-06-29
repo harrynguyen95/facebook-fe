@@ -86,3 +86,5 @@ xoainfo_logo = {currentPath() .. "/images/xoainfo_logo.png"}
 xoainfo_reset_data = {currentPath() .. "/images/xoainfo_reset_data.png"}
 xoainfo_info_fake = {currentPath() .. "/images/xoainfo_info_fake.png"}
 logo_facebook_2 = {currentPath() .. "/images/logo_facebook_2.png"}
+fb_logo_mode_new = {currentPath() .. "/images/fb_logo_mode_new.png"}
+page_not_available_now = {currentPath() .. "/images/page_not_available_now.png"}
