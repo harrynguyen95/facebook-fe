@@ -131,14 +131,14 @@ function main()
             swipeCloseApp()
             goto openFacebook
         end
-    else
-        toast('Not found what_is_your_email')
     end
 
     if waitImageVisible(already_have_account, 2) then
         toast("already_have_account")
         findAndClickByImage(continue_creating_account)
     end
+
+    exit()
 
     birthdayAndGender()
 

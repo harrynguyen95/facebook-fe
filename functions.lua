@@ -294,6 +294,7 @@ function executeHotmailFromDongVanFb()
             local response, error = httpRequest {
                 url = "https://api.dongvanfb.net/user/buy?apikey=" .. MAIL_DONGVANFB_API_KEY .. "&account_type=" .. service_id .. "&quality=1&type=full",
             }
+            log(response, 'executeHotmailFromDongVanFb')
 
             if response then
                 response = json.decode(response)
@@ -537,7 +538,7 @@ function checkSuspended()
         toast('Die')
         return true
     else 
-        toast('Live')
+        toast('Not Suspended')
         return false
     end
 end
