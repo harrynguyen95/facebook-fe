@@ -36,6 +36,7 @@ function main()
     goto debug
     ::debug::
 
+    ::xoainfo::
     if info.mailRegister == nil or info.mailRegister == '' then 
         -- Chưa lấy đc mail mới mới reset. Lấy được rồi thì thôi
 
@@ -65,7 +66,7 @@ function main()
         goto openFacebook
     end
 
-    if waitImageVisible(get_started) then
+    if waitImageVisible(get_started, 10) then
         toast('get_started')
         findAndClickByImage(get_started)
         waitImageNotVisible(get_started)
@@ -177,6 +178,10 @@ function main()
 
         findAndClickByImage(i_agree_btn)
         waitImageNotVisible(agree_facebook_term, 60)
+
+        if checkImageIsExists(to_sign_up_agree) or checkImageIsExists(agree_facebook_term) or checkImageIsExists(i_agree_btn) then 
+            goto xoainfo
+        end
 
         if waitImageVisible(do_you_already_have_account) then
             press(380, 600)
