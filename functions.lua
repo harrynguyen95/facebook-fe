@@ -515,11 +515,9 @@ end
 function handleSuspended()
     failedCurrentAccount()
 
-    if isPushData ~= nil and isPushData == 'push' then
-        info.checkpoint = 1
-        saveToGoogleForm()
-        info.checkpoint = nil
-    end
+    info.checkpoint = 1
+    saveToGoogleForm()
+    info.checkpoint = nil
 
     press(680, 90) sleep(1) -- help text
     if waitImageVisible(logout_suspend_icon) then
@@ -534,7 +532,7 @@ function handleSuspended()
     end
 end
 
-function checkSuspended(isPushData)
+function checkSuspended()
     toast('checkSuspended')
     if waitImageVisible(confirm_human) then
         handleSuspended()

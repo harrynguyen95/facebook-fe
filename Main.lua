@@ -57,7 +57,7 @@ function main()
         sleep(3)
     end
 
-    if checkSuspended('push') then goto continue end
+    if checkSuspended() then goto continue end
 
     if waitImageVisible(join_facebook, 3) then
         toast('facebook mode new.')
@@ -214,7 +214,7 @@ function main()
         info.profileUid = getUIDFBLogin()
         archiveCurrentAccount()
 
-        if checkSuspended('push') then goto continue end
+        if checkSuspended() then goto continue end
     end
 
     if waitImageVisible(profile_picture, 3) then
@@ -227,7 +227,7 @@ function main()
         
         waitImageNotVisible(profile_picture)
         sleep(2)
-        if checkSuspended('push') then goto continue end
+        if checkSuspended() then goto continue end
     end
 
     if waitImageVisible(dont_allow, 2) then
@@ -258,7 +258,7 @@ function main()
         waitImageVisible(no_friend)
     end
 
-    if checkSuspended('push') then goto continue end
+    if checkSuspended() then goto continue end
 
     if waitImageVisible(add_phone_number, 3) then
         toast("add_phone_number")
@@ -571,7 +571,7 @@ function main()
 
         removeAccount()
     else 
-        if checkSuspended('push') then goto continue end
+        if checkSuspended() then goto continue end
     end
 
     sleep(2)
