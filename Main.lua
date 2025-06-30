@@ -48,6 +48,11 @@ function main()
     ::openFacebook::
     openFacebook()
 
+    if waitImageVisible(page_not_available_now) then 
+        swipeCloseApp()
+        goto openFacebook
+    end 
+
     if waitImageVisible(create_new_account, 30) then
         if checkImageIsExists(fb_logo_mode_new) then 
             swipeCloseApp()
@@ -66,10 +71,6 @@ function main()
     end
 
     if checkSuspended() then goto continue end
-    if waitImageVisible(page_not_available_now, 2) then 
-        swipeCloseApp()
-        goto openFacebook
-    end 
 
     if waitImageVisible(join_facebook, 3) then
         toast('facebook mode new.')
