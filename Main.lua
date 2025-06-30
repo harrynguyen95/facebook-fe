@@ -3,7 +3,7 @@ MAIL_MODE = 1  -- 1|2 hotmail-dongvanfb|gmail-thuemails.com
 THUE_LAI_MAIL_THUEMAILS = true -- 1-true|2-false
 ADD_MAIL_DOMAIN = false
 REMOVE_REGISTER_MAIL = true
-TIMES_XOA_INFO = 2 -- 0|1|2|3
+TIMES_XOA_INFO = 1 -- 0|1|2|3
 
 -- ====== INFO ======
 info = {
@@ -48,7 +48,7 @@ function main()
     ::openFacebook::
     openFacebook()
 
-    if waitImageVisible(create_new_account, 50) then
+    if waitImageVisible(create_new_account, 30) then
         if checkImageIsExists(fb_logo_mode_new) then 
             swipeCloseApp()
             goto continue
@@ -67,7 +67,7 @@ function main()
         goto openFacebook
     end
 
-    if waitImageVisible(get_started, 10) then
+    if waitImageVisible(get_started) then
         toast('get_started')
         findAndClickByImage(get_started)
         waitImageNotVisible(get_started)
@@ -79,20 +79,31 @@ function main()
         waitImageNotVisible(create_new_account_blue)
     end
 
-    if waitImageVisible(what_name, 1) then
-        toast("what_name")
-        local name = getRandomName()
-        press(165, 385)
-        press(310, 370)
-        typeText(name[1]) sleep(0.5)
-        press(660, 385) 
-        press(660, 370) 
-        typeText(name[2]) sleep(0.5)
+    setFirstNameLastName()
+
+    if waitImageVisible(what_is_birthday, 2) then
+        toast("what_is_birthday")
+        press(270, 470) sleep(0.5)
+
+        for i = 1, math.random(2, 5) do
+            press(200, math.random(1003, 1008))
+        end
+        for i = 1, math.random(3, 10) do
+            press(400, math.random(1003, 1008))
+        end
+        for i = 1, math.random(12, 18) do
+            press(600, math.random(1003, 1008))
+        end
         findAndClickByImage(next)
-        waitImageNotVisible(what_name)
+
+        if waitImageNotVisible(what_is_birthday, 15) then 
+        else 
+            swipeCloseApp()
+            goto openFacebook
+        end 
     end
 
-    birthdayAndGender()
+    setGender()
 
     if waitImageVisible(what_is_mobile_number, 1) then
         toast("what_is_mobile_number")
@@ -139,7 +150,29 @@ function main()
         findAndClickByImage(continue_creating_account)
     end
 
-    birthdayAndGender()
+    if waitImageVisible(what_is_birthday, 2) then
+        toast("what_is_birthday")
+        press(270, 470) sleep(0.5)
+
+        for i = 1, math.random(2, 5) do
+            press(200, math.random(1003, 1008))
+        end
+        for i = 1, math.random(3, 10) do
+            press(400, math.random(1003, 1008))
+        end
+        for i = 1, math.random(12, 18) do
+            press(600, math.random(1003, 1008))
+        end
+        findAndClickByImage(next)
+        
+        if waitImageNotVisible(what_is_birthday, 15) then 
+        else 
+            swipeCloseApp()
+            goto openFacebook
+        end 
+    end
+
+    setGender()
 
     if waitImageVisible(create_a_password) then
         toast("create_a_password")

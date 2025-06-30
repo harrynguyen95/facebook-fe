@@ -226,6 +226,7 @@ function checkImageIsExists(paths, threshold)
 end
 
 function waitImageVisible(paths, timeout)
+    toast('...')
     if timeout == nil then
         timeout = 5
     end

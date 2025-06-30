@@ -33,7 +33,7 @@ function archiveCurrentAccount()
             info.twoFA        = info.twoFA or splitted[6]
             info.mailRegister        = info.mailRegister or splitted[7]
             info.thuemailId          = info.thuemailId or splitted[8]
-            info.mailPrice        = info.hotmailRefreshToken or splitted[9]
+            info.mailPrice           = info.mailPrice or splitted[9]
             info.hotmailRefreshToken = info.hotmailRefreshToken or splitted[10]
             info.hotmailClientId     = info.hotmailClientId or splitted[11]
             info.hotmailPassword     = info.hotmailPassword or splitted[12]
@@ -56,7 +56,7 @@ function archiveCurrentAccount()
         addLineToFile(accountFilePath, line)
     end
 
-    log(info, 'Archive')
+    -- log(info, 'Archive')
 end
 
 function failedCurrentAccount()
@@ -151,6 +151,7 @@ function resetInfoObject()
         profileUid = nil,
         mailLogin = nil,
         password = nil,
+        mailPrice = nil,
         hotmailRefreshToken = nil,
         hotmailClientId = nil,
         hotmailPassword = nil,
@@ -324,7 +325,7 @@ function executeHotmailFromDongVanFb()
             local response, error = httpRequest {
                 url = "https://api.dongvanfb.net/user/buy?apikey=" .. MAIL_DONGVANFB_API_KEY .. "&account_type=" .. service_id .. "&quality=1&type=full",
             }
-            log(response, 'executeHotmailFromDongVanFb')
+            -- log(response, 'executeHotmailFromDongVanFb')
 
             if response then
                 response = json.decode(response)
@@ -450,7 +451,7 @@ function getFreeMailConfirmCodeSecondTime()
         local response, error = httpRequest {
             url = PHP_SERVER .. "/confirm_free_mail.php?email=" .. info.mailLogin,
         }
-        log(response, 'getFreeMailConfirmCodeSecondTime')
+        -- log(response, 'getFreeMailConfirmCodeSecondTime')
         if response then
             response = json.decode(response)
             if response.code ~= '' then
@@ -473,7 +474,7 @@ function getFreeMailConfirmCode()
         local response, error = httpRequest {
             url = PHP_SERVER .. "/add_free_mail.php?email=" .. info.mailLogin,
         }
-        log(response, 'getFreeMailConfirmCode')
+        -- log(response, 'getFreeMailConfirmCode')
 
         if response then
             response = json.decode(response)
@@ -579,25 +580,23 @@ function checkSuspended()
     end
 end
 
-function birthdayAndGender()
-    if waitImageVisible(what_is_birthday, 1) then
-        toast("what_is_birthday")
-        press(270, 470) sleep(0.5)
-
-        for i = 1, math.random(2, 5) do
-            press(200, math.random(1003, 1008))
-        end
-        for i = 1, math.random(3, 10) do
-            press(400, math.random(1003, 1008))
-        end
-        for i = 1, math.random(12, 18) do
-            press(600, math.random(1003, 1008))
-        end
+function setFirstNameLastName()
+    if waitImageVisible(what_name, 2) then
+        toast("what_name")
+        local name = getRandomName()
+        press(165, 385)
+        press(310, 370)
+        typeText(name[1]) sleep(0.5)
+        press(660, 385) 
+        press(660, 370) 
+        typeText(name[2]) sleep(0.5)
         findAndClickByImage(next)
-        waitImageNotVisible(what_is_birthday)
+        waitImageNotVisible(what_name)
     end
+end
 
-    if waitImageVisible(what_is_gender, 1) then
+function setGender()
+    if waitImageVisible(what_is_gender, 2) then
         toast("what_is_gender")
         sleep(1)
 
