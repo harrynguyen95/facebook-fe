@@ -244,7 +244,7 @@ function main()
         local OTPcode = getCodeMailRegister()
         if OTPcode then 
             press(130, 410)
-            press(660, 450)
+            press(660, 410)
             typeText(OTPcode) sleep(1)
             findAndClickByImage(next)
         else
