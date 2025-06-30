@@ -33,25 +33,26 @@ function archiveCurrentAccount()
             info.twoFA        = info.twoFA or splitted[6]
             info.mailRegister        = info.mailRegister or splitted[7]
             info.thuemailId          = info.thuemailId or splitted[8]
-            info.hotmailRefreshToken = info.hotmailRefreshToken or splitted[9]
-            info.hotmailClientId     = info.hotmailClientId or splitted[10]
-            info.hotmailPassword     = info.hotmailPassword or splitted[11]
+            info.mailPrice        = info.hotmailRefreshToken or splitted[9]
+            info.hotmailRefreshToken = info.hotmailRefreshToken or splitted[10]
+            info.hotmailClientId     = info.hotmailClientId or splitted[11]
+            info.hotmailPassword     = info.hotmailPassword or splitted[12]
 
-            local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
+            local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
             accounts[#accounts] = line
             writeFile(accountFilePath, accounts)
         else
             info.uuid = floor(splitted[1] + 1)
             info.status = 'INPROGRESS'
             if ADD_MAIL_DOMAIN then info.mailLogin = randomEmailLogin() end 
-            local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
+            local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
             addLineToFile(accountFilePath, line)
         end 
     else 
         info.uuid = 1
         info.status = 'INPROGRESS'
         if ADD_MAIL_DOMAIN then info.mailLogin = randomEmailLogin() end 
-        local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
+        local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
         addLineToFile(accountFilePath, line)
     end
 
@@ -64,7 +65,7 @@ function failedCurrentAccount()
 
     if splitted[2] ~= 'SUCCESS' then 
         info.status = "FAILED"
-        local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
+        local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
         accounts[#accounts] = line
 
         writeFile(accountFilePath, accounts)
@@ -77,16 +78,16 @@ function finishCurrentAccount()
     local accounts = readFile(accountFilePath)
 
     info.status = "SUCCESS"
-    local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
+    local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
     accounts[#accounts] = line
 
     writeFile(accountFilePath, accounts)
-    saveToGoogleForm()
+    saveAccToGoogleForm()
 
     resetInfoObject()
 end
 
-function saveToGoogleForm()
+function saveAccToGoogleForm()
     local localIP = readFile(localIPFilePath)
     local infoClone = info
     infoClone.localIP = localIP[#localIP]
@@ -96,7 +97,34 @@ function saveToGoogleForm()
         sleep(3)
 
         local response, error = httpRequest {
-            url = PHP_SERVER .. "google_form.php",
+            url = PHP_SERVER .. "acc_google_form.php",
+            method = "POST",
+            headers = {
+                ["Content-Type"] = "application/json",
+            },
+            data = infoClone
+        }
+
+        if response then
+            log(infoClone, "Sent request to Google Form" )
+            return
+        else
+            log(error, "Error: Failed to send request. Reason")
+        end
+    end
+end
+
+function saveMailToGoogleForm()
+    local localIP = readFile(localIPFilePath)
+    local infoClone = info
+    infoClone.localIP = localIP[#localIP]
+
+    local tries = 2
+    for i = 1, tries do 
+        sleep(3)
+
+        local response, error = httpRequest {
+            url = PHP_SERVER .. "mail_google_form.php",
             method = "POST",
             headers = {
                 ["Content-Type"] = "application/json",
@@ -197,7 +225,7 @@ function executeGmailFromThueMail()
 
         local tries = 2
         for i = 1, tries do 
-            toast(i)
+            toast('Call times ' .. i)
             sleep(3)
 
             local postData = {
@@ -221,6 +249,7 @@ function executeGmailFromThueMail()
 
                     local res = response.data
                     info.thuemailId = res.id
+                    info.mailPrice = res.price
                     info.mailRegister = res.email
 
                     saveMailThueMail()
@@ -242,7 +271,7 @@ function executeGmailFromThueMail()
     if (not mailRerent) or (not rerentSuccess) then
         local tries = 2
         for i = 1, tries do 
-            toast(i)
+            toast('Call times ' .. i)
             sleep(3)
 
             local postData = {
@@ -266,6 +295,7 @@ function executeGmailFromThueMail()
                     local res = response.data[1]
 
                     info.thuemailId = res.id
+                    info.mailPrice = res.price
                     info.mailRegister = res.email
 
                     saveMailThueMail()
@@ -304,6 +334,8 @@ function executeHotmailFromDongVanFb()
 
                     info.mailLogin = splitted[1]
                     info.mailRegister = splitted[1]
+                    info.mailPrice = response.data.price
+                    info.thuemailId = 2000000
                     info.hotmailPassword = splitted[2]
                     info.hotmailRefreshToken = splitted[3]
                     info.hotmailClientId = splitted[4]
@@ -327,12 +359,16 @@ function executeGetMailRequest()
     else 
         toast('MAIL_MODE invalid.', 5)
     end
+
+    if info.mailRegister and info.mailRegister ~= '' then 
+        saveMailToGoogleForm()
+    end 
 end
 
 function getThuemailConfirmCode()
     local tries = 10
     for i = 1, tries do 
-        toast(i)
+        toast('Call times ' .. i)
         sleep(10)
 
         local response, error = httpRequest {
@@ -362,7 +398,7 @@ function getDongvanfbConfirmCode()
 
     local tries = 10
     for i = 1, tries do 
-        toast(i)
+        toast('Call times ' .. i)
         sleep(5)
 
         local postData = {
@@ -408,7 +444,7 @@ end
 function getFreeMailConfirmCodeSecondTime()
     local tries = 3
     for i = 1, tries do 
-        toast(i)
+        toast('Call times ' .. i)
         sleep(5)
 
         local response, error = httpRequest {
@@ -431,7 +467,7 @@ end
 function getFreeMailConfirmCode()
     local tries = 3
     for i = 1, tries do 
-        toast(i)
+        toast('Call times ' .. i)
         sleep(5)
 
         local response, error = httpRequest {
@@ -515,7 +551,7 @@ end
 
 function handleSuspended()
     info.checkpoint = 1
-    saveToGoogleForm()
+    saveAccToGoogleForm()
 
     failedCurrentAccount()
 
@@ -647,3 +683,146 @@ function executeXoaInfo()
         onOffAirplaneMode()
     end
 end
+
+-- function changeMailDomain()
+--     ::changemail::
+--     if ADD_MAIL_DOMAIN then
+--         if waitImageVisible(what_on_your_mind) then 
+--             toast('Change mail what_on_your_mind')
+
+--             press(690, 1290) -- go to menu
+
+--             if waitImageVisible(setting_menu) then
+--                 press(600, 90) -- setting
+--             end
+
+--             if waitImageVisible(setting_privacy) and waitImageVisible(see_more_account_center) then
+--                 toast('setting_privacy')
+--                 findAndClickByImage(see_more_account_center)
+--                 waitImageNotVisible(setting_privacy)
+--             end
+
+--             if waitImageVisible(account_center) then
+--                 toast('account_center')
+--                 swipe(600, 800, 610, 650)
+--                 if waitImageVisible(personal_details_btn) then
+--                     findAndClickByImage(personal_details_btn)
+--                 end
+--             end
+
+--             if waitImageVisible(personal_details_page) then
+--                 toast('personal_details_page')
+--                 press(630, 550) -- Contact info btn
+
+--                 if waitImageVisible(contact_information) then
+--                     press(370, 1260) -- Add new contact btn
+--                 end
+                
+--                 if waitImageVisible(add_mail) then
+--                     toast('add_mail')
+--                     sleep(1)
+--                     findAndClickByImage(add_mail)
+--                 else 
+--                     toast('add_mail else')
+--                     press(130, 730) sleep(2) -- add mail options
+--                 end
+
+--                 if waitImageVisible(add_a_phone_number, 2) then
+--                     toast('add_a_phone_number')
+--                     press(380, 1260) -- add email instead
+--                 end
+
+--                 if waitImageVisible(add_email_address) then
+--                     toast('add_email_address')
+
+--                     press(110, 560) -- Input new mail address
+--                     typeText(info.mailLogin) sleep(0.5)
+--                     press(700, 1280) -- enter done typing
+--                     findAndClickByImage(next)
+
+--                     if waitImageVisible(email_used_added) then
+--                         press(55, 155) -- X icon
+--                         press(45, 155) -- back
+--                         press(45, 155) -- back
+--                         press(55, 155) -- X icon
+--                         press(45, 90) -- back
+--                         press(60, 1290) -- back to homepage
+--                     else 
+--                         if waitImageVisible(enter_confirm_code, 10) then
+--                             toast('enter_confirm_code')
+--                             local code = getFreeMailConfirmCode()
+--                             toast('CODE: ' .. (code or '-'), 2)
+--                             if code then
+--                                 press(130, 500) -- input code
+--                                 press(660, 475) -- X icon
+--                                 typeText(code) sleep(0.5)
+--                                 press(530, 630) -- click to outside
+
+--                                 press(380, 1260) -- next btn
+--                                 waitImageNotVisible(enter_confirm_code)
+
+--                                 if waitImageVisible(added_email, 8) then 
+--                                     press(380, 1260) -- close btn
+--                                 end
+
+--                                 if waitImageVisible(contact_information) then
+--                                     if REMOVE_REGISTER_MAIL then
+--                                         press(650, 600) -- mail register
+--                                         if waitImageVisible(delete_mail) then
+--                                             findAndClickByImage(delete_mail)
+--                                             sleep(1)
+--                                             press(240, 850)
+
+--                                             if waitImageVisible(check_your_email, 3) then
+--                                                 toast('check_your_email')
+--                                                 local code = getFreeMailConfirmCodeSecondTime()
+--                                                 toast('CODE: ' .. (code or '-'), 2)
+
+--                                                 if code and code ~= '' then
+--                                                     press(100, 850) -- code input
+--                                                     typeText(code) sleep(1)
+--                                                     if waitImageVisible(continue_code_mail) then
+--                                                         findAndClickByImage(continue_code_mail)
+
+--                                                         waitImageNotVisible(check_your_email)
+--                                                     end
+--                                                 else 
+--                                                     goto get2FA
+--                                                 end
+--                                             end
+
+--                                             if waitImageVisible(deleted_previous_mail, 8) then
+--                                                 press(380, 1260) -- close btn
+--                                                 if waitImageVisible(contact_information) then
+--                                                     press(50, 155) -- back
+--                                                     if waitImageVisible(personal_details_page) then
+--                                                         press(50, 155) -- back
+--                                                         press(55, 155) -- back
+
+--                                                         press(45, 90) -- back to setting menu
+--                                                         press(60, 1290) -- back to homepage
+--                                                     end
+--                                                 end
+--                                             end
+--                                         end
+--                                     else 
+--                                         press(50, 155) -- back
+--                                         if waitImageVisible(personal_details_page) then
+--                                             press(50, 155) -- back
+--                                             press(55, 155) -- back
+
+--                                             press(45, 90) -- back to setting menu
+--                                             press(60, 1290) -- back to homepage
+--                                         end
+--                                     end
+--                                 end
+--                             else 
+--                                 info.mailLogin = info.mailRegister -- set mail register is mail login
+--                             end
+--                         end
+--                     end
+--                 end
+--             end
+--         end
+--     end
+-- end
