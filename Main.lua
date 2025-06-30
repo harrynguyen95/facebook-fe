@@ -53,6 +53,10 @@ function main()
         goto openFacebook
     end 
 
+    if waitImageVisible(dont_allow, 2) then
+        findAndClickByImage(dont_allow)
+    end
+
     if waitImageVisible(create_new_account, 30) then
         if checkImageIsExists(fb_logo_mode_new) then 
             swipeCloseApp()
@@ -280,10 +284,10 @@ function main()
         waitImageNotVisible(profile_picture)
         sleep(2)
         if checkSuspended() then goto continue end
-    end
 
-    if waitImageVisible(dont_allow, 2) then
-        findAndClickByImage(dont_allow)
+        if waitImageVisible(dont_allow, 2) then
+            findAndClickByImage(dont_allow)
+        end
     end
 
     if waitImageVisible(turn_on_contact) then
