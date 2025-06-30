@@ -242,7 +242,7 @@ end
 
 function waitImageNotVisible(paths, timeout)
     if timeout == nil then
-        timeout = 10
+        timeout = 15
     end
 
     for i = 1, timeout do
