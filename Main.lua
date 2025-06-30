@@ -274,6 +274,7 @@ function main()
         end
 
         waitImageNotVisible(enter_the_confirmation_code)
+        sleep(5)
 
         info.profileUid = getUIDFBLogin()
         archiveCurrentAccount()
@@ -281,7 +282,7 @@ function main()
         if checkSuspended() then goto continue end
     end
 
-    if waitImageVisible(profile_picture, 3) then
+    if waitImageVisible(profile_picture, 8) or waitImageVisible(add_picture, 8) then
         toast("profile_picture")
         if waitImageVisible(not_now, 2) then
             findAndClickByImage(not_now)
@@ -359,7 +360,7 @@ function main()
 
             if waitImageVisible(account_center) then
                 toast('account_center')
-                swipe(600, 800, 610, 650) sleep(1)
+                swipe(600, 800, 610, 650) sleep(3)
 
                 if waitImageVisible(personal_details_btn) then
                     findAndClickByImage(personal_details_btn)
@@ -491,22 +492,22 @@ function main()
         toast('2FA what_on_your_mind')
         press(690, 1290) -- go to menu
 
-        if waitImageVisible(setting_menu) then
+        if waitImageVisible(setting_menu, 8) then
             toast('setting_menu')
             press(600, 90) sleep(2) -- setting cog icon
         end
 
-        if waitImageVisible(setting_privacy) then
+        if waitImageVisible(setting_privacy, 8) then
             toast('setting_privacy')
-            if waitImageVisible(see_more_account_center) then
+            if waitImageVisible(see_more_account_center, 10) then
                 findAndClickByImage(see_more_account_center)
                 waitImageNotVisible(setting_privacy)
             end
         end
 
-        if waitImageVisible(account_center) then
+        if waitImageVisible(account_center, 8) then
             toast('account_center')
-            swipe(600, 800, 610, 650) sleep(1)
+            swipe(600, 800, 610, 650) sleep(3)
 
             if waitImageVisible(personal_details_btn) then
                 findAndClickByImage(personal_details_btn)
@@ -517,20 +518,20 @@ function main()
             end
         end
 
-        if waitImageVisible(personal_details_page) or waitImageVisible(your_information_and_2) then
+        if waitImageVisible(personal_details_page, 8) or waitImageVisible(your_information_and_2, 8) then
             toast('personal_details_page')
             findAndClickByImage(identify_confirmation_btn)
             waitImageNotVisible(identify_confirmation_btn)
             sleep(3)
         end
 
-        if waitImageVisible(confirm_your_identity) then
+        if waitImageVisible(confirm_your_identity, 10) then
             toast('confirm_your_identity')
             findAndClickByImage(confirm_your_identity) sleep(0.5)
             press(130, 1290) -- protect your account
         end
 
-        if waitImageVisible(reenter_password, 3) then
+        if waitImageVisible(reenter_password, 10) then
             toast('reenter_password')
             press(135, 530) -- input password
             press(660, 525) -- input password
@@ -557,13 +558,13 @@ function main()
             end
         end
 
-        if waitImageVisible(help_protect_account) then
+        if waitImageVisible(help_protect_account, 8) then
             toast('help_protect_account')
             findAndClickByImage(next)
             waitImageNotVisible(help_protect_account)
         end
 
-        if waitImageVisible(instructions_for_setup) and waitImageVisible(copy_key) then
+        if waitImageVisible(instructions_for_setup, 8) and waitImageVisible(copy_key) then
             toast('instructions_for_setup')
             findAndClickByImage(copy_key) sleep(4)
             local secret = clipText()
