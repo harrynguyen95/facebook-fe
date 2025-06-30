@@ -34,8 +34,8 @@ function main()
     log('----------------------------------- Main running ---------------------------------------')
     archiveCurrentAccount()
 
-    goto debug
-    ::debug::
+    -- goto debug
+    -- ::debug::
 
     ::xoainfo::
     if info.mailRegister == nil or info.mailRegister == '' then 
