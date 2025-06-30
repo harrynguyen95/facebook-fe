@@ -1,7 +1,7 @@
 
 -- ====== CONFIG ======
 PHP_SERVER = "https://tuongtacthongminh.com/"
-MAIL_THUEMAILS_THUEMAILS_API_KEY = "94a3a21c-40b5-4c48-a690-f1584c390e3e"
+MAIL_THUEMAILS_API_KEY = "94a3a21c-40b5-4c48-a690-f1584c390e3e"
 MAIL_THUEMAILS_DOMAIN = "https://api.thuemails.com/api/"
 MAIL_DONGVANFB_API_KEY = "iFI7ppA8JNDJ52yVedbPlMpSh"
 URL_2FA_FACEBOOK = "https://2fa.live/tok/"
@@ -185,7 +185,7 @@ end
 
 function retrieveMailThueMail()
     local mails = readFile(mailFilePath)
-    if #mails < 10 then
+    if #mails < 5 then
         return
     end
 
@@ -538,10 +538,11 @@ end
 
 -- ====== FE FUNCTION ======
 function removeAccount()
+    sleep(3)
     if waitImageVisible(avatar_picture) or waitImageVisible(create_new_account) then
-        press(695, 90) sleep(2) -- three dots icon
-        press(300, 1250) sleep(3) -- remove profiles from this device
-        press(600, 330) sleep(3) -- btn remove gray
+        press(695, 90) sleep(5) -- three dots icon
+        press(300, 1250) sleep(4) -- remove profiles from this device
+        press(600, 330) sleep(4) -- btn remove gray
         press(400, 1150) sleep(1) -- btn remove blue confirm
 
         if waitImageVisible(avatar_picture) or waitImageVisible(create_new_account) then 

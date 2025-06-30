@@ -1,8 +1,8 @@
 -- ====== CONFIG ======
 MAIL_MODE = 1  -- 1|2 hotmail-dongvanfb|gmail-thuemails.com
-THUE_LAI_MAIL_THUEMAILS = true -- 1-true|2-false
 ADD_MAIL_DOMAIN = false
-REMOVE_REGISTER_MAIL = true
+REMOVE_REGISTER_MAIL = false
+THUE_LAI_MAIL_THUEMAILS = false -- 1|2 true|false
 TIMES_XOA_INFO = 2 -- 0|1|2|3
 
 -- ====== INFO ======
@@ -50,7 +50,7 @@ function main()
 
     if waitImageVisible(page_not_available_now) then 
         swipeCloseApp()
-        goto openFacebook
+        goto xoainfo
     end 
 
     if waitImageVisible(dont_allow, 2) then
@@ -65,11 +65,11 @@ function main()
 
         findAndClickByImage(create_new_account)
 
-        if waitImageNotVisible(logo_facebook_2, 20) then 
+        if waitImageNotVisible(logo_facebook_2, 30) then 
         else 
             toast('Can not next Logo page')
             swipeCloseApp()
-            goto openFacebook
+            goto xoainfo
         end
         sleep(3)
     end
@@ -96,7 +96,7 @@ function main()
 
     setFirstNameLastName()
 
-    if waitImageVisible(what_is_birthday, 2) then
+    if waitImageVisible(what_is_birthday, 3) then
         toast("what_is_birthday")
         press(270, 470) sleep(0.5)
 
@@ -111,9 +111,9 @@ function main()
         end
         findAndClickByImage(next)
 
-        if waitImageNotVisible(what_is_birthday, 20) then 
+        if waitImageNotVisible(what_is_birthday, 30) then 
         else 
-            toast('Can not next birthday')
+            toast('Can not next')
             swipeCloseApp()
             goto openFacebook
         end 
@@ -121,7 +121,7 @@ function main()
 
     setGender()
 
-    if waitImageVisible(what_is_mobile_number, 1) then
+    if waitImageVisible(what_is_mobile_number) then
         toast("what_is_mobile_number")
         findAndClickByImage(sign_up_with_email)
         waitImageNotVisible(what_is_mobile_number)
@@ -181,9 +181,9 @@ function main()
         end
         findAndClickByImage(next)
         
-        if waitImageNotVisible(what_is_birthday, 20) then 
+        if waitImageNotVisible(what_is_birthday, 30) then 
         else 
-            toast('Can not next birthday')
+            toast('Can not next')
             swipeCloseApp()
             goto openFacebook
         end 
@@ -197,7 +197,15 @@ function main()
         press(660, 450)
         typeText(info.password) sleep(0.5)
         findAndClickByImage(next)
-        waitImageNotVisible(create_a_password)
+
+        if waitImageNotVisible(create_a_password, 30) then 
+        else 
+            toast('Can not next')
+            swipeCloseApp()
+            homeAndUnlockScreen()
+            executeXoaInfo() sleep(1)
+            goto openFacebook
+        end 
     end
 
     if waitImageVisible(you_are_logged_in, 2) then
@@ -207,13 +215,13 @@ function main()
 
     if waitImageVisible(save_your_login_info, 8) then
         toast("save_your_login_info")
-        press(370, 510)
-        findAndClickByImage(not_now)
+        findAndClickByImage(save)
+        -- press(370, 510) -- not now
 
         waitImageNotVisible(save_your_login_info)
     end
 
-    if waitImageVisible(continue_creating_account, 2) then
+    if waitImageVisible(continue_creating_account, 3) then
         toast("continue_creating_account")
         findAndClickByImage(continue_creating_account)
     end
@@ -238,7 +246,7 @@ function main()
         end
     end
 
-    if waitImageVisible(enter_the_confirmation_code, 10) then
+    if waitImageVisible(enter_the_confirmation_code, 10) or waitImageVisible(did_not_get_code, 10) then
         toast("enter_the_confirmation_code")
         sleep(3)
 
@@ -332,6 +340,152 @@ function main()
         goto openFacebook
     end 
 
+    ::addmail::
+    if ADD_MAIL_DOMAIN then
+        if waitImageVisible(what_on_your_mind) then 
+            toast('Add mail what_on_your_mind')
+
+            press(690, 1290) -- go to menu
+
+            if waitImageVisible(setting_menu) then
+                press(600, 90) -- setting
+            end
+
+            if waitImageVisible(setting_privacy) and waitImageVisible(see_more_account_center) then
+                toast('setting_privacy')
+                findAndClickByImage(see_more_account_center)
+                waitImageNotVisible(setting_privacy)
+            end
+
+            if waitImageVisible(account_center) then
+                toast('account_center')
+                swipe(600, 800, 610, 650) sleep(1)
+
+                if waitImageVisible(personal_details_btn) then
+                    findAndClickByImage(personal_details_btn)
+                else
+                    if waitImageVisible(your_information_and_permission) then
+                        findAndClickByImage(your_information_and_permission)
+                    end
+                end
+            end
+
+            if waitImageVisible(personal_details_page) or waitImageVisible(your_information_and_2) then
+                toast('personal_details_page')
+                press(630, 550) -- Contact info btn
+
+                if waitImageVisible(contact_information) then
+                    press(370, 1260) -- Add new contact btn
+                end
+                
+                if waitImageVisible(add_mail) then
+                    toast('add_mail')
+                    sleep(1)
+                    findAndClickByImage(add_mail)
+                else 
+                    toast('add_mail else')
+                    press(130, 730) sleep(2) -- add mail options
+                end
+
+                if waitImageVisible(add_a_phone_number, 2) then
+                    toast('add_a_phone_number')
+                    press(380, 1260) -- add email instead
+                end
+
+                if waitImageVisible(add_email_address) then
+                    toast('add_email_address')
+
+                    press(110, 560) -- Input new mail address
+                    typeText(info.mailLogin) sleep(0.5)
+                    press(700, 1280) -- enter done typing
+                    findAndClickByImage(next)
+
+                    if waitImageVisible(email_used_added) then
+                        press(55, 155) -- X icon
+                        press(45, 155) -- back
+                        press(45, 155) -- back
+                        press(55, 155) -- X icon
+                        press(45, 90) -- back
+                        press(60, 1290) -- back to homepage
+                    else 
+                        if waitImageVisible(enter_confirm_code, 10) then
+                            toast('enter_confirm_code')
+                            local code = getFreeMailConfirmCode()
+                            toast('CODE: ' .. (code or '-'), 2)
+                            if code then
+                                press(130, 500) -- input code
+                                press(660, 475) -- X icon
+                                typeText(code) sleep(0.5)
+                                press(530, 630) -- click to outside
+
+                                press(380, 1260) -- next btn
+                                waitImageNotVisible(enter_confirm_code)
+
+                                if waitImageVisible(added_email, 8) then 
+                                    press(380, 1260) -- close btn
+                                end
+
+                                if waitImageVisible(contact_information) then
+                                    if REMOVE_REGISTER_MAIL then
+                                        press(650, 600) -- mail register
+                                        if waitImageVisible(delete_mail) then
+                                            findAndClickByImage(delete_mail)
+                                            sleep(1)
+                                            press(240, 850)
+
+                                            if waitImageVisible(check_your_email, 3) then
+                                                toast('check_your_email')
+                                                local code = getFreeMailConfirmCodeSecondTime()
+                                                toast('CODE: ' .. (code or '-'), 2)
+
+                                                if code and code ~= '' then
+                                                    press(100, 850) -- code input
+                                                    typeText(code) sleep(1)
+                                                    if waitImageVisible(continue_code_mail) then
+                                                        findAndClickByImage(continue_code_mail)
+
+                                                        waitImageNotVisible(check_your_email)
+                                                    end
+                                                else 
+                                                    goto get2FA
+                                                end
+                                            end
+
+                                            if waitImageVisible(deleted_previous_mail, 8) then
+                                                press(380, 1260) -- close btn
+                                                if waitImageVisible(contact_information) then
+                                                    press(50, 155) -- back
+                                                    if waitImageVisible(personal_details_page) then
+                                                        press(50, 155) -- back
+                                                        press(55, 155) -- back
+
+                                                        press(45, 90) -- back to setting menu
+                                                        press(60, 1290) -- back to homepage
+                                                    end
+                                                end
+                                            end
+                                        end
+                                    else 
+                                        press(50, 155) -- back
+                                        if waitImageVisible(personal_details_page) then
+                                            press(50, 155) -- back
+                                            press(55, 155) -- back
+
+                                            press(45, 90) -- back to setting menu
+                                            press(60, 1290) -- back to homepage
+                                        end
+                                    end
+                                end
+                            else 
+                                info.mailLogin = info.mailRegister -- set mail register is mail login
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+
     ::get2FA::
     if waitImageVisible(what_on_your_mind) then 
         toast('2FA what_on_your_mind')
@@ -366,6 +520,8 @@ function main()
         if waitImageVisible(personal_details_page) or waitImageVisible(your_information_and_2) then
             toast('personal_details_page')
             findAndClickByImage(identify_confirmation_btn)
+            waitImageNotVisible(identify_confirmation_btn)
+            sleep(3)
         end
 
         if waitImageVisible(confirm_your_identity) then
@@ -464,6 +620,7 @@ function main()
         for i, line in ipairs(searchTexts) do
             typeText(line) sleep(0.5)
             press(700, 1300) sleep(2) -- btn search blue
+            sleep(2)
             swipe(500, 900, 500, 800) sleep(2)
             if i < #searchTexts then
                 press(300, 90); -- click back into search box
