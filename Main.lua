@@ -3,7 +3,7 @@ MAIL_MODE = 1  -- 1|2 hotmail-dongvanfb|gmail-thuemails.com
 THUE_LAI_MAIL_THUEMAILS = true -- 1-true|2-false
 ADD_MAIL_DOMAIN = false
 REMOVE_REGISTER_MAIL = true
-TIMES_XOA_INFO = 1 -- 0|1|2|3
+TIMES_XOA_INFO = 2 -- 0|1|2|3
 
 -- ====== INFO ======
 info = {
@@ -34,8 +34,8 @@ function main()
     log('----------------------------------- Main running ---------------------------------------')
     archiveCurrentAccount()
 
-    -- goto debug
-    -- ::debug::
+    goto debug
+    ::debug::
 
     ::xoainfo::
     if info.mailRegister == nil or info.mailRegister == '' then 
@@ -55,11 +55,21 @@ function main()
         end
 
         findAndClickByImage(create_new_account)
-        waitImageNotVisible(logo_facebook_2, 20) 
+
+        if waitImageNotVisible(logo_facebook_2, 20) then 
+        else 
+            toast('Can not next Logo page')
+            swipeCloseApp()
+            goto openFacebook
+        end
         sleep(3)
     end
 
     if checkSuspended() then goto continue end
+    if waitImageVisible(page_not_available_now, 2) then 
+        swipeCloseApp()
+        goto openFacebook
+    end 
 
     if waitImageVisible(join_facebook, 3) then
         toast('facebook mode new.')
@@ -96,8 +106,9 @@ function main()
         end
         findAndClickByImage(next)
 
-        if waitImageNotVisible(what_is_birthday, 15) then 
+        if waitImageNotVisible(what_is_birthday, 20) then 
         else 
+            toast('Can not next birthday')
             swipeCloseApp()
             goto openFacebook
         end 
@@ -165,8 +176,9 @@ function main()
         end
         findAndClickByImage(next)
         
-        if waitImageNotVisible(what_is_birthday, 15) then 
+        if waitImageNotVisible(what_is_birthday, 20) then 
         else 
+            toast('Can not next birthday')
             swipeCloseApp()
             goto openFacebook
         end 
@@ -277,6 +289,14 @@ function main()
         toast("turn_on_contact")
         press(380, 1200) sleep(1) -- next
 
+        if waitImageVisible(skip, 2) then
+            findAndClickByImage(skip)
+        end 
+
+        if waitImageVisible(next, 2) then
+            findAndClickByImage(next)
+        end 
+
         if waitImageVisible(not_now, 2) then
             findAndClickByImage(not_now)
         end 
@@ -284,10 +304,7 @@ function main()
         if waitImageVisible(dont_allow, 2) then
             findAndClickByImage(dont_allow)
         end
-
-        if waitImageVisible(skip, 2) then
-            findAndClickByImage(skip)
-        end 
+        
         waitImageNotVisible(turn_on_contact)
     end
 
@@ -297,13 +314,13 @@ function main()
         waitImageVisible(no_friend)
     end
 
-    if checkSuspended() then goto continue end
-
     if waitImageVisible(add_phone_number, 3) then
         toast("add_phone_number")
         press(380, 1220) -- skip
         waitImageVisible(add_phone_number)
     end
+
+    if checkSuspended() then goto continue end
 
     if waitImageVisible(page_not_available_now) then 
         swipeCloseApp()
