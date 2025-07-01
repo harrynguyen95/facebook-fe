@@ -29,12 +29,17 @@ local images = require(isES() and "images_es" or "images")
 require('utils')
 require('functions')
 
+
 -- ====== MAIN ======
 function main()
 
     ::continue::
     log('----------------------------------- Main running ---------------------------------------')
     archiveCurrentAccount()
+
+    
+    toastr(waitImageVisible(create_new_account), 5)
+    exit()
 
     goto debug
     ::debug::
@@ -59,9 +64,11 @@ function main()
     if  info.profileUid then goto continueAccountRegistered end 
 
     if waitImageVisible(create_new_account, 30) then
-        if checkImageIsExists(fb_logo_mode_new) then 
+        if checkImageIsExists(fb_logo_mode_new) or waitImageVisible(join_facebook) then 
+            toast('facebook mode new.')
+
             swipeCloseApp()
-            goto continue
+            goto openFacebook
         end
 
         findAndClickByImage(create_new_account)
@@ -74,12 +81,6 @@ function main()
             goto continue
         end
         sleep(3)
-    end
-
-    if waitImageVisible(join_facebook, 3) then
-        toast('facebook mode new.')
-        swipeCloseApp()
-        goto openFacebook
     end
 
     if waitImageVisible(get_started) then
@@ -282,10 +283,6 @@ function main()
         if checkSuspended() then goto continue end
     end
 
-    if waitImageVisible(enter_the_confirmation_code, 1) then 
-        goto confirmationcode
-    end 
-
     ::continueAccountRegistered::
     if waitImageVisible(profile_picture, 8) or waitImageVisible(add_picture, 8) then
         toast("profile_picture")
@@ -349,6 +346,10 @@ function main()
         toast("add_phone_number_home")
         findAndClickByImage(not_now)
     end
+
+    if waitImageVisible(enter_the_confirmation_code, 1) then 
+        goto confirmationcode
+    end 
 
     if checkSuspended() then goto continue end
 
@@ -446,6 +447,7 @@ function main()
             if secret then
                 info.twoFA = string.gsub(secret, " ", "")
                 findAndClickByImage(next)
+                waitImageNotVisible(instructions_for_setup) sleep(2)
             end
         end
 

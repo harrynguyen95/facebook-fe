@@ -167,18 +167,17 @@ function findAndClickByImage(paths, threshold)
     if threshold == nil then
         threshold = THRESHOLD
     end
-
     sleep(0.5)
 
     if type(paths) == "table" then
         for i = 1, #paths do
             local result = findImage(paths[i], 1, threshold, nil, DEBUG_IMAGE, 1)
             for i, v in pairs(result) do
+                log(v)
                 if v ~= nil then
                     local x = v[1]
                     local y = v[2]
-                    tap(x, y)
-                    sleep(0.016)
+                    press(x, y)
                     return true
                 end
             end
@@ -189,8 +188,7 @@ function findAndClickByImage(paths, threshold)
             if v ~= nil then
                 local x = v[1]
                 local y = v[2]
-                tap(x, y)
-                sleep(0.5)
+                press(x, y)
                 return true
             end
         end
@@ -202,10 +200,7 @@ function checkImageIsExist(path, threshold)
     if threshold == nil then
         threshold = THRESHOLD
     end
-    -- if path == nil then
-    --     return false
-    -- end
-    
+
     local file = io.open(path, "r")
     if file then
         local result = findImage(path, 1, threshold, nil, DEBUG_IMAGE, 1)
