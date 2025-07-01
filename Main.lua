@@ -25,7 +25,7 @@ info = {
 
 -- ====== LIB REQUIRED ======
 function isES() return LANGUAGE == 'ES' end
-local images = require(isES() and "images_es" or "images")
+local images = require(isES() and (currentDir() .. "/images_es") or (currentDir() .. "images"))
 require('utils')
 require('functions')
 
@@ -64,13 +64,15 @@ function main()
     ::createnewaccount::
     if waitImageVisible(create_new_account, 30) then
         toast('create_new_account')
-        if checkImageIsExists(fb_logo_mode_new, 2) or waitImageVisible(join_facebook, 2) then 
-            toast('facebook mode new.')
+
+        sleep(1)
+        if checkImageIsExists(fb_logo_mode_new) then
+            toast('facebook mode new')
 
             swipeCloseApp()
-            goto openFacebook
+            goto continue
         end
-
+        
         findAndClickByImage(create_new_account)
 
         if waitImageNotVisible(logo_facebook_2, 20) then 
@@ -80,7 +82,13 @@ function main()
             swipeCloseApp()
             goto continue
         end
-        sleep(3)
+    end
+
+    if waitImageVisible(join_facebook, 2) then 
+        toast('facebook mode new')
+
+        swipeCloseApp()
+        goto continue
     end
 
     if waitImageVisible(get_started) then
@@ -135,7 +143,6 @@ function main()
 
         ::findnewemmail::
         if info.mailRegister and info.mailRegister ~= '' then 
-            press(660, 410) -- X icon click
             press(660, 410)
             typeText(info.mailRegister) sleep(0.5)
 
@@ -164,7 +171,8 @@ function main()
             end
         end
 
-        if not waitImageNotVisible(what_is_your_email) then 
+        if not waitImageNotVisible(what_is_your_email, 20) then 
+            toast('Can not next')
             swipeCloseApp()
             goto openFacebook
         end
