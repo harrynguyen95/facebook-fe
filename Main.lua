@@ -54,25 +54,22 @@ function main()
         goto continue
     end 
 
-    if checkSuspended() then goto continue end
-
     if info.profileUid ~= '' then 
         sleep(5)
         goto continueAccountRegistered
     end 
 
     ::createnewaccount::
-    if waitImageVisible(create_new_account, 30) then
+    if waitImageVisible(create_new_account, 50) then
         toast('create_new_account')
 
-        sleep(1)
-        if checkImageIsExists(fb_logo_mode_new) then
+         if waitImageVisible(fb_logo_mode_new, 2) then
             toast('facebook mode new')
 
             swipeCloseApp()
             goto continue
         end
-        
+
         findAndClickByImage(create_new_account)
 
         if waitImageNotVisible(logo_facebook_2, 20) then 
@@ -83,6 +80,8 @@ function main()
             goto continue
         end
     end
+
+    if checkSuspended() then goto continue end
 
     if waitImageVisible(join_facebook, 2) then 
         toast('facebook mode new')
