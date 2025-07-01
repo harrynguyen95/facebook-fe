@@ -63,7 +63,7 @@ function main()
     if waitImageVisible(create_new_account, 60) then
         toast('create_new_account')
 
-         if waitImageVisible(fb_logo_mode_new, 2) then
+        if waitImageVisible(fb_logo_mode_new, 2) then
             toast('facebook mode new')
 
             swipeCloseApp()
@@ -72,7 +72,7 @@ function main()
 
         findAndClickByImage(create_new_account)
 
-        if waitImageNotVisible(logo_facebook_2, 20) then 
+        if waitImageNotVisible(logo_facebook_2, 30) then 
             sleep(3)
         else 
             toast('Can not next Logo page')

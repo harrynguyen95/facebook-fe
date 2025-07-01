@@ -17,7 +17,7 @@ not_now = {currentPath() .. "/images_es/not_now.png", currentPath() .. "/images_
 no_friend = {currentPath() .. "/images_es/no_friend.png", currentPath() .. "/images_es/no_friend2.png"}
 what_on_your_mind = {currentPath() .. "/images_es/what_on_your_mind.png"}
 
-create_new_account = {currentPath() .. "/images_es/create_new_acc.png", currentPath() .. "/images_es/create_new_acc2.png", currentPath() .. "/images_es/create_new_acc3.png", currentPath() .. "/images_es/create_new_acc4.png", currentPath() .. "/images_es/create_new_acc4.png"}
+create_new_account = {currentPath() .. "/images_es/create_new_acc.png", currentPath() .. "/images_es/create_new_acc2.png", currentPath() .. "/images_es/create_new_acc3.png", currentPath() .. "/images_es/create_new_acc4.png", currentPath() .. "/images_es/create_new_acc5.png"}
 create_new_account_blue = {currentPath() .. "/images_es/create_new_account_blue.png"}
 get_started = {currentPath() .. "/images_es/get_started2.png"}
 what_name = {currentPath() .. "/images_es/what_name.png"}
