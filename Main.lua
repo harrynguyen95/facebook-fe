@@ -105,7 +105,6 @@ function main()
     if checkImageIsExists(create_new_account) then goto label_createnewaccount end 
 
     setFirstNameLastName()
-    
     if waitImageVisible(what_is_birthday) then
         toast("what_is_birthday")
         press(270, 470) sleep(0.5)
@@ -121,10 +120,9 @@ function main()
         end
         findAndClickByImage(next)
 
-        if waitImageNotVisible(what_is_birthday, 30) then 
+        if not waitImageNotVisible(what_is_birthday, 30) then 
             if (findAndClickByImage(next)) then 
-                if waitImageNotVisible(what_is_birthday, 30) then 
-                else 
+                if not waitImageNotVisible(what_is_birthday, 30) then 
                     toast('Can not next')
                     swipeCloseApp()
                     goto label_continue
