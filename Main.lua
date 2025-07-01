@@ -199,35 +199,6 @@ function main()
         end
     end
 
-    if waitImageVisible(what_is_birthday) then
-        toast("what_is_birthday")
-        press(270, 470) sleep(0.5)
-
-        for i = 1, math.random(2, 5) do
-            press(200, math.random(1003, 1008))
-        end
-        for i = 1, math.random(3, 10) do
-            press(400, math.random(1003, 1008))
-        end
-        for i = 1, math.random(10, 18) do
-            press(600, math.random(1003, 1008))
-        end
-        findAndClickByImage(next)
-
-        if waitImageNotVisible(what_is_birthday, 30) then 
-            if (findAndClickByImage(next)) then 
-                if waitImageNotVisible(what_is_birthday, 30) then 
-                else 
-                    toast('Can not next')
-                    swipeCloseApp()
-                    goto label_continue
-                end 
-            end
-        end 
-    end
-
-    setGender()
-
     if waitImageVisible(create_a_password) then
         toast("create_a_password")
         press(135, 450)
@@ -245,7 +216,7 @@ function main()
         end 
     end
 
-    if waitImageVisible(you_are_logged_in) then
+    if waitImageVisible(you_are_logged_in, 2) then
         toast("you_are_logged_in")
         press(375, 805) -- OK btn
     end
