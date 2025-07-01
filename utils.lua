@@ -78,14 +78,14 @@ function log(value, prefix)
 end
 
 function press(x, y, duration)
-    duration = duration or 0.5
+    duration = duration or 0.3
     local randOffset = function()
         return math.random(-5, 5)
     end
     local randX = x + randOffset()
     local randY = y + randOffset()
     tap(randX, randY)
-    sleep(duration)
+    usleep(0.3 * 1000000)
 end
 
 function split(str, delimiter)
@@ -167,7 +167,7 @@ function findAndClickByImage(paths, threshold)
     if threshold == nil then
         threshold = THRESHOLD
     end
-    sleep(0.5)
+    sleep(0.3)
 
     if type(paths) == "table" then
         for i = 1, #paths do
@@ -543,7 +543,7 @@ end
 
 function typeText(text)
     if text == nil then return end
-    sleep(0.3)
+    usleep(300000)
     if checkImageIsExists(num_keyboard) then
         -- toast('number keyboard', 3)
         typeNumber(text)
@@ -554,6 +554,7 @@ function typeText(text)
         -- toast('long keyboard', 3)
         typeTextLongSpace(text)
     end
+    usleep(300000)
 end
 
 function typeTextShortSpace(text)

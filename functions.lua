@@ -539,7 +539,7 @@ end
 -- ====== FE FUNCTION ======
 function removeAccount()
     sleep(2)
-    if waitImageVisible(avatar_picture) or waitImageVisible(create_new_account) then
+    if  waitImageVisible(create_new_account) or waitImageVisible(avatar_picture) then
         press(695, 90) sleep(5) -- three dots icon
         press(300, 1250) sleep(4) -- remove profiles from this device
         press(600, 330) sleep(5) -- btn remove gray
@@ -557,39 +557,38 @@ function handleSuspended()
 
     failedCurrentAccount()
 
-    press(680, 90) sleep(1) -- help text
-    if waitImageVisible(logout_suspend_icon) then
+    press(680, 90) -- help text
+    if waitImageVisible(logout_suspend_icon, 10) then
         findAndClickByImage(logout_suspend_icon)
         press(520, 840) sleep(1) --logout text
 
         if waitImageVisible(logout_btn) then
             findAndClickByImage(logout_btn)
             sleep(3)
+
+            removeAccount()
         end
-        removeAccount()
     end
 end
 
 function checkSuspended()
-    if waitImageVisible(confirm_human) then
+    if checkImageIsExists(confirm_human) then
         handleSuspended()
         toast('Die')
         return true
-    else 
-        toast('Not Suspended')
-        return false
     end
+
+    -- toast('Not Suspended')
+    return false
 end
 
 function setFirstNameLastName()
     if waitImageVisible(what_name, 2) then
         toast("what_name")
         local name = getRandomName()
-        press(165, 385)
-        press(310, 370)
+        press(200, 380)
         typeText(name[1]) sleep(0.5)
-        press(660, 385) 
-        press(660, 370) 
+        press(600, 380) 
         typeText(name[2]) sleep(0.5)
         findAndClickByImage(next)
         waitImageNotVisible(what_name)
