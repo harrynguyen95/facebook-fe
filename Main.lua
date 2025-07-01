@@ -56,7 +56,10 @@ function main()
 
     if checkSuspended() then goto continue end
 
-    if info.profileUid ~= '' then goto continueAccountRegistered end 
+    if info.profileUid ~= '' then 
+        sleep(5)
+        goto continueAccountRegistered
+    end 
 
     if waitImageVisible(create_new_account, 30) then
         toast('create_new_account')

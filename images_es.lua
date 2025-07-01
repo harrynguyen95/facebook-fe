@@ -18,7 +18,7 @@ no_friend = {currentPath() .. "/images_es/no_friend.png", currentPath() .. "/ima
 what_on_your_mind = {currentPath() .. "/images_es/what_on_your_mind.png"}
 
 create_new_account = {currentPath() .. "/images_es/create_new_acc.png", currentPath() .. "/images_es/create_new_acc2.png", currentPath() .. "/images_es/create_new_acc3.png", currentPath() .. "/images_es/create_new_acc4.png", currentPath() .. "/images_es/create_new_acc4.png"}
-create_new_account_blue = {currentPath() .. "/images_es/create_new_account_blue.png"}
+create_new_account_blue = {currentPath() .. "/images_es/create_new_acc_blue.png"}
 get_started = {currentPath() .. "/images_es/get_started2.png"}
 what_name = {currentPath() .. "/images_es/what_name.png"}
 already_have_account = {currentPath() .. "/images_es/already_have_account.png"}
@@ -77,7 +77,7 @@ xoainfo_reset_data = {currentPath() .. "/images_es/xoainfo_reset_data.png"}
 xoainfo_info_fake = {currentPath() .. "/images_es/xoainfo_info_fake.png"}
 logo_facebook_2 = {currentPath() .. "/images_es/logo_facebook_2.png"}
 fb_logo_mode_new = {currentPath() .. "/images_es/fb_logo_mode_new.png"}
-page_not_available_now = {currentPath() .. "/images_es/page_not_available_now5.png", currentPath() .. "/images_es/page_not_available_now6.png"}
+page_not_available_now = {currentPath() .. "/images_es/page_not_available_now.png", currentPath() .. "/images_es/page_not_available_now2.png", currentPath() .. "/images_es/page_not_available_now3.png", currentPath() .. "/images_es/page_not_available_now4.png", currentPath() .. "/images_es/page_not_available_now5.png", currentPath() .. "/images_es/page_not_available_now6.png"}
 your_information_and_permission = {currentPath() .. "/images_es/your_information_and_permission.png"}
 your_information_and_2 = {currentPath() .. "/images_es/your_information_and_2.png"}
 did_not_get_code = {currentPath() .. "/images_es/did_not_get_code.png"}
