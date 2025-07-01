@@ -586,10 +586,10 @@ function setFirstNameLastName()
     if waitImageVisible(what_name) then
         toast("what_name")
         local name = getRandomName()
-        press(200, 380)
+        press(200, 380) sleep(0.5)
         findAndClickByImage(x_input_icon)
         typeText(name[1]) sleep(0.5)
-        press(600, 380) 
+        press(600, 380) sleep(0.5)
         findAndClickByImage(x_input_icon)
         typeText(name[2]) sleep(0.5)
         findAndClickByImage(next)
@@ -611,8 +611,6 @@ function setGender()
                 y = 540
             end
             press(x, y)
-
-            sleep(1)
             findAndClickByImage(next)
             waitImageNotVisible(what_is_gender)
         end

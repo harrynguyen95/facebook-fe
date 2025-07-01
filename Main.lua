@@ -53,12 +53,6 @@ function main()
         goto label_continue
     end 
 
-    if checkImageIsExists(enter_the_confirmation_code) then goto label_confirmationcode end
-    if checkImageIsExists(profile_picture) then goto label_profilepicture end
-    if checkImageIsExists(turn_on_contact) then goto label_turnoncontact end
-    if checkImageIsExists(no_friend) then goto label_nofriend end
-    if checkImageIsExists(add_phone_number) then goto label_addphonenumber end
-
     ::label_createnewaccount::
     if waitImageVisible(create_new_account, 60) then
         toast('create_new_account')
@@ -79,6 +73,12 @@ function main()
             swipeCloseApp()
             goto label_continue
         end
+    else 
+        if checkImageIsExists(enter_the_confirmation_code) then goto label_confirmationcode end
+        if checkImageIsExists(profile_picture) then goto label_profilepicture end
+        if checkImageIsExists(turn_on_contact) then goto label_turnoncontact end
+        if checkImageIsExists(no_friend) then goto label_nofriend end
+        if checkImageIsExists(add_phone_number) then goto label_addphonenumber end
     end
 
     if checkSuspended() then goto label_continue end
@@ -133,7 +133,7 @@ function main()
 
     setGender()
 
-    if waitImageVisible(what_is_mobile_number) or waitImageVisible(sign_up_with_email) then
+    if waitImageVisible(what_is_mobile_number, 10) or waitImageVisible(sign_up_with_email, 10) then
         toast("what_is_mobile_number")
         findAndClickByImage(sign_up_with_email)
         waitImageNotVisible(what_is_mobile_number)
@@ -268,7 +268,7 @@ function main()
         findAndClickByImage(dont_allow)
         findAndClickByImage(i_agree_btn)
 
-        waitImageNotVisible(agree_facebook_term, 60)
+        waitImageNotVisible(agree_facebook_term, 100)
         if checkImageIsExists(to_sign_up_agree) or checkImageIsExists(agree_facebook_term) then 
             swipeCloseApp()
             goto label_continue
@@ -570,9 +570,9 @@ function main()
 
         removeAccount()
         toast('Done 1 nick live')
-    else 
-        if checkSuspended() then goto label_continue end
     end
+
+    if checkSuspended() then goto label_continue end
 
     sleep(2)
     if info.status == 'INPROGRESS' then 
