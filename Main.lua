@@ -56,6 +56,8 @@ function main()
 
     if checkSuspended() then goto continue end
 
+    if  info.profileUid then goto continueAccountRegistered end 
+
     if waitImageVisible(create_new_account, 30) then
         if checkImageIsExists(fb_logo_mode_new) then 
             swipeCloseApp()
@@ -236,7 +238,7 @@ function main()
 
         if checkImageIsExists(to_sign_up_agree) or checkImageIsExists(agree_facebook_term) or checkImageIsExists(i_agree_btn) then 
             goto continue
-        end
+        end 
 
         if waitImageVisible(already_have_account) then
             press(380, 600)
@@ -244,6 +246,7 @@ function main()
         end
     end
 
+    ::confirmationcode::
     if waitImageVisible(enter_the_confirmation_code, 10) or waitImageVisible(did_not_get_code, 10) then
         toast("enter_the_confirmation_code")
         sleep(3)
@@ -271,15 +274,19 @@ function main()
         end
 
         if waitImageNotVisible(enter_the_confirmation_code) then 
+            info.profileUid = getUIDFBLogin()
+            archiveCurrentAccount()
             sleep(5)
         end
-
-        info.profileUid = getUIDFBLogin()
-        archiveCurrentAccount()
 
         if checkSuspended() then goto continue end
     end
 
+    if waitImageVisible(enter_the_confirmation_code, 1) then 
+        goto confirmationcode
+    end 
+
+    ::continueAccountRegistered::
     if waitImageVisible(profile_picture, 8) or waitImageVisible(add_picture, 8) then
         toast("profile_picture")
         if waitImageVisible(not_now, 2) then
