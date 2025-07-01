@@ -1,4 +1,4 @@
-local path = rootDir() .. "/Device/accounts2.txt"
+local path = rootDir() .. "/Device/accounts.txt"
 
 local function removeLastIfInProgress(filePath)
     local fh = io.open(filePath, "r")
