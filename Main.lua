@@ -61,6 +61,7 @@ function main()
         goto continueAccountRegistered
     end 
 
+    ::createnewaccount::
     if waitImageVisible(create_new_account, 30) then
         toast('create_new_account')
         if checkImageIsExists(fb_logo_mode_new, 2) or waitImageVisible(join_facebook, 2) then 
@@ -93,6 +94,8 @@ function main()
         findAndClickByImage(create_new_account_blue)
         waitImageNotVisible(create_new_account_blue)
     end
+
+    if checkImageIsExists(create_new_account) then goto createnewaccount end 
 
     setFirstNameLastName()
     
