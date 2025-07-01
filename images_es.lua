@@ -19,7 +19,7 @@ what_on_your_mind = {currentPath() .. "/images_es/what_on_your_mind.png"}
 
 create_new_account = {currentPath() .. "/images_es/create_new_acc.png", currentPath() .. "/images_es/create_new_acc2.png", currentPath() .. "/images_es/create_new_acc3.png", currentPath() .. "/images_es/create_new_acc4.png", currentPath() .. "/images_es/create_new_acc4.png"}
 create_new_account_blue = {currentPath() .. "/images_es/create_new_acc_blue.png"}
--- get_started = {currentPath() .. "/images_es/get_started.png"}
+get_started = {currentPath() .. "/images_es/get_started2.png"}
 what_name = {currentPath() .. "/images_es/what_name.png"}
 already_have_account = {currentPath() .. "/images_es/already_have_account.png"}
 setting_menu = {currentPath() .. "/images_es/setting_menu3.png", currentPath() .. "/images_es/setting_menu2.png", currentPath() .. "/images_es/setting_menu.png"}
