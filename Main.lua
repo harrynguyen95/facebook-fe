@@ -216,10 +216,10 @@ function main()
         end 
     end
 
-    if waitImageVisible(you_are_logged_in, 2) then
-        toast("you_are_logged_in")
-        press(375, 805) -- OK btn
-    end
+    -- if waitImageVisible(you_are_logged_in, 2) then
+    --     toast("you_are_logged_in")
+    --     press(375, 805) -- OK btn
+    -- end
 
     if waitImageVisible(save_your_login_info) then
         toast("save_your_login_info")
@@ -311,20 +311,6 @@ function main()
         sleep(2)
     end
 
-    ::label_nofriend::
-    if waitImageVisible(no_friend, 10) or waitImageVisible(no_friend_icon, 10) then
-        toast("no_friend")
-        findAndClickByImage(next)
-        waitImageVisible(no_friend)
-    end
-
-    ::label_addphonenumber::
-    if waitImageVisible(add_phone_number) then
-        toast("add_phone_number")
-        press(380, 1220) -- skip
-        waitImageVisible(add_phone_number)
-    end
-
     ::label_turnoncontact::
     if waitImageVisible(turn_on_contact) then
         toast("turn_on_contact")
@@ -348,6 +334,20 @@ function main()
         
         waitImageNotVisible(turn_on_contact)
         sleep(2)
+    end
+
+    ::label_nofriend::
+    if waitImageVisible(no_friend, 10) or waitImageVisible(no_friend_icon, 10) then
+        toast("no_friend")
+        findAndClickByImage(next)
+        waitImageVisible(no_friend)
+    end
+
+    ::label_addphonenumber::
+    if waitImageVisible(add_phone_number) then
+        toast("add_phone_number")
+        press(380, 1220) -- skip
+        waitImageVisible(add_phone_number)
     end
 
     if checkSuspended() then goto label_continue end
