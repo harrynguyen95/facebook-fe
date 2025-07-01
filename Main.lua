@@ -46,9 +46,9 @@ function main()
 
     ::openFacebook::
     openFacebook()
-    sleep(5)
+    sleep(10)
  
-    if waitImageVisible(page_not_available_now) then 
+    if waitImageVisible(page_not_available_now, 3) then 
         toast('page_not_available_now')
         swipeCloseApp()
         goto continue
@@ -56,10 +56,11 @@ function main()
 
     if checkSuspended() then goto continue end
 
-    if  info.profileUid then goto continueAccountRegistered end 
+    if info.profileUid ~= '' then goto continueAccountRegistered end 
 
-    if waitImageVisible(create_new_account, 30) then
-        if checkImageIsExists(fb_logo_mode_new) or waitImageVisible(join_facebook) then 
+    if waitImageVisible(create_new_account, 20) then
+        toast('create_new_account')
+        if checkImageIsExists(fb_logo_mode_new, 2) or waitImageVisible(join_facebook, 2) then 
             toast('facebook mode new.')
 
             swipeCloseApp()
@@ -348,7 +349,7 @@ function main()
 
     if checkSuspended() then goto continue end
 
-    if waitImageVisible(page_not_available_now) then 
+    if checkImageIsExists(page_not_available_now) then 
         toast('page_not_available_now')
         swipeCloseApp()
         goto openFacebook
