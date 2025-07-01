@@ -58,7 +58,7 @@ function main()
 
     if info.profileUid ~= '' then goto continueAccountRegistered end 
 
-    if waitImageVisible(create_new_account, 20) then
+    if waitImageVisible(create_new_account, 30) then
         toast('create_new_account')
         if checkImageIsExists(fb_logo_mode_new, 2) or waitImageVisible(join_facebook, 2) then 
             toast('facebook mode new.')
