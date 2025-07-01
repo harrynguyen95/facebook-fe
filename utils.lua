@@ -167,7 +167,6 @@ function findAndClickByImage(paths, threshold)
     if threshold == nil then
         threshold = THRESHOLD
     end
-
     sleep(0.5)
 
     if type(paths) == "table" then
@@ -177,8 +176,7 @@ function findAndClickByImage(paths, threshold)
                 if v ~= nil then
                     local x = v[1]
                     local y = v[2]
-                    tap(x, y)
-                    sleep(0.016)
+                    press(x, y)
                     return true
                 end
             end
@@ -189,8 +187,7 @@ function findAndClickByImage(paths, threshold)
             if v ~= nil then
                 local x = v[1]
                 local y = v[2]
-                tap(x, y)
-                sleep(0.5)
+                press(x, y)
                 return true
             end
         end
@@ -202,11 +199,18 @@ function checkImageIsExist(path, threshold)
     if threshold == nil then
         threshold = THRESHOLD
     end
-    local result = findImage(path, 1, threshold, nil, DEBUG_IMAGE, 1)
-    for i, v in pairs(result) do
-        if v ~= nil then
-            return true
+
+    local file = io.open(path, "r")
+    if file then
+        local result = findImage(path, 1, threshold, nil, DEBUG_IMAGE, 1)
+        for i, v in pairs(result) do
+            if v ~= nil then
+                return true
+            end
         end
+    else 
+        -- log(path, 'Not found img')
+        -- toastr('Not found img: ' .. path, 1)
     end
     return false
 end
@@ -226,6 +230,7 @@ function checkImageIsExists(paths, threshold)
 end
 
 function waitImageVisible(paths, timeout)
+    toast('..', 1)
     if timeout == nil then
         timeout = 5
     end
@@ -241,7 +246,7 @@ end
 
 function waitImageNotVisible(paths, timeout)
     if timeout == nil then
-        timeout = 10
+        timeout = 15
     end
 
     for i = 1, timeout do
@@ -475,6 +480,7 @@ function httpRequest(params)
 
     local c = curl.easy {
         url = params.url,
+        proxy = params.proxy or nil, 
         ssl_verifypeer = params.ssl_verifypeer or false,
         ssl_verifyhost = params.ssl_verifyhost or false,
         customrequest = method,
@@ -740,7 +746,7 @@ function getUIDFBLogin()
 end
 
 function checkInternetAndPublicIP()
-    local url = "https://api.myip.com/?v=" .. math.random(1, 65535)
+    local url = "https://api.ipify.org?v=" .. math.random(1, 65535)
     local resultTable = {}
 
     local response, error = httpRequest {
@@ -748,21 +754,22 @@ function checkInternetAndPublicIP()
         method = "GET",
         headers = {
             ["Content-Type"] = "application/json"
-        }
+        },
     }
+    toastr(response, 4)
 
     if error then
         log("No internet connection. Error: " .. tostring(error))
         toast("No Internet. Error: " .. tostring(error), 3)
     else
-        local data = json.decode(response)
-        if data.ip and data.country then
-            log("Connected to the Internet. Public IP: " .. data.ip .. ", Country: " .. data.country)
-            toast(data.country .. " - " .. data.ip, 3)
-        else
-            log("Connected, but failed to fetch public IP.")
-            toast("Internet OK, but no public IP detected.", 3)
-        end
+        -- local data = json.decode(response)
+        -- if data.ip and data.country then
+        --     log("Connected to the Internet. Public IP: " .. data.ip .. ", Country: " .. data.country)
+        --     toast(data.country .. " - " .. data.ip, 3)
+        -- else
+        --     log("Connected, but failed to fetch public IP.")
+        --     toast("Internet OK, but no public IP detected.", 3)
+        -- end
     end
 end
 
