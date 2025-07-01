@@ -48,7 +48,7 @@ function main()
     openFacebook()
     sleep(10)
  
-    if waitImageVisible(page_not_available_now, 3) then 
+    if waitImageVisible(page_not_available_now, 2) then 
         toast('page_not_available_now')
         swipeCloseApp()
         goto continue
@@ -60,7 +60,7 @@ function main()
     end 
 
     ::createnewaccount::
-    if waitImageVisible(create_new_account, 60) then
+    if waitImageVisible(create_new_account, 30) then
         toast('create_new_account')
 
         if waitImageVisible(fb_logo_mode_new, 2) then
@@ -72,7 +72,7 @@ function main()
 
         findAndClickByImage(create_new_account)
 
-        if waitImageNotVisible(logo_facebook_2, 30) then 
+        if waitImageNotVisible(logo_facebook_2, 25) then 
             sleep(3)
         else 
             toast('Can not next Logo page')
