@@ -146,6 +146,7 @@ function main()
 
         if info.mailRegister ~= nil and info.mailRegister ~= '' then 
             press(310, 410)
+            findAndClickByImage(x_input_icon)
             typeText(info.mailRegister)
 
             findAndClickByImage(next)
@@ -167,6 +168,7 @@ function main()
             sleep(1)
             if info.mailRegister ~= nil or info.mailRegister ~= '' then 
                 press(310, 410)
+                findAndClickByImage(x_input_icon)
                 typeText(info.mailRegister)
 
                 findAndClickByImage(next)

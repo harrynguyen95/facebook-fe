@@ -587,8 +587,10 @@ function setFirstNameLastName()
         toast("what_name")
         local name = getRandomName()
         press(200, 380)
+        findAndClickByImage(x_input_icon)
         typeText(name[1]) sleep(0.5)
         press(600, 380) 
+        findAndClickByImage(x_input_icon)
         typeText(name[2]) sleep(0.5)
         findAndClickByImage(next)
         waitImageNotVisible(what_name)
@@ -598,20 +600,20 @@ end
 function setGender()
     if waitImageVisible(what_is_gender) then
         toast("what_is_gender")
-        sleep(1)
+        if waitImageVisible(gender_options) then 
+            math.randomseed(os.time() + math.random())
+            local x = math.random(500, 560)
+            local y = 440
 
-        math.randomseed(os.time() + math.random())
-        local x = math.random(500, 560)
-        local y = 440
+            local xRandom = math.random(1, 2)
+            if xRandom == 2 then
+                y = 540
+            end
+            press(x, y)
 
-        local xRandom = math.random(1, 2)
-        if xRandom == 2 then
-            y = 540
+            findAndClickByImage(next)
+            waitImageNotVisible(what_is_gender)
         end
-        press(x, y)
-
-        findAndClickByImage(next)
-        waitImageNotVisible(what_is_gender)
     end
 end
 

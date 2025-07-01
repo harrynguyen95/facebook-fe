@@ -88,3 +88,5 @@ add_picture = {dirPath .. "add_picture.png"}
 no_friend_icon = {dirPath .. "no_friend_icon.png"}
 mail_did_not_receive_code = {dirPath .. "mail_did_not_receive_code.png"}
 setting_up_for_fb = {dirPath .. "setting_up_for_fb.png"}
+x_input_icon = {dirPath .. "x_input_icon.png"}
+gender_options = {dirPath .. "gender_options.png"}
