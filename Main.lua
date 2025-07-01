@@ -1,8 +1,9 @@
 -- ====== CONFIG ======
+LANGUAGE = 'ES' -- EN|ES English|Spanish
 MAIL_MODE = 1  -- 1|2 hotmail-dongvanfb|gmail-thuemails.com
 ADD_MAIL_DOMAIN = false
 REMOVE_REGISTER_MAIL = false
-THUE_LAI_MAIL_THUEMAILS = false -- 1|2 true|false
+THUE_LAI_MAIL_THUEMAILS = false
 TIMES_XOA_INFO = 2 -- 0|1|2|3
 
 -- ====== INFO ======
@@ -23,7 +24,8 @@ info = {
 }
 
 -- ====== LIB REQUIRED ======
-require('images')
+function isES() return LANGUAGE == 'ES' end
+local images = require(isES() and "images_es" or "images")
 require('utils')
 require('functions')
 
@@ -37,25 +39,22 @@ function main()
     goto debug
     ::debug::
 
-    ::xoainfo::
     if info.mailRegister == nil or info.mailRegister == '' then 
-        -- Chưa lấy đc mail mới mới reset. Lấy được rồi thì thôi
-
         homeAndUnlockScreen()
         executeXoaInfo() sleep(1)
     end
 
     ::openFacebook::
     openFacebook()
-
+    sleep(5)
+ 
     if waitImageVisible(page_not_available_now) then 
+        toast('page_not_available_now')
         swipeCloseApp()
-        goto xoainfo
+        goto continue
     end 
 
-    if waitImageVisible(dont_allow, 2) then
-        findAndClickByImage(dont_allow)
-    end
+    if checkSuspended() then goto continue end
 
     if waitImageVisible(create_new_account, 30) then
         if checkImageIsExists(fb_logo_mode_new) then 
@@ -65,16 +64,15 @@ function main()
 
         findAndClickByImage(create_new_account)
 
-        if waitImageNotVisible(logo_facebook_2, 30) then 
+        if waitImageNotVisible(logo_facebook_2, 20) then 
+            sleep(3)
         else 
             toast('Can not next Logo page')
             swipeCloseApp()
-            goto xoainfo
+            goto continue
         end
         sleep(3)
     end
-
-    if checkSuspended() then goto continue end
 
     if waitImageVisible(join_facebook, 3) then
         toast('facebook mode new.')
@@ -95,7 +93,7 @@ function main()
     end
 
     setFirstNameLastName()
-
+    
     if waitImageVisible(what_is_birthday, 3) then
         toast("what_is_birthday")
         press(270, 470) sleep(0.5)
@@ -106,7 +104,7 @@ function main()
         for i = 1, math.random(3, 10) do
             press(400, math.random(1003, 1008))
         end
-        for i = 1, math.random(12, 18) do
+        for i = 1, math.random(10, 18) do
             press(600, math.random(1003, 1008))
         end
         findAndClickByImage(next)
@@ -135,8 +133,14 @@ function main()
             press(660, 410) -- X icon click
             press(660, 410)
             typeText(info.mailRegister) sleep(0.5)
+
             findAndClickByImage(next)
             archiveCurrentAccount()
+
+            if waitImageVisible(already_have_account, 2) then
+                toast("already_have_account")
+                findAndClickByImage(continue_creating_account)
+            end
 
             if waitImageVisible(exist_account_in_mail, 8) then
                 info.mailRegister = nil
@@ -159,11 +163,6 @@ function main()
             swipeCloseApp()
             goto openFacebook
         end
-    end
-
-    if waitImageVisible(already_have_account, 2) then
-        toast("already_have_account")
-        findAndClickByImage(continue_creating_account)
     end
 
     if waitImageVisible(what_is_birthday, 2) then
@@ -216,7 +215,6 @@ function main()
     if waitImageVisible(save_your_login_info, 8) then
         toast("save_your_login_info")
         findAndClickByImage(save)
-        -- press(370, 510) -- not now
 
         waitImageNotVisible(save_your_login_info)
     end
@@ -227,7 +225,7 @@ function main()
     end
 
     if  waitImageVisible(to_sign_up_agree) or waitImageVisible(agree_facebook_term) or waitImageVisible(i_agree_btn) then
-        toast("i_agree_btn")
+        toast("agree_facebook_term")
 
         if waitImageVisible(dont_allow, 2) then
             findAndClickByImage(dont_allow)
@@ -237,12 +235,12 @@ function main()
         waitImageNotVisible(agree_facebook_term, 60)
 
         if checkImageIsExists(to_sign_up_agree) or checkImageIsExists(agree_facebook_term) or checkImageIsExists(i_agree_btn) then 
-            goto xoainfo
+            goto continue
         end
 
-        if waitImageVisible(do_you_already_have_account) then
+        if waitImageVisible(already_have_account) then
             press(380, 600)
-            waitImageNotVisible(do_you_already_have_account, 30)
+            waitImageNotVisible(already_have_account, 30)
         end
     end
 
@@ -256,8 +254,7 @@ function main()
 
         local OTPcode = getCodeMailRegister()
         if OTPcode then 
-            press(130, 410)
-            press(660, 410)
+            findAndClickByImage(input_confirm_code)
             typeText(OTPcode) sleep(1)
             findAndClickByImage(next)
         else
@@ -273,8 +270,9 @@ function main()
             goto continue
         end
 
-        waitImageNotVisible(enter_the_confirmation_code)
-        sleep(5)
+        if waitImageNotVisible(enter_the_confirmation_code) then 
+            sleep(5)
+        end
 
         info.profileUid = getUIDFBLogin()
         archiveCurrentAccount()
@@ -290,8 +288,13 @@ function main()
             press(380, 1260) -- skip
         end
         
-        waitImageNotVisible(profile_picture)
-        sleep(2)
+        if waitImageNotVisible(profile_picture, 20) then 
+            sleep(3)
+        else 
+            swipeCloseApp()
+            goto openFacebook
+        end 
+
         if checkSuspended() then goto continue end
 
         if waitImageVisible(dont_allow, 2) then
@@ -320,6 +323,7 @@ function main()
         end
         
         waitImageNotVisible(turn_on_contact)
+        sleep(2)
     end
 
     if waitImageVisible(no_friend) then
@@ -334,167 +338,30 @@ function main()
         waitImageVisible(add_phone_number)
     end
 
+    if waitImageVisible(add_phone_number_home, 3) then
+        toast("add_phone_number_home")
+        findAndClickByImage(not_now)
+    end
+
     if checkSuspended() then goto continue end
 
     if waitImageVisible(page_not_available_now) then 
+        toast('page_not_available_now')
         swipeCloseApp()
         goto openFacebook
     end 
 
-    ::addmail::
-    if ADD_MAIL_DOMAIN then
-        if waitImageVisible(what_on_your_mind) then 
-            toast('Add mail what_on_your_mind')
-
-            press(690, 1290) -- go to menu
-
-            if waitImageVisible(setting_menu) then
-                press(600, 90) -- setting
-            end
-
-            if waitImageVisible(setting_privacy) and waitImageVisible(see_more_account_center) then
-                toast('setting_privacy')
-                findAndClickByImage(see_more_account_center)
-                waitImageNotVisible(setting_privacy)
-            end
-
-            if waitImageVisible(account_center) then
-                toast('account_center')
-                swipe(600, 800, 610, 650) sleep(3)
-
-                if waitImageVisible(personal_details_btn) then
-                    findAndClickByImage(personal_details_btn)
-                else
-                    if waitImageVisible(your_information_and_permission) then
-                        findAndClickByImage(your_information_and_permission)
-                    end
-                end
-            end
-
-            if waitImageVisible(personal_details_page) or waitImageVisible(your_information_and_2) then
-                toast('personal_details_page')
-                press(630, 550) -- Contact info btn
-
-                if waitImageVisible(contact_information) then
-                    press(370, 1260) -- Add new contact btn
-                end
-                
-                if waitImageVisible(add_mail) then
-                    toast('add_mail')
-                    sleep(1)
-                    findAndClickByImage(add_mail)
-                else 
-                    toast('add_mail else')
-                    press(130, 730) sleep(2) -- add mail options
-                end
-
-                if waitImageVisible(add_a_phone_number, 2) then
-                    toast('add_a_phone_number')
-                    press(380, 1260) -- add email instead
-                end
-
-                if waitImageVisible(add_email_address) then
-                    toast('add_email_address')
-
-                    press(110, 560) -- Input new mail address
-                    typeText(info.mailLogin) sleep(0.5)
-                    press(700, 1280) -- enter done typing
-                    findAndClickByImage(next)
-
-                    if waitImageVisible(email_used_added) then
-                        press(55, 155) -- X icon
-                        press(45, 155) -- back
-                        press(45, 155) -- back
-                        press(55, 155) -- X icon
-                        press(45, 90) -- back
-                        press(60, 1290) -- back to homepage
-                    else 
-                        if waitImageVisible(enter_confirm_code, 10) then
-                            toast('enter_confirm_code')
-                            local code = getFreeMailConfirmCode()
-                            toast('CODE: ' .. (code or '-'), 2)
-                            if code then
-                                press(130, 500) -- input code
-                                press(660, 475) -- X icon
-                                typeText(code) sleep(0.5)
-                                press(530, 630) -- click to outside
-
-                                press(380, 1260) -- next btn
-                                waitImageNotVisible(enter_confirm_code)
-
-                                if waitImageVisible(added_email, 8) then 
-                                    press(380, 1260) -- close btn
-                                end
-
-                                if waitImageVisible(contact_information) then
-                                    if REMOVE_REGISTER_MAIL then
-                                        press(650, 600) -- mail register
-                                        if waitImageVisible(delete_mail) then
-                                            findAndClickByImage(delete_mail)
-                                            sleep(1)
-                                            press(240, 850)
-
-                                            if waitImageVisible(check_your_email, 3) then
-                                                toast('check_your_email')
-                                                local code = getFreeMailConfirmCodeSecondTime()
-                                                toast('CODE: ' .. (code or '-'), 2)
-
-                                                if code and code ~= '' then
-                                                    press(100, 850) -- code input
-                                                    typeText(code) sleep(1)
-                                                    if waitImageVisible(continue_code_mail) then
-                                                        findAndClickByImage(continue_code_mail)
-
-                                                        waitImageNotVisible(check_your_email)
-                                                    end
-                                                else 
-                                                    goto get2FA
-                                                end
-                                            end
-
-                                            if waitImageVisible(deleted_previous_mail, 8) then
-                                                press(380, 1260) -- close btn
-                                                if waitImageVisible(contact_information) then
-                                                    press(50, 155) -- back
-                                                    if waitImageVisible(personal_details_page) then
-                                                        press(50, 155) -- back
-                                                        press(55, 155) -- back
-
-                                                        press(45, 90) -- back to setting menu
-                                                        press(60, 1290) -- back to homepage
-                                                    end
-                                                end
-                                            end
-                                        end
-                                    else 
-                                        press(50, 155) -- back
-                                        if waitImageVisible(personal_details_page) then
-                                            press(50, 155) -- back
-                                            press(55, 155) -- back
-
-                                            press(45, 90) -- back to setting menu
-                                            press(60, 1290) -- back to homepage
-                                        end
-                                    end
-                                end
-                            else 
-                                info.mailLogin = info.mailRegister -- set mail register is mail login
-                            end
-                        end
-                    end
-                end
-            end
-        end
-    end
-
     ::get2FA::
+    toast('2FA..')
     if waitImageVisible(what_on_your_mind) then 
         toast('2FA what_on_your_mind')
         press(690, 1290) -- go to menu
 
         if waitImageVisible(setting_menu, 8) then
             toast('setting_menu')
-            press(600, 90) sleep(2) -- setting cog icon
+            press(600, 90)
+            waitImageNotVisible(setting_menu)
+            sleep(2) -- setting cog icon
         end
 
         if waitImageVisible(setting_privacy, 8) then
@@ -507,7 +374,8 @@ function main()
 
         if waitImageVisible(account_center, 8) then
             toast('account_center')
-            swipe(600, 800, 610, 650) sleep(3)
+            sleep(1)
+            swipe(600, 800, 610, 650) sleep(2)
 
             if waitImageVisible(personal_details_btn) then
                 findAndClickByImage(personal_details_btn)
@@ -621,7 +489,7 @@ function main()
         for i, line in ipairs(searchTexts) do
             typeText(line) sleep(0.5)
             press(700, 1300) sleep(2) -- btn search blue
-            sleep(2)
+            sleep(3)
             swipe(500, 900, 500, 800) sleep(2)
             if i < #searchTexts then
                 press(300, 90); -- click back into search box
@@ -664,6 +532,7 @@ function main()
 
     sleep(2)
     if info.status == 'INPROGRESS' then 
+        swipeCloseApp()
         goto openFacebook
     else 
         resetInfoObject()

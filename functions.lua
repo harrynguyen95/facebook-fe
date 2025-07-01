@@ -325,7 +325,7 @@ function executeHotmailFromDongVanFb()
             local response, error = httpRequest {
                 url = "https://api.dongvanfb.net/user/buy?apikey=" .. MAIL_DONGVANFB_API_KEY .. "&account_type=" .. service_id .. "&quality=1&type=full",
             }
-            -- log(response, 'executeHotmailFromDongVanFb')
+            log(response, 'executeHotmailFromDongVanFb')
 
             if response then
                 response = json.decode(response)
@@ -538,11 +538,11 @@ end
 
 -- ====== FE FUNCTION ======
 function removeAccount()
-    sleep(3)
+    sleep(2)
     if waitImageVisible(avatar_picture) or waitImageVisible(create_new_account) then
         press(695, 90) sleep(5) -- three dots icon
         press(300, 1250) sleep(4) -- remove profiles from this device
-        press(600, 330) sleep(4) -- btn remove gray
+        press(600, 330) sleep(5) -- btn remove gray
         press(400, 1150) sleep(1) -- btn remove blue confirm
 
         if waitImageVisible(avatar_picture) or waitImageVisible(create_new_account) then 
@@ -601,13 +601,13 @@ function setGender()
         toast("what_is_gender")
         sleep(1)
 
-        local x = 590
-        local y = 420
         math.randomseed(os.time() + math.random())
+        local x = math.random(500, 560)
+        local y = 440
 
         local xRandom = math.random(1, 2)
         if xRandom == 2 then
-            y = 520
+            y = 540
         end
         press(x, y)
 
@@ -685,10 +685,10 @@ function executeXoaInfo()
 end
 
 -- function changeMailDomain()
---     ::changemail::
+--     ::addmail::
 --     if ADD_MAIL_DOMAIN then
 --         if waitImageVisible(what_on_your_mind) then 
---             toast('Change mail what_on_your_mind')
+--             toast('Add mail what_on_your_mind')
 
 --             press(690, 1290) -- go to menu
 
@@ -704,13 +704,18 @@ end
 
 --             if waitImageVisible(account_center) then
 --                 toast('account_center')
---                 swipe(600, 800, 610, 650)
+--                 swipe(600, 800, 610, 650) sleep(3)
+
 --                 if waitImageVisible(personal_details_btn) then
 --                     findAndClickByImage(personal_details_btn)
+--                 else
+--                     if waitImageVisible(your_information_and_permission) then
+--                         findAndClickByImage(your_information_and_permission)
+--                     end
 --                 end
 --             end
 
---             if waitImageVisible(personal_details_page) then
+--             if waitImageVisible(personal_details_page) or waitImageVisible(your_information_and_2) then
 --                 toast('personal_details_page')
 --                 press(630, 550) -- Contact info btn
 

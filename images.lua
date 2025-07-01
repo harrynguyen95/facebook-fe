@@ -1,6 +1,5 @@
 
 get_started = {currentPath() .. "/images/get_started.png"}
-what_is_your_name = {currentPath() .. "/images/what_is_your_name.png"}
 what_is_birthday = {currentPath() .. "/images/what_is_your_birthday.png", currentPath() .. "/images/what_is_your_birthday2.png", currentPath() .. "/images/what_is_your_birthday11.png"}
 next = {currentPath() .. "/images/next.png", currentPath() .. "/images/next2.png", currentPath() .. "/images/next3.png"}
 what_is_gender = {currentPath() .. "/images/what_is_your_gender.png"}

@@ -202,11 +202,21 @@ function checkImageIsExist(path, threshold)
     if threshold == nil then
         threshold = THRESHOLD
     end
-    local result = findImage(path, 1, threshold, nil, DEBUG_IMAGE, 1)
-    for i, v in pairs(result) do
-        if v ~= nil then
-            return true
+    -- if path == nil then
+    --     return false
+    -- end
+    
+    local file = io.open(path, "r")
+    if file then
+        local result = findImage(path, 1, threshold, nil, DEBUG_IMAGE, 1)
+        for i, v in pairs(result) do
+            if v ~= nil then
+                return true
+            end
         end
+    else 
+        -- log(path, 'Not found img')
+        -- toastr('Not found img: ' .. path, 1)
     end
     return false
 end
@@ -476,6 +486,7 @@ function httpRequest(params)
 
     local c = curl.easy {
         url = params.url,
+        proxy = params.proxy or nil, 
         ssl_verifypeer = params.ssl_verifypeer or false,
         ssl_verifyhost = params.ssl_verifyhost or false,
         customrequest = method,
@@ -741,7 +752,7 @@ function getUIDFBLogin()
 end
 
 function checkInternetAndPublicIP()
-    local url = "https://api.myip.com/?v=" .. math.random(1, 65535)
+    local url = "https://api.ipify.org?v=" .. math.random(1, 65535)
     local resultTable = {}
 
     local response, error = httpRequest {
@@ -749,21 +760,22 @@ function checkInternetAndPublicIP()
         method = "GET",
         headers = {
             ["Content-Type"] = "application/json"
-        }
+        },
     }
+    toastr(response, 4)
 
     if error then
         log("No internet connection. Error: " .. tostring(error))
         toast("No Internet. Error: " .. tostring(error), 3)
     else
-        local data = json.decode(response)
-        if data.ip and data.country then
-            log("Connected to the Internet. Public IP: " .. data.ip .. ", Country: " .. data.country)
-            toast(data.country .. " - " .. data.ip, 3)
-        else
-            log("Connected, but failed to fetch public IP.")
-            toast("Internet OK, but no public IP detected.", 3)
-        end
+        -- local data = json.decode(response)
+        -- if data.ip and data.country then
+        --     log("Connected to the Internet. Public IP: " .. data.ip .. ", Country: " .. data.country)
+        --     toast(data.country .. " - " .. data.ip, 3)
+        -- else
+        --     log("Connected, but failed to fetch public IP.")
+        --     toast("Internet OK, but no public IP detected.", 3)
+        -- end
     end
 end
 
