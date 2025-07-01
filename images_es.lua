@@ -13,7 +13,7 @@ enter_the_confirmation_code = {currentPath() .. "/images_es/enter_the_confirmati
 profile_picture = {currentPath() .. "/images_es/profile_picture.png"}
 turn_on_contact = {currentPath() .. "/images_es/turn_on_contact.png"}
 skip = {currentPath() .. "/images_es/skip.png", currentPath() .. "/images_es/skip2.png", currentPath() .. "/images_es/skip3.png"}
-not_now = {currentPath() .. "/images_es/not_now.png", currentPath() .. "/images_es/not_now2.png"}
+not_now = {currentPath() .. "/images_es/not_now.png", currentPath() .. "/images_es/not_now2.png", currentPath() .. "/images_es/not_now3.png"}
 no_friend = {currentPath() .. "/images_es/no_friend.png", currentPath() .. "/images_es/no_friend2.png"}
 what_on_your_mind = {currentPath() .. "/images_es/what_on_your_mind.png"}
 
