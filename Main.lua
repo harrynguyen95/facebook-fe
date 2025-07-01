@@ -106,7 +106,7 @@ function main()
 
     setFirstNameLastName()
     
-    if waitImageVisible(what_is_birthday, 2) then
+    if waitImageVisible(what_is_birthday) then
         toast("what_is_birthday")
         press(270, 470) sleep(0.5)
 
@@ -122,16 +122,20 @@ function main()
         findAndClickByImage(next)
 
         if waitImageNotVisible(what_is_birthday, 30) then 
-        else 
-            toast('Can not next')
-            swipeCloseApp()
-            goto label_continue
+            if (findAndClickByImage(next)) then 
+                if waitImageNotVisible(what_is_birthday, 30) then 
+                else 
+                    toast('Can not next')
+                    swipeCloseApp()
+                    goto label_continue
+                end 
+            end
         end 
     end
 
     setGender()
 
-    if waitImageVisible(what_is_mobile_number, 2) then
+    if waitImageVisible(what_is_mobile_number) or waitImageVisible(sign_up_with_email) then
         toast("what_is_mobile_number")
         findAndClickByImage(sign_up_with_email)
         waitImageNotVisible(what_is_mobile_number)
@@ -195,7 +199,7 @@ function main()
         end
     end
 
-    if waitImageVisible(what_is_birthday, 2) then
+    if waitImageVisible(what_is_birthday) then
         toast("what_is_birthday")
         press(270, 470) sleep(0.5)
 
@@ -211,16 +215,20 @@ function main()
         findAndClickByImage(next)
 
         if waitImageNotVisible(what_is_birthday, 30) then 
-        else 
-            toast('Can not next')
-            swipeCloseApp()
-            goto label_continue
+            if (findAndClickByImage(next)) then 
+                if waitImageNotVisible(what_is_birthday, 30) then 
+                else 
+                    toast('Can not next')
+                    swipeCloseApp()
+                    goto label_continue
+                end 
+            end
         end 
     end
 
     setGender()
 
-    if waitImageVisible(create_a_password, 2) then
+    if waitImageVisible(create_a_password) then
         toast("create_a_password")
         press(135, 450)
         findAndClickByImage(password_eye)
@@ -237,12 +245,12 @@ function main()
         end 
     end
 
-    if waitImageVisible(you_are_logged_in, 2) then
+    if waitImageVisible(you_are_logged_in) then
         toast("you_are_logged_in")
         press(375, 805) -- OK btn
     end
 
-    if waitImageVisible(save_your_login_info, 2) then
+    if waitImageVisible(save_your_login_info) then
         toast("save_your_login_info")
         findAndClickByImage(save)
 
@@ -313,7 +321,7 @@ function main()
     end
 
     ::label_profilepicture::
-    if waitImageVisible(profile_picture, 2) or waitImageVisible(add_picture, 2) then
+    if waitImageVisible(profile_picture) or waitImageVisible(add_picture) then
         toast("profile_picture")
 
         if waitImageVisible(dont_allow, 2) then
@@ -340,7 +348,7 @@ function main()
     end
 
     ::label_addphonenumber::
-    if waitImageVisible(add_phone_number, 3) then
+    if waitImageVisible(add_phone_number) then
         toast("add_phone_number")
         press(380, 1220) -- skip
         waitImageVisible(add_phone_number)

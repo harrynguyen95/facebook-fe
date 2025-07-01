@@ -2,7 +2,7 @@
 local dirPath = currentDir() .. "/images_es/"
 
 what_is_birthday = {dirPath .. "what_is_your_birthday.png"}
-next = {dirPath .. "next.png"}
+next = {dirPath .. "next.png", dirPath .. "next2.png"}
 what_is_gender = {dirPath .. "what_is_your_gender.png"}
 what_is_mobile_number = {dirPath .. "what_is_mobile_number.png"}
 sign_up_with_email = {dirPath .. "sign_up_with_email.png"}

@@ -583,7 +583,7 @@ function checkSuspended()
 end
 
 function setFirstNameLastName()
-    if waitImageVisible(what_name, 2) then
+    if waitImageVisible(what_name) then
         toast("what_name")
         local name = getRandomName()
         press(200, 380)
@@ -596,7 +596,7 @@ function setFirstNameLastName()
 end
 
 function setGender()
-    if waitImageVisible(what_is_gender, 2) then
+    if waitImageVisible(what_is_gender) then
         toast("what_is_gender")
         sleep(1)
 
