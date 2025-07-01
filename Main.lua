@@ -60,7 +60,7 @@ function main()
     end 
 
     ::createnewaccount::
-    if waitImageVisible(create_new_account, 50) then
+    if waitImageVisible(create_new_account, 60) then
         toast('create_new_account')
 
          if waitImageVisible(fb_logo_mode_new, 2) then
