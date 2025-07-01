@@ -29,17 +29,12 @@ local images = require(isES() and "images_es" or "images")
 require('utils')
 require('functions')
 
-
 -- ====== MAIN ======
 function main()
 
     ::continue::
     log('----------------------------------- Main running ---------------------------------------')
     archiveCurrentAccount()
-
-    
-    toastr(waitImageVisible(create_new_account), 5)
-    exit()
 
     goto debug
     ::debug::

@@ -173,7 +173,6 @@ function findAndClickByImage(paths, threshold)
         for i = 1, #paths do
             local result = findImage(paths[i], 1, threshold, nil, DEBUG_IMAGE, 1)
             for i, v in pairs(result) do
-                log(v)
                 if v ~= nil then
                     local x = v[1]
                     local y = v[2]
