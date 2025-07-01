@@ -4,7 +4,7 @@ MAIL_MODE = 1  -- 1|2 hotmail-dongvanfb|gmail-thuemails.com
 ADD_MAIL_DOMAIN = false
 REMOVE_REGISTER_MAIL = false
 THUE_LAI_MAIL_THUEMAILS = false
-TIMES_XOA_INFO = 2 -- 0|1|2|3
+TIMES_XOA_INFO = 1 -- 0|1|2|3
 
 -- ====== INFO ======
 info = {
