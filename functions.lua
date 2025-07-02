@@ -279,7 +279,7 @@ function executeGmailFromThueMail()
             local postData = {
                 api_key = MAIL_THUEMAILS_API_KEY,
                 service_id = 1,
-                provider_id = 1,
+                provider_id = PROVIDER_MAIL_THUEMAILS or 1,
                 quantity = 1,
             }
             local response, error = httpRequest {

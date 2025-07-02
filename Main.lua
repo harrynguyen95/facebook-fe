@@ -1,9 +1,10 @@
 -- ====== CONFIG ======
 LANGUAGE = 'ES' -- EN|ES English|Spanish
-MAIL_SUPLY = 1  -- 1|2 hotmail_dongvanfb|gmail_thuemails.com
+MAIL_SUPLY = 2  -- 1|2 hotmail_dongvanfb|gmail_thuemails.com
 ADD_MAIL_DOMAIN = false
 REMOVE_REGISTER_MAIL = false
 THUE_LAI_MAIL_THUEMAILS = false
+PROVIDER_MAIL_THUEMAILS = 3 -- 1|3 gmail|icloud
 TIMES_XOA_INFO = 3 -- 0|1|2|3
 
 -- ====== INFO ======
