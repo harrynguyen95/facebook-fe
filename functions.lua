@@ -107,7 +107,7 @@ function saveAccToGoogleForm()
         }
 
         if response then
-            log(infoClone, "Sent request to Google Form" )
+            -- log(infoClone, "Sent request to Google Form" )
             return
         else
             log(error, "Error: Failed to send request. Reason")
@@ -405,7 +405,7 @@ end
 function getDongvanfbConfirmCode()
     sleep(3)
 
-    local tries = 3
+    local tries = 5
     for i = 1, tries do 
         toastr('Call times ' .. i)
 

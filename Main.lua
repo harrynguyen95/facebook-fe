@@ -42,6 +42,8 @@ function main()
     if info.mailRegister == nil or info.mailRegister == '' then 
         homeAndUnlockScreen()
         executeXoaInfo() sleep(1)
+    else 
+        swipeCloseApp()
     end
 
     ::label_openfacebook::
