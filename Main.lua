@@ -65,7 +65,7 @@ function main()
     if checkImageIsExists(to_sign_up_agree) or checkImageIsExists(agree_facebook_term) then goto label_agree end
     if checkImageIsExists(what_on_your_mind) then 
         if info.twoFA == '' then goto label_get2FA end 
-        if info.twoFA != '' then goto label_searchtext end 
+        if info.twoFA ~= '' then goto label_searchtext end 
     end
     if checkSuspended() then goto label_continue end
 
