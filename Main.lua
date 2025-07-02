@@ -4,7 +4,7 @@ MAIL_SUPLY = 1  -- 1|2 hotmail_dongvanfb|gmail_thuemails.com
 ADD_MAIL_DOMAIN = false
 REMOVE_REGISTER_MAIL = false
 THUE_LAI_MAIL_THUEMAILS = false
-TIMES_XOA_INFO = 1 -- 0|1|2|3
+TIMES_XOA_INFO = 3 -- 0|1|2|3
 
 -- ====== INFO ======
 info = {
@@ -94,7 +94,6 @@ function main()
             goto label_continue
         end
     end
-
 
     if waitImageVisible(join_facebook, 2) then 
         toastr('not_support_this_FB_mode')
@@ -442,7 +441,7 @@ function main()
             end
         end
 
-        if waitImageVisible(personal_details_page, 12) or waitImageVisible(your_information_and_2, 12) then
+        if waitImageVisible(personal_details_page, 12) or waitImageVisible(your_information_and_per_btn, 12) then
             toastr('personal_details_page')
             findAndClickByImage(identify_confirmation_btn)
             waitImageNotVisible(identify_confirmation_btn)
