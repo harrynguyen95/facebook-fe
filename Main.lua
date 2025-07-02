@@ -4,8 +4,8 @@ MAIL_SUPLY = 2  -- 1|2 hotmail_dongvanfb|thuemails.com
 THUE_LAI_MAIL_THUEMAILS = false
 ADD_MAIL_DOMAIN = false
 REMOVE_REGISTER_MAIL = false
-PROVIDER_MAIL_THUEMAILS = 3 -- 1|3 gmail|icloud
-TIMES_XOA_INFO = 1 -- 0|1|2|3
+PROVIDER_MAIL_THUEMAILS = 1 -- 1|3 gmail|icloud
+TIMES_XOA_INFO = 3 -- 0|1|2|3
 
 -- ====== INFO ======
 info = {
@@ -57,6 +57,9 @@ function main()
         goto label_continue
     end 
 
+    if checkImageIsExists(what_is_birthday) then goto label_birthday end
+    if checkImageIsExists(what_is_mobile_number) then goto label_what_is_mobile end
+    if checkImageIsExists(what_is_your_email) then goto label_what_is_email end
     if checkImageIsExists(enter_the_confirmation_code) then goto label_confirmationcode end
     if checkImageIsExists(create_a_password) then goto label_createpassword end
     if checkImageIsExists(save_your_login_info) then goto label_saveyourlogin end
@@ -64,13 +67,11 @@ function main()
     if checkImageIsExists(turn_on_contact) then goto label_turnoncontact end
     if checkImageIsExists(no_friend) then goto label_nofriend end
     if checkImageIsExists(add_phone_number) then goto label_addphonenumber end
-    if checkImageIsExists(what_is_mobile_number) then goto label_what_is_mobile end
-    if checkImageIsExists(what_is_birthday) then goto label_birthday end
     if checkImageIsExists(to_sign_up_agree) or checkImageIsExists(agree_facebook_term) then goto label_agree end
     if checkSuspended() then goto label_continue end
 
     ::label_createnewaccount::
-    toastr('loginscreen..')
+    toastr('wait login..')
     if waitImageVisible(create_new_account, 60) then
         toastr('create_new_account')
 
@@ -116,6 +117,7 @@ function main()
     setFirstNameLastName()
 
     ::label_birthday::
+    toastr('wait birthday..')
     if waitImageVisible(what_is_birthday, 2) then
         toastr("what_is_birthday")
         press(270, 470) sleep(0.5)
@@ -143,16 +145,18 @@ function main()
     end
 
     setGender()
-
     sleep(2)
+
     ::label_what_is_mobile::
+    toastr('wait mobile..')
     if waitImageVisible(what_is_mobile_number) or waitImageVisible(sign_up_with_email) then
         toastr("what_is_mobile_number")
         findAndClickByImage(sign_up_with_email)
         waitImageNotVisible(what_is_mobile_number)
     end
 
-    toastr('getmail..')
+    ::label_what_is_email::
+    toastr('wait email..')
     if waitImageVisible(what_is_your_email) then
         toastr("what_is_your_email")
         -- or waitImageVisible(mail_did_not_receive_code) 
@@ -243,7 +247,7 @@ function main()
     setGender()
 
     ::label_createpassword::
-    toastr('password..')
+    toastr('wait password..')
     if waitImageVisible(create_a_password) then
         toastr("create_a_password")
         press(135, 450)
@@ -277,7 +281,7 @@ function main()
     end
 
     ::label_agree::
-    toastr('agree..')
+    toastr('wait agree..')
     if  waitImageVisible(to_sign_up_agree) or waitImageVisible(agree_facebook_term) then
         toastr("agree_facebook_term")
 
@@ -299,7 +303,7 @@ function main()
     end
 
     ::label_confirmationcode::
-    toastr('confirmcode..')
+    toastr('wait confirmcode..')
     if waitImageVisible(enter_the_confirmation_code, 20) then
         toastr("enter_the_confirmation_code")
 
@@ -339,6 +343,7 @@ function main()
     end
 
     ::label_profilepicture::
+    toastr('wait profilepicture..')
     if waitImageVisible(profile_picture) then
         toastr("profile_picture")
 
@@ -359,7 +364,7 @@ function main()
     end
 
     ::label_turnoncontact::
-    toastr('contact..')
+    toastr('wait contact..')
     if waitImageVisible(turn_on_contact, 10) then
         toastr("turn_on_contact")
         press(380, 1200) sleep(1) -- next
@@ -405,7 +410,7 @@ function main()
     end
 
     ::label_get2FA::
-    toastr('2FA..')
+    toastr('wait 2FA..')
     if waitImageVisible(what_on_your_mind) then 
         toastr('2FA what_on_your_mind')
         press(690, 1290) -- go to menu
@@ -535,7 +540,7 @@ function main()
     end
 
     ::label_searchtext::
-    toastr('searchtext..')
+    toastr('wait searchtext..')
     if waitImageVisible(what_on_your_mind) then
         toastr('Search what_on_your_mind')
         press(600, 90) -- go to search screen
@@ -561,7 +566,7 @@ function main()
     end
 
     ::label_logout::
-    toastr('logout..')
+    toastr('wait logout..')
     if waitImageVisible(what_on_your_mind) then 
         toastr('Logout what_on_your_mind')
         press(690, 1290) -- go to menu
