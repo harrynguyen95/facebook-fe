@@ -67,10 +67,6 @@ function main()
     if checkImageIsExists(what_is_mobile_number) then goto label_what_is_mobile end
     if checkImageIsExists(what_is_birthday) then goto label_birthday end
     if checkImageIsExists(to_sign_up_agree) or checkImageIsExists(agree_facebook_term) then goto label_agree end
-    if checkImageIsExists(what_on_your_mind) then 
-        if info.twoFA == '' then goto label_get2FA end 
-        if info.twoFA ~= '' then goto label_searchtext end 
-    end
     if checkSuspended() then goto label_continue end
 
     ::label_createnewaccount::

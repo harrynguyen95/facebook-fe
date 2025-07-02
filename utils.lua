@@ -485,7 +485,6 @@ function httpRequest(params)
         customrequest = method,
         followlocation   = true,
         timeout = 60,
-        connecttimeout = 60,
         writefunction = function(chunk)
             response = response .. tostring(chunk) -- Đảm bảo `chunk` là chuỗi
             return #chunk
