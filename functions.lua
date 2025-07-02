@@ -66,34 +66,36 @@ function failedCurrentAccount()
     if splitted[2] ~= 'SUCCESS' then 
         info.status = "FAILED"
         info.checkpoint = 1
-        if not info.mailLogin or info.mailLogin == '' then info.mailLogin = info.mailRegister or '' end 
-        if not info.profileUid or info.profileUid == '' then info.profileUid = getUIDFBLogin() or '' end 
+        if not info.mailLogin or info.mailLogin == '' then info.mailLogin = info.mailRegister end 
+        if not info.profileUid or info.profileUid == '' then info.profileUid = getUIDFBLogin() end 
         local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
         accounts[#accounts] = line
 
         log('failedCurrentAccount ' .. line)
         writeFile(accountFilePath, accounts)
+        saveAccToGoogleForm()
+        resetInfoObject()
     end
-    saveAccToGoogleForm()
-
-    resetInfoObject()
+    
 end
 
 function finishCurrentAccount()
     local accounts = readFile(accountFilePath)
+    local splitted = split(accounts[#accounts], "|")
 
-    info.status = "SUCCESS"
-    info.checkpoint = nil
-    if not info.mailLogin or info.mailLogin == '' then info.mailLogin = info.mailRegister or '' end 
-    if not info.profileUid or info.profileUid == '' then info.profileUid = getUIDFBLogin() or '' end 
-    local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
-    accounts[#accounts] = line
+    if splitted[2] ~= 'INPROGRESS' then
+        info.status = "SUCCESS"
+        info.checkpoint = nil
+        if not info.mailLogin or info.mailLogin == '' then info.mailLogin = info.mailRegister end 
+        if not info.profileUid or info.profileUid == '' then info.profileUid = getUIDFBLogin() end 
+        local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
+        accounts[#accounts] = line
 
-    log('finishCurrentAccount ' .. line)
-    writeFile(accountFilePath, accounts)
-    saveAccToGoogleForm()
-
-    resetInfoObject()
+        log('finishCurrentAccount ' .. line)
+        writeFile(accountFilePath, accounts)
+        saveAccToGoogleForm()
+        resetInfoObject()
+    end  
 end
 
 function saveAccToGoogleForm()
