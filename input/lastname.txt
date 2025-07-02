@@ -24,7 +24,6 @@ Jonathan Bennett
 Ryan Garza
 Claire Medina
 Hunter Gomez
-Lee Soto
 Tyler Dixon
 Noelle Wright
 Nicole Hill
@@ -38,7 +37,6 @@ Michael Ruiz
 Elijah Wells
 David Mendez
 Jordan Baker
-Anthony Fox
 William Scott
 Charlotte Hicks
 Michelle Torres
@@ -90,9 +88,7 @@ Vincent Green
 Elise Griffin
 Kate Holmes
 Ruby Silva
-Lee Peterson
 Joy Robinson
-Rose Black
 Logan Kelly
 Sophia Jimenez
 Edward Stevens
@@ -140,7 +136,6 @@ Michelle Chen
 Audrey Richardson
 Marie Webb
 Noelle Herrera
-Lee Richardson
 Alexander Vargas
 Brielle Hernandez
 Rose Garza
@@ -155,7 +150,6 @@ Camille Webb
 Marie James
 Logan Castro
 Elizabeth Thompson
-Lee Henderson
 Andrew West
 Maxwell Murphy
 Matthew Tucker
@@ -167,7 +161,6 @@ Maxwell Brown
 Madison Wells
 Paul Harrison
 Harper Patterson
-Elijah Black
 William Ruiz
 Henry Stone
 Belle Kim
@@ -223,7 +216,6 @@ Irene Martinez
 Audrey Tucker
 Elise Ryan
 Olivia Reed
-Lee Bennett
 Thomas Henderson
 Blair Moore
 Christine White
@@ -333,7 +325,6 @@ David Tucker
 Paul Tucker
 Christine Washington
 Sophia Ruiz
-Joy Lee
 Brian Patel
 Brian Jenkins
 Kate Kelley
@@ -349,7 +340,6 @@ Allen Morales
 Sophia Fisher
 Robert Daniels
 George Castillo
-Lee Evans
 Paige Schmidt
 Christian Morgan
 Lynn Diaz
@@ -377,7 +367,6 @@ David Morris
 Jason Woods
 Mae Henderson
 Robert Powell
-Ryan Fox
 Irene Young
 Brian Mendez
 Joy Barnes
@@ -431,7 +420,6 @@ Elise Murray
 Marie Tran
 Jade Mason
 William Soto
-Brian Black
 Audrey Chavez
 Brooke Phillips
 Autumn Ryan
@@ -444,7 +432,6 @@ Madison Martinez
 Ruby Fernandez
 Daniel Burns
 Rose Young
-Lee Ward
 Isabelle Crawford
 Scott Kim
 Renee Thompson
@@ -502,7 +489,6 @@ Timothy Woods
 Nathan Warren
 Elise Mason
 Simone Ramos
-Stephen Lee
 Allen Salazar
 Michelle Griffin
 Scott Owens
@@ -522,7 +508,6 @@ Renee Evans
 Eric Boyd
 Blair Gonzales
 Eric Morales
-Olivia Lee
 Claire Kim
 Christopher Diaz
 Benjamin Alvarez
@@ -532,7 +517,6 @@ George Thomas
 Sage Grant
 Ruby Henry
 Victoria Hicks
-Allen Lee
 Jordan Dunn
 Benjamin Salazar
 Richard Castillo
@@ -563,7 +547,6 @@ Daniel Hamilton
 Charlotte Fernandez
 Mae Russell
 Marie Ortiz
-Owen Fox
 Robert Simpson
 Blair Bryant
 Christopher Medina
@@ -592,7 +575,6 @@ Christine Henry
 Jonathan Russell
 Skye Hicks
 Joy Perez
-Lee Salazar
 Benjamin Tucker
 Belle Wright
 Maxwell Coleman
@@ -716,15 +698,12 @@ Emerson Mendez
 Christine Parker
 Richard Kennedy
 Samuel Medina
-Jonathan Black
 Robert Gutierrez
 Emerson Gonzalez
 Blake West
 Jane Chen
-Lee King
 Nathan Rice
 Autumn Robertson
-Noelle Fox
 Savannah Reynolds
 Tyler Garza
 Skye Rice
@@ -756,7 +735,6 @@ Joseph Smith
 Samuel Stephens
 Leigh Hamilton
 Isabelle Romero
-Benjamin Black
 Leigh Simmons
 Eric Davis
 Ruby Jordan
@@ -786,7 +764,6 @@ Ann Bryant
 Dakota Aguilar
 Jonathan Richardson
 Savannah Schmidt
-Lee Tucker
 Alexander Anderson
 Leigh Gordon
 Mae Daniels
@@ -811,7 +788,6 @@ Benjamin Phillips
 Hope Collins
 Louise Gordon
 Charlotte Jackson
-Alexander Lee
 Faith Freeman
 Louise Parker
 Elijah Mendez
@@ -856,7 +832,6 @@ Edward Patel
 Charlotte Flores
 Brielle Scott
 Emerson Murray
-Zachary Black
 Autumn Fernandez
 Grace Reyes
 Paul Woods
@@ -909,13 +884,11 @@ Daniel Fisher
 Audrey Webb
 Robert Ortiz
 Daniel Wright
-Skye Black
 Joseph Carter
 Audrey Wood
 Paige Phillips
 Carter Jones
 Samuel Richardson
-Jordan Fox
 Henry Morales
 Thomas Wright
 Jordan Ferguson
@@ -971,16 +944,13 @@ Patrick Mason
 Daniel Munoz
 Charlotte Spencer
 Rae Flores
-Lee Diaz
 Dakota Stone
 Vincent Harrison
-Lee Thomas
 Dakota Gibson
 Thomas Alvarez
 Savannah Mendez
 Sage Gonzalez
 Brooke Nelson
-William Fox
 Hope Stephens
 Nathan Perry
 Jason Gardner
@@ -1042,7 +1012,6 @@ Caleb Campbell
 Paul Silva
 Camille Chavez
 Jason Stephens
-Lee Munoz
 Richard Gibson
 Sage Medina
 Owen Stone
@@ -1051,7 +1020,6 @@ George Gonzales
 Christopher Hunter
 Grace Rice
 Nicholas Stevens
-Jackson Lee
 Henry Perez
 Alice Robinson
 Harper Gibson
@@ -1067,8 +1035,6 @@ Timothy Gray
 Skye Wood
 Logan Crawford
 David Woods
-Carter Fox
-Patrick Black
 Grace Russell
 Madison Johnson
 Robert Wilson
@@ -1180,7 +1146,6 @@ Isabelle Sullivan
 Irene Ryan
 Alice Anderson
 Elizabeth Ruiz
-Renee Lee
 Olivia Burns
 Grace Palmer
 Nicole Hernandez
@@ -1189,7 +1154,6 @@ Stephen Richardson
 Zachary Ryan
 Patrick James
 Jason Thompson
-Allen Black
 Elijah Stone
 Kate Hunter
 Thomas Moreno
@@ -1202,7 +1166,6 @@ Sage Smith
 Elise Sullivan
 Jane Silva
 Daniel Roberts
-Lee Bell
 Madison Ellis
 Renee Holmes
 Leigh Baker
@@ -1215,7 +1178,6 @@ George Price
 Harper Collins
 Jonathan Payne
 Alexander Bell
-Patrick Lee
 Robert Rodriguez
 Carter Tran
 Faith Medina
@@ -1223,7 +1185,6 @@ John Foster
 Brian Henderson
 Robert Warren
 Belle Webb
-Lee Garza
 Sage Meyer
 Paul Jordan
 Caleb Martinez
@@ -1334,12 +1295,9 @@ Zachary Gardner
 Renee Garcia
 Vincent Alexander
 Faith Graham
-Lee Green
 Brielle Morgan
 Isla Perez
 Savannah Henderson
-Jordan Lee
-Andrew Fox
 Andrew Mills
 Leigh Payne
 Jane Stewart
@@ -1366,7 +1324,6 @@ Zachary Garza
 Maxwell Hall
 Mae Reed
 Claire Diaz
-Lee Wilson
 Jonathan Weaver
 Olivia Gomez
 Vincent Moreno
@@ -1374,7 +1331,6 @@ Madison Olson
 Alexander Guzman
 Brooke Hamilton
 Jonathan Ferguson
-Eric Lee
 Blake Graham
 Rose Rogers
 Hunter Graham
@@ -1396,7 +1352,6 @@ Patrick Ryan
 Maxwell Robertson
 Hope Schmidt
 Harper Schmidt
-Lee Palmer
 Dakota West
 Andrew Barnes
 Ruby Hughes
@@ -1444,7 +1399,6 @@ Benjamin Carter
 Christopher Mendez
 Hope Ellis
 Michelle Mitchell
-Lee Rodriguez
 Elijah Grant
 Christine Shaw
 Louis Phillips
@@ -1463,7 +1417,6 @@ Timothy Flores
 Jordan Bennett
 Anthony Alvarez
 Jade Price
-Christine Fox
 Kate Mendez
 Robert Cook
 Noelle Hunter
@@ -1494,7 +1447,6 @@ Madison Palmer
 Noelle Powell
 William Parker
 Alice Wilson
-May Fox
 Dakota Stevens
 Allison Lewis
 John Nguyen
@@ -1530,7 +1482,6 @@ Benjamin Reyes
 Zachary Cole
 Michael Hughes
 Elise Harris
-Lee Johnson
 Victoria Price
 Benjamin Martin
 Joseph Flores
@@ -1541,7 +1492,6 @@ James Sanchez
 Emerson Gomez
 Daniel Adams
 Sage Rodriguez
-Lee Martin
 Claire Brown
 Marie Ross
 Benjamin Herrera
@@ -1565,7 +1515,6 @@ Sage Sanders
 Andrew Wilson
 Victoria Wright
 Harper Fernandez
-Nicholas Lee
 Nathan Garza
 Jane Thompson
 Irene Gibson
@@ -1653,7 +1602,6 @@ Grace Henderson
 Owen James
 Louise Stone
 Joy Gutierrez
-Sage Lee
 Elise Reynolds
 Sage Griffin
 Alice Alvarez
@@ -1668,7 +1616,6 @@ Emerson Herrera
 Carter Crawford
 Olivia Collins
 Andrew Perez
-Eric Fox
 Henry Nelson
 Timothy West
 Rae Vasquez
@@ -1690,7 +1637,6 @@ Elise Schmidt
 Samuel Stevens
 Vincent Russell
 Allison Jenkins
-Lee Wells
 Timothy Powell
 Jason Thomas
 Jade Payne
@@ -1741,7 +1687,6 @@ Isabelle Stewart
 Ann Daniels
 Olivia Robertson
 Elizabeth Ellis
-Lee Porter
 Ruby Lopez
 Mae Simmons
 Belle Vargas
@@ -1785,7 +1730,6 @@ Nicholas McDonald
 Camille Marshall
 Louis Perez
 Emerson Payne
-Lee Myers
 Rae Butler
 Richard Thompson
 James Gutierrez
@@ -1814,7 +1758,6 @@ Allison Bryant
 Samuel Woods
 Carter Johnson
 Christine Porter
-Michelle Lee
 Elizabeth Sullivan
 May Kelly
 Rae Hughes
@@ -1826,7 +1769,6 @@ Dakota Medina
 John Clark
 Joseph Salazar
 David Wells
-William Lee
 Harper Moore
 Richard Foster
 John Spencer
@@ -1834,7 +1776,6 @@ Edward Kelly
 Rae Warren
 George Sullivan
 Jason Reynolds
-Lee Foster
 Elise Cruz
 Carter Miller
 Timothy Adams
@@ -1864,7 +1805,6 @@ Joy Shaw
 Ann Washington
 Madison Morales
 Zachary Harrison
-Lee Olson
 Thomas Rice
 Elijah Jordan
 Elijah Gonzales
@@ -1880,9 +1820,7 @@ Elise Howard
 Camille Reyes
 Alice Wagner
 Logan Fisher
-Eric Black
 Alexander Gardner
-Lee Brown
 Owen Chavez
 Logan Ward
 Nicholas Hawkins
@@ -1934,7 +1872,6 @@ Nathan Stevens
 Madison Martin
 Leigh Torres
 Grace Davis
-Scott Fox
 Leigh Mason
 Charles Holmes
 Marie Young
@@ -1945,7 +1882,6 @@ Elise Hughes
 Madison Jimenez
 Irene Ross
 Owen Bell
-Lee Lee
 Renee Morales
 Rose Grant
 Blair Roberts
@@ -1991,10 +1927,8 @@ Ryan Adams
 Eric Mills
 Vincent Barnes
 Robert Morgan
-Lee Gutierrez
 Jackson Perez
 Sophia Cole
-Lee Hill
 Zachary Barnes
 Alice Walker
 Carter Watson
@@ -2067,7 +2001,6 @@ Emerson Aguilar
 Daniel Ryan
 Sophia Russell
 Joseph Clark
-Jason Fox
 Scott Spencer
 Savannah Myers
 Elijah Harrison
@@ -2136,7 +2069,6 @@ Vincent Perez
 Carter Wagner
 Christian Ryan
 Hunter Carter
-Lee Tran
 Isabelle Chavez
 Sophia Hamilton
 Ruby Gomez
@@ -2199,7 +2131,6 @@ Thomas Boyd
 Vincent Gordon
 Louise Olson
 Joy Cooper
-Christian Black
 Savannah Carter
 Andrew Jimenez
 Alice Sanders
@@ -2207,7 +2138,6 @@ Dakota Simpson
 Jason Gordon
 John Lopez
 Benjamin Powell
-Elizabeth Lee
 Hope Wilson
 Hope Barnes
 Logan Vargas
@@ -2312,7 +2242,6 @@ Matthew Castillo
 Allen Aguilar
 Edward Hunter
 Scott Carter
-Owen Lee
 Olivia Phillips
 Ann Bailey
 Ruby Gordon
@@ -2329,7 +2258,6 @@ Ruby Simmons
 Grace Mason
 Elise Mendez
 Samuel Sanchez
-Michelle Black
 Skye Shaw
 Ruby Diaz
 Noelle Rivera
@@ -2357,10 +2285,8 @@ Mae Alvarez
 Noelle Davis
 Irene Stevens
 Elise Bailey
-Lee Henry
 Isla Hall
 Benjamin Shaw
-Edward Fox
 Noelle Hawkins
 Rose Johnson
 Michael Wilson
@@ -2386,12 +2312,10 @@ George Kelly
 Robert Ross
 Victoria Washington
 Allen Webb
-Alice Black
 Jane Griffin
 Allison Mendoza
 Simone Green
 Jason Holmes
-Lee Davis
 Louis Bennett
 Timothy Jones
 Marie Henderson
@@ -2461,7 +2385,6 @@ Paige Garza
 Robert Lopez
 David Burns
 Maxwell Davis
-Lee Meyer
 Richard Tran
 Christian Sanders
 Christine Perez
@@ -2622,7 +2545,6 @@ Blair Powell
 Robert Marshall
 Brielle Butler
 Alice Gomez
-Lee Cook
 Renee Bryant
 Hunter Mendoza
 Samuel Patterson
@@ -2739,11 +2661,9 @@ Rose Chen
 George Patel
 Camille Mendez
 Ann Hunter
-Lee Smith
 Logan Alvarez
 Joy Meyer
 Jackson Fernandez
-Elizabeth Fox
 Camille Garcia
 Allen Nelson
 Noelle Henderson
@@ -2804,7 +2724,6 @@ Benjamin Bell
 Jade Owens
 Stephen Schmidt
 Michael Smith
-Lee Collins
 May Vargas
 Harper Moreno
 Richard Gutierrez
@@ -2929,10 +2848,8 @@ Belle Hall
 Jackson Lewis
 Joseph Guzman
 Alexander Thompson
-Audrey Black
 Simone Foster
 Joy Lopez
-Lee Thompson
 Isabelle Barnes
 Caleb Davis
 Zachary Bell
@@ -2974,7 +2891,6 @@ Irene Harris
 Owen Castro
 Louise Payne
 Madison Simpson
-Lee Robertson
 Edward Peterson
 Michelle Moreno
 Alexander Herrera
@@ -2995,7 +2911,6 @@ Harper Hunter
 Caleb Evans
 Belle Murray
 Leigh Foster
-Charlotte Lee
 Jonathan Roberts
 Joseph Barnes
 Grace Wagner
@@ -3037,15 +2952,12 @@ Isla Chen
 Joseph Graham
 Paige Owens
 Jason Freeman
-Lee Lewis
 Owen Morgan
 Mae Clark
 Renee Freeman
 Thomas Miller
 Blake Barnes
-David Black
 Camille Simmons
-Joseph Fox
 Matthew Gomez
 Carter Young
 Jackson Gordon
@@ -3078,7 +2990,6 @@ Owen Patel
 Allison Johnson
 Carter Hunter
 David Jenkins
-Jane Black
 Alexander Sullivan
 Rose Vasquez
 Louis Butler
@@ -3117,7 +3028,6 @@ George Hunt
 Zachary Mason
 Elizabeth Price
 Tyler Wells
-Lee Woods
 Blair Henderson
 Anthony Wilson
 Joy Vasquez
@@ -3126,7 +3036,6 @@ Timothy Brooks
 Jackson Edwards
 Allen Long
 Jackson Gonzales
-Lee Crawford
 Sophia Watson
 Ruby King
 Blair Herrera
@@ -3157,7 +3066,6 @@ Charles Woods
 Brooke Hunter
 Brooke Herrera
 Grace Watson
-Lee White
 Christine Patel
 Autumn Stephens
 Rose Taylor
@@ -3166,7 +3074,6 @@ Tyler Soto
 Madison Jackson
 Robert Howard
 Audrey Palmer
-Lee Jackson
 Grace Guzman
 Allison Sanchez
 Samuel Turner
@@ -3180,7 +3087,6 @@ Daniel Boyd
 Nicholas Spencer
 Faith Salazar
 Eric Flores
-Lee Hall
 Allen Ellis
 Skye Daniels
 Nicholas Wallace
@@ -3326,7 +3232,6 @@ Alice Adams
 Henry Cole
 Noelle Nichols
 Jonathan Garcia
-Mae Black
 Blair Munoz
 Scott Jordan
 Samuel Cooper
@@ -3364,7 +3269,6 @@ Audrey Roberts
 Stephen Myers
 Hunter Chavez
 Rae Morris
-Lee Ramos
 Sage Burns
 Louise Moreno
 Christine Castro
@@ -3417,7 +3321,6 @@ Ryan Sanders
 Christine Walker
 Brielle Alvarez
 Rae Cole
-Lee Reyes
 Christian Coleman
 Belle Henderson
 Charlotte Lewis
@@ -3468,7 +3371,6 @@ Charlotte Reynolds
 Charlotte Kim
 Elizabeth Alexander
 Sage Anderson
-Lee Wood
 Victoria Perez
 Louis Martin
 Joy Chen
@@ -3529,7 +3431,6 @@ Sage Tucker
 Blair Morgan
 Allen Ross
 Henry Adams
-Leigh Black
 Christine Herrera
 Brielle Ferguson
 Elizabeth Sanders
@@ -3624,7 +3525,6 @@ Olivia Scott
 Robert Brooks
 Ryan Gutierrez
 Jade Griffin
-Leigh Lee
 Paige Holmes
 Christine Hunt
 Joy Tran
@@ -3632,7 +3532,6 @@ Matthew Palmer
 Harper Torres
 Noelle Romero
 Joseph Garza
-Daniel Fox
 Edward Bryant
 Richard Reynolds
 Benjamin Freeman
@@ -3731,7 +3630,6 @@ Ruby Weaver
 Sophia Dunn
 Michael Hall
 Christine Hawkins
-Paige Fox
 Alice Hicks
 Benjamin Dunn
 Alice Warren
@@ -3746,10 +3644,8 @@ David Watson
 Rae Davis
 Elizabeth Burns
 William Garcia
-Harper Fox
 John Wood
 John Long
-Lee Rogers
 Christopher Torres
 Nicole Hunter
 Vincent Kelly
@@ -3808,7 +3704,6 @@ Victoria Salazar
 Owen Rivera
 Owen Graham
 Jane Schmidt
-Lee Burns
 Robert Gardner
 Jordan Rice
 Victoria Hernandez
@@ -3822,7 +3717,6 @@ Timothy Watson
 Madison Bennett
 Victoria Bailey
 Paige Mendez
-Andrew Black
 Victoria Campbell
 Victoria Carter
 Elizabeth Ortiz
@@ -3830,7 +3724,6 @@ Autumn Jackson
 Marie Phillips
 Tyler Owens
 Andrew Ryan
-Lee Gonzales
 May Jimenez
 Kate Lewis
 Audrey Jordan
@@ -3845,7 +3738,6 @@ Jason Mason
 Noelle Hayes
 Claire Sanders
 George Shaw
-Paul Lee
 Isabelle Rodriguez
 Nicholas Turner
 Louis Dunn
@@ -3894,7 +3786,6 @@ Michael Thompson
 Nathan Gomez
 George Morales
 Kate Henderson
-Daniel Black
 Scott Rice
 Benjamin Stevens
 Claire Mitchell
@@ -3907,7 +3798,6 @@ Patrick Wright
 Patrick Richardson
 Isabelle Moore
 Paul Davis
-John Lee
 Carter Mitchell
 Jordan Kim
 Michelle Adams
@@ -3931,7 +3821,6 @@ Mae Harris
 Belle Rivera
 Timothy Nichols
 Jason Gomez
-Richard Fox
 Allen Burns
 Hunter Mitchell
 Camille Gordon
@@ -3970,7 +3859,6 @@ Renee Castro
 Ryan White
 Joseph Green
 Brooke Alvarez
-Faith Lee
 Savannah Collins
 Elizabeth Meyer
 Harper White
@@ -4000,7 +3888,6 @@ Victoria Sanchez
 Timothy Spencer
 Henry Mills
 Skye Howard
-Anthony Black
 Olivia Woods
 Brooke Hall
 Paul Gonzalez
@@ -4084,7 +3971,6 @@ Nicholas Ramirez
 Christopher Young
 Savannah White
 Nicholas Mason
-Allison Fox
 Allen Russell
 Alice Mendoza
 Brian Spencer
@@ -4152,11 +4038,9 @@ Grace Morris
 Owen Stephens
 May Parker
 Autumn Hernandez
-Blake Lee
 Maxwell Moreno
 Daniel Simpson
 Christian Russell
-Lee Scott
 James Ellis
 Richard Murphy
 James James
@@ -4177,7 +4061,6 @@ Allison Jordan
 Autumn Taylor
 Brian Graham
 Allen Perez
-Lee Brooks
 Rae White
 Logan Perez
 Maxwell Boyd
@@ -4210,13 +4093,11 @@ Edward Young
 Allen Ford
 George Tucker
 Ann Kelley
-Lee Sullivan
 Irene Olson
 Alexander Stewart
 Belle Brooks
 Blake Ramirez
 Caleb Hunter
-Maxwell Fox
 Olivia Howard
 Vincent Cook
 Sage Myers
@@ -4304,15 +4185,12 @@ Renee Harrison
 Allen Gardner
 Alexander Price
 Carter Moore
-Blake Fox
 Olivia Dunn
 Elise Hawkins
 May Rivera
 Isla Bennett
-Lee Butler
 Irene Hernandez
 Blair Hayes
-Lee Coleman
 James Hicks
 Simone Young
 Jonathan Warren
@@ -4320,7 +4198,6 @@ Tyler Miller
 Blair Smith
 Rae Gardner
 Jonathan Peterson
-Lee Perry
 Christopher Webb
 Nathan Robertson
 Brielle Schmidt
@@ -4436,14 +4313,12 @@ Mae Reynolds
 Vincent Dunn
 Daniel Nichols
 Maxwell Martinez
-Lee Cox
 Nicole Ramirez
 Jonathan West
 Thomas Foster
 Jane Gibson
 Timothy Simmons
 Nathan Russell
-Lee Carter
 Rose Moreno
 Elise Stone
 Jason Smith
@@ -4485,7 +4360,6 @@ Kate Bennett
 Eric Moreno
 Grace Torres
 Noelle Rogers
-Samuel Fox
 Edward Howard
 Alexander Garcia
 Harper Hamilton
@@ -4677,7 +4551,6 @@ Anthony Barnes
 Christopher Howard
 James Hayes
 Nicole Vargas
-Savannah Black
 Henry Grant
 Nathan Dixon
 Rae Ford
@@ -4696,7 +4569,6 @@ Rose Collins
 Eric Robinson
 Scott Holmes
 Kate Mason
-Timothy Black
 Sage Robinson
 Emerson Griffin
 Sage Kennedy
@@ -4734,7 +4606,6 @@ Jade Rivera
 Vincent Snyder
 Stephen Evans
 Samuel Walker
-Lee Edwards
 Stephen Kelly
 Jordan Alexander
 Skye James
@@ -4746,7 +4617,6 @@ Sage Sullivan
 Elijah Rogers
 Belle Young
 Rae Scott
-Lee Aguilar
 Brian Lopez
 Andrew Wood
 Dakota Fisher
@@ -4757,7 +4627,6 @@ Louis Jones
 Samuel Flores
 Grace Snyder
 Owen Butler
-Renee Fox
 Brian Meyer
 Rae Garza
 Jackson Silva
@@ -4778,7 +4647,6 @@ Kate Adams
 Skye Ross
 Belle Martin
 Faith Kelley
-Kate Fox
 Jackson Kim
 Daniel Sullivan
 Harper Jackson
@@ -4931,7 +4799,6 @@ John Medina
 Olivia Vasquez
 Richard Ortiz
 David Stone
-Nicole Black
 Michelle Gordon
 Thomas Ruiz
 Camille Burns
@@ -5034,7 +4901,6 @@ David Myers
 Christian Hicks
 Charlotte Schmidt
 Brooke Lewis
-Jane Fox
 Christian Hayes
 Belle Miller
 Ryan Henderson
@@ -5077,7 +4943,6 @@ David Nguyen
 Allison Butler
 Elijah Jimenez
 Tyler Brown
-Blair Black
 Michelle Martinez
 Samuel Lewis
 Harper Cox
@@ -5087,7 +4952,6 @@ Elijah Parker
 Christian Woods
 Jade Phillips
 Nicholas Cole
-David Lee
 David Nichols
 Nicole Tran
 Henry Bailey
@@ -5210,7 +5074,6 @@ Hope Chavez
 Joy Stewart
 William Murphy
 Allen Bailey
-Lee Rose
 Emerson Peterson
 Alexander Hill
 Paul Mitchell
@@ -5225,7 +5088,6 @@ Louis Johnson
 Matthew Jones
 Christopher Parker
 Richard Perry
-Ann Fox
 Owen Garcia
 Madison Fernandez
 Isla Allen
@@ -5337,7 +5199,6 @@ Patrick Perry
 Nathan Johnson
 Elise Butler
 Louise Ferguson
-James Fox
 Brielle Sanders
 Simone Thomas
 Edward Gonzales
@@ -5383,7 +5244,6 @@ Dakota Ward
 Christopher Stephens
 Hope Fisher
 Autumn Wells
-Allen Fox
 Brielle Reyes
 Alexander Gutierrez
 Christine Castillo
@@ -5394,7 +5254,6 @@ Sophia Peterson
 Nicole Harris
 Anthony Morales
 Nicholas Hayes
-Lee Ford
 Blair Russell
 Richard Carter
 Sophia Kelley
@@ -5409,10 +5268,8 @@ Faith Jones
 Joy Moreno
 Olivia Rice
 Victoria Graham
-Lee Gordon
 Simone Webb
 Samuel Ryan
-Lee Young
 Jordan Edwards
 Alice Taylor
 Joseph Alexander
@@ -5481,7 +5338,6 @@ Audrey Hall
 Mae Gutierrez
 Isla Campbell
 Ryan Reynolds
-Timothy Lee
 Ruby Sanchez
 Sophia Romero
 Edward Warren
@@ -5536,9 +5392,7 @@ Isla Jones
 Richard Cox
 Kate Silva
 Lynn Walker
-Lee Patterson
 Isla Thompson
-Renee Black
 Ryan Collins
 Sophia Butler
 Jonathan Murray
@@ -5598,7 +5452,6 @@ Anthony Carter
 Samuel Williams
 Dakota Daniels
 Rose Wright
-Richard Lee
 Nathan Smith
 Eric Campbell
 May Gordon
@@ -5677,7 +5530,6 @@ Faith Murray
 Renee Phillips
 Leigh Owens
 Elijah Davis
-William Black
 Rae Gutierrez
 Rose Thompson
 Skye Price
@@ -5740,9 +5592,7 @@ Jane Barnes
 Hope Jimenez
 Autumn Soto
 Harper Cook
-Scott Lee
 Irene Mason
-Louis Lee
 David Castillo
 Louis Green
 Faith Olson
@@ -5762,17 +5612,14 @@ Anthony Perez
 Madison Ross
 Jade Webb
 Ryan Alexander
-Hope Lee
 Claire Stevens
 Harper Nelson
 Allison Moreno
 Christian Ellis
-Olivia Black
 Christian Hunter
 Victoria Jordan
 Maxwell Salazar
 Daniel Foster
-Nicole Fox
 Benjamin Gomez
 George Gray
 William Shaw
@@ -5827,7 +5674,6 @@ Grace Aguilar
 Maxwell Shaw
 Hunter Cole
 William Henry
-Matthew Black
 Allison Alexander
 Matthew Cox
 Simone Vasquez
@@ -5846,7 +5692,6 @@ Louise Wallace
 Belle Nelson
 Harper Rice
 Timothy Harris
-Lee Rice
 Daniel Sanchez
 David Parker
 Stephen Scott
@@ -5864,11 +5709,9 @@ Charles Chen
 Caleb Romero
 Eric Foster
 Rose Torres
-Christian Fox
 Brielle Mills
 Paul Rose
 George Spencer
-Thomas Black
 Claire Rose
 Elizabeth Barnes
 Brian Martin
@@ -5987,8 +5830,6 @@ Louise Garza
 Patrick Miller
 William Russell
 Anthony Alexander
-Lee Jordan
-Nathan Fox
 Savannah Russell
 Jade Robinson
 Christian Ferguson
@@ -6052,10 +5893,8 @@ Joseph Wood
 Alexander Rodriguez
 Ruby Alvarez
 Carter Robertson
-Nathan Lee
 Nathan Murray
 Timothy Hicks
-Lee Morris
 Ann Mendez
 Jonathan Jones
 Elijah Ross
@@ -6117,9 +5956,7 @@ Alexander Vasquez
 Samuel Ellis
 Belle Alexander
 Charlotte Howard
-Simone Lee
 Brielle Jimenez
-Savannah Fox
 Anthony Turner
 Brooke Cooper
 Allison Rodriguez
@@ -6129,7 +5966,6 @@ Lynn Scott
 Andrew Dixon
 Camille Stephens
 Owen Cooper
-Lee Murphy
 Christopher Bryant
 Madison Cruz
 Stephen Chavez
@@ -6249,7 +6085,6 @@ Christine Thompson
 Charlotte Gordon
 Faith Carter
 Blair Gordon
-Scott Black
 Allison Brooks
 Charles Butler
 Belle Ward
@@ -6273,7 +6108,6 @@ Alice Moreno
 Skye Ortiz
 Andrew Hamilton
 Victoria Scott
-Joseph Lee
 Christopher Hill
 Audrey Myers
 Zachary Sanchez
@@ -6312,7 +6146,6 @@ Mae Chen
 Robert Flores
 Simone Adams
 Brielle Cox
-Lee Morgan
 Nicole Howard
 Belle Harrison
 Henry Jones
@@ -6354,7 +6187,6 @@ Paul Sanders
 Allison Richardson
 David Fernandez
 Matthew Harris
-Lee James
 Harper Porter
 Victoria Soto
 Kate Morris
@@ -6368,7 +6200,6 @@ Mae Boyd
 Irene Thomas
 Elise Vargas
 Michelle Evans
-Lee Kelley
 Louis Webb
 Blake Taylor
 Isla Harris
@@ -6378,7 +6209,6 @@ Hope Jones
 Joy Bryant
 David Munoz
 Isla Mills
-Sage Fox
 Jonathan Hicks
 Brian Nichols
 Tyler Moore
@@ -6417,7 +6247,6 @@ Brian Nelson
 Ruby Mills
 Mae Henry
 Louise Ellis
-Jade Fox
 Matthew Warren
 William Martin
 Patrick Vargas
@@ -6519,7 +6348,6 @@ Sage Boyd
 Blair Robertson
 Lynn Cole
 James Washington
-Andrew Lee
 Andrew Torres
 Renee Fernandez
 Nathan Allen
@@ -6590,7 +6418,6 @@ Isabelle Burns
 Ryan Rice
 Jason Jenkins
 Owen Simmons
-Lee Cruz
 Savannah Barnes
 Jackson Hernandez
 Lynn Lopez
@@ -6616,7 +6443,6 @@ May Hicks
 Dakota Henderson
 Matthew Ross
 Christopher Snyder
-Lee Ferguson
 Christian Rogers
 Camille Gonzales
 Isla Hawkins
@@ -6647,9 +6473,7 @@ Leigh Freeman
 Claire Munoz
 Renee Martinez
 Stephen Miller
-Logan Lee
 Skye Woods
-Isla Fox
 Joy Mason
 Eric Weaver
 Alice Watson
@@ -6722,7 +6546,6 @@ Alice Gonzales
 Paul Hunt
 Nicole Boyd
 Charlotte Barnes
-Elise Black
 Louis Holmes
 Nicholas Daniels
 Richard Moreno
@@ -6805,7 +6628,6 @@ Emerson Lopez
 Renee Guzman
 Andrew Flores
 Ryan Kelley
-Skye Fox
 Autumn Washington
 Hope Crawford
 Claire Daniels
@@ -6835,7 +6657,6 @@ Joseph King
 Louis Henry
 Richard Marshall
 Audrey Gonzales
-Nicholas Fox
 Faith Spencer
 Ryan Stone
 Joy Kennedy
@@ -6867,7 +6688,6 @@ Camille Alvarez
 Lynn Simmons
 Jackson Murray
 Nicole Owens
-Elijah Lee
 Nicole Rose
 Mae Weaver
 Christine Guzman
@@ -6972,7 +6792,6 @@ Emerson Mason
 May Freeman
 Samuel Nichols
 Simone Herrera
-Lee Long
 Robert Snyder
 Joy Phillips
 Rose Jones
@@ -7002,7 +6821,6 @@ Elizabeth Hunter
 Brian James
 Daniel Gray
 Harper Wilson
-Lee Hicks
 Louis Powell
 Louise Guzman
 Andrew Thompson
@@ -7016,9 +6834,7 @@ Thomas Wells
 Irene Sanchez
 Sage Bailey
 Timothy Howard
-Lee Barnes
 Logan Ramos
-Richard Black
 Andrew Peterson
 Grace Ramirez
 Elise Nichols
@@ -7068,7 +6884,6 @@ Autumn Parker
 Brooke Patterson
 Jonathan Marshall
 Owen Kelley
-Lee Wright
 Joy Harrison
 Elijah Webb
 Timothy Taylor
@@ -7135,7 +6950,6 @@ George Stone
 Jonathan Evans
 Joy Grant
 May Nichols
-Robert Black
 Alexander Ford
 Noelle Coleman
 Thomas Harrison
@@ -7147,7 +6961,6 @@ Ryan Murphy
 Jason Murphy
 Vincent Fisher
 Allen Holmes
-Marie Lee
 Grace Washington
 Noelle Clark
 Allen Butler
@@ -7168,7 +6981,6 @@ Audrey Williams
 Nathan Green
 Irene Reynolds
 Anthony Castro
-Charlotte Black
 Christine Hughes
 Audrey Medina
 Dakota Payne
@@ -7206,7 +7018,6 @@ Ruby Campbell
 Hunter Gonzalez
 Autumn Collins
 Christopher Carter
-Madison Lee
 Maxwell McDonald
 Richard Ellis
 Hope Martin
@@ -7221,7 +7032,6 @@ Robert Ford
 Owen Henderson
 Richard Bennett
 Kate Allen
-John Black
 Savannah Burns
 Isabelle Tran
 Samuel Jones
@@ -7231,7 +7041,6 @@ Harper Gray
 Elise Hunter
 Noelle Dixon
 Rose Martin
-Lee Miller
 Edward Porter
 Tyler Rose
 Emerson Hawkins
@@ -7288,7 +7097,6 @@ Madison Romero
 Jason Porter
 Noelle Vargas
 Jackson Richardson
-Dakota Fox
 John Lewis
 Hope Harrison
 Skye Russell
@@ -7305,7 +7113,6 @@ Dakota Woods
 Simone Hayes
 Isabelle Palmer
 Nicole Hunt
-Tyler Lee
 Marie Gibson
 Isabelle Martin
 Jordan Tucker
@@ -7346,7 +7153,6 @@ Claire Jackson
 Jade Ortiz
 Joseph Richardson
 Nathan Cruz
-Christopher Black
 Ryan Vargas
 Noelle Williams
 David Baker
@@ -7356,7 +7162,6 @@ Daniel Thompson
 Renee Butler
 Paul Hicks
 Brielle Henderson
-Lee Patel
 Brian Jordan
 Paul Fisher
 Allen Murray
@@ -7380,7 +7185,6 @@ Timothy Anderson
 Logan Gutierrez
 Elise Scott
 Timothy Barnes
-Lee McDonald
 Michael Schmidt
 Ryan Alvarez
 Alexander Green
@@ -7439,7 +7243,6 @@ Christian Medina
 Belle Herrera
 Noelle Cook
 Carter Bailey
-Victoria Lee
 Jordan Morales
 Owen Price
 Madison Garcia
@@ -7456,17 +7259,14 @@ Michael Bennett
 Rose Butler
 Ann Nichols
 Timothy Wilson
-Jackson Black
 Alexander Ortiz
 Alice Aguilar
 Thomas Peterson
 Daniel Payne
 Audrey Castillo
-Lee Chen
 Rae Long
 Eric Burns
 Paige King
-Lee Rivera
 Grace Silva
 May Green
 Dakota White
@@ -7553,7 +7353,6 @@ Tyler Morris
 Caleb Reed
 Richard Hicks
 Autumn Henderson
-Lee Torres
 Daniel Wells
 Autumn King
 Blake Bryant
@@ -7586,10 +7385,7 @@ David Long
 Rose Ross
 May Reynolds
 Simone Hawkins
-Lee Harris
 Isla Shaw
-Simone Fox
-Lee Medina
 Richard Murray
 Alexander Tucker
 Zachary Wilson
@@ -7602,7 +7398,6 @@ Nathan West
 Henry Rivera
 Jane Crawford
 Hunter Butler
-Lee Garcia
 Timothy Munoz
 Audrey Morgan
 Michael Garcia
@@ -7626,7 +7421,6 @@ Nicholas Perry
 Belle Castro
 Mae Harrison
 Blake Payne
-Lee Mason
 Christian Morales
 Ryan Payne
 Rae Hunter
@@ -7648,7 +7442,6 @@ Elizabeth Peterson
 Jordan Cole
 Charlotte Ryan
 Ryan Hill
-Emerson Black
 Richard Brown
 Brielle Adams
 Andrew Salazar
@@ -7676,11 +7469,9 @@ May Barnes
 Brooke Holmes
 Victoria Olson
 Belle Cole
-Jason Black
 Marie Miller
 Elijah Herrera
 Camille Henderson
-Lee Freeman
 Madison Stephens
 Louis Hall
 Elizabeth Weaver
@@ -7697,7 +7488,6 @@ Louis Parker
 Nathan Wilson
 Alexander Romero
 Joseph Wallace
-Christian Lee
 Lynn Ward
 Patrick Morris
 Jonathan Castillo
@@ -7712,7 +7502,6 @@ Nicole Harrison
 Zachary Hicks
 Michael Washington
 Jordan Campbell
-Hunter Black
 Isla Rogers
 Christian Nelson
 Caleb Patterson
@@ -7765,7 +7554,6 @@ Charlotte Gomez
 Kate Sanders
 Maxwell Morgan
 Dakota Peterson
-Isla Black
 Michael Cruz
 Marie Cruz
 Hunter Snyder
@@ -7853,7 +7641,6 @@ Allen James
 Emerson Henderson
 Caleb Roberts
 Timothy Patel
-Isabelle Black
 James Nichols
 Ryan Romero
 Elizabeth Kim
@@ -7888,12 +7675,10 @@ Samuel Tran
 Allen Garza
 Edward Hayes
 Belle Ramos
-Blake Black
 Irene Perez
 Jordan Williams
 Harper Vasquez
 Scott Fernandez
-Jade Lee
 Noelle Richardson
 Rose Williams
 Emerson Jordan
@@ -7910,7 +7695,6 @@ Thomas Olson
 William Owens
 Robert Patel
 Ruby Chen
-Matthew Lee
 Anthony Nelson
 Daniel Walker
 Robert Mendez
@@ -7935,7 +7719,6 @@ Elise Crawford
 Sophia Cruz
 Patrick Price
 Brooke Gomez
-Simone Black
 Elise Harrison
 Brian Salazar
 Jason Williams
@@ -7995,14 +7778,12 @@ Allison Murray
 Brielle Perez
 Grace Gutierrez
 Mae Rivera
-Noelle Lee
 Stephen Diaz
 John Johnson
 Brian Clark
 Allen Watson
 Harper Aguilar
 Jason James
-Lee Mitchell
 Brooke Castro
 Christopher Brooks
 Brielle Kelley
@@ -8145,8 +7926,6 @@ Faith Chavez
 Kate Meyer
 Sage Romero
 Nicholas James
-Lee Mendoza
-Lee Taylor
 Alice Simmons
 Timothy Robertson
 Jordan Ramirez
@@ -8225,8 +8004,6 @@ Robert Alvarez
 Tyler Cooper
 Emerson Foster
 Zachary Medina
-May Black
-Lee Silva
 Marie Gonzalez
 Faith Nichols
 Brian Cooper
@@ -8268,7 +8045,6 @@ Jackson Chavez
 Michelle Cooper
 Alexander Webb
 Louis Daniels
-Sophia Black
 John Rogers
 Isla Parker
 Grace Miller
@@ -8283,10 +8059,8 @@ Skye Ramirez
 Charlotte Turner
 Timothy Perez
 Jackson Reed
-Lee Owens
 Elijah Nichols
 Henry Schmidt
-Lee Snyder
 Jackson Boyd
 Matthew Owens
 Scott Silva
@@ -8312,7 +8086,6 @@ Richard Wright
 Scott Moore
 Hunter Salazar
 Vincent Gonzalez
-Brielle Black
 Maxwell Mills
 Noelle Ward
 Tyler Murray
@@ -8409,7 +8182,6 @@ Sage Ramirez
 Isabelle Rose
 Elizabeth Martinez
 Jordan Hawkins
-Audrey Lee
 Emerson Hayes
 Michelle Harris
 Christian Harris
@@ -8456,7 +8228,6 @@ Caleb Turner
 Skye Murphy
 Jordan Peterson
 Autumn Daniels
-Lee Roberts
 Vincent Simpson
 Louise Harris
 Sage Scott
@@ -8521,7 +8292,6 @@ Timothy Simpson
 Faith Rodriguez
 Faith Gonzalez
 Hunter Munoz
-George Fox
 Elizabeth Morgan
 Timothy Miller
 Louis Nguyen
@@ -8562,7 +8332,6 @@ Scott Peterson
 Leigh Warren
 Jonathan Soto
 Irene Rivera
-Patrick Fox
 Nicole Smith
 Audrey Mason
 Sophia Stewart
@@ -8575,7 +8344,6 @@ Nicole Stephens
 Zachary Bennett
 Joseph Powell
 Olivia Kim
-John Fox
 Jason Hunter
 Alice Shaw
 Elijah Boyd
@@ -8678,8 +8446,6 @@ Jonathan Edwards
 Brian Bell
 Edward Ryan
 Anthony Chavez
-Lee Stephens
-Lee Jones
 May Diaz
 Ann Davis
 May Gibson
@@ -8715,7 +8481,6 @@ Hunter Castillo
 Paul Grant
 Faith Mitchell
 Simone Bell
-Lee Powell
 Patrick Wood
 Brian Hernandez
 Caleb Butler
@@ -8763,7 +8528,6 @@ Rae Bailey
 Jade Castro
 Ruby West
 Nicole Burns
-Christopher Lee
 Faith Lewis
 Eric Hawkins
 Benjamin Richardson
@@ -8778,7 +8542,6 @@ Thomas White
 Robert Watson
 Irene Stone
 Jane Tran
-Michael Fox
 Belle Allen
 Jackson Davis
 Ann Harrison
@@ -8817,7 +8580,6 @@ Vincent Reynolds
 Elise Young
 Belle Scott
 George Hernandez
-Louis Black
 Marie Mitchell
 Jane Spencer
 Isla Garza
@@ -8838,7 +8600,6 @@ Jonathan Guzman
 May Turner
 Jackson White
 Audrey Mills
-Lee Stone
 Jason Bryant
 Logan Sanders
 Mae Ramos
@@ -8949,7 +8710,6 @@ Noelle Moreno
 May McDonald
 Jonathan Webb
 Joseph White
-Lee Morales
 Nicholas White
 Maxwell Butler
 Elizabeth Long
@@ -9010,21 +8770,18 @@ Ann Kennedy
 Vincent Collins
 Joy Harris
 Nathan Palmer
-Olivia Fox
 Charlotte Graham
 Isabelle Schmidt
 Andrew Mason
 Leigh Rivera
 Nicholas Garcia
 Dakota Lewis
-Lee Graham
 Simone Bailey
 Thomas Diaz
 Tyler Bell
 Ann Gray
 Kate Moore
 Blair Stewart
-Robert Fox
 Christian Webb
 Audrey Lewis
 Lynn Wilson
@@ -9046,7 +8803,6 @@ Rae Mendez
 Mae Morris
 Charles Davis
 Leigh Stone
-Louis Fox
 Dakota Davis
 Charles Gomez
 Richard Salazar
@@ -9092,7 +8848,6 @@ Hunter Richardson
 Simone Porter
 Autumn Cook
 Nicholas Hunter
-Brian Fox
 David Perry
 Renee Hill
 Harper Reed
@@ -9106,7 +8861,6 @@ May Hawkins
 Olivia Payne
 Ann Tran
 Louis Hawkins
-Lee Warren
 George Sanchez
 Leigh Kelly
 Hope Boyd
@@ -9178,7 +8932,6 @@ Kate Payne
 Robert Reynolds
 Ruby Evans
 Sophia Carter
-Grace Fox
 Louise Reyes
 Charles Tucker
 Elijah Morris
@@ -9186,14 +8939,12 @@ Jason Hughes
 Dakota Tucker
 Elijah Perry
 Grace Ward
-Kate Black
 Allison Robinson
 Maxwell Owens
 Sophia Lewis
 Jordan Young
 Scott Reed
 Louise Ford
-Hunter Fox
 Noelle Nelson
 Samuel Butler
 Daniel Ramirez
@@ -9244,7 +8995,6 @@ Madison Ford
 Joy Vargas
 Richard Nelson
 Autumn Ramirez
-Dakota Lee
 Skye Snyder
 Kate Wood
 Henry Hamilton
@@ -9281,7 +9031,6 @@ Autumn Hicks
 Blake Edwards
 Belle Warren
 Simone Sullivan
-Hunter Lee
 Hunter Myers
 William Castillo
 Emerson Nichols
@@ -9380,7 +9129,6 @@ May Lopez
 Allen Guzman
 Benjamin Harrison
 David Patel
-Hope Fox
 Jackson Rivera
 Rose Castro
 Claire Tucker
@@ -9408,7 +9156,6 @@ Blair Holmes
 Zachary Russell
 Tyler Kelly
 Irene Palmer
-Lee Walker
 John Burns
 Audrey Ruiz
 Dakota King
@@ -9529,7 +9276,6 @@ Ruby Dunn
 Mae Spencer
 Louise Silva
 Hope Bennett
-Audrey Fox
 Jason Martinez
 Camille Jenkins
 Scott Hernandez
@@ -9548,7 +9294,6 @@ Victoria Coleman
 Thomas Parker
 William Holmes
 Isla Morris
-Camille Fox
 Michelle Cruz
 Isla Grant
 Audrey Jackson
@@ -9595,7 +9340,6 @@ Rae Harrison
 Brian Evans
 Daniel Griffin
 Harper Palmer
-Lee Nichols
 Faith Mills
 Jordan Torres
 Allen Hunt
@@ -9647,7 +9391,6 @@ Emerson Vargas
 Carter Ward
 Camille Hamilton
 Timothy Roberts
-Samuel Lee
 David Hall
 Irene Murray
 Brian Alvarez
@@ -9688,7 +9431,6 @@ Rose Graham
 Noelle Watson
 Jane Gomez
 Allen Garcia
-George Black
 Joseph Perez
 Camille Price
 Caleb Cox
@@ -9729,7 +9471,6 @@ Jade Martinez
 Jackson Gutierrez
 Victoria Hawkins
 Belle Jones
-Elijah Fox
 Ruby Bell
 Madison Harrison
 Carter White
@@ -9754,13 +9495,11 @@ Marie Barnes
 Rae Soto
 Owen Mendez
 Blake Sullivan
-Edward Black
 Paige Carter
 Irene Thompson
 Brooke Young
 Irene King
 Nicole Powell
-Lee Nelson
 Richard Dunn
 Hope Howard
 Charles Kelley
@@ -9932,7 +9671,6 @@ Jane Soto
 Allison Dunn
 Lynn Boyd
 Sophia Wood
-Brielle Fox
 Henry Rogers
 Charles Russell
 Victoria Diaz
@@ -9992,7 +9730,6 @@ Rae Moreno
 Renee Flores
 Paul Stevens
 Allen Robertson
-Lee Simmons
 Christian Hamilton
 John Parker
 Patrick Hayes
@@ -10044,7 +9781,6 @@ Charlotte Gibson
 John Mills
 Rae Taylor
 Joseph Simpson
-Isla Lee
 Madison McDonald
 Richard Wallace
 Edward Russell
@@ -10111,7 +9847,6 @@ James Reyes
 Sophia Anderson
 Harper Wood
 May Jones
-Louise Black
 Mae Hamilton
 Victoria Weaver
 David Gardner
@@ -10137,28 +9872,23 @@ Blair Gonzalez
 Harper Nichols
 Elizabeth Davis
 Andrew Murray
-Elizabeth Black
 Blake Crawford
 Henry Romero
 Robert Robinson
 Elizabeth Guzman
-Ruby Fox
 Patrick Graham
 Eric Aguilar
 Emerson Owens
 Grace Moore
 Dakota Green
 Timothy Mitchell
-Lee Sanders
 John James
-Lee Romero
 Blair Garza
 Belle Meyer
 Sage Rose
 Jackson Daniels
 Isabelle Kelly
 Jason Rogers
-Irene Black
 Claire Nichols
 Brielle Munoz
 Scott Bailey
@@ -10201,13 +9931,11 @@ Jordan Reynolds
 Savannah Tucker
 Alexander Ramirez
 Noelle Campbell
-Lee Adams
 Joseph Martin
 Brian Cox
 Alice Burns
 David Harrison
 Isabelle Daniels
-Lee Marshall
 Edward Woods
 Jane Hughes
 Leigh Gonzales
@@ -10277,7 +10005,6 @@ Christian Bennett
 Brian White
 Zachary Tran
 Daniel Washington
-Lee Gomez
 Brooke Ward
 Emerson Weaver
 Stephen Kennedy
@@ -10383,7 +10110,6 @@ Marie Hill
 Owen Baker
 Owen Harris
 Nicholas Tucker
-Allison Black
 Logan Taylor
 Elijah Wright
 Skye Wells
@@ -10443,7 +10169,6 @@ John Reyes
 Noelle Washington
 Sophia Sanchez
 Anthony Herrera
-Autumn Lee
 Nathan Hill
 Kate Bell
 Louis Diaz
@@ -10529,7 +10254,6 @@ Alexander Castro
 Simone Tran
 Allison Kennedy
 Autumn Grant
-Lee Herrera
 Olivia Moreno
 Matthew Holmes
 Samuel Jordan
@@ -10602,7 +10326,6 @@ Emerson Wood
 Isla Robinson
 Vincent Ferguson
 Dakota Wallace
-Faith Black
 May Long
 Charles Thompson
 Charles Taylor
@@ -10658,7 +10381,6 @@ Leigh Patel
 Jordan Butler
 Alice Davis
 Madison Perez
-Timothy Fox
 Allen Ramos
 Michael Spencer
 Nicholas Robertson
@@ -10682,7 +10404,6 @@ Rose Guzman
 Louis Ryan
 Dakota Salazar
 Henry Moreno
-Lee Bryant
 Alexander Evans
 Andrew Webb
 Hope Vargas
@@ -10692,7 +10413,6 @@ Louis Davis
 Eric Garza
 William Mason
 Jackson Simmons
-David Fox
 Autumn Thomas
 Brielle Gibson
 Irene Nguyen
@@ -10766,14 +10486,12 @@ Thomas Murray
 Allen Graham
 James Munoz
 Lynn Long
-Elise Lee
 Christine Morris
 Logan Porter
 Brian Mills
 Ann Wagner
 Hope Hernandez
 Alexander Sanders
-Camille Black
 Timothy Clark
 Savannah Fisher
 Samuel Ramos
@@ -10913,7 +10631,6 @@ Jane Ford
 Charles Perry
 Stephen Green
 Dakota Hamilton
-Lee Alvarez
 David White
 Claire Russell
 Noelle Soto
@@ -10937,7 +10654,6 @@ Lynn Vasquez
 Lynn Olson
 Eric Russell
 Isla Webb
-Lee Ross
 Elijah Patterson
 Zachary Turner
 Simone Myers
@@ -10960,7 +10676,6 @@ Patrick Allen
 Scott Daniels
 Blair Hernandez
 James Aguilar
-Paige Lee
 Belle Cruz
 Grace Salazar
 George Hawkins
@@ -10975,7 +10690,6 @@ Belle Freeman
 Ryan Scott
 Skye Palmer
 Faith Nguyen
-Lee Flores
 Jordan Schmidt
 Joseph Munoz
 David Boyd
@@ -10983,7 +10697,6 @@ Louise Henderson
 Nathan Tran
 Brooke Price
 Victoria Adams
-Claire Fox
 Sophia Campbell
 Caleb James
 Alice Russell
@@ -11045,7 +10758,6 @@ Henry Sanchez
 Brian Rice
 Jackson Ward
 Daniel Dunn
-Rose Lee
 Christian Rodriguez
 David Mitchell
 Samuel Chen
@@ -11098,7 +10810,6 @@ Madison Ortiz
 Sophia Bennett
 Allison Clark
 David Hill
-Christine Black
 Kate Warren
 Allison Holmes
 Hope Hayes
@@ -11132,7 +10843,6 @@ Elizabeth Rodriguez
 Claire Butler
 Alice Fernandez
 Paige Burns
-Autumn Black
 Patrick Munoz
 Tyler Thomas
 Charlotte Ferguson
@@ -11182,7 +10892,6 @@ Joy Medina
 Sage Perry
 Rae Williams
 George Weaver
-Blair Fox
 Faith Crawford
 Allen Hayes
 Nathan Kelley
@@ -11199,7 +10908,6 @@ Eric Edwards
 Matthew Kelley
 John Taylor
 John Gutierrez
-Louise Lee
 Skye Taylor
 Robert Hughes
 Andrew Phillips
@@ -11291,7 +10999,6 @@ Allen Hicks
 Allen Rodriguez
 Mae Nguyen
 Kate Mills
-Grace Black
 Mae Soto
 Thomas Bailey
 Charlotte Thompson
@@ -11307,7 +11014,6 @@ Brooke Dunn
 Jade Bailey
 Kate Baker
 Alice Ross
-Elise Fox
 Victoria Henry
 Timothy Daniels
 Elizabeth Robinson
@@ -11326,12 +11032,10 @@ Brooke Perry
 Dakota Palmer
 Emerson Munoz
 Hunter Baker
-Zachary Fox
 Allen Gutierrez
 Maxwell Jones
 Audrey Cook
 Carter Gibson
-Allison Lee
 Robert Porter
 Jackson Anderson
 Harper Castillo
@@ -11379,7 +11083,6 @@ Kate Nichols
 Skye Turner
 Nicholas Ross
 Dakota Romero
-Savannah Lee
 Eric Gardner
 Marie Schmidt
 Andrew Young
@@ -11412,7 +11115,6 @@ Carter Tucker
 Brooke Reyes
 Scott Reynolds
 Michael Morris
-Claire Lee
 Ryan Russell
 Kate Woods
 Samuel Foster
@@ -11477,12 +11179,10 @@ Benjamin Henderson
 George Peterson
 Michael Baker
 Elijah Shaw
-Lee Williams
 Savannah Miller
 Louis Turner
 Samuel Gutierrez
 Allison Weaver
-Alexander Black
 Jason Lewis
 Renee Price
 Allen McDonald
@@ -11512,7 +11212,6 @@ Isla Nguyen
 Charlotte Chavez
 Simone Ryan
 Alexander Lewis
-Joy Fox
 Lynn Hicks
 Andrew Freeman
 Kate Henry
@@ -11521,7 +11220,6 @@ Charlotte Perez
 Ryan Washington
 Rae Grant
 Elijah Dixon
-Edward Lee
 Michelle Graham
 Edward Crawford
 Caleb Rodriguez
@@ -11557,7 +11255,6 @@ Stephen Wright
 Madison Wilson
 Timothy Nguyen
 Rose Rivera
-Lee Cole
 Dakota Castillo
 Henry Webb
 Olivia Kennedy
@@ -11587,7 +11284,6 @@ Maxwell Grant
 Michael Patel
 Ryan Hernandez
 Robert Nguyen
-Stephen Fox
 Christian Alexander
 Nicole Griffin
 Nathan Henry
@@ -11602,7 +11298,6 @@ Autumn Crawford
 Benjamin Wright
 Elizabeth Marshall
 Joy Gonzalez
-Lee Anderson
 Claire McDonald
 Emerson Roberts
 Charlotte Weaver
@@ -11756,7 +11451,6 @@ Irene Aguilar
 Sophia Price
 Marie Diaz
 Noelle Bell
-Lee Jenkins
 Robert Wagner
 Elijah Watson
 Daniel Vargas
@@ -11805,7 +11499,6 @@ Paul Simpson
 Elijah Schmidt
 Joseph Taylor
 Samuel McDonald
-Lee Ortiz
 Mae Gray
 Lynn Thomas
 Louise Meyer
@@ -11874,7 +11567,6 @@ Timothy Kim
 Charles Powell
 Ryan Graham
 William Hawkins
-Caleb Black
 Kate Powell
 Jackson Smith
 Richard Henderson
@@ -11888,7 +11580,6 @@ Andrew Boyd
 William Price
 Noelle Jimenez
 Jason Palmer
-Brooke Fox
 Alexander Tran
 Ruby Alexander
 Andrew Parker
@@ -11918,7 +11609,6 @@ Elise Henry
 Michelle Marshall
 Anthony Lewis
 Brooke Williams
-Lee Martinez
 Stephen Crawford
 Nicole Brown
 Christine Chavez
@@ -11942,7 +11632,6 @@ Irene Rodriguez
 Irene Hall
 George Campbell
 Brian Fernandez
-Hope Black
 Blake Fernandez
 May Chavez
 Kate Gomez
@@ -12029,7 +11718,6 @@ George Cole
 Robert Gibson
 Nicole Stone
 Zachary Woods
-Lee Hamilton
 Skye Ellis
 Camille Fisher
 Sophia Daniels
@@ -12195,7 +11883,6 @@ Louise Jackson
 Eric Romero
 Paige Richardson
 Mae Flores
-Lee Clark
 Ruby Shaw
 Noelle Jordan
 Kate Gordon
@@ -12208,7 +11895,6 @@ Carter Thompson
 John Ramos
 Charlotte Simmons
 Vincent Sanders
-Lee Hunt
 Richard Flores
 Camille Aguilar
 Brian Romero
@@ -12298,7 +11984,6 @@ Christian Patterson
 Christopher Hunt
 Richard Cruz
 Alice Washington
-Lee Fisher
 Nicholas Jenkins
 George Powell
 Eric Cole
@@ -12318,7 +12003,6 @@ Robert Bell
 Marie Turner
 Andrew Grant
 Louise Rice
-Kate Lee
 Michelle Murray
 Grace Tucker
 Elise King
@@ -12394,10 +12078,8 @@ Zachary Anderson
 Brooke Bennett
 Richard Jackson
 Victoria Henderson
-Irene Fox
 Scott Howard
 Lynn Thompson
-Leigh Fox
 James Phillips
 Madison King
 Faith Ward
@@ -12497,7 +12179,6 @@ Christopher Robinson
 Camille Moore
 Audrey Green
 Paige Kelly
-Benjamin Lee
 Irene Robinson
 Audrey Simmons
 Blair Nichols
@@ -12506,7 +12187,6 @@ Louis Richardson
 Brian Warren
 Zachary Kennedy
 Rose Cox
-Robert Lee
 Timothy Burns
 Matthew Martinez
 Eric Murray
@@ -12547,7 +12227,6 @@ Christine Morales
 Zachary Chen
 Jade Gordon
 Claire Jimenez
-Vincent Lee
 Christopher Silva
 Thomas Morris
 Tyler Chen
@@ -12595,7 +12274,6 @@ Renee Hernandez
 Scott Allen
 Jonathan Kennedy
 Patrick Jackson
-Sophia Lee
 Sophia Perez
 Camille Woods
 Hunter Washington
@@ -12611,7 +12289,6 @@ Maxwell Castro
 Scott Gonzalez
 Owen Woods
 Logan Cooper
-Lee Price
 Maxwell Porter
 Christine Baker
 Tyler Guzman
@@ -12620,7 +12297,6 @@ Skye Coleman
 Christian Mendez
 Timothy Salazar
 Joy Aguilar
-Jonathan Lee
 Christine Stone
 Stephen Payne
 Robert Schmidt
@@ -12668,9 +12344,7 @@ Jackson Coleman
 Victoria Reed
 Isla Clark
 Hope Long
-Harper Lee
 Caleb Bell
-Lee Campbell
 Simone Smith
 Brian Sanchez
 Audrey Taylor
@@ -12746,7 +12420,6 @@ Charles Silva
 Harper Boyd
 Jason Scott
 Vincent Reed
-Lee Alexander
 Alice Herrera
 George Gomez
 David Chen
@@ -12812,7 +12485,6 @@ Jason Young
 Ruby Robertson
 Maxwell Washington
 Ryan Robinson
-Sophia Fox
 Rae Guzman
 Paul Brooks
 Carter Munoz
@@ -12820,7 +12492,6 @@ Mae Rice
 Ruby Scott
 Michelle Taylor
 Marie Edwards
-Lee Watson
 Grace Daniels
 James Martinez
 Claire Watson
@@ -12845,7 +12516,6 @@ Sage Harrison
 Christopher Wells
 Allen Evans
 Nathan Jones
-Lee Gibson
 Jordan Scott
 Samuel Sullivan
 Ryan Mendez
@@ -13025,7 +12695,6 @@ Anthony Schmidt
 Savannah Taylor
 Grace Wright
 Zachary Wagner
-Noelle Black
 Mae Ramirez
 Anthony Price
 Louis Nichols
@@ -13123,7 +12792,6 @@ Jonathan Cooper
 Henry Harrison
 Victoria Bell
 Brielle Smith
-Lee Gray
 Elise Long
 Joseph Harris
 Paige Williams
@@ -13143,12 +12811,10 @@ Anthony Gardner
 Irene Gray
 Victoria Dunn
 Alice Ruiz
-Lee Holmes
 Brooke Cruz
 Faith Turner
 Mae Baker
 Renee Tucker
-Claire Black
 Joseph Kelley
 Allison Mills
 Belle Foster
@@ -13202,7 +12868,6 @@ Nicholas Evans
 Ryan Gonzales
 Rose Long
 Faith Gardner
-Grace Lee
 Sophia Barnes
 Allison Long
 Timothy Fisher
@@ -13289,7 +12954,6 @@ Blake Hill
 Robert Rose
 Patrick Griffin
 Emerson Cole
-James Lee
 Hunter Ruiz
 Marie Soto
 Patrick Wells
@@ -13326,14 +12990,12 @@ Autumn Long
 Rose Wood
 Michael Stephens
 David McDonald
-Lee Ruiz
 Hope Cruz
 George Gutierrez
 Tyler Cruz
 Skye Salazar
 Madison Hamilton
 Madison Campbell
-Joseph Black
 Ryan Long
 Charlotte Ward
 Alexander Miller
@@ -13370,7 +13032,6 @@ Brooke Stevens
 Caleb Washington
 Savannah Dunn
 Anthony Jackson
-Sage Black
 Zachary Miller
 Rae Simmons
 Elijah Harris
@@ -13431,7 +13092,6 @@ Carter Burns
 Blair Sanchez
 Paige Morgan
 Andrew Sanchez
-Lee Mills
 Matthew Vasquez
 Michelle Porter
 Brielle Rodriguez
@@ -13470,7 +13130,6 @@ Sage Davis
 Savannah Hawkins
 Thomas Allen
 James Kelly
-Tyler Fox
 Richard Mendoza
 Alice Castillo
 Jonathan Ellis
@@ -13645,7 +13304,6 @@ Eric Coleman
 Henry Spencer
 Alice Jimenez
 David Stephens
-Jackson Fox
 Isabelle Morales
 Stephen Cole
 Rae Perry
@@ -13670,7 +13328,6 @@ Alice Cole
 Christian Wagner
 Zachary Flores
 Victoria White
-Brian Lee
 Allison Herrera
 Blake Lewis
 Christine Hayes
@@ -13710,7 +13367,6 @@ Louise Murray
 Michael Owens
 Elise Payne
 Jackson Nelson
-Lee Payne
 Autumn Perez
 Emerson Crawford
 Brooke Freeman
@@ -13775,7 +13431,6 @@ Tyler Wood
 Rose Stephens
 Alice Cruz
 Brielle Gonzalez
-Lee Turner
 May Carter
 Alice Stevens
 Ruby Gardner
@@ -13835,7 +13490,6 @@ Matthew Hunt
 Belle Jackson
 Autumn Perry
 Andrew Mendoza
-Lee Hughes
 Ruby Bennett
 Lynn Webb
 Blake Baker
@@ -13843,7 +13497,6 @@ Marie Jimenez
 May Taylor
 Jackson Romero
 Claire Stone
-Dakota Black
 Emerson Olson
 Alexander Collins
 Blake Salazar
@@ -13867,7 +13520,6 @@ Michael Campbell
 Owen Gray
 Noelle Tucker
 Jane Miller
-Paige Black
 Jade McDonald
 Patrick Mills
 George Hamilton
@@ -13905,7 +13557,6 @@ Hope Stevens
 Stephen Hamilton
 Kate Cox
 Sophia King
-Logan Black
 Brooke Mills
 Daniel Dixon
 Isla Ward
@@ -13927,7 +13578,6 @@ Nathan Mills
 Scott Medina
 Eric Harrison
 Hunter Cook
-Lee Howard
 Matthew Harrison
 Ryan Morris
 Tyler Flores
@@ -13942,7 +13592,6 @@ Sage Butler
 David Howard
 Elizabeth Powell
 Blair Hunter
-Matthew Fox
 Timothy Castro
 Dakota Rodriguez
 Jackson Rodriguez
@@ -13980,7 +13629,6 @@ Sophia Green
 Lynn Richardson
 Leigh Mendez
 Matthew Rose
-Lee Reynolds
 May Baker
 Edward Ortiz
 Ruby Hunter
@@ -14048,10 +13696,8 @@ Tyler Wallace
 Hunter Ramos
 Mae Hicks
 Harper Ortiz
-Lee Moore
 Owen Wright
 William Jordan
-Brooke Black
 Brian Tucker
 Scott Marshall
 Paul Hall
@@ -14178,7 +13824,6 @@ Charlotte Vasquez
 Rae Martin
 Ruby Warren
 Grace Hill
-Nathan Black
 George Grant
 Faith Simpson
 Henry Porter
@@ -14228,13 +13873,10 @@ Marie Davis
 Carter Aguilar
 Brielle Lopez
 Jackson Russell
-Michael Black
 Paige Mendoza
 Kate Alvarez
-Owen Black
 Madison Torres
 Hope West
-Victoria Fox
 Timothy Moore
 Jade Ruiz
 Sage Silva
@@ -14279,7 +13921,6 @@ Michelle Stewart
 Zachary Sanders
 Simone Hunter
 Caleb Mendez
-Lee Wagner
 Olivia Harris
 Emerson Ferguson
 Owen Cruz
@@ -14292,9 +13933,7 @@ Paul Harris
 Dakota Tran
 Louis Baker
 Faith Bell
-James Black
 Christopher Morales
-Ann Lee
 Timothy Mendoza
 Andrew Green
 Timothy Brown
@@ -14311,7 +13950,6 @@ James Marshall
 Paige Chavez
 Matthew Price
 David Jordan
-Lee Stewart
 Kate Hamilton
 Victoria Brooks
 Benjamin Foster
@@ -14348,7 +13986,6 @@ William Dixon
 Joy Dunn
 Jonathan Sanders
 Nicholas Kelley
-Lee Jimenez
 Simone Phillips
 Vincent Martin
 Mae Munoz
@@ -14492,7 +14129,6 @@ Michael Clark
 Noelle Bennett
 Caleb Perry
 Irene Bailey
-Lee Simpson
 Louise Hamilton
 Allen Stone
 Charlotte James
@@ -14553,7 +14189,6 @@ David Kennedy
 Belle Tucker
 Ruby Rogers
 Olivia Young
-Charles Black
 Ryan Cook
 Henry Burns
 Harper Washington
@@ -14598,7 +14233,6 @@ Claire Perry
 Victoria Morgan
 Hope Ramos
 Allen Vasquez
-Lee Allen
 Thomas Nguyen
 Jason Guzman
 Harper Sanders
@@ -14707,7 +14341,6 @@ Irene Fisher
 Hunter Gray
 Matthew Flores
 Olivia Mitchell
-Lee Boyd
 Olivia Hernandez
 Edward Murray
 David Peterson
@@ -14844,7 +14477,6 @@ Allen Ramirez
 Camille Gibson
 James Jordan
 Renee Diaz
-Vincent Black
 Charlotte Meyer
 Olivia Simpson
 Dakota Murray
@@ -14872,7 +14504,6 @@ Jordan Reyes
 Andrew James
 Christopher Martin
 Owen Reynolds
-Thomas Fox
 Timothy Nelson
 Louis Thompson
 Jane Snyder
@@ -14922,7 +14553,6 @@ Paige Morales
 Stephen Perry
 Elijah Gray
 Michael Chen
-Lee Vasquez
 Mae Palmer
 Skye Diaz
 Jordan Ramos
@@ -14933,13 +14563,10 @@ Sophia Richardson
 Claire Roberts
 Jade Palmer
 Blake Woods
-Lee Gonzalez
 Joseph Edwards
 Henry Meyer
 Hunter Hunter
-Lee Kim
 Eric Hernandez
-Lee Ryan
 Eric Ross
 Mae Payne
 Elizabeth Reyes
@@ -14959,7 +14586,6 @@ Kate Gonzales
 Michael Griffin
 William Long
 David Morales
-Camille Lee
 Joseph Garcia
 Ann Thomas
 Paul Garza
@@ -14989,7 +14615,6 @@ Leigh Wood
 Blake Morales
 Dakota Murphy
 Logan Moreno
-Lee Perez
 Jordan Taylor
 Alexander Graham
 Nicole Jackson
@@ -15056,7 +14681,6 @@ Olivia Lopez
 Isabelle Thompson
 Savannah Warren
 Brielle Cole
-Anthony Lee
 Thomas Anderson
 Nathan Bryant
 Nathan Thompson
@@ -15075,7 +14699,6 @@ John Holmes
 Elizabeth Perez
 Stephen Roberts
 Jonathan Nelson
-Rae Black
 Michelle Warren
 Brian Murray
 Kate Anderson
@@ -15136,7 +14759,6 @@ Emerson Castro
 Jordan Dixon
 Louis Russell
 Sophia Simmons
-George Lee
 Tyler Washington
 Benjamin Hunter
 Kate Foster
@@ -15157,7 +14779,6 @@ Sage White
 Tyler Martin
 Dakota Warren
 Mae Gomez
-Lee Kelly
 Samuel Shaw
 Harper Roberts
 Stephen Ward
@@ -15184,13 +14805,11 @@ Hope Kelly
 Victoria King
 Jordan Myers
 Emerson Brown
-Lee Fox
 Mae Jones
 Joy Rogers
 Louis Soto
 Allen Henry
 Carter Ford
-Lee Weaver
 Madison Morris
 Nicole Coleman
 William Jenkins
@@ -15206,7 +14825,6 @@ Michelle Owens
 Faith Jimenez
 Belle Patel
 Caleb Stewart
-May Lee
 Emerson Kelley
 Caleb Wells
 Nicole Hicks
@@ -15260,7 +14878,6 @@ Samuel Wallace
 Rose Gonzales
 Kate Guzman
 Christine West
-Lee West
 Claire Silva
 Paul Walker
 May Torres
@@ -15350,7 +14967,6 @@ Zachary Cox
 Claire Ward
 May Howard
 Caleb Edwards
-Lee Hawkins
 Jade Wallace
 Richard James
 May Perry
@@ -15358,7 +14974,6 @@ Benjamin Hunt
 Jackson Alexander
 Mae Stephens
 Paul Bell
-Thomas Lee
 Christopher McDonald
 Skye Chen
 Elijah Ortiz
@@ -15381,7 +14996,6 @@ Anthony Taylor
 Samuel Thomas
 Kate Sullivan
 Eric Spencer
-Vincent Fox
 Brooke Miller
 Allison Cox
 Isabelle Hill
@@ -15505,13 +15119,11 @@ Christian Young
 Blair Hicks
 Paige Myers
 Renee Murray
-Ryan Black
 Hope Porter
 Elise Robertson
 Christine Kim
 George Gibson
 Carter Harris
-Marie Fox
 Anthony Murphy
 Christine Green
 Camille Tran
@@ -15601,7 +15213,6 @@ Logan Stephens
 May Smith
 Paige Olson
 Christine Davis
-Lee Fernandez
 Maxwell Stone
 Sage Stevens
 Rae Castro
@@ -15614,14 +15225,12 @@ Elizabeth Ramos
 Jonathan Holmes
 Christopher Bailey
 Claire Olson
-Ryan Lee
 Noelle Brown
 Renee Myers
 Dakota Powell
 Maxwell Nguyen
 Olivia Murray
 James Clark
-Jonathan Fox
 Renee Tran
 Audrey Turner
 Logan Robertson
@@ -15637,7 +15246,6 @@ Michael Kennedy
 George Freeman
 Paul Thomas
 Patrick Fernandez
-Lee Parker
 Lynn Young
 Charlotte Thomas
 Madison Coleman
@@ -15647,7 +15255,6 @@ Rae Castillo
 Jade Jordan
 Isabelle Hawkins
 Christopher Foster
-Marie Black
 Emerson Smith
 Irene Ramirez
 Charlotte Baker
@@ -15655,9 +15262,7 @@ Charlotte Munoz
 Victoria Crawford
 Leigh Jordan
 Carter Anderson
-Ruby Black
 Elijah Perez
-Daniel Lee
 Belle Burns
 Christine Rogers
 Matthew Richardson
@@ -15686,11 +15291,9 @@ Belle Smith
 Caleb Flores
 Brielle White
 Lynn Bennett
-Caleb Fox
 Irene Spencer
 Stephen Mendez
 Noelle Stevens
-Harper Black
 Matthew Graham
 John Crawford
 Scott Shaw
@@ -15819,7 +15422,6 @@ Dakota Bell
 Timothy Mills
 Louise Allen
 George Munoz
-Isabelle Lee
 Michael Nelson
 Sage Nelson
 Hunter Adams
@@ -15866,7 +15468,6 @@ Jane Wilson
 George Wright
 Anthony Dunn
 Mae Gordon
-Lee Murray
 Isla Warren
 David Russell
 Jonathan James
@@ -15878,7 +15479,6 @@ Elise Wilson
 Jade Bennett
 Sage Jackson
 Nathan Jackson
-Lee Hunter
 Edward Gutierrez
 David Smith
 Samuel Reynolds
@@ -15993,7 +15593,6 @@ Renee Ryan
 Alice Perry
 Savannah Foster
 Anthony Ortiz
-Lee Schmidt
 Caleb Munoz
 Noelle Sanchez
 Jonathan Young
@@ -16023,10 +15622,7 @@ Logan Nelson
 Andrew McDonald
 George Anderson
 Elijah Garcia
-Belle Fox
 Hunter Lopez
-Joy Black
-Lee Shaw
 Tyler Harrison
 Joy Martin
 Victoria Smith
@@ -16055,7 +15651,6 @@ Nathan Aguilar
 Simone Wright
 Carter Howard
 Daniel Brown
-Madison Fox
 Daniel Garza
 Elise Aguilar
 Noelle Nguyen
@@ -16097,7 +15692,6 @@ Autumn Graham
 Claire Schmidt
 Allison Jimenez
 Alexander Alexander
-Lee Kennedy
 Joseph Kennedy
 Ryan Jimenez
 Olivia Ramos
@@ -16107,7 +15701,6 @@ Robert Shaw
 Emerson Stephens
 Henry Woods
 Scott Hunter
-Charles Lee
 Edward Barnes
 Isabelle Payne
 Belle Richardson
@@ -16124,7 +15717,6 @@ David Payne
 Simone Payne
 Nicole Kim
 John Ferguson
-Skye Lee
 Nathan Collins
 Elise Taylor
 Brooke Webb
@@ -16136,7 +15728,6 @@ Christopher Palmer
 Claire Salazar
 Patrick Kelley
 Charles Boyd
-Lee Lopez
 Victoria Snyder
 Jade Cole
 Hope Rivera
@@ -16150,7 +15741,6 @@ Jade Stewart
 Ruby Harris
 Nicholas Lopez
 Michelle Robertson
-Autumn Fox
 Blair Gomez
 Michelle Cook
 Harper Simmons
@@ -16181,7 +15771,6 @@ Eric Reynolds
 Hope Myers
 Allen Murphy
 Nicholas Rice
-Lee Hernandez
 Camille Weaver
 Alice Webb
 Irene Foster
@@ -16210,7 +15799,6 @@ Allen Crawford
 Carter Rogers
 May Sanders
 Harper Smith
-Nicholas Black
 Christopher Martinez
 Jonathan Woods
 Charles Alvarez
@@ -16250,7 +15838,6 @@ Carter Kelley
 Hunter Ward
 Claire Hawkins
 Rose Jenkins
-Michelle Fox
 Brielle Bryant
 Charlotte Bell
 Claire Sanchez
@@ -16354,7 +15941,6 @@ Brooke Stewart
 Olivia Murphy
 Henry Chen
 Rae Rose
-Lee Washington
 Belle Hunter
 Scott Mills
 Irene Miller
@@ -16383,7 +15969,6 @@ Elise Ellis
 Jason Kelly
 Autumn Romero
 William Kelly
-Henry Lee
 Ann Gardner
 Elijah Ruiz
 Stephen Thomas
@@ -16421,7 +16006,6 @@ Michael Morales
 Isabelle Russell
 Isabelle Ramos
 Eric Tucker
-Christine Lee
 Eric Robertson
 Ann Johnson
 Claire Hicks
@@ -16438,7 +16022,6 @@ Sophia Washington
 Matthew Henderson
 Dakota Crawford
 Matthew Ryan
-Maxwell Lee
 Tyler Russell
 Allen Hunter
 Joseph Owens
@@ -16460,14 +16043,12 @@ Henry Robertson
 Rae Herrera
 Elizabeth Ford
 James Watson
-Victoria Black
 Claire Scott
 Caleb Jenkins
 Anthony Jenkins
 Robert Bryant
 Hunter Meyer
 Sophia Mitchell
-Madison Black
 Blair Howard
 Robert Mendoza
 Caleb Owens
@@ -16491,7 +16072,6 @@ Leigh Munoz
 George Diaz
 Paul Collins
 Edward Ellis
-Alice Lee
 Charlotte Marshall
 Isabelle King
 Brielle Ryan
@@ -16683,7 +16263,6 @@ Lynn Taylor
 Daniel Clark
 Mae Guzman
 Ann Reynolds
-Lynn Lee
 Isabelle Mills
 Grace Grant
 Logan Clark
@@ -16716,7 +16295,6 @@ Blair Harris
 Scott Weaver
 Allen Medina
 Dakota Wells
-Paul Fox
 Autumn Ortiz
 Alexander Rose
 Irene Carter
@@ -16743,7 +16321,6 @@ Camille Ford
 Noelle Russell
 Anthony Wright
 Irene Scott
-Lynn Fox
 Daniel Long
 Harper Shaw
 Daniel Grant
@@ -16786,7 +16363,6 @@ Louis Kelley
 Autumn Chavez
 Jade Castillo
 Ann Mendoza
-Lee Ramirez
 Rose Daniels
 Louis Watson
 Emerson Watson
@@ -16803,7 +16379,6 @@ Jade Foster
 Noelle Snyder
 Zachary McDonald
 Thomas Vargas
-Emerson Lee
 Christine James
 Ann Jones
 Jordan Rogers
@@ -16812,14 +16387,12 @@ Maxwell Evans
 Blake Perry
 Ruby Wallace
 Elise Stevens
-Lee Ellis
 Rose Hunter
 Andrew Dunn
 Renee Ramirez
 Jane Allen
 Paige Griffin
 Stephen Gray
-Jordan Black
 Jordan Collins
 Marie Nichols
 Dakota Wood
@@ -16854,7 +16427,6 @@ Louis Miller
 Jackson Jordan
 Anthony Davis
 Madison Castro
-Maxwell Black
 Joseph Herrera
 Daniel West
 Anthony Thompson
@@ -16946,7 +16518,6 @@ James Morris
 Brielle Owens
 Belle Palmer
 Rose Freeman
-Lee Webb
 May Dunn
 Irene Walker
 May Ortiz
@@ -16975,7 +16546,6 @@ Samuel Martinez
 Leigh Morris
 Jane Perez
 Benjamin Evans
-Logan Fox
 Henry Martin
 Jade Morgan
 David Fisher
@@ -17024,7 +16594,6 @@ George Palmer
 Zachary West
 Elise Lewis
 George Burns
-Lee Mendez
 Christopher Marshall
 Elijah Romero
 Joy Price
@@ -17092,7 +16661,6 @@ Charlotte Reyes
 Zachary Vasquez
 Henry Sullivan
 Hunter Price
-Irene Lee
 Rose Price
 Noelle Adams
 Benjamin Schmidt
@@ -17146,7 +16714,6 @@ Charles Harrison
 Isabelle Lopez
 Leigh Parker
 Faith Aguilar
-Jade Black
 Paul Herrera
 Maxwell Kelly
 George Flores
@@ -17222,14 +16789,12 @@ Elise Richardson
 Louis Stewart
 Stephen Morris
 Hope Reyes
-Benjamin Fox
 Sage Baker
 Olivia Gordon
 Audrey Coleman
 Owen Morris
 Christopher James
 Anthony Cruz
-Lee Stevens
 Owen Stewart
 Victoria Warren
 Victoria Brown
@@ -17276,7 +16841,6 @@ Renee Clark
 Marie Silva
 Henry Alvarez
 Jonathan Murphy
-Lee Spencer
 Maxwell Hamilton
 Marie Moore
 Audrey Meyer
@@ -17287,7 +16851,6 @@ Thomas Hill
 Thomas Bryant
 Allison Burns
 Claire Garza
-Tyler Black
 Kate Rose
 Eric Holmes
 Maxwell Mitchell
@@ -17392,9 +16955,7 @@ Daniel Henderson
 Stephen Dixon
 Noelle Morales
 Blair Mills
-Charlotte Fox
 Skye Holmes
-Lee Castillo
 Rae Hayes
 Simone Parker
 Ruby Rice
@@ -17461,7 +17022,6 @@ Christopher Bell
 Patrick Bailey
 Edward Henderson
 Joseph Tucker
-Lee Dunn
 Joseph Olson
 Michael Edwards
 Isla Aguilar
@@ -17493,7 +17053,6 @@ David Dixon
 Thomas Schmidt
 Leigh Campbell
 Maxwell Flores
-Carter Black
 Victoria Garza
 Mae Graham
 Simone Anderson
@@ -17513,7 +17072,6 @@ Brooke Richardson
 Timothy Ruiz
 Ryan Coleman
 Rose Tucker
-Lee Reed
 William Smith
 Jane Wood
 Belle Perry
@@ -17553,14 +17111,11 @@ Paige Hawkins
 Alexander Mills
 Edward Price
 Louise Thomas
-Ann Black
-Lee Chavez
 Christine Stevens
 Jane Gray
 Harper Daniels
 Edward McDonald
 Brooke Diaz
-Lee Gardner
 Scott Wells
 Rae Stone
 Hope Lewis
@@ -17593,7 +17148,6 @@ John Kim
 Leigh James
 Renee Spencer
 Owen Johnson
-Christopher Fox
 Logan Wilson
 Samuel Bryant
 Jane Evans
@@ -17617,7 +17171,6 @@ Caleb Diaz
 Blake Weaver
 Richard Wilson
 Autumn Marshall
-Lee Bailey
 Blair Alexander
 Leigh McDonald
 Lynn Perry
@@ -17636,7 +17189,6 @@ Allison Ross
 May Butler
 Christopher Schmidt
 Christine Myers
-Alice Fox
 Christine Edwards
 Anthony Munoz
 Paige Jordan
@@ -17651,7 +17203,6 @@ Allison Warren
 Jason Barnes
 Lynn Stewart
 Marie Spencer
-Brooke Lee
 Scott Wagner
 Irene Simpson
 Brooke Jackson
@@ -17674,7 +17225,6 @@ Richard Barnes
 Paul Campbell
 Allison Jackson
 Michelle Russell
-Lee Black
 Benjamin Ward
 Grace Martinez
 Blair Crawford
@@ -17763,7 +17313,6 @@ Christine Turner
 Renee Cook
 Nathan James
 Alexander Kelly
-Alexander Fox
 Elise Morris
 Thomas Guzman
 Claire Garcia
@@ -17786,7 +17335,6 @@ Richard Palmer
 Rose Davis
 Leigh Carter
 Scott Jimenez
-Lee Cooper
 Emerson Green
 Emerson Spencer
 George Ramirez
@@ -17847,7 +17395,6 @@ Matthew Cole
 George Griffin
 Paul Chavez
 Faith Torres
-Stephen Black
 Louis Porter
 Eric Vasquez
 Louis Silva
@@ -17861,7 +17408,6 @@ Paul Jones
 Ryan Daniels
 Christopher Jimenez
 Owen Carter
-Samuel Black
 Olivia Diaz
 Harper Wright
 Hunter Sullivan
@@ -17927,7 +17473,6 @@ Lynn Wagner
 Elizabeth Bryant
 Carter Weaver
 Zachary Moore
-Lee Hayes
 Hunter Olson
 Kate Bryant
 Maxwell Gardner
@@ -17971,7 +17516,6 @@ Vincent Wells
 Caleb Russell
 Grace Ortiz
 Christine Gibson
-Lee Robinson
 Sophia Marshall
 Victoria Gomez
 Allen Ryan
@@ -18040,7 +17584,6 @@ Michelle Kennedy
 Jade Hicks
 Paul Flores
 Emerson Kim
-Mae Fox
 Leigh Hall
 Christopher Evans
 Joy Schmidt
@@ -18073,12 +17616,10 @@ James Bailey
 Ann Schmidt
 Christopher Wright
 Renee Green
-Faith Fox
 Christine McDonald
 Maxwell Murray
 Harper Jordan
 Christine Rodriguez
-Lee Russell
 Skye Wilson
 Stephen Hicks
 Ryan Schmidt
@@ -18095,7 +17636,6 @@ Olivia Perry
 Nathan Davis
 Renee Stephens
 Alice Stewart
-Lee Harrison
 Andrew Ellis
 James Medina
 Logan Baker
@@ -18109,7 +17649,6 @@ May Tran
 Joseph Dunn
 Carter Gonzalez
 Stephen Young
-Mae Lee
 Grace James
 Elizabeth Jenkins
 Maxwell Kennedy
@@ -18155,7 +17694,6 @@ Michael Gonzalez
 Maxwell Ortiz
 Christine Wells
 James Dixon
-Lee Wallace
 Louise Wood
 Vincent Burns
 Ruby Mendez
@@ -18169,13 +17707,11 @@ Jonathan McDonald
 Matthew Mendoza
 Joy Ross
 Louise Woods
-Lee Vargas
 Samuel Moreno
 Robert Webb
 William Martinez
 Ryan Mitchell
 Brooke Jones
-Lee Dixon
 Kate Rivera
 Charlotte Patel
 Paul Olson
@@ -18188,7 +17724,6 @@ Allison Soto
 Benjamin Owens
 George Bennett
 Camille Fernandez
-Rae Lee
 May Phillips
 Madison Anderson
 Vincent Stevens
@@ -18196,7 +17731,6 @@ Joy Wilson
 Patrick Gibson
 Paige White
 Charles Harris
-Lynn Black
 Faith Hunt
 Louis Salazar
 Christine Gordon
@@ -18341,7 +17875,6 @@ Samuel Young
 Marie Bennett
 Renee Jenkins
 David Hunt
-Lee Baker
 Blake Williams
 Nicholas Price
 Timothy Patterson
@@ -18356,11 +17889,9 @@ Isabelle Hicks
 Jane Morales
 Camille King
 Rae Munoz
-Caleb Lee
 Alice Mills
 William Ross
 Samuel Collins
-Lee Grant
 Belle Davis
 Rose Campbell
 Audrey Hamilton
@@ -18441,7 +17972,6 @@ Daniel Smith
 Lynn Nichols
 Thomas Fernandez
 Michael Ramos
-Rae Fox
 Nicole Peterson
 Anthony Ross
 May Garza
@@ -18451,11 +17981,9 @@ Rae Cook
 Mae Butler
 Camille Nelson
 Benjamin Coleman
-Zachary Lee
 Ann King
 Ryan Hawkins
 Madison Reyes
-Jane Lee
 Irene Garza
 Camille Edwards
 Louis Grant
@@ -18626,7 +18154,6 @@ Nicholas Henderson
 Hunter Clark
 Caleb Ellis
 Kate Diaz
-Paul Black
 Hunter Martin
 Eric Taylor
 Jordan Graham
@@ -18646,7 +18173,6 @@ Michelle Meyer
 Nicole Crawford
 Matthew Nelson
 Jordan Hughes
-Brielle Lee
 Owen Washington
 Christine Stephens
 Paige Howard
@@ -18762,7 +18288,6 @@ Michael Graham
 Jade Grant
 Christine Salazar
 Brian Stone
-Charles Fox
 David Guzman
 Carter Alvarez
 James Patel
@@ -18817,7 +18342,6 @@ Christine Silva
 Michael Gray
 Charles Morris
 Savannah Kelley
-Lee Griffin
 Nicholas Holmes
 Allison Bailey
 Dakota Owens
@@ -18858,7 +18382,6 @@ Dakota Cruz
 Benjamin Griffin
 Tyler Jackson
 Ruby Coleman
-Nicole Lee
 Tyler Hayes
 Samuel Washington
 Patrick Martin
@@ -18937,7 +18460,6 @@ Elizabeth Olson
 Charles Hicks
 Ann Sullivan
 Allen Torres
-Lee Phillips
 Tyler Taylor
 Ann Campbell
 Louis Hughes
@@ -18952,11 +18474,9 @@ Autumn Bell
 Mae Ryan
 Marie Brown
 Mae Washington
-Louise Fox
 Faith Sanchez
 Brian Hall
 Andrew Jordan
-Jason Lee
 Ryan Griffin
 Ann Crawford
 Louise Harrison
@@ -19087,7 +18607,6 @@ Isabelle Wagner
 Camille Williams
 Audrey Alexander
 David Sanders
-Lee Guzman
 Maxwell Gordon
 Grace Foster
 Patrick Roberts
@@ -19103,7 +18622,6 @@ Camille Mitchell
 Louis Morris
 John Cole
 Emerson Tran
-Blair Lee
 Ruby Wells
 Thomas Sanders
 Camille Jones
@@ -19119,7 +18637,6 @@ Carter Herrera
 Eric Reed
 Elijah Robertson
 Sophia Reyes
-Lee Nguyen
 Charlotte Gonzalez
 Hunter Smith
 Noelle Rice
@@ -19148,7 +18665,6 @@ Leigh Long
 Michael Diaz
 David Sanchez
 Autumn Thompson
-Lee Castro
 James Harris
 William Perry
 May Owens
@@ -19187,7 +18703,6 @@ Richard Stephens
 Scott Munoz
 Richard Mendez
 Nathan Jimenez
-Lee Daniels
 Daniel Price
 Blair Wood
 Camille Hicks
@@ -19282,7 +18797,6 @@ Blake Palmer
 Charles Mendoza
 Hunter Brown
 Louise Hughes
-Rose Fox
 Elise Parker
 Hunter Hawkins
 Skye Meyer
@@ -19495,7 +19009,6 @@ Logan Harrison
 Tyler Tucker
 Dakota Reed
 Elijah Young
-Belle Lee
 John Simmons
 Paul Wells
 Maxwell Myers
@@ -19534,7 +19047,6 @@ Jane Vargas
 Paige Lopez
 Christian Kim
 Eric Allen
-Isabelle Fox
 Rose Alvarez
 Ryan Holmes
 Christine Moreno
@@ -19589,7 +19101,6 @@ Patrick Ferguson
 Jade Walker
 Claire Kelley
 Christine Jones
-Henry Black
 Audrey Woods
 Christian Taylor
 Jason Shaw
@@ -19681,12 +19192,10 @@ David Castro
 Joy Allen
 Carter Adams
 Blair Rodriguez
-Ruby Lee
 Renee Patterson
 Timothy Holmes
 Rae Hawkins
 Allison Hunt
-Belle Black
 William Peterson
 Hunter Howard
 Carter Baker
@@ -19703,7 +19212,6 @@ Timothy Bell
 Ryan Marshall
 Mae Martin
 Belle Wells
-Carter Lee
 Joy Gordon
 Grace Alvarez
 Lynn Tucker
@@ -19758,7 +19266,6 @@ Richard West
 Nicholas Fernandez
 Irene Evans
 Eric Butler
-Michael Lee
 Noelle Rose
 Lynn Price
 Allison Garcia
@@ -19804,7 +19311,6 @@ John Jenkins
 John Freeman
 Jackson Meyer
 Simone Miller
-Lee Sanchez
 Savannah Sanders
 Kate Perry
 Timothy Morgan
@@ -19834,7 +19340,6 @@ Paige Scott
 Jane Price
 Henry Miller
 Samuel Cox
-Emerson Fox
 Simone Lewis
 Alice Parker
 Timothy Hamilton
@@ -19888,7 +19393,6 @@ Robert Vasquez
 Elijah Sanchez
 Jason Kelley
 Ryan Hicks
-Lee Moreno
 Hunter Torres
 Harper Bailey
 Caleb Shaw
@@ -19948,7 +19452,6 @@ Jane Walker
 Christopher Kelley
 Sage Mitchell
 Faith Wagner
-Henry Fox
 Isla Woods
 Lynn Davis
 Nathan Barnes
