@@ -380,7 +380,7 @@ function getThuemailConfirmCode()
     local tries = 10
     for i = 1, tries do 
         toastr('Call times ' .. i)
-        sleep(10)
+        sleep(5)
 
         local response, error = httpRequest {
             url = MAIL_THUEMAILS_DOMAIN .. "rentals/" .. info.thuemailId .. "?api_key=" .. MAIL_THUEMAILS_API_KEY,
