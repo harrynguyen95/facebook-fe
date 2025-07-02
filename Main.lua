@@ -141,13 +141,9 @@ function main()
         findAndClickByImage(next)
 
         if not waitImageNotVisible(what_is_birthday, 20) then 
-            if findAndClickByImage(next) then 
-                if not waitImageNotVisible(what_is_birthday, 20) then 
-                    toastr('Can not next')
-                    swipeCloseApp()
-                    goto label_openfacebook
-                end 
-            end
+            toastr('Can not next')
+            swipeCloseApp()
+            goto label_openfacebook
         end 
     end
 
@@ -176,7 +172,7 @@ function main()
             findAndClickByImage(next)
             archiveCurrentAccount()
 
-            if waitImageVisible(already_have_account, 2) then
+            if waitImageVisible(already_have_account) then
                 toastr("already_have_account")
                 findAndClickByImage(continue_creating_account)
                 sleep(2)
@@ -197,7 +193,7 @@ function main()
                     findAndClickByImage(next)
                     archiveCurrentAccount()
 
-                    if waitImageVisible(already_have_account, 2) then
+                    if waitImageVisible(already_have_account) then
                         toastr("already_have_account")
                         findAndClickByImage(continue_creating_account)
                         sleep(2)
@@ -589,7 +585,7 @@ function main()
         if waitImageVisible(logout_btn) then
             findAndClickByImage(logout_btn) sleep(1)
         end
-        if waitImageVisible(not_now) then
+        if waitImageVisible(not_now, 3) then
             findAndClickByImage(not_now) sleep(1)
             waitImageNotVisible(not_now)
         end
