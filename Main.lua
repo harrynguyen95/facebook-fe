@@ -49,16 +49,16 @@ function main()
     sleep(10)
  
     if waitImageVisible(page_not_available_now, 2) then 
-        toast('page_not_available_now')
+        toastr('page_not_available_now')
         goto label_continue
     end 
 
     ::label_createnewaccount::
     if waitImageVisible(create_new_account, 60) then
-        toast('create_new_account')
+        toastr('create_new_account')
 
-        if waitImageVisible(logo_fb_modern, 2) then
-            toast('not_support_this_FB_mode')
+        if waitImageVisible(logo_fb_modern, 3) then
+            toastr('not_support_this_FB_mode')
 
             swipeCloseApp()
             goto label_continue
@@ -69,7 +69,7 @@ function main()
         if waitImageNotVisible(logo_facebook_2, 60) then 
             sleep(3)
         else 
-            toast('Can not next')
+            toastr('Can not next')
             swipeCloseApp()
             goto label_continue
         end
@@ -84,19 +84,19 @@ function main()
     if checkSuspended() then goto label_continue end
 
     if waitImageVisible(join_facebook, 2) then 
-        toast('not_support_this_FB_mode')
+        toastr('not_support_this_FB_mode')
 
         swipeCloseApp()
         goto label_continue
     end
 
     if waitImageVisible(create_new_account_blue) then
-        toast('create_new_account_blue')
+        toastr('create_new_account_blue')
         findAndClickByImage(create_new_account_blue)
         waitImageNotVisible(create_new_account_blue)
     else 
         if waitImageVisible(get_started) then
-            toast('get_started')
+            toastr('get_started')
             findAndClickByImage(get_started)
             waitImageNotVisible(get_started)
         end
@@ -105,8 +105,9 @@ function main()
     if checkImageIsExists(create_new_account) then goto label_createnewaccount end 
 
     setFirstNameLastName()
-    if waitImageVisible(what_is_birthday) then
-        toast("what_is_birthday")
+
+    if waitImageVisible(what_is_birthday, 2) then
+        toastr("what_is_birthday")
         press(270, 470) sleep(0.5)
 
         for i = 1, math.random(2, 5) do
@@ -120,10 +121,10 @@ function main()
         end
         findAndClickByImage(next)
 
-        if not waitImageNotVisible(what_is_birthday, 30) then 
-            if (findAndClickByImage(next)) then 
-                if not waitImageNotVisible(what_is_birthday, 30) then 
-                    toast('Can not next')
+        if not waitImageNotVisible(what_is_birthday, 20) then 
+            if findAndClickByImage(next) then 
+                if not waitImageNotVisible(what_is_birthday, 20) then 
+                    toastr('Can not next')
                     swipeCloseApp()
                     goto label_continue
                 end 
@@ -133,15 +134,17 @@ function main()
 
     setGender()
 
-    if waitImageVisible(what_is_mobile_number, 10) or waitImageVisible(sign_up_with_email, 10) then
-        toast("what_is_mobile_number")
+    if waitImageVisible(what_is_mobile_number) then
+        toastr("what_is_mobile_number")
         findAndClickByImage(sign_up_with_email)
         waitImageNotVisible(what_is_mobile_number)
     end
 
-    if waitImageVisible(what_is_your_email) or waitImageVisible(mail_did_not_receive_code) then
-        toast("what_is_your_email")
+    if waitImageVisible(what_is_your_email) then
+        toastr("what_is_your_email")
+        -- or waitImageVisible(mail_did_not_receive_code)
 
+        ::label_entermail::
         if info.mailRegister ~= nil and info.mailRegister ~= '' then 
             press(310, 410)
             findAndClickByImage(x_input_icon)
@@ -151,7 +154,7 @@ function main()
             archiveCurrentAccount()
 
             if waitImageVisible(already_have_account, 2) then
-                toast("already_have_account")
+                toastr("already_have_account")
                 findAndClickByImage(continue_creating_account)
                 sleep(2)
             end
@@ -162,29 +165,10 @@ function main()
                 goto label_continue
             end
         else
-            executeGetMailRequest()
-            sleep(1)
-            if info.mailRegister ~= nil or info.mailRegister ~= '' then 
-                press(310, 410)
-                findAndClickByImage(x_input_icon)
-                typeText(info.mailRegister)
-
-                findAndClickByImage(next)
-                archiveCurrentAccount()
-
-                if waitImageVisible(already_have_account, 2) then
-                    toast("already_have_account")
-                    findAndClickByImage(continue_creating_account)
-                    sleep(2)
-                end
-
-                if waitImageVisible(exist_account_in_mail) then
-                    failedCurrentAccount()
-                    swipeCloseApp()
-                    goto label_continue
-                end
+            if executeGetMailRequest() then 
+                goto label_entermail
             else 
-                toast("Không có mail. Continue.", 10) sleep(5)
+                toastr("Không có mail. Continue.", 10) sleep(5)
                 failedCurrentAccount()
                 swipeCloseApp()
                 goto label_continue
@@ -193,54 +177,80 @@ function main()
 
         if waitImageNotVisible(what_is_your_email, 30) then 
         else 
-            toast('Can not next')
+            toastr('Can not next')
             swipeCloseApp()
             goto label_continue
         end
     end
 
+    if waitImageVisible(what_is_birthday, 2) then
+        toastr("what_is_birthday")
+        press(270, 470) sleep(0.5)
+
+        for i = 1, math.random(2, 5) do
+            press(200, math.random(1003, 1008))
+        end
+        for i = 1, math.random(3, 10) do
+            press(400, math.random(1003, 1008))
+        end
+        for i = 1, math.random(10, 18) do
+            press(600, math.random(1003, 1008))
+        end
+        findAndClickByImage(next)
+
+        if not waitImageNotVisible(what_is_birthday, 20) then 
+            if findAndClickByImage(next) then 
+                if not waitImageNotVisible(what_is_birthday, 20) then 
+                    toastr('Can not next')
+                    swipeCloseApp()
+                    goto label_continue
+                end 
+            end
+        end 
+    end
+
+    setGender()
+
     if waitImageVisible(create_a_password) then
-        toast("create_a_password")
+        toastr("create_a_password")
         press(135, 450)
         findAndClickByImage(password_eye)
         typeText(info.password)
         findAndClickByImage(next)
 
-        if waitImageNotVisible(create_a_password, 30) then 
-        else 
-            toast('Can not next')
+        if not waitImageNotVisible(create_a_password, 60) then 
+            toastr('Can not next')
             swipeCloseApp()
-            homeAndUnlockScreen()
-            executeXoaInfo() sleep(1)
-            goto label_openfacebook
+            goto label_continue
         end 
     end
 
     -- if waitImageVisible(you_are_logged_in, 2) then
-    --     toast("you_are_logged_in")
+    --     toastr("you_are_logged_in")
     --     press(375, 805) -- OK btn
     -- end
 
     if waitImageVisible(save_your_login_info) then
-        toast("save_your_login_info")
+        toastr("save_your_login_info")
         findAndClickByImage(save)
 
         waitImageNotVisible(save_your_login_info)
     end
 
     if waitImageVisible(continue_creating_account, 3) then
-        toast("continue_creating_account")
+        toastr("continue_creating_account")
         findAndClickByImage(continue_creating_account)
     end
 
     if  waitImageVisible(to_sign_up_agree) or waitImageVisible(agree_facebook_term) then
-        toast("agree_facebook_term")
+        toastr("agree_facebook_term")
 
         findAndClickByImage(dont_allow)
         findAndClickByImage(i_agree_btn)
 
-        waitImageNotVisible(agree_facebook_term, 100)
-        if checkImageIsExists(to_sign_up_agree) or checkImageIsExists(agree_facebook_term) then 
+        
+        if not waitImageNotVisible(agree_facebook_term, 100) then 
+            toastr('Can not agree')
             swipeCloseApp()
             goto label_continue
         end 
@@ -255,7 +265,7 @@ function main()
 
     ::label_confirmationcode::
     if waitImageVisible(enter_the_confirmation_code, 20) or waitImageVisible(did_not_get_code, 20) then
-        toast("enter_the_confirmation_code")
+        toastr("enter_the_confirmation_code")
         sleep(3)
 
         findAndClickByImage(dont_allow)
@@ -266,7 +276,7 @@ function main()
             typeText(OTPcode) sleep(1)
             findAndClickByImage(next)
         else
-            toast('empty OTP', 6)
+            toastr('empty OTP', 6)
             press(55, 90) sleep(1) -- X back icon
             press(240, 820) sleep(1) -- Leave btn
 
@@ -280,7 +290,7 @@ function main()
         
         if waitImageNotVisible(enter_the_confirmation_code) then 
             if waitImageVisible(setting_up_for_fb) then
-                toast('setting_up_for_fb')
+                toastr('setting_up_for_fb')
                 waitImageNotVisible(setting_up_for_fb)
             end
         end
@@ -293,7 +303,7 @@ function main()
 
     ::label_profilepicture::
     if waitImageVisible(profile_picture) or waitImageVisible(add_picture) then
-        toast("profile_picture")
+        toastr("profile_picture")
 
         if waitImageVisible(dont_allow, 2) then
             findAndClickByImage(dont_allow)
@@ -313,7 +323,7 @@ function main()
 
     ::label_turnoncontact::
     if waitImageVisible(turn_on_contact) then
-        toast("turn_on_contact")
+        toastr("turn_on_contact")
         press(380, 1200) sleep(1) -- next
 
         if waitImageVisible(skip, 2) then
@@ -338,14 +348,14 @@ function main()
 
     ::label_nofriend::
     if waitImageVisible(no_friend, 10) or waitImageVisible(no_friend_icon, 10) then
-        toast("no_friend")
+        toastr("no_friend")
         findAndClickByImage(next)
         waitImageVisible(no_friend)
     end
 
     ::label_addphonenumber::
     if waitImageVisible(add_phone_number) then
-        toast("add_phone_number")
+        toastr("add_phone_number")
         press(380, 1220) -- skip
         waitImageVisible(add_phone_number)
     end
@@ -355,30 +365,30 @@ function main()
     if checkImageIsExists(enter_the_confirmation_code) then goto label_confirmationcode end 
 
     if checkImageIsExists(page_not_available_now) then 
-        toast('page_not_available_now')
+        toastr('page_not_available_now')
         swipeCloseApp()
         goto label_openfacebook
     end 
 
     if waitImageVisible(add_phone_number_home, 3) then
-        toast("add_phone_number_home")
+        toastr("add_phone_number_home")
         findAndClickByImage(not_now)
     end
 
     ::label_get2FA::
-    toast('2FA..')
+    toastr('2FA..')
     if waitImageVisible(what_on_your_mind) then 
-        toast('2FA what_on_your_mind')
+        toastr('2FA what_on_your_mind')
         press(690, 1290) -- go to menu
 
         if waitImageVisible(setting_menu, 8) then
-            toast('setting_menu')
+            toastr('setting_menu')
             press(600, 90) -- setting cog icon
             waitImageNotVisible(setting_menu)
         end
 
         if waitImageVisible(setting_privacy, 10) then
-            toast('setting_privacy')
+            toastr('setting_privacy')
             if waitImageVisible(see_more_account_center, 10) then
                 findAndClickByImage(see_more_account_center)
                 waitImageNotVisible(see_more_account_center)
@@ -386,7 +396,7 @@ function main()
         end
 
         if waitImageVisible(account_center, 10) then
-            toast('account_center')
+            toastr('account_center')
             sleep(1)
             swipe(600, 800, 610, 650) sleep(1)
 
@@ -400,20 +410,20 @@ function main()
         end
 
         if waitImageVisible(personal_details_page, 10) or waitImageVisible(your_information_and_2, 10) then
-            toast('personal_details_page')
+            toastr('personal_details_page')
             findAndClickByImage(identify_confirmation_btn)
             waitImageNotVisible(identify_confirmation_btn)
         end
 
         if waitImageVisible(confirm_your_identity, 12) then
-            toast('confirm_your_identity')
+            toastr('confirm_your_identity')
             findAndClickByImage(confirm_your_identity)
             press(130, 1290) -- protect your account
             waitImageNotVisible(confirm_your_identity)
         end
 
         if waitImageVisible(reenter_password, 10) then
-            toast('reenter_password')
+            toastr('reenter_password')
             press(135, 530) -- input password
             findAndClickByImage(password_eye)
             typeText(info.password)
@@ -422,9 +432,9 @@ function main()
         end
         
         if waitImageVisible(check_your_email) then
-            toast('check_your_email')
+            toastr('check_your_email')
             local code = getCodeMailConfirm()
-            toast('CODE: ' .. (code or '-'), 2)
+            toastr('CODE: ' .. (code or '-'), 2)
 
             if code ~= nil and code ~= '' then
                 press(100, 850) -- code input
@@ -441,13 +451,13 @@ function main()
         end
 
         if waitImageVisible(help_protect_account, 8) then
-            toast('help_protect_account')
+            toastr('help_protect_account')
             findAndClickByImage(next)
             waitImageNotVisible(help_protect_account)
         end
 
         if waitImageVisible(instructions_for_setup, 8) and waitImageVisible(copy_key) then
-            toast('instructions_for_setup')
+            toastr('instructions_for_setup')
             findAndClickByImage(copy_key) sleep(4)
             local secret = clipText()
             if secret then
@@ -458,7 +468,7 @@ function main()
         end
 
         if waitImageVisible(two_FA_code, 8) or waitImageVisible(enter_code_2fa, 8) then
-            toast('two_FA_code')
+            toastr('two_FA_code')
             local otp = get2FACode()
             if otp then
                 press(660, 525) -- input otp code
@@ -473,7 +483,7 @@ function main()
         end
 
         if waitImageVisible(two_factor_is_on, 8) then
-            toast('two_factor_is_on')
+            toastr('two_factor_is_on')
             press(380, 1160) -- btn done
 
             archiveCurrentAccount()
@@ -497,7 +507,7 @@ function main()
 
     ::label_searchtext::
     if waitImageVisible(what_on_your_mind) then
-        toast('Search what_on_your_mind')
+        toastr('Search what_on_your_mind')
         press(600, 90) -- go to search screen
 
         local searchTexts = getSearchText(math.random(4, 6))
@@ -522,7 +532,7 @@ function main()
 
     ::label_logout::
     if waitImageVisible(what_on_your_mind) then 
-        toast('Logout what_on_your_mind')
+        toastr('Logout what_on_your_mind')
         press(690, 1290) -- go to menu
         swipe(500, 900, 500, 800) sleep(1)
         swipe(550, 600, 600, 350) sleep(2)
@@ -540,7 +550,7 @@ function main()
         end
 
         removeAccount()
-        toast('Done 1 nick live')
+        toastr('Done 1 nick live')
     end
 
     if checkSuspended() then goto label_continue end

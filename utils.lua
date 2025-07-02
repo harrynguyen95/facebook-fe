@@ -15,7 +15,7 @@ end
 
 function toastr(value, time)
     if time == nil then
-        time = 2
+        time = 1
     end
 
     if value == nil then
@@ -230,7 +230,7 @@ function checkImageIsExists(paths, threshold)
 end
 
 function waitImageVisible(paths, timeout)
-    toast('..', 1)
+    toastr('..')
     if timeout == nil then
         timeout = 5
     end
@@ -353,7 +353,6 @@ function swipeVertically(n)
     local y1 = math.random(90, 115)
     local timecholuot = math.random(5000, 10000)
     for i = 1, n, 1 do
-        -- toast("vuot:"..i.."/"..n);
         touchDown(x, x1, y);
         usleep(timecholuot);
         for i = y, y1 + 20, -30 do
@@ -545,13 +544,13 @@ function typeText(text)
     if text == nil then return end
     usleep(300000)
     if checkImageIsExists(num_keyboard) then
-        -- toast('number keyboard', 3)
+        -- toastr('number keyboard')
         typeNumber(text)
     elseif checkImageIsExists(space_short) then
-        -- toast('short keyboard', 3)
+        -- toastr('short keyboard')
         typeTextShortSpace(text)
     else 
-        -- toast('long keyboard', 3)
+        -- toastr('long keyboard')
         typeTextLongSpace(text)
     end
     usleep(300000)
@@ -757,25 +756,25 @@ function checkInternetAndPublicIP()
             ["Content-Type"] = "application/json"
         },
     }
-    toastr(response, 4)
+    -- toastr(response, 4)
 
     if error then
         log("No internet connection. Error: " .. tostring(error))
-        toast("No Internet. Error: " .. tostring(error), 3)
+        toastr("No Internet. Error: " .. tostring(error))
     else
         -- local data = json.decode(response)
         -- if data.ip and data.country then
         --     log("Connected to the Internet. Public IP: " .. data.ip .. ", Country: " .. data.country)
-        --     toast(data.country .. " - " .. data.ip, 3)
+        --     toastr(data.country .. " - " .. data.ip, 3)
         -- else
         --     log("Connected, but failed to fetch public IP.")
-        --     toast("Internet OK, but no public IP detected.", 3)
+        --     toastr("Internet OK, but no public IP detected.", 3)
         -- end
     end
 end
 
 function onOffAirplaneMode()
-    toast('onOffAirplaneMode')
+    toastr('onOffAirplaneMode')
     io.popen("activator send switch-off.com.a3tweaks.switch.vpn")
     sleep(0.5)
     io.popen('activator send switch-on.com.a3tweaks.switch.airplane-mode');

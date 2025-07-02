@@ -226,7 +226,7 @@ function executeGmailFromThueMail()
 
         local tries = 2
         for i = 1, tries do 
-            toast('Call times ' .. i)
+            toastr('Call times ' .. i)
             sleep(3)
 
             local postData = {
@@ -254,7 +254,7 @@ function executeGmailFromThueMail()
                     info.mailRegister = res.email
 
                     saveMailThueMail()
-                    return
+                    return true
                 else
                     toastr(response.message)
                     log(response.message)
@@ -272,7 +272,7 @@ function executeGmailFromThueMail()
     if (not mailRerent) or (not rerentSuccess) then
         local tries = 2
         for i = 1, tries do 
-            toast('Call times ' .. i)
+            toastr('Call times ' .. i)
             sleep(3)
 
             local postData = {
@@ -300,7 +300,7 @@ function executeGmailFromThueMail()
                     info.mailRegister = res.email
 
                     saveMailThueMail()
-                    return
+                    return true
                 else
                     toastr(response.message)
                     log(response.message)
@@ -310,6 +310,7 @@ function executeGmailFromThueMail()
             end
         end
     end
+    return false
 end
 
 function executeHotmailFromDongVanFb()
@@ -319,7 +320,7 @@ function executeHotmailFromDongVanFb()
     for i, service_id in pairs(account_type) do
         local tries = 1
         for i = 1, tries do 
-            toast('Mail id: ' .. service_id)
+            toastr('Mail id: ' .. service_id)
             sleep(3)
 
             local response, error = httpRequest {
@@ -340,7 +341,7 @@ function executeHotmailFromDongVanFb()
                     info.hotmailPassword = splitted[2]
                     info.hotmailRefreshToken = splitted[3]
                     info.hotmailClientId = splitted[4]
-                    return
+                    return true
                 else
                     toastr(response.message)
                     log(response.message)
@@ -350,26 +351,32 @@ function executeHotmailFromDongVanFb()
             end
         end
     end
+    return false
 end
 
 function executeGetMailRequest()
     if MAIL_MODE == 1 then 
-        executeHotmailFromDongVanFb()
+        local exec = executeHotmailFromDongVanFb()
+        if exec then 
+            saveMailToGoogleForm()
+        end 
+        return exec
     elseif MAIL_MODE == 2 then
-        executeGmailFromThueMail()
+        local exec = executeGmailFromThueMail()
+        if exec then 
+            saveMailToGoogleForm()
+        end 
+        return exec
     else 
-        toast('MAIL_MODE invalid.', 5)
+        toastr('MAIL_MODE invalid.', 5)
+        return false
     end
-
-    if info.mailRegister and info.mailRegister ~= '' then 
-        saveMailToGoogleForm()
-    end 
 end
 
 function getThuemailConfirmCode()
     local tries = 10
     for i = 1, tries do 
-        toast('Call times ' .. i)
+        toastr('Call times ' .. i)
         sleep(10)
 
         local response, error = httpRequest {
@@ -384,7 +391,7 @@ function getThuemailConfirmCode()
             if response.id and response.otp then
                 return response.otp
             else
-                toast('Empty thuemails.com code.')
+                toastr('Empty thuemails.com code.')
                 log('Empty thuemails.com code.')
             end
         else
@@ -399,7 +406,7 @@ function getDongvanfbConfirmCode()
 
     local tries = 10
     for i = 1, tries do 
-        toast('Call times ' .. i)
+        toastr('Call times ' .. i)
         sleep(5)
 
         local postData = {
@@ -422,7 +429,7 @@ function getDongvanfbConfirmCode()
             if response.status or response.status == 'true' then
                 return response.code
             else
-                toast('Empty dongvanfb code.')
+                toastr('Empty dongvanfb code.')
                 log('Empty dongvanfb code.')
             end
         else
@@ -438,14 +445,14 @@ function getCodeMailRegister()
     elseif MAIL_MODE == 2 then
         return getThuemailConfirmCode()
     else 
-        toast('MAIL_MODE invalid.', 5)
+        toastr('MAIL_MODE invalid.', 5)
     end
 end
 
 function getFreeMailConfirmCodeSecondTime()
     local tries = 3
     for i = 1, tries do 
-        toast('Call times ' .. i)
+        toastr('Call times ' .. i)
         sleep(5)
 
         local response, error = httpRequest {
@@ -457,7 +464,7 @@ function getFreeMailConfirmCodeSecondTime()
             if response.code ~= '' then
                 return response.code
             else
-                toast("Empty response code.");
+                toastr("Empty response code.");
             end
         else
             log("Error: Failed to send request. Reason: " .. tostring(error))
@@ -468,7 +475,7 @@ end
 function getFreeMailConfirmCode()
     local tries = 3
     for i = 1, tries do 
-        toast('Call times ' .. i)
+        toastr('Call times ' .. i)
         sleep(5)
 
         local response, error = httpRequest {
@@ -481,7 +488,7 @@ function getFreeMailConfirmCode()
             if response.code ~= '' then
                 return response.code
             else
-                toast("Empty response code.");
+                toastr("Empty response code.");
             end
         else
             log("Error: Failed to send request. Reason: " .. tostring(error))
@@ -495,7 +502,7 @@ function getCodeMailConfirm()
     elseif MAIL_MODE == 2 then
         return getFreeMailConfirmCodeSecondTime()
     else 
-        toast('MAIL_MODE invalid.', 5)
+        toastr('MAIL_MODE invalid.', 5)
     end
 end
 
@@ -512,7 +519,7 @@ function get2FACode()
         if response.token then
             return response.token
         else
-            toast("Empty response get 2FA OTP.");
+            toastr("Empty response get 2FA OTP.");
             log("Empty response get 2FA OTP.");
         end
     else
@@ -572,19 +579,19 @@ function handleSuspended()
 end
 
 function checkSuspended()
-    if checkImageIsExists(confirm_human) then
+    if waitImageVisible(confirm_human, 1) then
         handleSuspended()
-        toast('Die')
+        toastr('Die')
         return true
     end
 
-    -- toast('Not Suspended')
+    -- toastr('Not Suspended')
     return false
 end
 
 function setFirstNameLastName()
     if waitImageVisible(what_name) then
-        toast("what_name")
+        toastr("what_name")
         local name = getRandomName()
         press(200, 380) sleep(0.5)
         findAndClickByImage(x_input_icon)
@@ -598,8 +605,8 @@ function setFirstNameLastName()
 end
 
 function setGender()
-    if waitImageVisible(what_is_gender) then
-        toast("what_is_gender")
+    if waitImageVisible(what_is_gender, 2) then
+        toastr("what_is_gender")
 
         if waitImageVisible(gender_options) then 
             math.randomseed(os.time() + math.random())
@@ -628,7 +635,7 @@ function goBackToCreateNewAccount()
 end
 
 function openFacebook()
-    toast('openFacebook')
+    toastr('openFacebook')
 
     appActivate("com.facebook.Facebook")
     -- pressHome()
@@ -636,13 +643,13 @@ function openFacebook()
     --     findAndClickByImage(fb_logo_2)
     --     waitImageNotVisible(fb_logo_2)
     -- else
-    --     toast('Not found Icon facebook', 3)
+    --     toastr('Not found Icon facebook', 3)
     -- end
     -- sleep(1)
 end
 
 function homeAndUnlockScreen()
-    toast("Check Unlock Screen")
+    toastr("Check Unlock Screen")
 
     local i = 0
     while true do
@@ -663,7 +670,7 @@ end
 
 function executeXoaInfo()
     if TIMES_XOA_INFO > 0 and waitImageVisible(xoainfo_logo) then
-        toast('executeXoaInfo')
+        toastr('executeXoaInfo')
 
         findAndClickByImage(xoainfo_logo)
         waitImageNotVisible(xoainfo_logo)
@@ -689,7 +696,7 @@ end
 --     ::addmail::
 --     if ADD_MAIL_DOMAIN then
 --         if waitImageVisible(what_on_your_mind) then 
---             toast('Add mail what_on_your_mind')
+--             toastr('Add mail what_on_your_mind')
 
 --             press(690, 1290) -- go to menu
 
@@ -698,13 +705,13 @@ end
 --             end
 
 --             if waitImageVisible(setting_privacy) and waitImageVisible(see_more_account_center) then
---                 toast('setting_privacy')
+--                 toastr('setting_privacy')
 --                 findAndClickByImage(see_more_account_center)
 --                 waitImageNotVisible(setting_privacy)
 --             end
 
 --             if waitImageVisible(account_center) then
---                 toast('account_center')
+--                 toastr('account_center')
 --                 swipe(600, 800, 610, 650) sleep(3)
 
 --                 if waitImageVisible(personal_details_btn) then
@@ -717,7 +724,7 @@ end
 --             end
 
 --             if waitImageVisible(personal_details_page) or waitImageVisible(your_information_and_2) then
---                 toast('personal_details_page')
+--                 toastr('personal_details_page')
 --                 press(630, 550) -- Contact info btn
 
 --                 if waitImageVisible(contact_information) then
@@ -725,21 +732,21 @@ end
 --                 end
                 
 --                 if waitImageVisible(add_mail) then
---                     toast('add_mail')
+--                     toastr('add_mail')
 --                     sleep(1)
 --                     findAndClickByImage(add_mail)
 --                 else 
---                     toast('add_mail else')
+--                     toastr('add_mail else')
 --                     press(130, 730) sleep(2) -- add mail options
 --                 end
 
 --                 if waitImageVisible(add_a_phone_number, 2) then
---                     toast('add_a_phone_number')
+--                     toastr('add_a_phone_number')
 --                     press(380, 1260) -- add email instead
 --                 end
 
 --                 if waitImageVisible(add_email_address) then
---                     toast('add_email_address')
+--                     toastr('add_email_address')
 
 --                     press(110, 560) -- Input new mail address
 --                     typeText(info.mailLogin) sleep(0.5)
@@ -755,9 +762,9 @@ end
 --                         press(60, 1290) -- back to homepage
 --                     else 
 --                         if waitImageVisible(enter_confirm_code, 10) then
---                             toast('enter_confirm_code')
+--                             toastr('enter_confirm_code')
 --                             local code = getFreeMailConfirmCode()
---                             toast('CODE: ' .. (code or '-'), 2)
+--                             toastr('CODE: ' .. (code or '-'), 2)
 --                             if code then
 --                                 press(130, 500) -- input code
 --                                 press(660, 475) -- X icon
@@ -780,9 +787,9 @@ end
 --                                             press(240, 850)
 
 --                                             if waitImageVisible(check_your_email, 3) then
---                                                 toast('check_your_email')
+--                                                 toastr('check_your_email')
 --                                                 local code = getFreeMailConfirmCodeSecondTime()
---                                                 toast('CODE: ' .. (code or '-'), 2)
+--                                                 toastr('CODE: ' .. (code or '-'), 2)
 
 --                                                 if code and code ~= '' then
 --                                                     press(100, 850) -- code input
