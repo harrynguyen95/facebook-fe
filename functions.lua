@@ -138,7 +138,7 @@ function saveMailToGoogleForm()
         }
 
         if response then
-            log(infoClone, "Sent request to Google Form" )
+            -- log(infoClone, "Sent request to Google Form" )
             return
         else
             log(error, "Error: Failed to send request. Reason")

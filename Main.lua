@@ -55,6 +55,7 @@ function main()
     showIphoneModel()
     if waitImageVisible(create_new_account, 50) then
         toastr('create_new_account')
+        findAndClickByImage(accept)
 
         if waitImageVisible(logo_fb_modern, 3) then
             toastr('not_support_this_FB_mode')

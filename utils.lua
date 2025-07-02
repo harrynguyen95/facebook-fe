@@ -493,7 +493,7 @@ function httpRequest(params)
         ssl_verifyhost = params.ssl_verifyhost or false,
         customrequest = method,
         followlocation = true,
-        timeout = 120,
+        timeout = 30,
         writefunction = function(chunk)
             response = response .. tostring(chunk) -- Đảm bảo `chunk` là chuỗi
             return #chunk
@@ -542,7 +542,8 @@ function httpRequest(params)
 
     -- Đóng curl
     c:close()
-
+    collectgarbage()
+    
     if not success then
         return nil, "Lỗi khi thực hiện request: " .. tostring(err)
     end
