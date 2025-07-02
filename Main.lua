@@ -464,21 +464,21 @@ function main()
         
         if waitImageVisible(check_your_email, 3) then
             toastr('check_your_email')
-            local code = getCodeMailConfirm()
-            toastr('CODE: ' .. (code or '-'), 2)
+            
+            finishCurrentAccount()
+            press(55, 160) -- X
 
-            if code ~= nil and code ~= '' then
-                press(100, 850) -- code input
-                typeText(code) sleep(1)
-                if waitImageVisible(continue_code_mail) then
-                    findAndClickByImage(continue_code_mail)
-
-                    waitImageNotVisible(check_your_email)
-                end
-            else 
-                finishCurrentAccount()
-                goto label_searchtext
+            if waitImageVisible(protect_your_account) then
+                press(40, 90) sleep(1) -- back on protect your account
+                press(40, 90) sleep(1) -- back on confirm identity
+                press(45, 90) sleep(1) -- back to setting menu
+                press(45, 90)          -- back to main menu
             end
+            if waitImageVisible(home_icon) then
+                press(60, 1290) -- back to homepage
+            end
+
+            goto label_searchtext
         end
 
         if waitImageVisible(help_protect_account, 10) then
@@ -510,7 +510,7 @@ function main()
         else 
             info.twoFA = nil
             finishCurrentAccount()
-            goto label_searchtext
+            goto label_continue
         end
 
         if waitImageVisible(two_factor_is_on, 10) then
