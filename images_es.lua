@@ -90,4 +90,6 @@ mail_did_not_receive_code = {dirPath .. "mail_did_not_receive_code.png"}
 setting_up_for_fb = {dirPath .. "setting_up_for_fb.png"}
 x_input_icon = {dirPath .. "x_input_icon.png"}
 gender_options = {dirPath .. "gender_options.png"}
+first_name_invalid = {dirPath .. "first_name_invalid.png"}
+red_warning_icon = {dirPath .. "red_warning_icon.png"}
 accept = {dirPath .. "accept1.png", dirPath .. "accept2.png"}

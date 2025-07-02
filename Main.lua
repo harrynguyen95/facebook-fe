@@ -194,6 +194,7 @@ function main()
                 end
             else 
                 toastr("Không có mail. Continue.", 10) sleep(5)
+                log("Không có mail. Continue.")
                 failedCurrentAccount()
                 goto label_continue
             end
@@ -277,12 +278,6 @@ function main()
 
         findAndClickByImage(dont_allow)
         findAndClickByImage(i_agree_btn)
-
-        if waitImageVisible(dont_allow, 10) then 
-            -- toastr('Can not agree')
-            -- failedCurrentAccount()
-            -- goto label_continue
-        end 
         
         if not waitImageNotVisible(agree_facebook_term, 60) then 
             toastr('Can not agree')

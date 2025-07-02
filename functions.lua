@@ -65,8 +65,9 @@ function failedCurrentAccount()
 
     if splitted[2] ~= 'SUCCESS' then 
         info.status = "FAILED"
-        if info.mailLogin == '' then info.mailLogin = info.mailRegister end 
-        if info.profileUid == '' then info.profileUid = getUIDFBLogin() or '' end 
+        info.checkpoint = 1
+        if not info.mailLogin or info.mailLogin == '' then info.mailLogin = info.mailRegister or '' end 
+        if not info.profileUid or info.profileUid == '' then info.profileUid = getUIDFBLogin() or '' end 
         local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
         accounts[#accounts] = line
 
@@ -81,8 +82,9 @@ function finishCurrentAccount()
     local accounts = readFile(accountFilePath)
 
     info.status = "SUCCESS"
-    if info.mailLogin == '' then info.mailLogin = info.mailRegister end 
-    if info.profileUid == '' then info.profileUid = getUIDFBLogin() or '' end 
+    info.checkpoint = nil
+    if not info.mailLogin or info.mailLogin == '' then info.mailLogin = info.mailRegister or '' end 
+    if not info.profileUid or info.profileUid == '' then info.profileUid = getUIDFBLogin() or '' end 
     local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
     accounts[#accounts] = line
 
@@ -379,6 +381,7 @@ function executeGetMailRequest()
 end
 
 function getThuemailConfirmCode()
+    sleep(3)
     local tries = 10
     for i = 1, tries do 
         toastr('Call times ' .. i)
@@ -566,29 +569,24 @@ function removeAccount()
     end
 end
 
-function handleSuspended()
-    
-end
-
 function checkSuspended()
     if waitImageVisible(confirm_human, 1) then
         toastr('Die')
 
-        info.checkpoint = 1
         failedCurrentAccount()
 
-        press(680, 90) -- help text
-        if waitImageVisible(logout_suspend_icon, 10) then
-            findAndClickByImage(logout_suspend_icon)
-            press(520, 840) sleep(1) --logout text
+        -- press(680, 90) -- help text
+        -- if waitImageVisible(logout_suspend_icon, 10) then
+        --     findAndClickByImage(logout_suspend_icon)
+        --     press(520, 840) sleep(1) --logout text
 
-            if waitImageVisible(logout_btn) then
-                findAndClickByImage(logout_btn)
-                sleep(3)
+        --     if waitImageVisible(logout_btn) then
+        --         findAndClickByImage(logout_btn)
+        --         sleep(3)
 
-                removeAccount()
-            end
-        end
+        --         removeAccount()
+        --     end
+        -- end
         return true
     end
 
@@ -599,6 +597,8 @@ end
 function setFirstNameLastName()
     if waitImageVisible(what_name) then
         toastr("what_name")
+
+        ::label_input_name::
         local name = getRandomName()
         press(200, 380) sleep(0.5)
         findAndClickByImage(x_input_icon)
@@ -607,7 +607,10 @@ function setFirstNameLastName()
         findAndClickByImage(x_input_icon)
         typeText(name[2]) sleep(0.5)
         findAndClickByImage(next)
-        waitImageNotVisible(what_name)
+
+        if not waitImageNotVisible(what_name, 10) then 
+            if waitImageVisible(first_name_invalid, 2) or red_warning_icon(red, 2) then goto label_input_name end 
+        end
     end
 end
 
