@@ -1,7 +1,7 @@
 -- ====== CONFIG ======
 LANGUAGE = 'ES'  -- EN|ES English|Spanish
 MAIL_SUPLY = 2  -- 1|2 hotmail_dongvanfb|thuemails.com
-THUE_LAI_MAIL_THUEMAILS = false  -- true|false
+THUE_LAI_MAIL_THUEMAILS = true  -- true|false
 ADD_MAIL_DOMAIN = false
 REMOVE_REGISTER_MAIL = false
 PROVIDER_MAIL_THUEMAILS = 1  -- 1|3 gmail|icloud
@@ -116,7 +116,7 @@ function main()
     if checkImageIsExists(create_new_account) then goto label_createnewaccount end 
     if waitImageVisible(page_not_available_now, 2) then 
         toastr('page_not_available_now')
-        failedCurrentAccount()
+        -- failedCurrentAccount()
         goto label_continue
     end 
 
@@ -388,7 +388,7 @@ function main()
 
     if checkImageIsExists(page_not_available_now) then 
         toastr('page_not_available_now')
-        failedCurrentAccount()
+        -- failedCurrentAccount()
         goto label_continue
     end 
 
