@@ -397,7 +397,7 @@ function getRandomSearchText(count)
     return result
 end
 
-function pressHome ()
+function pressHome()
     sleep(0.5)
     keyDown(KEY_TYPE.HOME_BUTTON)
     sleep(1)
@@ -802,8 +802,9 @@ function onOffAirplaneMode()
 end
 
 function respring()
-    usleep(math.random(3000000, 4000000));
+    sleep(1);
     io.popen('killall -9 SpringBoard');
+    sleep(5);
 end
 
 function swipeCloseApp()

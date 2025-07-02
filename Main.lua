@@ -1,7 +1,7 @@
 -- ====== CONFIG ======
 LANGUAGE = 'ES'  -- EN|ES English|Spanish
 MAIL_SUPLY = 2  -- 1|2 hotmail_dongvanfb|thuemails.com
-THUE_LAI_MAIL_THUEMAILS = true  -- true|false
+THUE_LAI_MAIL_THUEMAILS = false  -- true|false
 ADD_MAIL_DOMAIN = false
 REMOVE_REGISTER_MAIL = false
 PROVIDER_MAIL_THUEMAILS = 1  -- 1|3 gmail|icloud
@@ -88,8 +88,8 @@ function main()
         if checkImageIsExists(add_phone_number) then goto label_addphonenumber end
         if checkImageIsExists(to_sign_up_agree) or checkImageIsExists(agree_facebook_term) then goto label_agree end
         if checkImageIsExists(what_on_your_mind) then 
-            if info.twoFA == '' then goto label_get2FA end 
-            if info.twoFA ~= '' then goto label_searchtext end 
+            if info.twoFA == nil or info.twoFA == '' then goto label_get2FA end 
+            if info.twoFA ~= nil or info.twoFA ~= '' then goto label_searchtext end 
         end
     end
 

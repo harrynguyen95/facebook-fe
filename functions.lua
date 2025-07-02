@@ -71,6 +71,7 @@ function failedCurrentAccount()
         local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
         accounts[#accounts] = line
 
+        log('failedCurrentAccount ' .. line)
         writeFile(accountFilePath, accounts)
     end
     saveAccToGoogleForm()
@@ -88,6 +89,7 @@ function finishCurrentAccount()
     local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
     accounts[#accounts] = line
 
+    log('finishCurrentAccount ' .. line)
     writeFile(accountFilePath, accounts)
     saveAccToGoogleForm()
 
