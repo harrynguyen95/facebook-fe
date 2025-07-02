@@ -66,6 +66,7 @@ function failedCurrentAccount()
     if splitted[2] ~= 'SUCCESS' then 
         info.status = "FAILED"
         if info.mailLogin == '' then info.mailLogin = info.mailRegister end 
+        if info.profileUid == '' then info.profileUid = getUIDFBLogin() or '' end 
         local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
         accounts[#accounts] = line
 
@@ -81,6 +82,7 @@ function finishCurrentAccount()
 
     info.status = "SUCCESS"
     if info.mailLogin == '' then info.mailLogin = info.mailRegister end 
+    if info.profileUid == '' then info.profileUid = getUIDFBLogin() or '' end 
     local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
     accounts[#accounts] = line
 
