@@ -613,7 +613,7 @@ function setGender()
     if waitImageVisible(what_is_gender, 2) then
         toastr("what_is_gender")
 
-        if waitImageVisible(gender_options) then 
+        if waitImageVisible(gender_options, 10) then 
             math.randomseed(os.time() + math.random())
             local x = math.random(500, 560)
             local y = 440

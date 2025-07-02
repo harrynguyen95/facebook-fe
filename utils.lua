@@ -2,7 +2,7 @@ json = require "json"
 curl = require('lcurl')
 ltn12 = require("ltn12")
 
-DEBUG_IMAGE = true
+DEBUG_IMAGE = false
 THRESHOLD = 0.99
 
 function sleep(timeout)
@@ -493,7 +493,6 @@ function httpRequest(params)
         ssl_verifyhost = params.ssl_verifyhost or false,
         customrequest = method,
         followlocation   = true,
-        timeout = 60,
         writefunction = function(chunk)
             response = response .. tostring(chunk) -- Đảm bảo `chunk` là chuỗi
             return #chunk

@@ -1,11 +1,11 @@
 -- ====== CONFIG ======
 LANGUAGE = 'ES'  -- EN|ES English|Spanish
 MAIL_SUPLY = 2  -- 1|2 hotmail_dongvanfb|thuemails.com
-THUE_LAI_MAIL_THUEMAILS = true  -- true|false
+THUE_LAI_MAIL_THUEMAILS = false  -- true|false
 ADD_MAIL_DOMAIN = false
 REMOVE_REGISTER_MAIL = false
 PROVIDER_MAIL_THUEMAILS = 1  -- 1|3 gmail|icloud
-TIMES_XOA_INFO = 1  -- 0|1|2|3
+TIMES_XOA_INFO = 2  -- 0|1|2|3
 
 -- ====== INFO ======
 info = {
@@ -49,11 +49,10 @@ function main()
 
     ::label_openfacebook::
     openFacebook()
-    showIphoneModel()
     sleep(10)
 
     ::label_createnewaccount::
-    toastr('wait login..')
+    showIphoneModel()
     if waitImageVisible(create_new_account, 50) then
         toastr('create_new_account')
 
@@ -124,7 +123,7 @@ function main()
 
     ::label_birthday::
     toastr('wait birthday..')
-    if waitImageVisible(what_is_birthday, 2) then
+    if waitImageVisible(what_is_birthday) then
         toastr("what_is_birthday")
         press(270, 470) sleep(0.5)
 
@@ -150,7 +149,7 @@ function main()
     sleep(2)
 
     ::label_what_is_mobile::
-    toastr('wait mobile..')
+    toastr('wait mobile number..')
     if waitImageVisible(what_is_mobile_number) or waitImageVisible(sign_up_with_email) then
         toastr("what_is_mobile_number")
         findAndClickByImage(sign_up_with_email)
@@ -207,7 +206,7 @@ function main()
         end
     end
 
-    if waitImageVisible(what_is_birthday, 2) then
+    if waitImageVisible(what_is_birthday) then
         toastr("what_is_birthday")
         press(270, 470) sleep(0.5)
 
@@ -386,6 +385,7 @@ function main()
         waitImageVisible(add_phone_number)
     end
 
+    findAndClickByImage(accept)
     if checkSuspended() then goto label_continue end
 
     if checkImageIsExists(enter_the_confirmation_code) then goto label_confirmationcode end 
