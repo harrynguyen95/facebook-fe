@@ -136,6 +136,7 @@ function main()
 
     setGender()
 
+    sleep(2)
     if waitImageVisible(what_is_mobile_number) or waitImageVisible(sign_up_with_email) then
         toastr("what_is_mobile_number")
         findAndClickByImage(sign_up_with_email)
@@ -145,9 +146,8 @@ function main()
     toastr('getmail..')
     if waitImageVisible(what_is_your_email) then
         toastr("what_is_your_email")
-        -- or waitImageVisible(mail_did_not_receive_code)
+        -- or waitImageVisible(mail_did_not_receive_code) 
 
-        ::label_entermail::
         if info.mailRegister ~= nil and info.mailRegister ~= '' then 
             press(310, 410)
             findAndClickByImage(x_input_icon)
@@ -169,7 +169,26 @@ function main()
             end
         else
             if executeGetMailRequest() then 
-                goto label_entermail
+                if info.mailRegister ~= nil and info.mailRegister ~= '' then 
+                    press(310, 410)
+                    findAndClickByImage(x_input_icon)
+                    typeText(info.mailRegister)
+
+                    findAndClickByImage(next)
+                    archiveCurrentAccount()
+
+                    if waitImageVisible(already_have_account, 2) then
+                        toastr("already_have_account")
+                        findAndClickByImage(continue_creating_account)
+                        sleep(2)
+                    end
+
+                    if waitImageVisible(exist_account_in_mail) then
+                        failedCurrentAccount()
+                        swipeCloseApp()
+                        goto label_continue
+                    end
+                end
             else 
                 toastr("Không có mail. Continue.", 10) sleep(5)
                 failedCurrentAccount()
