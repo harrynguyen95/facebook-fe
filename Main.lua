@@ -19,7 +19,7 @@ info = {
     password = nil,
     mailRegister = nil,
     mailPrice = nil,
-    hotmailRefreshToken =nil,
+    hotmailRefreshToken = nil,
     hotmailClientId = nil,
     hotmailPassword = nil,
 }
@@ -500,9 +500,13 @@ function main()
             if otp then
                 press(660, 525) -- input otp code
                 typeText(otp)
-            end
-            findAndClickByImage(next)
-            waitImageNotVisible(next)
+
+                findAndClickByImage(next)
+                waitImageNotVisible(next)
+            else 
+                info.twoFA = nil
+                finishCurrentAccount()
+            end 
         else 
             info.twoFA = nil
             finishCurrentAccount()

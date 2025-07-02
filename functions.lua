@@ -611,7 +611,7 @@ function setFirstNameLastName()
         findAndClickByImage(next)
 
         if not waitImageNotVisible(what_name, 10) then 
-            if waitImageVisible(first_name_invalid, 2) or red_warning_icon(red, 2) then goto label_input_name end 
+            if waitImageVisible(first_name_invalid, 2) or waitImageVisible(red_warning_icon, 2) then goto label_input_name end 
         end
     end
 end
