@@ -230,7 +230,7 @@ function checkImageIsExists(paths, threshold)
 end
 
 function waitImageVisible(paths, timeout)
-    toastr('..', 1)
+    toastr('..', 0.8)
     if timeout == nil then
         timeout = 5
     end
@@ -596,11 +596,9 @@ function typeTextShortSpace(text)
         usleep(math.random(300000, 400000))
     end
 
-    if (checkImageIsExists(shift_keyboard_on)) then
-        if isLower then 
-            randomTap(shiftKey) -- click shift
-            sleep(1)
-        end
+    if waitImageVisible(shift_keyboard_on, 1) then
+        randomTap(shiftKey) -- click shift
+        sleep(0.5)
     end
 
     for i = 1, #text do
@@ -662,11 +660,9 @@ function typeTextLongSpace(text)
         usleep(math.random(300000, 400000))
     end
 
-    if (checkImageIsExists(shift_keyboard_on)) then
-        if isLower then 
-            randomTap(shiftKey) -- click shift
-            sleep(1)
-        end
+    if waitImageVisible(shift_keyboard_on, 1) then
+        randomTap(shiftKey) -- click shift
+        sleep(0.5)
     end
 
     for i = 1, #text do

@@ -309,6 +309,7 @@ function main()
         findAndClickByImage(dont_allow)
 
         local OTPcode = getCodeMailRegister()
+        toastr('OTPcode: ' .. (OTPcode or '-'))
         if OTPcode then 
             findAndClickByImage(input_confirm_code)
             typeText(OTPcode) sleep(1)
