@@ -54,14 +54,23 @@ function main()
     end 
 
     if checkImageIsExists(enter_the_confirmation_code) then goto label_confirmationcode end
+    if checkImageIsExists(create_a_password) then goto label_createpassword end
+    if checkImageIsExists(save_your_login_info) then goto label_saveyourlogin end
     if checkImageIsExists(profile_picture) then goto label_profilepicture end
     if checkImageIsExists(turn_on_contact) then goto label_turnoncontact end
     if checkImageIsExists(no_friend) then goto label_nofriend end
     if checkImageIsExists(add_phone_number) then goto label_addphonenumber end
+    if checkImageIsExists(what_is_mobile_number) then goto label_what_is_mobile end
+    if checkImageIsExists(what_is_birthday) then goto label_birthday end
     if checkImageIsExists(to_sign_up_agree) or checkImageIsExists(agree_facebook_term) then goto label_agree end
+    if checkImageIsExists(what_on_your_mind) then 
+        if info.twoFA == '' then goto label_get2FA end 
+        if info.twoFA != '' then goto label_searchtext end 
+    end
+    if checkSuspended() then goto label_continue end
 
     ::label_createnewaccount::
-    toastr('first..')
+    toastr('loginscreen..')
     if waitImageVisible(create_new_account, 60) then
         toastr('create_new_account')
 
@@ -83,7 +92,6 @@ function main()
         end
     end
 
-    if checkSuspended() then goto label_continue end
 
     if waitImageVisible(join_facebook, 2) then 
         toastr('not_support_this_FB_mode')
@@ -108,6 +116,7 @@ function main()
 
     setFirstNameLastName()
 
+    ::label_birthday::
     if waitImageVisible(what_is_birthday, 2) then
         toastr("what_is_birthday")
         press(270, 470) sleep(0.5)
@@ -137,6 +146,7 @@ function main()
     setGender()
 
     sleep(2)
+    ::label_what_is_mobile::
     if waitImageVisible(what_is_mobile_number) or waitImageVisible(sign_up_with_email) then
         toastr("what_is_mobile_number")
         findAndClickByImage(sign_up_with_email)
@@ -233,6 +243,7 @@ function main()
 
     setGender()
 
+    ::label_createpassword::
     toastr('password..')
     if waitImageVisible(create_a_password) then
         toastr("create_a_password")
@@ -253,6 +264,7 @@ function main()
     --     press(375, 805) -- OK btn
     -- end
 
+    ::label_saveyourlogin::
     if waitImageVisible(save_your_login_info) then
         toastr("save_your_login_info")
         findAndClickByImage(save)
@@ -484,7 +496,7 @@ function main()
             end
         end
 
-        if waitImageVisible(two_FA_code, 8) or waitImageVisible(enter_code_2fa, 8) then
+        if waitImageVisible(two_FA_code, 10) or waitImageVisible(enter_code_2fa, 10) then
             toastr('two_FA_code')
             local otp = get2FACode()
             if otp then

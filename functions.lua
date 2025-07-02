@@ -78,6 +78,7 @@ function finishCurrentAccount()
     local accounts = readFile(accountFilePath)
 
     info.status = "SUCCESS"
+    if info.mailLogin == '' then info.mailLogin = info.mailRegister end 
     local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
     accounts[#accounts] = line
 
