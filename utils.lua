@@ -24,9 +24,18 @@ function toastr(value, time)
 
     if type(value) == "table" or type(value) == "boolean" then
         toast(jsonStringify(value), time)
+        -- print(jsonStringify(value))
     else
         toast(value, time)
+        -- print(value)
     end
+end
+
+function showIphoneModel()
+    local fh = io.popen("uname -m", "r")
+    local model = fh:read("*l")
+    fh:close()
+    toastr(model or 'Unknown model', 4)
 end
 
 function shuffle(tbl)
@@ -230,7 +239,7 @@ function checkImageIsExists(paths, threshold)
 end
 
 function waitImageVisible(paths, timeout)
-    toastr('..', 1)
+    toastr('.', 0.8)
     if timeout == nil then
         timeout = 5
     end
