@@ -57,22 +57,9 @@ function main()
         goto label_continue
     end 
 
-    if checkImageIsExists(what_is_birthday) then goto label_birthday end
-    if checkImageIsExists(what_is_mobile_number) then goto label_what_is_mobile end
-    if checkImageIsExists(what_is_your_email) then goto label_what_is_email end
-    if checkImageIsExists(enter_the_confirmation_code) then goto label_confirmationcode end
-    if checkImageIsExists(create_a_password) then goto label_createpassword end
-    if checkImageIsExists(save_your_login_info) then goto label_saveyourlogin end
-    if checkImageIsExists(profile_picture) then goto label_profilepicture end
-    if checkImageIsExists(turn_on_contact) then goto label_turnoncontact end
-    if checkImageIsExists(no_friend) then goto label_nofriend end
-    if checkImageIsExists(add_phone_number) then goto label_addphonenumber end
-    if checkImageIsExists(to_sign_up_agree) or checkImageIsExists(agree_facebook_term) then goto label_agree end
-    if checkSuspended() then goto label_continue end
-
     ::label_createnewaccount::
     toastr('wait login..')
-    if waitImageVisible(create_new_account, 60) then
+    if waitImageVisible(create_new_account, 50) then
         toastr('create_new_account')
 
         if waitImageVisible(logo_fb_modern, 3) then
@@ -84,12 +71,29 @@ function main()
 
         findAndClickByImage(create_new_account)
 
-        if waitImageNotVisible(logo_facebook_2, 60) then 
+        if waitImageNotVisible(logo_facebook_2, 50) then 
             sleep(3)
         else 
             toastr('Can not next')
             swipeCloseApp()
             goto label_continue
+        end
+    else 
+        if checkSuspended() then goto label_continue end
+        if checkImageIsExists(what_is_birthday) then goto label_birthday end
+        if checkImageIsExists(what_is_mobile_number) then goto label_what_is_mobile end
+        if checkImageIsExists(what_is_your_email) then goto label_what_is_email end
+        if checkImageIsExists(enter_the_confirmation_code) then goto label_confirmationcode end
+        if checkImageIsExists(create_a_password) then goto label_createpassword end
+        if checkImageIsExists(save_your_login_info) then goto label_saveyourlogin end
+        if checkImageIsExists(profile_picture) then goto label_profilepicture end
+        if checkImageIsExists(turn_on_contact) then goto label_turnoncontact end
+        if checkImageIsExists(no_friend) then goto label_nofriend end
+        if checkImageIsExists(add_phone_number) then goto label_addphonenumber end
+        if checkImageIsExists(to_sign_up_agree) or checkImageIsExists(agree_facebook_term) then goto label_agree end
+        if checkImageIsExists(what_on_your_mind) then 
+            if info.twoFA == '' then goto label_get2FA end 
+            if info.twoFA ~= '' then goto label_searchtext end 
         end
     end
 
