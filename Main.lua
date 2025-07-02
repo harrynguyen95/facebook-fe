@@ -135,7 +135,7 @@ function main()
 
     setGender()
 
-    if waitImageVisible(what_is_mobile_number) then
+    if waitImageVisible(what_is_mobile_number) or waitImageVisible(sign_up_with_email) then
         toastr("what_is_mobile_number")
         findAndClickByImage(sign_up_with_email)
         waitImageNotVisible(what_is_mobile_number)
@@ -268,7 +268,7 @@ function main()
 
     ::label_confirmationcode::
     toastr('confirmcode..')
-    if waitImageVisible(enter_the_confirmation_code, 20) or waitImageVisible(did_not_get_code, 20) then
+    if waitImageVisible(enter_the_confirmation_code, 20) then
         toastr("enter_the_confirmation_code")
 
         sleep(1)
@@ -306,7 +306,7 @@ function main()
     end
 
     ::label_profilepicture::
-    if waitImageVisible(profile_picture) or waitImageVisible(add_picture) then
+    if waitImageVisible(profile_picture) then
         toastr("profile_picture")
 
         if waitImageVisible(dont_allow, 1) then
@@ -342,7 +342,7 @@ function main()
     end
 
     ::label_nofriend::
-    if waitImageVisible(no_friend) or waitImageVisible(no_friend_icon) then
+    if waitImageVisible(no_friend) then
         toastr("no_friend")
         if waitImageVisible(skip, 1) then findAndClickByImage(skip) end 
         findAndClickByImage(next)
