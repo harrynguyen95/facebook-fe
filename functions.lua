@@ -355,20 +355,20 @@ function executeHotmailFromDongVanFb()
 end
 
 function executeGetMailRequest()
-    if MAIL_MODE == 1 then 
+    if MAIL_SUPLY == 1 then 
         local exec = executeHotmailFromDongVanFb()
         if exec then 
             saveMailToGoogleForm()
         end 
         return exec
-    elseif MAIL_MODE == 2 then
+    elseif MAIL_SUPLY == 2 then
         local exec = executeGmailFromThueMail()
         if exec then 
             saveMailToGoogleForm()
         end 
         return exec
     else 
-        toastr('MAIL_MODE invalid.', 5)
+        toastr('MAIL_SUPLY invalid.', 5)
         return false
     end
 end
@@ -407,7 +407,6 @@ function getDongvanfbConfirmCode()
     local tries = 10
     for i = 1, tries do 
         toastr('Call times ' .. i)
-        sleep(5)
 
         local postData = {
             email = info.mailRegister,
@@ -424,6 +423,8 @@ function getDongvanfbConfirmCode()
             data = postData
         }
 
+        log(response, 'getDongvanfbConfirmCode')
+
         if response then
             response = json.decode(response)
             if response.status or response.status == 'true' then
@@ -435,17 +436,19 @@ function getDongvanfbConfirmCode()
         else
             log("Error: Failed to send request. Reason: " .. tostring(error))
         end
+
+        sleep(5)
     end
     return nil
 end
 
 function getCodeMailRegister()
-    if MAIL_MODE == 1 then 
+    if MAIL_SUPLY == 1 then 
         return getDongvanfbConfirmCode()
-    elseif MAIL_MODE == 2 then
+    elseif MAIL_SUPLY == 2 then
         return getThuemailConfirmCode()
     else 
-        toastr('MAIL_MODE invalid.', 5)
+        toastr('MAIL_SUPLY invalid.', 5)
     end
 end
 
@@ -497,12 +500,12 @@ function getFreeMailConfirmCode()
 end
 
 function getCodeMailConfirm()
-    if MAIL_MODE == 1 then 
+    if MAIL_SUPLY == 1 then 
         return getDongvanfbConfirmCode()
-    elseif MAIL_MODE == 2 then
+    elseif MAIL_SUPLY == 2 then
         return getFreeMailConfirmCodeSecondTime()
     else 
-        toastr('MAIL_MODE invalid.', 5)
+        toastr('MAIL_SUPLY invalid.', 5)
     end
 end
 

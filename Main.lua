@@ -1,6 +1,6 @@
 -- ====== CONFIG ======
 LANGUAGE = 'ES' -- EN|ES English|Spanish
-MAIL_MODE = 1  -- 1|2 hotmail_dongvanfb|gmail_thuemails.com
+MAIL_SUPLY = 1  -- 1|2 hotmail_dongvanfb|gmail_thuemails.com
 ADD_MAIL_DOMAIN = false
 REMOVE_REGISTER_MAIL = false
 THUE_LAI_MAIL_THUEMAILS = false
@@ -60,6 +60,7 @@ function main()
     if checkImageIsExists(add_phone_number) then goto label_addphonenumber end
 
     ::label_createnewaccount::
+    toastr('first..')
     if waitImageVisible(create_new_account, 60) then
         toastr('create_new_account')
 
@@ -140,6 +141,7 @@ function main()
         waitImageNotVisible(what_is_mobile_number)
     end
 
+    toastr('getmail..')
     if waitImageVisible(what_is_your_email) then
         toastr("what_is_your_email")
         -- or waitImageVisible(mail_did_not_receive_code)
@@ -211,6 +213,7 @@ function main()
 
     setGender()
 
+    toastr('password..')
     if waitImageVisible(create_a_password) then
         toastr("create_a_password")
         press(135, 450)
@@ -242,6 +245,7 @@ function main()
         findAndClickByImage(continue_creating_account)
     end
 
+    toastr('agree..')
     if  waitImageVisible(to_sign_up_agree) or waitImageVisible(agree_facebook_term) then
         toastr("agree_facebook_term")
 
@@ -263,10 +267,11 @@ function main()
     end
 
     ::label_confirmationcode::
+    toastr('confirmcode..')
     if waitImageVisible(enter_the_confirmation_code, 20) or waitImageVisible(did_not_get_code, 20) then
         toastr("enter_the_confirmation_code")
-        sleep(3)
 
+        sleep(1)
         findAndClickByImage(dont_allow)
 
         local OTPcode = getCodeMailRegister()
@@ -321,6 +326,7 @@ function main()
     end
 
     ::label_turnoncontact::
+    toastr('contact..')
     if waitImageVisible(turn_on_contact, 10) then
         toastr("turn_on_contact")
         press(380, 1200) sleep(1) -- next
@@ -332,11 +338,11 @@ function main()
         if waitImageVisible(skip, 1) then findAndClickByImage(skip) end 
 
         waitImageNotVisible(turn_on_contact)
-        sleep(2)
+        sleep(5)
     end
 
     ::label_nofriend::
-    if waitImageVisible(no_friend, 10) or waitImageVisible(no_friend_icon, 10) then
+    if waitImageVisible(no_friend) or waitImageVisible(no_friend_icon) then
         toastr("no_friend")
         if waitImageVisible(skip, 1) then findAndClickByImage(skip) end 
         findAndClickByImage(next)
@@ -421,7 +427,7 @@ function main()
             waitImageNotVisible(reenter_password)
         end
         
-        if waitImageVisible(check_your_email) then
+        if waitImageVisible(check_your_email, 3) then
             toastr('check_your_email')
             local code = getCodeMailConfirm()
             toastr('CODE: ' .. (code or '-'), 2)
@@ -496,6 +502,7 @@ function main()
     end
 
     ::label_searchtext::
+    toastr('searchtext..')
     if waitImageVisible(what_on_your_mind) then
         toastr('Search what_on_your_mind')
         press(600, 90) -- go to search screen
@@ -521,6 +528,7 @@ function main()
     end
 
     ::label_logout::
+    toastr('logout..')
     if waitImageVisible(what_on_your_mind) then 
         toastr('Logout what_on_your_mind')
         press(690, 1290) -- go to menu
@@ -545,6 +553,7 @@ function main()
 
     if checkSuspended() then goto label_continue end
 
+    toastr('end..')
     sleep(2)
     if info.status == 'INPROGRESS' then 
         if info.mailRegister ~= nil and info.mailRegister ~= '' then 
