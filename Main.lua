@@ -58,6 +58,7 @@ function main()
     if checkImageIsExists(turn_on_contact) then goto label_turnoncontact end
     if checkImageIsExists(no_friend) then goto label_nofriend end
     if checkImageIsExists(add_phone_number) then goto label_addphonenumber end
+    if checkImageIsExists(to_sign_up_agree) or checkImageIsExists(agree_facebook_term) then goto label_agree end
 
     ::label_createnewaccount::
     toastr('first..')
@@ -245,6 +246,7 @@ function main()
         findAndClickByImage(continue_creating_account)
     end
 
+    ::label_agree::
     toastr('agree..')
     if  waitImageVisible(to_sign_up_agree) or waitImageVisible(agree_facebook_term) then
         toastr("agree_facebook_term")
