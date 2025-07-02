@@ -50,6 +50,7 @@ function main()
  
     if waitImageVisible(page_not_available_now, 2) then 
         toastr('page_not_available_now')
+        handleSuspended()
         goto label_continue
     end 
 
@@ -395,8 +396,8 @@ function main()
 
     if checkImageIsExists(page_not_available_now) then 
         toastr('page_not_available_now')
-        swipeCloseApp()
-        goto label_openfacebook
+        handleSuspended()
+        goto label_continue
     end 
 
     if waitImageVisible(add_phone_number_home, 3) then

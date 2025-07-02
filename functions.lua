@@ -405,7 +405,7 @@ end
 function getDongvanfbConfirmCode()
     sleep(3)
 
-    local tries = 10
+    local tries = 3
     for i = 1, tries do 
         toastr('Call times ' .. i)
 
