@@ -51,12 +51,6 @@ function main()
     openFacebook()
     showIphoneModel()
     sleep(10)
- 
-    if waitImageVisible(page_not_available_now, 2) then 
-        toastr('page_not_available_now')
-        failedCurrentAccount()
-        goto label_continue
-    end 
 
     ::label_createnewaccount::
     toastr('wait login..')
@@ -120,6 +114,11 @@ function main()
     end
 
     if checkImageIsExists(create_new_account) then goto label_createnewaccount end 
+    if waitImageVisible(page_not_available_now, 2) then 
+        toastr('page_not_available_now')
+        failedCurrentAccount()
+        goto label_continue
+    end 
 
     setFirstNameLastName()
 
@@ -172,12 +171,6 @@ function main()
             findAndClickByImage(next)
             archiveCurrentAccount()
 
-            if waitImageVisible(already_have_account) then
-                toastr("already_have_account")
-                findAndClickByImage(continue_creating_account)
-                sleep(2)
-            end
-
             if waitImageVisible(exist_account_in_mail) then
                 toastr('exist_account_in_mail')
                 failedCurrentAccount()
@@ -192,12 +185,6 @@ function main()
 
                     findAndClickByImage(next)
                     archiveCurrentAccount()
-
-                    if waitImageVisible(already_have_account) then
-                        toastr("already_have_account")
-                        findAndClickByImage(continue_creating_account)
-                        sleep(2)
-                    end
 
                     if waitImageVisible(exist_account_in_mail) then
                         toastr('exist_account_in_mail')
@@ -248,6 +235,12 @@ function main()
 
     setGender()
 
+    if waitImageVisible(continue_creating_account, 3) then
+        toastr("continue_creating_account")
+        findAndClickByImage(continue_creating_account)
+        sleep(2)
+    end
+
     ::label_createpassword::
     toastr('wait password..')
     if waitImageVisible(create_a_password) then
@@ -275,11 +268,6 @@ function main()
         findAndClickByImage(save)
 
         waitImageNotVisible(save_your_login_info)
-    end
-
-    if waitImageVisible(continue_creating_account, 3) then
-        toastr("continue_creating_account")
-        findAndClickByImage(continue_creating_account)
     end
 
     ::label_agree::
