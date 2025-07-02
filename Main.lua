@@ -53,7 +53,7 @@ function main()
  
     if waitImageVisible(page_not_available_now, 2) then 
         toastr('page_not_available_now')
-        handleSuspended()
+        failedCurrentAccount()
         goto label_continue
     end 
 
@@ -177,7 +177,6 @@ function main()
 
             if waitImageVisible(exist_account_in_mail) then
                 failedCurrentAccount()
-                swipeCloseApp()
                 goto label_continue
             end
         else
@@ -198,14 +197,12 @@ function main()
 
                     if waitImageVisible(exist_account_in_mail) then
                         failedCurrentAccount()
-                        swipeCloseApp()
                         goto label_continue
                     end
                 end
             else 
                 toastr("Không có mail. Continue.", 10) sleep(5)
                 failedCurrentAccount()
-                swipeCloseApp()
                 goto label_continue
             end
         end
@@ -321,11 +318,7 @@ function main()
             press(55, 90) sleep(1) -- X back icon
             press(240, 820) sleep(1) -- Leave btn
 
-            -- Cancel all
             failedCurrentAccount()
-
-            goBackToCreateNewAccount()
-            removeAccount()
             goto label_continue
         end
         
@@ -400,7 +393,7 @@ function main()
 
     if checkImageIsExists(page_not_available_now) then 
         toastr('page_not_available_now')
-        handleSuspended()
+        failedCurrentAccount()
         goto label_continue
     end 
 

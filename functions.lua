@@ -70,6 +70,7 @@ function failedCurrentAccount()
 
         writeFile(accountFilePath, accounts)
     end
+    saveAccToGoogleForm()
 
     resetInfoObject()
 end
@@ -563,33 +564,32 @@ function removeAccount()
 end
 
 function handleSuspended()
-    info.checkpoint = 1
-    saveAccToGoogleForm()
-
-    failedCurrentAccount()
-
-    press(680, 90) -- help text
-    if waitImageVisible(logout_suspend_icon, 10) then
-        findAndClickByImage(logout_suspend_icon)
-        press(520, 840) sleep(1) --logout text
-
-        if waitImageVisible(logout_btn) then
-            findAndClickByImage(logout_btn)
-            sleep(3)
-
-            removeAccount()
-        end
-    end
+    
 end
 
 function checkSuspended()
     if waitImageVisible(confirm_human, 1) then
-        handleSuspended()
         toastr('Die')
+
+        info.checkpoint = 1
+        failedCurrentAccount()
+
+        press(680, 90) -- help text
+        if waitImageVisible(logout_suspend_icon, 10) then
+            findAndClickByImage(logout_suspend_icon)
+            press(520, 840) sleep(1) --logout text
+
+            if waitImageVisible(logout_btn) then
+                findAndClickByImage(logout_btn)
+                sleep(3)
+
+                removeAccount()
+            end
+        end
         return true
     end
 
-    -- toastr('Not Suspended')
+    toastr('Not Suspended')
     return false
 end
 
