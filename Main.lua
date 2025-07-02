@@ -53,6 +53,12 @@ function main()
         goto label_continue
     end 
 
+    if checkImageIsExists(enter_the_confirmation_code) then goto label_confirmationcode end
+    if checkImageIsExists(profile_picture) then goto label_profilepicture end
+    if checkImageIsExists(turn_on_contact) then goto label_turnoncontact end
+    if checkImageIsExists(no_friend) then goto label_nofriend end
+    if checkImageIsExists(add_phone_number) then goto label_addphonenumber end
+
     ::label_createnewaccount::
     if waitImageVisible(create_new_account, 60) then
         toastr('create_new_account')
@@ -73,12 +79,6 @@ function main()
             swipeCloseApp()
             goto label_continue
         end
-    else 
-        if checkImageIsExists(enter_the_confirmation_code) then goto label_confirmationcode end
-        if checkImageIsExists(profile_picture) then goto label_profilepicture end
-        if checkImageIsExists(turn_on_contact) then goto label_turnoncontact end
-        if checkImageIsExists(no_friend) then goto label_nofriend end
-        if checkImageIsExists(add_phone_number) then goto label_addphonenumber end
     end
 
     if checkSuspended() then goto label_continue end
@@ -247,7 +247,6 @@ function main()
 
         findAndClickByImage(dont_allow)
         findAndClickByImage(i_agree_btn)
-
         
         if not waitImageNotVisible(agree_facebook_term, 100) then 
             toastr('Can not agree')
@@ -305,7 +304,7 @@ function main()
     if waitImageVisible(profile_picture) or waitImageVisible(add_picture) then
         toastr("profile_picture")
 
-        if waitImageVisible(dont_allow, 2) then
+        if waitImageVisible(dont_allow, 1) then
             findAndClickByImage(dont_allow)
         end
 
@@ -318,30 +317,20 @@ function main()
         waitImageNotVisible(profile_picture) 
 
         if checkSuspended() then goto label_continue end
-        sleep(2)
+        sleep(5)
     end
 
     ::label_turnoncontact::
-    if waitImageVisible(turn_on_contact) then
+    if waitImageVisible(turn_on_contact, 10) then
         toastr("turn_on_contact")
         press(380, 1200) sleep(1) -- next
 
-        if waitImageVisible(skip, 2) then
-            findAndClickByImage(skip)
-        end 
+        if waitImageVisible(skip, 1) then findAndClickByImage(skip) end 
+        if waitImageVisible(next, 1) then findAndClickByImage(next) end 
+        if waitImageVisible(not_now, 1) then findAndClickByImage(not_now) end 
+        if waitImageVisible(dont_allow, 1) then findAndClickByImage(dont_allow) end
+        if waitImageVisible(skip, 1) then findAndClickByImage(skip) end 
 
-        if waitImageVisible(next, 2) then
-            findAndClickByImage(next)
-        end 
-
-        if waitImageVisible(not_now, 2) then
-            findAndClickByImage(not_now)
-        end 
-
-        if waitImageVisible(dont_allow, 2) then
-            findAndClickByImage(dont_allow)
-        end
-        
         waitImageNotVisible(turn_on_contact)
         sleep(2)
     end
@@ -349,6 +338,7 @@ function main()
     ::label_nofriend::
     if waitImageVisible(no_friend, 10) or waitImageVisible(no_friend_icon, 10) then
         toastr("no_friend")
+        if waitImageVisible(skip, 1) then findAndClickByImage(skip) end 
         findAndClickByImage(next)
         waitImageVisible(no_friend)
     end
@@ -387,7 +377,7 @@ function main()
             waitImageNotVisible(setting_menu)
         end
 
-        if waitImageVisible(setting_privacy, 10) then
+        if waitImageVisible(setting_privacy, 12) then
             toastr('setting_privacy')
             if waitImageVisible(see_more_account_center, 10) then
                 findAndClickByImage(see_more_account_center)
@@ -395,7 +385,7 @@ function main()
             end
         end
 
-        if waitImageVisible(account_center, 10) then
+        if waitImageVisible(account_center, 12) then
             toastr('account_center')
             sleep(1)
             swipe(600, 800, 610, 650) sleep(1)
@@ -409,7 +399,7 @@ function main()
             end
         end
 
-        if waitImageVisible(personal_details_page, 10) or waitImageVisible(your_information_and_2, 10) then
+        if waitImageVisible(personal_details_page, 12) or waitImageVisible(your_information_and_2, 12) then
             toastr('personal_details_page')
             findAndClickByImage(identify_confirmation_btn)
             waitImageNotVisible(identify_confirmation_btn)
@@ -490,7 +480,7 @@ function main()
             finishCurrentAccount()
 
             waitImageNotVisible(two_factor_is_on)
-            if waitImageVisible(reenter_password) then
+            if waitImageVisible(reenter_password, 10) then
                 press(55, 155) -- X on re-enter password
             end
             if waitImageVisible(protect_your_account) then

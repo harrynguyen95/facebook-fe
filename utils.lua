@@ -167,7 +167,7 @@ function findAndClickByImage(paths, threshold)
     if threshold == nil then
         threshold = THRESHOLD
     end
-    sleep(0.3)
+    sleep(0.2)
 
     if type(paths) == "table" then
         for i = 1, #paths do
