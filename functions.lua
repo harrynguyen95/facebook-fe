@@ -588,7 +588,7 @@ function checkSuspended()
         return true
     end
 
-    toastr('Live')
+    toastr('Ok')
     return false
 end
 
