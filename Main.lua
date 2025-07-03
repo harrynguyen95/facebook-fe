@@ -624,7 +624,7 @@ function main()
 
         if modeMenuLeft() then 
             press(40, 90) sleep(1) -- go to menu
-            swipe(550, 600, 600, 350) sleep(1)
+            swipe(500, 600, 500, 350) sleep(1)
         else 
             press(690, 1290) -- go to menu
             swipe(500, 900, 500, 800) sleep(1)
