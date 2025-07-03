@@ -49,13 +49,13 @@ function main()
 
     ::label_openfacebook::
     openFacebook()
-    sleep(10)
+    sleep(20)
 
     if checkSuspended() then goto label_continue end
 
     ::label_createnewaccount::
     showIphoneModel()
-    if waitImageVisible(create_new_account, 50) then
+    if waitImageVisible(create_new_account, 40) then
         toastr('create_new_account')
 
         if waitImageVisible(logo_fb_modern, 3) then
@@ -67,7 +67,7 @@ function main()
         findAndClickByImage(accept)
         findAndClickByImage(create_new_account)
 
-        if waitImageNotVisible(logo_facebook_2, 50) then 
+        if waitImageNotVisible(logo_facebook_2, 40) then 
             sleep(3)
         else 
             toastr('Can not next')
