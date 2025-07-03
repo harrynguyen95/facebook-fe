@@ -52,6 +52,7 @@ function main()
     sleep(20)
 
     if checkSuspended() then goto label_continue end
+    findAndClickByImage(accept)
 
     ::label_createnewaccount::
     showIphoneModel()
@@ -64,7 +65,6 @@ function main()
             goto label_continue
         end
 
-        findAndClickByImage(accept)
         findAndClickByImage(create_new_account)
 
         if waitImageNotVisible(logo_facebook_2, 40) then 
