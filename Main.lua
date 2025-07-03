@@ -382,6 +382,7 @@ function main()
         waitImageVisible(turn_on_contact)
     end
 
+    if checkSuspended() then goto label_continue end
     if checkImageIsExists(page_not_available_now) then 
         toastr('page_not_available_now')
         swipeCloseApp()
