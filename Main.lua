@@ -5,7 +5,7 @@ THUE_LAI_MAIL_THUEMAILS = false  -- true|false
 ADD_MAIL_DOMAIN = false
 REMOVE_REGISTER_MAIL = false
 PROVIDER_MAIL_THUEMAILS = 1  -- 1|3 gmail|icloud
-TIMES_XOA_INFO = 4  -- 0|1|2|3
+TIMES_XOA_INFO = 3  -- 0|1|2|3
 
 -- ====== INFO ======
 info = {
@@ -23,7 +23,6 @@ info = {
     hotmailClientId = nil,
     hotmailPassword = nil,
 }
-
 
 -- ====== LIB REQUIRED ======
 function isES() return LANGUAGE == 'ES' end
@@ -60,7 +59,7 @@ function main()
     if waitImageVisible(create_new_account, 40) then
         toastr('create_new_account')
 
-        if waitImageVisible(logo_fb_modern, 5) then
+        if waitImageVisible(logo_fb_modern, 4) then
             toastr('not_support_this_FB_mode')
             swipeCloseApp()
             goto label_continue
@@ -182,7 +181,7 @@ function main()
 
             if waitImageVisible(exist_account_in_mail) then
                 toastr('exist_account_in_mail')
-                failedCurrentAccount(400)
+                failedCurrentAccount('email_has_account')
                 goto label_continue
             end
         else
@@ -197,14 +196,14 @@ function main()
 
                     if waitImageVisible(exist_account_in_mail) then
                         toastr('exist_account_in_mail')
-                        failedCurrentAccount(400)
+                        failedCurrentAccount('email_has_account')
                         goto label_continue
                     end
                 end
             else 
                 toastr("Empty mail. Continue.", 10) sleep(5)
                 log("Empty mail. Continue.")
-                failedCurrentAccount(500)
+                failedCurrentAccount('empty_email')
                 goto label_continue
             end
         end
@@ -242,13 +241,13 @@ function main()
                 goto label_openfacebook
             end 
         end 
-    end
 
-    setGender()
+        setGender()
+    end
 
     if waitImageVisible(continue_creating_account, 3) then
         toastr("continue_creating_account")
-        failedCurrentAccount(403)
+        failedCurrentAccount('email_has_account')
         goto label_continue
     end
 
@@ -294,7 +293,7 @@ function main()
         
         if waitImageVisible(can_not_agree) or (not waitImageNotVisible(agree_facebook_term, 60)) then 
             toastr('Can not agree')
-            failedCurrentAccount(600)
+            failedCurrentAccount('can_not_agree')
             goto label_continue
         end 
 
@@ -325,7 +324,7 @@ function main()
             press(55, 90) sleep(1) -- X back icon
             press(240, 820) sleep(1) -- Leave btn
 
-            failedCurrentAccount(501)
+            failedCurrentAccount('empty_code')
             goto label_continue
         end
         
@@ -357,7 +356,10 @@ function main()
             press(380, 1260) -- skip
         end
         
-        waitImageNotVisible(profile_picture) 
+        if not waitImageNotVisible(profile_picture, 20) then
+            swipeCloseApp()
+            goto label_openfacebook
+        end 
 
         if checkSuspended() then goto label_continue end
         waitImageVisible(turn_on_contact)
