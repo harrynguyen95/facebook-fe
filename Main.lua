@@ -51,7 +51,13 @@ function main()
 
     ::label_openfacebook::
     openFacebook()
-    sleep(20)
+    sleep(15)
+
+    if waitImageVisible(logo_fb_modern, 5) then
+        toastr('not_support_this_FB_mode')
+        swipeCloseApp()
+        goto label_continue
+    end
 
     findAndClickByImage(accept)
     if checkSuspended() then goto label_continue end
@@ -120,6 +126,8 @@ function main()
     end
 
     if checkImageIsExists(create_new_account) then goto label_createnewaccount end 
+
+    if checkSuspended() then goto label_continue end
     if waitImageVisible(page_not_available_now, 2) then 
         toastr('page_not_available_now')
         swipeCloseApp()
