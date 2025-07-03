@@ -1,6 +1,6 @@
 -- ====== CONFIG ======
 LANGUAGE = 'ES'  -- EN|ES English|Spanish
-MAIL_SUPLY = 2  -- 1|2 hotmail_dongvanfb|thuemails.com
+MAIL_SUPLY = 1  -- 1|2 hotmail_dongvanfb|thuemails.com
 THUE_LAI_MAIL_THUEMAILS = false  -- true|false
 ADD_MAIL_DOMAIN = false
 REMOVE_REGISTER_MAIL = false
@@ -24,6 +24,7 @@ info = {
     hotmailPassword = nil,
 }
 
+
 -- ====== LIB REQUIRED ======
 function isES() return LANGUAGE == 'ES' end
 local images = require(isES() and (currentDir() .. "/images_es") or (currentDir() .. "images"))
@@ -42,7 +43,7 @@ function main()
 
     if info.mailRegister == nil or info.mailRegister == '' then 
         homeAndUnlockScreen()
-        executeXoaInfo() sleep(1)
+        executeXoaInfo()
     else 
         swipeCloseApp()
     end
@@ -420,13 +421,19 @@ function main()
     toastr('wait 2FA..')
     if waitImageVisible(what_on_your_mind) then 
         toastr('2FA what_on_your_mind')
-        press(690, 1290) -- go to menu
 
-        if waitImageVisible(setting_menu, 10) then
-            toastr('setting_menu')
-            press(600, 90) -- setting cog icon
-            waitImageNotVisible(setting_menu)
-        end
+        if modeMenuLeft() then 
+            press(40, 90) sleep(1) -- go to menu
+            press(560, 1100) sleep(1) -- go to configuration
+            press(110, 210) -- go to privacy
+        else 
+            press(690, 1290) -- go to menu
+            if waitImageVisible(setting_menu, 10) then
+                toastr('setting_menu')
+                press(600, 90) -- setting cog icon
+                waitImageNotVisible(setting_menu)
+            end
+        end 
 
         if waitImageVisible(setting_privacy, 20) then
             toastr('setting_privacy')
@@ -590,14 +597,20 @@ function main()
     toastr('wait logout..')
     if waitImageVisible(what_on_your_mind) then 
         toastr('Logout what_on_your_mind')
-        press(690, 1290) -- go to menu
-        swipe(500, 900, 500, 800) sleep(1)
-        swipe(550, 600, 600, 350) sleep(2)
+
+        if modeMenuLeft() then 
+            press(40, 90) sleep(1) -- go to menu
+            swipe(550, 600, 600, 350) sleep(1)
+        else 
+            press(690, 1290) -- go to menu
+            swipe(500, 900, 500, 800) sleep(1)
+            swipe(550, 600, 600, 350) sleep(2)
+        end 
 
         if waitImageVisible(logout_btn) then
             findAndClickByImage(logout_btn) sleep(1)
         end
-        if waitImageVisible(not_now, 3) then
+        if waitImageVisible(not_now, 2) then
             findAndClickByImage(not_now) sleep(1)
             waitImageNotVisible(not_now)
         end
@@ -607,7 +620,7 @@ function main()
         end
 
         removeAccount()
-        toastr('Done 1 nick live')
+        toastr('+1 nick live')
     end
 
     if checkSuspended() then goto label_continue end

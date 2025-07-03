@@ -28,7 +28,7 @@ function archiveCurrentAccount()
             info.uuid         = splitted[1]
             info.status       = info.status or splitted[2]
             info.mailLogin    = info.mailLogin or splitted[3]
-            info.password     = splitted[4] or info.password
+            info.password     = info.password or splitted[4]
             info.profileUid   = info.profileUid or splitted[5]
             info.twoFA        = info.twoFA or splitted[6]
             info.mailRegister        = info.mailRegister or splitted[7]
@@ -425,7 +425,7 @@ function getDongvanfbConfirmCode()
             data = postData
         }
 
-        -- log(response, 'getDongvanfbConfirmCode')
+        log(response, 'getDongvanfbConfirmCode')
 
         if response then
             response = json.decode(response)
@@ -706,6 +706,11 @@ function executeXoaInfo()
     else
         onOffAirplaneMode()
     end
+    sleep(1)
+end
+
+function modeMenuLeft()
+    return waitImageVisible(fb_logo_menu_left, 2)
 end
 
 -- function changeMailDomain()

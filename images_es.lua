@@ -92,3 +92,4 @@ gender_options = {dirPath .. "gender_options.png"}
 first_name_invalid = {dirPath .. "first_name_invalid.png"}
 accept = {dirPath .. "accept1.png", dirPath .. "accept2.png", dirPath .. "accept3.png"}
 can_not_agree = {dirPath .. "can_not_agree.png"}
+fb_logo_menu_left = {dirPath .. "fb_logo_menu_left.png"}
