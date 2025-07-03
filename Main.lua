@@ -494,8 +494,7 @@ function main()
 
         if waitImageVisible(enter_code_2fa, 10) or waitImageVisible(two_FA_code, 10) then
             toastr('two_FA_code')
-            -- local otp = get2FACode()
-            local otp = nil
+            local otp = get2FACode()
             if otp then
                 press(660, 525) -- input otp code
                 typeText(otp)
@@ -505,6 +504,7 @@ function main()
             else 
                 info.twoFA = nil
                 finishCurrentAccount()
+                
                 press(55, 155) -- back
                 press(55, 155) -- back
                 press(55, 155) -- back
