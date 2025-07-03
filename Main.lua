@@ -1,6 +1,6 @@
 -- ====== CONFIG ======
 LANGUAGE = 'ES'  -- EN|ES English|Spanish
-MAIL_SUPLY = 1  -- 1|2 hotmail_dongvanfb|thuemails.com
+MAIL_SUPLY = 2  -- 1|2 hotmail_dongvanfb|thuemails.com
 THUE_LAI_MAIL_THUEMAILS = false  -- true|false
 ADD_MAIL_DOMAIN = false
 REMOVE_REGISTER_MAIL = false
