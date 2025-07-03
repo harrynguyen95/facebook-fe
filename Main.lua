@@ -1,9 +1,10 @@
 -- ====== CONFIG ======
 LANGUAGE = 'ES'  -- EN|ES English|Spanish
-MAIL_SUPLY = 2  -- 1|2 hotmail_dongvanfb|thuemails.com
+MAIL_SUPLY = 1  -- 1|2 hotmail_dongvanfb|thuemails.com
+ENTER_VERIFY_CODE = false  -- true|false
 THUE_LAI_MAIL_THUEMAILS = false  -- true|false
-ADD_MAIL_DOMAIN = false
-REMOVE_REGISTER_MAIL = false
+ADD_MAIL_DOMAIN = false  -- true|false
+REMOVE_REGISTER_MAIL = false  -- true|false
 PROVIDER_MAIL_THUEMAILS = 1  -- 1|3 gmail|icloud
 TIMES_XOA_INFO = 3  -- 0|1|2|3
 
@@ -22,8 +23,8 @@ info = {
     hotmailRefreshToken = nil,
     hotmailClientId = nil,
     hotmailPassword = nil,
+    verifyCode = nil,
 }
-
 
 -- ====== LIB REQUIRED ======
 function isES() return LANGUAGE == 'ES' end
@@ -290,7 +291,13 @@ function main()
         findAndClickByImage(dont_allow)
         findAndClickByImage(i_agree_btn)
         
-        if waitImageVisible(can_not_agree) or (not waitImageNotVisible(agree_facebook_term, 60)) then 
+        if waitImageVisible(can_not_agree) then 
+            toastr('Can not agree')
+            failedCurrentAccount('can_not_agree')
+            goto label_continue
+        end 
+
+        if not waitImageNotVisible(agree_facebook_term, 60) then 
             toastr('Can not agree')
             failedCurrentAccount('can_not_agree')
             goto label_continue
@@ -305,23 +312,28 @@ function main()
     end
 
     ::label_confirmationcode::
-    toastr('wait confirmcode..')
+    toastr('wait confirmationcode..')
     if waitImageVisible(enter_the_confirmation_code, 20) then
         toastr("enter_the_confirmation_code")
 
         sleep(1)
         findAndClickByImage(dont_allow)
-        
         info.profileUid = getUIDFBLogin()
-        toastr("UID: " .. info.profileUid or '-')
-        archiveCurrentAccount()
 
         local OTPcode = getCodeMailRegister()
         toastr('OTPcode: ' .. (OTPcode or '-'))
         if OTPcode then 
-            findAndClickByImage(input_confirm_code)
-            typeText(OTPcode) sleep(1)
-            findAndClickByImage(next)
+            info.verifyCode = OTPcode
+            archiveCurrentAccount()
+
+            if ENTER_VERIFY_CODE then 
+                findAndClickByImage(input_confirm_code)
+                typeText(OTPcode) sleep(1)
+                findAndClickByImage(next)
+            else 
+                finishCurrentAccount()
+                goto label_continue
+            end 
         else
             toastr('empty OTP', 6) sleep(3)
             press(55, 90) sleep(1) -- X back icon
@@ -337,6 +349,10 @@ function main()
                 waitImageNotVisible(setting_up_for_fb)
             end
         end
+
+        info.profileUid = getUIDFBLogin()
+        toastr("UID: " .. (info.profileUid or '-'))
+        archiveCurrentAccount()
         
         if checkSuspended() then goto label_continue end
     end
@@ -395,16 +411,16 @@ function main()
         waitImageVisible(no_friend)
     end
 
+    findAndClickByImage(accept)
+    if checkSuspended() then goto label_continue end
+    if checkImageIsExists(profile_picture) then goto label_profilepicture end
+
     ::label_addphonenumber::
     if waitImageVisible(add_phone_number) then
         toastr("add_phone_number")
         press(380, 1220) -- skip
         waitImageVisible(add_phone_number)
     end
-
-    findAndClickByImage(accept)
-    if checkSuspended() then goto label_continue end
-    if checkImageIsExists(profile_picture) then goto label_profilepicture end
 
     if checkImageIsExists(page_not_available_now) then 
         toastr('page_not_available_now')
@@ -418,6 +434,7 @@ function main()
     end
 
     if checkImageIsExists(enter_the_confirmation_code) then goto label_confirmationcode end 
+    if checkImageIsExists(profile_picture) then goto label_profilepicture end
     if checkImageIsExists(turn_on_contact) then goto label_turnoncontact end
     if checkImageIsExists(no_friend) then goto label_nofriend end
     if checkImageIsExists(add_phone_number) then goto label_addphonenumber end
