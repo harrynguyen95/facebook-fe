@@ -28,7 +28,7 @@ function archiveCurrentAccount()
             info.uuid         = splitted[1]
             info.status       = info.status or splitted[2]
             info.mailLogin    = info.mailLogin or splitted[3]
-            info.password     = info.password or splitted[4]
+            info.password     = splitted[4] or info.password
             info.profileUid   = info.profileUid or splitted[5]
             info.twoFA        = info.twoFA or splitted[6]
             info.mailRegister        = info.mailRegister or splitted[7]
