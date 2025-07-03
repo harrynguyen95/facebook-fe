@@ -297,7 +297,7 @@ function main()
             goto label_continue
         end 
 
-        if not waitImageNotVisible(agree_facebook_term, 60) then 
+        if not waitImageNotVisible(agree_facebook_term, 80) then 
             toastr('Can not agree')
             failedCurrentAccount('can_not_agree')
             goto label_continue
