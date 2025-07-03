@@ -354,7 +354,7 @@ end
 function executeHotmailFromDongVanFb()
     -- https://api.dongvanfb.net/user/buy?apikey=36458879248967a36&account_type=1&quality=1&type=full
     
-    local account_type = {1, 2, 3, 5, 59, 60}
+    local account_type = {2, 6, 1, 3, 5, 59, 60}
     for i, service_id in pairs(account_type) do
         local tries = 1
         for i = 1, tries do 
