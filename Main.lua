@@ -613,6 +613,10 @@ function main()
                 end
             else
                 press(60, 1290) -- back to homepage
+
+                sleep(1)
+                resetInfoObject()
+                goto label_continue
             end
         end
     end
