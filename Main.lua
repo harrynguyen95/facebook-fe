@@ -1,7 +1,7 @@
 -- ====== CONFIG ======
 LANGUAGE = 'ES'  -- EN|ES English|Spanish
 MAIL_SUPLY = 1  -- 1|2 hotmail_dongvanfb|thuemails.com
-ENTER_VERIFY_CODE = false  -- true|false
+ENTER_VERIFY_CODE = true  -- true|false
 THUE_LAI_MAIL_THUEMAILS = false  -- true|false
 ADD_MAIL_DOMAIN = false  -- true|false
 REMOVE_REGISTER_MAIL = false  -- true|false
