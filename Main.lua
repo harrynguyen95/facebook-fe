@@ -238,7 +238,7 @@ function main()
 
     if waitImageVisible(continue_creating_account, 3) then
         toastr("continue_creating_account")
-        failedCurrentAccount(400)
+        failedCurrentAccount(403)
         goto label_continue
     end
 
@@ -281,7 +281,7 @@ function main()
         
         if not waitImageNotVisible(agree_facebook_term, 60) then 
             toastr('Can not agree')
-            failedCurrentAccount(400)
+            failedCurrentAccount(600)
             goto label_continue
         end 
 
