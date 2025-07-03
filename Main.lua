@@ -55,15 +55,14 @@ function main()
     showIphoneModel()
     if waitImageVisible(create_new_account, 50) then
         toastr('create_new_account')
-        findAndClickByImage(accept)
 
         if waitImageVisible(logo_fb_modern, 3) then
             toastr('not_support_this_FB_mode')
-
             swipeCloseApp()
             goto label_continue
         end
 
+        findAndClickByImage(accept)
         findAndClickByImage(create_new_account)
 
         if waitImageNotVisible(logo_facebook_2, 50) then 
@@ -95,7 +94,6 @@ function main()
 
     if waitImageVisible(join_facebook, 2) then 
         toastr('not_support_this_FB_mode')
-
         swipeCloseApp()
         goto label_continue
     end
@@ -116,7 +114,7 @@ function main()
     if checkImageIsExists(create_new_account) then goto label_createnewaccount end 
     if waitImageVisible(page_not_available_now, 2) then 
         toastr('page_not_available_now')
-        -- failedCurrentAccount()
+        swipeCloseApp()
         goto label_continue
     end 
 
@@ -238,8 +236,8 @@ function main()
 
     if waitImageVisible(continue_creating_account, 3) then
         toastr("continue_creating_account")
-        findAndClickByImage(continue_creating_account)
-        sleep(2)
+        failedCurrentAccount()
+        goto label_continue
     end
 
     ::label_createpassword::
@@ -388,7 +386,7 @@ function main()
 
     if checkImageIsExists(page_not_available_now) then 
         toastr('page_not_available_now')
-        -- failedCurrentAccount()
+        swipeCloseApp()
         goto label_continue
     end 
 
@@ -494,9 +492,10 @@ function main()
             end
         end
 
-        if waitImageVisible(two_FA_code, 10) or waitImageVisible(enter_code_2fa, 10) then
+        if waitImageVisible(enter_code_2fa, 10) or waitImageVisible(two_FA_code, 10) then
             toastr('two_FA_code')
-            local otp = get2FACode()
+            -- local otp = get2FACode()
+            local otp = nil
             if otp then
                 press(660, 525) -- input otp code
                 typeText(otp)
@@ -506,11 +505,20 @@ function main()
             else 
                 info.twoFA = nil
                 finishCurrentAccount()
+                press(55, 155) -- back
+                press(55, 155) -- back
+                press(55, 155) -- back
+                if waitImageVisible(protect_your_account) then
+                    press(40, 90) sleep(1) -- back on protect your account
+                    press(40, 90) sleep(1) -- back on confirm identity
+                    press(45, 90) sleep(1) -- back to setting menu
+                    press(45, 90)          -- back to main menu
+                end
+                if waitImageVisible(home_icon) then
+                    press(60, 1290) -- back to homepage
+                end
+                goto label_searchtext
             end 
-        else 
-            info.twoFA = nil
-            finishCurrentAccount()
-            goto label_continue
         end
 
         if waitImageVisible(two_factor_is_on, 10) then

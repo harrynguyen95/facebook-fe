@@ -73,7 +73,7 @@ function failedCurrentAccount()
 
         log('failedCurrentAccount ' .. line)
         writeFile(accountFilePath, accounts)
-        saveAccToGoogleForm()
+        if info.profileUid and info.profileUid ~= '' then saveAccToGoogleForm() end
         resetInfoObject()
     end
     
@@ -83,7 +83,7 @@ function finishCurrentAccount()
     local accounts = readFile(accountFilePath)
     local splitted = split(accounts[#accounts], "|")
 
-    if splitted[2] ~= 'INPROGRESS' then
+    if splitted[2] == 'INPROGRESS' then
         info.status = "SUCCESS"
         info.checkpoint = nil
         if not info.mailLogin or info.mailLogin == '' then info.mailLogin = info.mailRegister end 
@@ -93,7 +93,7 @@ function finishCurrentAccount()
 
         log('finishCurrentAccount ' .. line)
         writeFile(accountFilePath, accounts)
-        saveAccToGoogleForm()
+        if info.profileUid and info.profileUid ~= '' then saveAccToGoogleForm() end
         resetInfoObject()
     end  
 end
@@ -594,7 +594,7 @@ function checkSuspended()
         return true
     end
 
-    toastr('Not Suspended')
+    toastr('Live')
     return false
 end
 
