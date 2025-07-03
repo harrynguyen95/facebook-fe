@@ -5,7 +5,7 @@ THUE_LAI_MAIL_THUEMAILS = false  -- true|false
 ADD_MAIL_DOMAIN = false
 REMOVE_REGISTER_MAIL = false
 PROVIDER_MAIL_THUEMAILS = 1  -- 1|3 gmail|icloud
-TIMES_XOA_INFO = 2  -- 0|1|2|3
+TIMES_XOA_INFO = 4  -- 0|1|2|3
 
 -- ====== INFO ======
 info = {
