@@ -29,7 +29,7 @@ local function removeLastIfInProgress(filePath)
 end
 
 function homeAndUnlockScreen()
-    toastr("Check Unlock Screen")
+    toast("Check Unlock Screen")
 
     local i = 0
     while true do
