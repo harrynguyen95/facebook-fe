@@ -44,7 +44,7 @@ function homeAndUnlockScreen()
 
         keyDown(KEY_TYPE.HOME_BUTTON)
         keyUp(KEY_TYPE.HOME_BUTTON)
-        sleep(1)
+        usleep(1000000)
     end
 end
 
