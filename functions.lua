@@ -59,35 +59,43 @@ function archiveCurrentAccount()
     -- log(info, 'Archive')
 end
 
-function failedCurrentAccount()
+function finishCurrentAccount()
+    local accounts = readFile(accountFilePath)
+    local splitted = split(accounts[#accounts], "|")
+
+    if splitted[2] == "INPROGRESS" then
+        info.status = "SUCCESS"
+        info.checkpoint = nil
+        if not info.mailLogin or info.mailLogin == '' then info.mailLogin = info.mailRegister end 
+        if not info.profileUid or info.profileUid == '' then info.profileUid = getUIDFBLogin() end 
+        local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
+        accounts[#accounts] = line
+
+        log('finishCurrentAccount ' .. line)
+        writeFile(accountFilePath, accounts)
+        if info.profileUid and info.profileUid ~= '' then saveAccToGoogleForm() end
+        resetInfoObject()
+    end  
+end
+
+function failedCurrentAccount(code)
+    if code == nil then code = 282 end
     local accounts = readFile(accountFilePath)
     local splitted = split(accounts[#accounts], "|")
 
     if splitted[2] ~= 'SUCCESS' then 
         info.status = "FAILED"
-        if info.mailLogin == '' then info.mailLogin = info.mailRegister end 
+        info.checkpoint = code
+        if not info.mailLogin or info.mailLogin == '' then info.mailLogin = info.mailRegister end 
+        if not info.profileUid or info.profileUid == '' then info.profileUid = getUIDFBLogin() end 
         local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
         accounts[#accounts] = line
 
+        log('failedCurrentAccount ' .. line)
         writeFile(accountFilePath, accounts)
+        if info.profileUid and info.profileUid ~= '' then saveAccToGoogleForm() end
+        resetInfoObject()
     end
-    saveAccToGoogleForm()
-
-    resetInfoObject()
-end
-
-function finishCurrentAccount()
-    local accounts = readFile(accountFilePath)
-
-    info.status = "SUCCESS"
-    if info.mailLogin == '' then info.mailLogin = info.mailRegister end 
-    local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
-    accounts[#accounts] = line
-
-    writeFile(accountFilePath, accounts)
-    saveAccToGoogleForm()
-
-    resetInfoObject()
 end
 
 function saveAccToGoogleForm()
@@ -112,7 +120,7 @@ function saveAccToGoogleForm()
             -- log(infoClone, "Sent request to Google Form" )
             return
         else
-            log(error, "Error: Failed to send request. Reason")
+            log("Failed request acc_google_form.php. Reason: " .. tostring(error))
         end
     end
 end
@@ -136,10 +144,10 @@ function saveMailToGoogleForm()
         }
 
         if response then
-            log(infoClone, "Sent request to Google Form" )
+            -- log(infoClone, "Sent request to Google Form" )
             return
         else
-            log(error, "Error: Failed to send request. Reason")
+            log("Failed request mail_google_form.php. Reason: " .. tostring(error))
         end
     end
 end
@@ -184,6 +192,8 @@ function saveMailThueMail()
         local line = info.mailRegister  .. "|1"
         addLineToFile(mailFilePath, line)
     end
+
+    saveMailToGoogleForm()
 end
 
 function retrieveMailThueMail()
@@ -257,7 +267,7 @@ function executeGmailFromThueMail()
                     info.mailRegister = res.email
 
                     saveMailThueMail()
-                    return true
+                    return 'success'
                 else
                     toastr(response.message)
                     log(response.message)
@@ -267,7 +277,7 @@ function executeGmailFromThueMail()
                     end
                 end
             else
-                log("Error: Failed to send request. Reason: " .. tostring(error))
+                log("Failed request rentals/re-rent. Reason: " .. tostring(error))
             end
         end
     end
@@ -309,7 +319,7 @@ function executeGmailFromThueMail()
                     log(response.message)
                 end
             else
-                log("Error: Failed to send request. Reason: " .. tostring(error))
+                log("Failed request rentals. Reason: " .. tostring(error))
             end
         end
     end
@@ -350,7 +360,7 @@ function executeHotmailFromDongVanFb()
                     log(response.message)
                 end
             else
-                log("Error: Failed to send request. Reason: " .. tostring(error))
+                log("Failed request user/buy. Reason: " .. tostring(error))
             end
         end
     end
@@ -359,17 +369,9 @@ end
 
 function executeGetMailRequest()
     if MAIL_SUPLY == 1 then 
-        local exec = executeHotmailFromDongVanFb()
-        if exec then 
-            saveMailToGoogleForm()
-        end 
-        return exec
+        return executeHotmailFromDongVanFb()
     elseif MAIL_SUPLY == 2 then
-        local exec = executeGmailFromThueMail()
-        if exec then 
-            saveMailToGoogleForm()
-        end 
-        return exec
+        return executeGmailFromThueMail()
     else 
         toastr('MAIL_SUPLY invalid.', 5)
         return false
@@ -377,6 +379,7 @@ function executeGetMailRequest()
 end
 
 function getThuemailConfirmCode()
+    sleep(3)
     local tries = 10
     for i = 1, tries do 
         toastr('Call times ' .. i)
@@ -398,7 +401,7 @@ function getThuemailConfirmCode()
                 log('Empty thuemails.com code.')
             end
         else
-            log("Error: Failed to send request. Reason: " .. tostring(error))
+            log("Failed request rentals/id. Reason: " .. tostring(error))
         end
     end
     return nil
@@ -437,7 +440,7 @@ function getDongvanfbConfirmCode()
                 log('Empty dongvanfb code.')
             end
         else
-            log("Error: Failed to send request. Reason: " .. tostring(error))
+            log("Failed request api/get_code_oauth2. Reason: " .. tostring(error))
         end
 
         sleep(5)
@@ -473,7 +476,7 @@ function getFreeMailConfirmCodeSecondTime()
                 toastr("Empty response code.");
             end
         else
-            log("Error: Failed to send request. Reason: " .. tostring(error))
+            log("Failed request confirm_free_mail.php. Reason: " .. tostring(error))
         end
     end
 end
@@ -497,7 +500,7 @@ function getFreeMailConfirmCode()
                 toastr("Empty response code.");
             end
         else
-            log("Error: Failed to send request. Reason: " .. tostring(error))
+            log("Failed request add_free_mail.php. Reason: " .. tostring(error))
         end
     end
 end
@@ -529,7 +532,7 @@ function get2FACode()
             log("Empty response get 2FA OTP.");
         end
     else
-        log("Error: Failed to send request. Reason: " .. tostring(error))
+        log("Failed request 2fa.live/tok. Reason: " .. tostring(error))
     end
 end
 
@@ -564,39 +567,36 @@ function removeAccount()
     end
 end
 
-function handleSuspended()
-    
-end
-
 function checkSuspended()
     if waitImageVisible(confirm_human, 1) then
         toastr('Die')
 
-        info.checkpoint = 1
-        failedCurrentAccount()
+        failedCurrentAccount(282)
 
-        press(680, 90) -- help text
-        if waitImageVisible(logout_suspend_icon, 10) then
-            findAndClickByImage(logout_suspend_icon)
-            press(520, 840) sleep(1) --logout text
+        -- press(680, 90) -- help text
+        -- if waitImageVisible(logout_suspend_icon, 10) then
+        --     findAndClickByImage(logout_suspend_icon)
+        --     press(520, 840) sleep(1) --logout text
 
-            if waitImageVisible(logout_btn) then
-                findAndClickByImage(logout_btn)
-                sleep(3)
+        --     if waitImageVisible(logout_btn) then
+        --         findAndClickByImage(logout_btn)
+        --         sleep(3)
 
-                removeAccount()
-            end
-        end
+        --         removeAccount()
+        --     end
+        -- end
         return true
     end
 
-    toastr('Not Suspended')
+    toastr('Ok')
     return false
 end
 
 function setFirstNameLastName()
     if waitImageVisible(what_name) then
         toastr("what_name")
+
+        ::label_input_name::
         local name = getRandomName()
         press(200, 380) sleep(0.5)
         findAndClickByImage(x_input_icon)
@@ -605,7 +605,10 @@ function setFirstNameLastName()
         findAndClickByImage(x_input_icon)
         typeText(name[2]) sleep(0.5)
         findAndClickByImage(next)
-        waitImageNotVisible(what_name)
+
+        if not waitImageNotVisible(what_name, 10) then 
+            if waitImageVisible(first_name_invalid, 2) or waitImageVisible(red_warning_icon, 2) then goto label_input_name end 
+        end
     end
 end
 
@@ -614,6 +617,18 @@ function setGender()
         toastr("what_is_gender")
 
         if waitImageVisible(gender_options, 10) then 
+            math.randomseed(os.time() + math.random())
+            local x = math.random(500, 560)
+            local y = 440
+
+            local xRandom = math.random(1, 2)
+            if xRandom == 2 then
+                y = 540
+            end
+            press(x, y)
+            findAndClickByImage(next)
+            waitImageNotVisible(what_is_gender)
+        else 
             math.randomseed(os.time() + math.random())
             local x = math.random(500, 560)
             local y = 440

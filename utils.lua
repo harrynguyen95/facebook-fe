@@ -73,10 +73,18 @@ function jsonStringify(tbl)
     return encode(tbl)
 end
 
+local function epoch_vietnam()
+    local now_utc = os.time(os.date("!*t"))
+    return now_utc + (7 * 3600)
+end
+
 function log(value, prefix)
     if prefix == nil then
         prefix = ':'
     end
+    local ts = os.date("- %m-%d %H:%M ", epoch_vietnam())
+    prefix = ts .. prefix
+
     if type(value) == "table" then
         print(prefix .. ": " .. jsonStringify(value))
     elseif type(value) == "string" then
@@ -239,7 +247,7 @@ function checkImageIsExists(paths, threshold)
 end
 
 function waitImageVisible(paths, timeout)
-    -- toastr('.', 0.8)
+    toastr('.', 1)
     if timeout == nil then
         timeout = 5
     end
@@ -397,7 +405,7 @@ function getRandomSearchText(count)
     return result
 end
 
-function pressHome ()
+function pressHome()
     sleep(0.5)
     keyDown(KEY_TYPE.HOME_BUTTON)
     sleep(1)
@@ -493,7 +501,7 @@ function httpRequest(params)
         ssl_verifyhost = params.ssl_verifyhost or false,
         customrequest = method,
         followlocation = true,
-        timeout = 120,
+        timeout = 30,
         writefunction = function(chunk)
             response = response .. tostring(chunk) -- Đảm bảo `chunk` là chuỗi
             return #chunk
@@ -542,7 +550,8 @@ function httpRequest(params)
 
     -- Đóng curl
     c:close()
-
+    collectgarbage()
+    
     if not success then
         return nil, "Lỗi khi thực hiện request: " .. tostring(err)
     end
@@ -801,8 +810,9 @@ function onOffAirplaneMode()
 end
 
 function respring()
-    usleep(math.random(3000000, 4000000));
+    sleep(1);
     io.popen('killall -9 SpringBoard');
+    sleep(5);
 end
 
 function swipeCloseApp()
