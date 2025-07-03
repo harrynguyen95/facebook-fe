@@ -236,6 +236,9 @@ function checkImageIsExists(paths, threshold)
     if threshold == nil then
         threshold = THRESHOLD
     end
+    if paths == nil then
+        return false
+    end
     for i = 1, #paths do
         local isExist = checkImageIsExist(paths[i], threshold)
         if isExist then
@@ -247,7 +250,7 @@ function checkImageIsExists(paths, threshold)
 end
 
 function waitImageVisible(paths, timeout)
-    toastr('.', 1)
+    -- toastr('.', 1)
     if timeout == nil then
         timeout = 5
     end

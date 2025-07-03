@@ -19,7 +19,7 @@ function archiveCurrentAccount()
     local accounts = readFile(accountFilePath)
     
     info.uuid = 1
-    info.password = readFile(defaultPasswordFilePath)[1]
+    info.password = getRandomLineInFile(defaultPasswordFilePath)
 
     if #accounts > 0 then
         local current = accounts[#accounts]
@@ -28,7 +28,7 @@ function archiveCurrentAccount()
             info.uuid         = splitted[1]
             info.status       = info.status or splitted[2]
             info.mailLogin    = info.mailLogin or splitted[3]
-            info.password     = info.password or splitted[4]
+            info.password     = splitted[4] or info.password
             info.profileUid   = info.profileUid or splitted[5]
             info.twoFA        = info.twoFA or splitted[6]
             info.mailRegister        = info.mailRegister or splitted[7]
@@ -37,22 +37,23 @@ function archiveCurrentAccount()
             info.hotmailRefreshToken = info.hotmailRefreshToken or splitted[10]
             info.hotmailClientId     = info.hotmailClientId or splitted[11]
             info.hotmailPassword     = info.hotmailPassword or splitted[12]
+            info.verifyCode          = info.verifyCode or splitted[13]
 
-            local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
+            local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '')
             accounts[#accounts] = line
             writeFile(accountFilePath, accounts)
         else
             info.uuid = floor(splitted[1] + 1)
             info.status = 'INPROGRESS'
             if ADD_MAIL_DOMAIN then info.mailLogin = randomEmailLogin() end 
-            local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
+            local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '')
             addLineToFile(accountFilePath, line)
         end 
     else 
         info.uuid = 1
         info.status = 'INPROGRESS'
         if ADD_MAIL_DOMAIN then info.mailLogin = randomEmailLogin() end 
-        local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
+        local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '')
         addLineToFile(accountFilePath, line)
     end
 
@@ -63,19 +64,17 @@ function finishCurrentAccount()
     local accounts = readFile(accountFilePath)
     local splitted = split(accounts[#accounts], "|")
 
-    if splitted[2] == "INPROGRESS" then
-        info.status = "SUCCESS"
-        info.checkpoint = nil
-        if not info.mailLogin or info.mailLogin == '' then info.mailLogin = info.mailRegister end 
-        if not info.profileUid or info.profileUid == '' then info.profileUid = getUIDFBLogin() end 
-        local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
-        accounts[#accounts] = line
+    info.status = "SUCCESS"
+    info.checkpoint = nil
+    if not info.mailLogin or info.mailLogin == '' then info.mailLogin = info.mailRegister end 
+    if not info.profileUid or info.profileUid == '' then info.profileUid = getUIDFBLogin() end 
+    local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '')
+    accounts[#accounts] = line
 
-        log('finishCurrentAccount ' .. line)
-        writeFile(accountFilePath, accounts)
-        if info.profileUid and info.profileUid ~= '' then saveAccToGoogleForm() end
-        resetInfoObject()
-    end  
+    log('finishCurrentAccount ' .. line)
+    writeFile(accountFilePath, accounts)
+    if ENTER_VERIFY_CODE then saveAccToGoogleForm() else saveNoVerifyToGoogleForm() end
+    resetInfoObject()
 end
 
 function failedCurrentAccount(code)
@@ -83,19 +82,17 @@ function failedCurrentAccount(code)
     local accounts = readFile(accountFilePath)
     local splitted = split(accounts[#accounts], "|")
 
-    if splitted[2] ~= 'SUCCESS' then 
-        info.status = "FAILED"
-        info.checkpoint = code
-        if not info.mailLogin or info.mailLogin == '' then info.mailLogin = info.mailRegister end 
-        if not info.profileUid or info.profileUid == '' then info.profileUid = getUIDFBLogin() end 
-        local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
-        accounts[#accounts] = line
+    info.status = "FAILED"
+    info.checkpoint = code
+    if not info.mailLogin or info.mailLogin == '' then info.mailLogin = info.mailRegister end 
+    if not info.profileUid or info.profileUid == '' then info.profileUid = getUIDFBLogin() end 
+    local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '')
+    accounts[#accounts] = line
 
-        log('failedCurrentAccount ' .. line)
-        writeFile(accountFilePath, accounts)
-        if info.profileUid and info.profileUid ~= '' then saveAccToGoogleForm() end
-        resetInfoObject()
-    end
+    log(code .. ' - failedCurrentAccount ' .. line)
+    writeFile(accountFilePath, accounts)
+    saveAccToGoogleForm()
+    resetInfoObject()
 end
 
 function saveAccToGoogleForm()
@@ -121,6 +118,33 @@ function saveAccToGoogleForm()
             return
         else
             log("Failed request acc_google_form.php. Reason: " .. tostring(error))
+        end
+    end
+end
+
+function saveNoVerifyToGoogleForm()
+    local localIP = readFile(localIPFilePath)
+    local infoClone = info
+    infoClone.localIP = localIP[#localIP]
+
+    local tries = 2
+    for i = 1, tries do 
+        sleep(3)
+
+        local response, error = httpRequest {
+            url = PHP_SERVER .. "no_verify_google_form.php",
+            method = "POST",
+            headers = {
+                ["Content-Type"] = "application/json",
+            },
+            data = infoClone
+        }
+
+        if response then
+            -- log(infoClone, "Sent request to Google Form" )
+            return
+        else
+            log("Failed request no_verify_google_form.php. Reason: " .. tostring(error))
         end
     end
 end
@@ -167,6 +191,7 @@ function resetInfoObject()
         hotmailClientId = nil,
         hotmailPassword = nil,
         checkpoint = nil,
+        verifyCode = nil,
     }
 end
 
@@ -329,7 +354,7 @@ end
 function executeHotmailFromDongVanFb()
     -- https://api.dongvanfb.net/user/buy?apikey=36458879248967a36&account_type=1&quality=1&type=full
     
-    local account_type = {1, 2, 3, 5, 59, 60}
+    local account_type = {2, 6, 1, 3, 5, 59, 60}
     for i, service_id in pairs(account_type) do
         local tries = 1
         for i = 1, tries do 
@@ -410,7 +435,7 @@ end
 function getDongvanfbConfirmCode()
     sleep(3)
 
-    local tries = 5
+    local tries = 6
     for i = 1, tries do 
         toastr('Call times ' .. i)
 
@@ -616,7 +641,7 @@ function setGender()
     if waitImageVisible(what_is_gender, 2) then
         toastr("what_is_gender")
 
-        if waitImageVisible(gender_options, 10) then 
+        if waitImageVisible(gender_options, 20) then 
             math.randomseed(os.time() + math.random())
             local x = math.random(500, 560)
             local y = 440
@@ -710,6 +735,11 @@ function executeXoaInfo()
     else
         onOffAirplaneMode()
     end
+    sleep(1)
+end
+
+function modeMenuLeft()
+    return waitImageVisible(fb_logo_menu_left, 2)
 end
 
 -- function changeMailDomain()

@@ -1,11 +1,12 @@
 -- ====== CONFIG ======
 LANGUAGE = 'ES'  -- EN|ES English|Spanish
-MAIL_SUPLY = 2  -- 1|2 hotmail_dongvanfb|thuemails.com
+MAIL_SUPLY = 1  -- 1|2 hotmail_dongvanfb|thuemails.com
+ENTER_VERIFY_CODE = true  -- true|false
 THUE_LAI_MAIL_THUEMAILS = false  -- true|false
-ADD_MAIL_DOMAIN = false
-REMOVE_REGISTER_MAIL = false
+ADD_MAIL_DOMAIN = false  -- true|false
+REMOVE_REGISTER_MAIL = false  -- true|false
 PROVIDER_MAIL_THUEMAILS = 1  -- 1|3 gmail|icloud
-TIMES_XOA_INFO = 4  -- 0|1|2|3
+TIMES_XOA_INFO = 3  -- 0|1|2|3
 
 -- ====== INFO ======
 info = {
@@ -22,6 +23,7 @@ info = {
     hotmailRefreshToken = nil,
     hotmailClientId = nil,
     hotmailPassword = nil,
+    verifyCode = nil,
 }
 
 -- ====== LIB REQUIRED ======
@@ -42,24 +44,30 @@ function main()
 
     if info.mailRegister == nil or info.mailRegister == '' then 
         homeAndUnlockScreen()
-        executeXoaInfo() sleep(1)
+        executeXoaInfo()
     else 
         swipeCloseApp()
     end
 
     ::label_openfacebook::
     openFacebook()
-    sleep(20)
+    sleep(15)
 
-    if checkSuspended() then goto label_continue end
+    if waitImageVisible(logo_fb_modern, 5) then
+        toastr('not_support_this_FB_mode')
+        swipeCloseApp()
+        goto label_continue
+    end
+
     findAndClickByImage(accept)
-
+    if checkSuspended() then goto label_continue end
+    
     ::label_createnewaccount::
     showIphoneModel()
-    if waitImageVisible(create_new_account, 40) then
+    if waitImageVisible(create_new_account, 30) then
         toastr('create_new_account')
 
-        if waitImageVisible(logo_fb_modern, 5) then
+        if waitImageVisible(logo_fb_modern, 4) then
             toastr('not_support_this_FB_mode')
             swipeCloseApp()
             goto label_continue
@@ -67,7 +75,7 @@ function main()
 
         findAndClickByImage(create_new_account)
 
-        if waitImageNotVisible(logo_facebook_2, 40) then 
+        if waitImageNotVisible(logo_facebook_2, 30) then 
             sleep(3)
         else 
             toastr('Can not next')
@@ -75,7 +83,6 @@ function main()
             goto label_continue
         end
     else 
-        toastr('not login..')
         if checkSuspended() then goto label_continue end
         if checkImageIsExists(what_is_birthday) then goto label_birthday end
         if checkImageIsExists(what_is_mobile_number) then goto label_what_is_mobile end
@@ -87,7 +94,7 @@ function main()
         if checkImageIsExists(turn_on_contact) then goto label_turnoncontact end
         if checkImageIsExists(no_friend) then goto label_nofriend end
         if checkImageIsExists(add_phone_number) then goto label_addphonenumber end
-        if checkImageIsExists(to_sign_up_agree) or checkImageIsExists(agree_facebook_term) then goto label_agree end
+        if checkImageIsExists(agree_facebook_term) then goto label_agree end
         if checkImageIsExists(what_on_your_mind) then 
             if info.twoFA == nil or info.twoFA == '' then goto label_get2FA end 
             if info.twoFA ~= nil or info.twoFA ~= '' then goto label_searchtext end 
@@ -119,6 +126,8 @@ function main()
     end
 
     if checkImageIsExists(create_new_account) then goto label_createnewaccount end 
+
+    if checkSuspended() then goto label_continue end
     if waitImageVisible(page_not_available_now, 2) then 
         toastr('page_not_available_now')
         swipeCloseApp()
@@ -181,7 +190,7 @@ function main()
 
             if waitImageVisible(exist_account_in_mail) then
                 toastr('exist_account_in_mail')
-                failedCurrentAccount(400)
+                failedCurrentAccount('email_has_account')
                 goto label_continue
             end
         else
@@ -196,14 +205,14 @@ function main()
 
                     if waitImageVisible(exist_account_in_mail) then
                         toastr('exist_account_in_mail')
-                        failedCurrentAccount(400)
+                        failedCurrentAccount('email_has_account')
                         goto label_continue
                     end
                 end
             else 
                 toastr("Empty mail. Continue.", 10) sleep(5)
                 log("Empty mail. Continue.")
-                failedCurrentAccount(500)
+                failedCurrentAccount('empty_email')
                 goto label_continue
             end
         end
@@ -241,13 +250,13 @@ function main()
                 goto label_openfacebook
             end 
         end 
-    end
 
-    setGender()
+        setGender()
+    end
 
     if waitImageVisible(continue_creating_account, 3) then
         toastr("continue_creating_account")
-        failedCurrentAccount(403)
+        failedCurrentAccount('email_has_account')
         goto label_continue
     end
 
@@ -291,15 +300,16 @@ function main()
         findAndClickByImage(dont_allow)
         findAndClickByImage(i_agree_btn)
         
-        if not waitImageNotVisible(agree_facebook_term, 60) then 
-            if checkImageIsExists(agree_facebook_term) then findAndClickByImage(i_agree_btn) end
-            if not waitImageNotVisible(agree_facebook_term, 60) then 
-                toastr('Can not agree')
-                -- failedCurrentAccount(600)
-                -- goto label_continue
-                swipeCloseApp()
-                goto label_openfacebook
-            end 
+        if waitImageVisible(can_not_agree) then 
+            toastr('Can not agree')
+            failedCurrentAccount('can_not_agree')
+            goto label_continue
+        end 
+
+        if not waitImageNotVisible(agree_facebook_term, 80) then 
+            toastr('Can not agree')
+            swipeCloseApp()
+            goto label_openfacebook
         end 
 
         if waitImageVisible(already_have_account) then
@@ -311,25 +321,34 @@ function main()
     end
 
     ::label_confirmationcode::
-    toastr('wait confirmcode..')
+    toastr('wait confirmationcode..')
     if waitImageVisible(enter_the_confirmation_code, 20) then
         toastr("enter_the_confirmation_code")
 
         sleep(1)
         findAndClickByImage(dont_allow)
+        info.profileUid = getUIDFBLogin()
 
         local OTPcode = getCodeMailRegister()
         toastr('OTPcode: ' .. (OTPcode or '-'))
         if OTPcode then 
-            findAndClickByImage(input_confirm_code)
-            typeText(OTPcode) sleep(1)
-            findAndClickByImage(next)
+            info.verifyCode = OTPcode
+            archiveCurrentAccount()
+
+            if ENTER_VERIFY_CODE then 
+                findAndClickByImage(input_confirm_code)
+                typeText(OTPcode) sleep(1)
+                findAndClickByImage(next)
+            else 
+                finishCurrentAccount()
+                goto label_continue
+            end 
         else
             toastr('empty OTP', 6) sleep(3)
             press(55, 90) sleep(1) -- X back icon
             press(240, 820) sleep(1) -- Leave btn
 
-            failedCurrentAccount(500)
+            failedCurrentAccount('empty_code')
             goto label_continue
         end
         
@@ -341,6 +360,7 @@ function main()
         end
 
         info.profileUid = getUIDFBLogin()
+        toastr("UID: " .. (info.profileUid or '-'))
         archiveCurrentAccount()
         
         if checkSuspended() then goto label_continue end
@@ -361,11 +381,21 @@ function main()
             press(380, 1260) -- skip
         end
         
-        waitImageNotVisible(profile_picture) 
+        if not waitImageNotVisible(profile_picture, 20) then
+            swipeCloseApp()
+            goto label_openfacebook
+        end 
 
         if checkSuspended() then goto label_continue end
         waitImageVisible(turn_on_contact)
     end
+
+    if checkSuspended() then goto label_continue end
+    if checkImageIsExists(page_not_available_now) then 
+        toastr('page_not_available_now')
+        swipeCloseApp()
+        goto label_continue
+    end 
 
     ::label_turnoncontact::
     toastr('wait contact..')
@@ -391,15 +421,16 @@ function main()
         waitImageVisible(no_friend)
     end
 
+    findAndClickByImage(accept)
+    if checkSuspended() then goto label_continue end
+    if checkImageIsExists(profile_picture) then goto label_profilepicture end
+
     ::label_addphonenumber::
     if waitImageVisible(add_phone_number) then
         toastr("add_phone_number")
         press(380, 1220) -- skip
         waitImageVisible(add_phone_number)
     end
-
-    findAndClickByImage(accept)
-    if checkSuspended() then goto label_continue end
 
     if checkImageIsExists(page_not_available_now) then 
         toastr('page_not_available_now')
@@ -422,13 +453,19 @@ function main()
     toastr('wait 2FA..')
     if waitImageVisible(what_on_your_mind) then 
         toastr('2FA what_on_your_mind')
-        press(690, 1290) -- go to menu
 
-        if waitImageVisible(setting_menu, 10) then
-            toastr('setting_menu')
-            press(600, 90) -- setting cog icon
-            waitImageNotVisible(setting_menu)
-        end
+        if modeMenuLeft() then 
+            press(40, 90) sleep(1) -- go to menu
+            press(560, 1100) sleep(1) -- go to configuration
+            press(110, 210) -- go to privacy
+        else 
+            press(690, 1290) -- go to menu
+            if waitImageVisible(setting_menu, 10) then
+                toastr('setting_menu')
+                press(600, 90) -- setting cog icon
+                waitImageNotVisible(setting_menu)
+            end
+        end 
 
         if waitImageVisible(setting_privacy, 20) then
             toastr('setting_privacy')
@@ -532,9 +569,15 @@ function main()
                     press(45, 90) sleep(1) -- back to setting menu
                     press(45, 90)          -- back to main menu
                 end
-                if waitImageVisible(home_icon) then
-                    press(60, 1290) -- back to homepage
-                end
+
+                if modeMenuLeft() then 
+                    press(700, 90) -- back to homepage
+                else 
+                    if waitImageVisible(home_icon) then
+                        press(60, 1290) -- back to homepage
+                    end
+                end 
+                
                 goto label_searchtext
             end 
         end
@@ -584,6 +627,10 @@ function main()
                 end
             else
                 press(60, 1290) -- back to homepage
+
+                sleep(1)
+                resetInfoObject()
+                goto label_continue
             end
         end
     end
@@ -592,14 +639,20 @@ function main()
     toastr('wait logout..')
     if waitImageVisible(what_on_your_mind) then 
         toastr('Logout what_on_your_mind')
-        press(690, 1290) -- go to menu
-        swipe(500, 900, 500, 800) sleep(1)
-        swipe(550, 600, 600, 350) sleep(2)
+
+        if modeMenuLeft() then 
+            press(40, 90) sleep(1) -- go to menu
+            swipe(500, 600, 500, 350) sleep(1)
+        else 
+            press(690, 1290) -- go to menu
+            swipe(500, 900, 500, 800) sleep(1)
+            swipe(550, 600, 600, 350) sleep(2)
+        end 
 
         if waitImageVisible(logout_btn) then
             findAndClickByImage(logout_btn) sleep(1)
         end
-        if waitImageVisible(not_now, 3) then
+        if waitImageVisible(not_now, 2) then
             findAndClickByImage(not_now) sleep(1)
             waitImageNotVisible(not_now)
         end
@@ -609,10 +662,15 @@ function main()
         end
 
         removeAccount()
-        toastr('Done 1 nick live')
+        toastr('+1 nick live')
     end
 
     if checkSuspended() then goto label_continue end
+    if checkImageIsExists(enter_the_confirmation_code) then goto label_confirmationcode end 
+    if checkImageIsExists(profile_picture) then goto label_profilepicture end
+    if checkImageIsExists(turn_on_contact) then goto label_turnoncontact end
+    if checkImageIsExists(no_friend) then goto label_nofriend end
+    if checkImageIsExists(add_phone_number) then goto label_addphonenumber end
 
     toastr('end..')
     sleep(2)
