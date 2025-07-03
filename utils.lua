@@ -236,6 +236,9 @@ function checkImageIsExists(paths, threshold)
     if threshold == nil then
         threshold = THRESHOLD
     end
+    if paths == nil then
+        return false
+    end
     for i = 1, #paths do
         local isExist = checkImageIsExist(paths[i], threshold)
         if isExist then
