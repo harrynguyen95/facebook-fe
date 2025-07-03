@@ -291,12 +291,14 @@ function main()
         findAndClickByImage(dont_allow)
         findAndClickByImage(i_agree_btn)
         
-        if not waitImageNotVisible(agree_facebook_term, 40) then 
+        if not waitImageNotVisible(agree_facebook_term, 60) then 
             if checkImageIsExists(agree_facebook_term) then findAndClickByImage(i_agree_btn) end
-            if not waitImageNotVisible(agree_facebook_term, 40) then 
+            if not waitImageNotVisible(agree_facebook_term, 60) then 
                 toastr('Can not agree')
-                failedCurrentAccount(600)
-                goto label_continue
+                -- failedCurrentAccount(600)
+                -- goto label_continue
+                swipeCloseApp()
+                goto label_openfacebook
             end 
         end 
 
