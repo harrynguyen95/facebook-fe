@@ -300,8 +300,8 @@ function main()
 
         if not waitImageNotVisible(agree_facebook_term, 80) then 
             toastr('Can not agree')
-            failedCurrentAccount('can_not_agree')
-            goto label_continue
+            swipeCloseApp()
+            goto label_openfacebook
         end 
 
         if waitImageVisible(already_have_account) then
