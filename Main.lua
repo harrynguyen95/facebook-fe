@@ -54,25 +54,10 @@ function main()
 
     findAndClickByImage(accept)
     if checkSuspended() then goto label_continue end
-    if checkImageIsExists(what_is_birthday) then goto label_birthday end
-    if checkImageIsExists(what_is_mobile_number) then goto label_what_is_mobile end
-    if checkImageIsExists(what_is_your_email) then goto label_what_is_email end
-    if checkImageIsExists(enter_the_confirmation_code) then goto label_confirmationcode end
-    if checkImageIsExists(create_a_password) then goto label_createpassword end
-    if checkImageIsExists(save_your_login_info) then goto label_saveyourlogin end
-    if checkImageIsExists(profile_picture) then goto label_profilepicture end
-    if checkImageIsExists(turn_on_contact) then goto label_turnoncontact end
-    if checkImageIsExists(no_friend) then goto label_nofriend end
-    if checkImageIsExists(add_phone_number) then goto label_addphonenumber end
-    if checkImageIsExists(agree_facebook_term) then goto label_agree end
-    if checkImageIsExists(what_on_your_mind) then 
-        if info.twoFA == nil or info.twoFA == '' then goto label_get2FA end 
-        if info.twoFA ~= nil or info.twoFA ~= '' then goto label_searchtext end 
-    end
-
+    
     ::label_createnewaccount::
     showIphoneModel()
-    if waitImageVisible(create_new_account, 40) then
+    if waitImageVisible(create_new_account, 30) then
         toastr('create_new_account')
 
         if waitImageVisible(logo_fb_modern, 4) then
@@ -83,12 +68,28 @@ function main()
 
         findAndClickByImage(create_new_account)
 
-        if waitImageNotVisible(logo_facebook_2, 40) then 
+        if waitImageNotVisible(logo_facebook_2, 30) then 
             sleep(3)
         else 
             toastr('Can not next')
             swipeCloseApp()
             goto label_continue
+        end
+    else 
+        if checkImageIsExists(what_is_birthday) then goto label_birthday end
+        if checkImageIsExists(what_is_mobile_number) then goto label_what_is_mobile end
+        if checkImageIsExists(what_is_your_email) then goto label_what_is_email end
+        if checkImageIsExists(enter_the_confirmation_code) then goto label_confirmationcode end
+        if checkImageIsExists(create_a_password) then goto label_createpassword end
+        if checkImageIsExists(save_your_login_info) then goto label_saveyourlogin end
+        if checkImageIsExists(profile_picture) then goto label_profilepicture end
+        if checkImageIsExists(turn_on_contact) then goto label_turnoncontact end
+        if checkImageIsExists(no_friend) then goto label_nofriend end
+        if checkImageIsExists(add_phone_number) then goto label_addphonenumber end
+        if checkImageIsExists(agree_facebook_term) then goto label_agree end
+        if checkImageIsExists(what_on_your_mind) then 
+            if info.twoFA == nil or info.twoFA == '' then goto label_get2FA end 
+            if info.twoFA ~= nil or info.twoFA ~= '' then goto label_searchtext end 
         end
     end
 
@@ -363,6 +364,12 @@ function main()
         if checkSuspended() then goto label_continue end
         waitImageVisible(turn_on_contact)
     end
+
+    if checkImageIsExists(page_not_available_now) then 
+        toastr('page_not_available_now')
+        swipeCloseApp()
+        goto label_continue
+    end 
 
     ::label_turnoncontact::
     toastr('wait contact..')
