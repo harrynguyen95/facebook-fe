@@ -73,10 +73,18 @@ function jsonStringify(tbl)
     return encode(tbl)
 end
 
+local function epoch_vietnam()
+    local now_utc = os.time(os.date("!*t"))
+    return now_utc + (7 * 3600)
+end
+
 function log(value, prefix)
     if prefix == nil then
         prefix = ':'
     end
+    local ts = os.date("- %m-%d %H:%M ", epoch_vietnam())
+    prefix = ts .. prefix
+
     if type(value) == "table" then
         print(prefix .. ": " .. jsonStringify(value))
     elseif type(value) == "string" then

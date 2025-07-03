@@ -34,7 +34,7 @@ require('functions')
 function main()
 
     ::label_continue::
-    log('----------------------------------- Main running ---------------------------------------')
+    log('------------ Main running ------------')
     archiveCurrentAccount()
 
     goto debug
@@ -50,6 +50,8 @@ function main()
     ::label_openfacebook::
     openFacebook()
     sleep(10)
+
+    if checkSuspended() then goto label_continue end
 
     ::label_createnewaccount::
     showIphoneModel()
