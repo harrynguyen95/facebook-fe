@@ -561,9 +561,15 @@ function main()
                     press(45, 90) sleep(1) -- back to setting menu
                     press(45, 90)          -- back to main menu
                 end
-                if waitImageVisible(home_icon) then
-                    press(60, 1290) -- back to homepage
-                end
+
+                if modeMenuLeft() then 
+                    press(700, 90) -- back to homepage
+                else 
+                    if waitImageVisible(home_icon) then
+                        press(60, 1290) -- back to homepage
+                    end
+                end 
+                
                 goto label_searchtext
             end 
         end
