@@ -100,6 +100,11 @@ function main()
         goto label_continue
     end
 
+    if findAndClickByImage(accept) then 
+        swipeCloseApp()
+        goto label_openfacebook
+    end 
+
     toastr('wait create_new_account_blue..')
     if waitImageVisible(create_new_account_blue) then
         toastr('create_new_account_blue')
