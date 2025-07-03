@@ -24,6 +24,7 @@ info = {
     hotmailPassword = nil,
 }
 
+
 -- ====== LIB REQUIRED ======
 function isES() return LANGUAGE == 'ES' end
 local images = require(isES() and (currentDir() .. "/images_es") or (currentDir() .. "images"))
@@ -291,9 +292,9 @@ function main()
         findAndClickByImage(dont_allow)
         findAndClickByImage(i_agree_btn)
         
-        if not waitImageNotVisible(agree_facebook_term, 60) then 
+        if not waitImageNotVisible(agree_facebook_term, 30) then 
             if checkImageIsExists(agree_facebook_term) then findAndClickByImage(i_agree_btn) end
-            if not waitImageNotVisible(agree_facebook_term, 30) then 
+            if not waitImageNotVisible(agree_facebook_term, 20) then 
                 toastr('Can not agree')
                 failedCurrentAccount(600)
                 goto label_continue
@@ -611,6 +612,11 @@ function main()
     end
 
     if checkSuspended() then goto label_continue end
+    if checkImageIsExists(enter_the_confirmation_code) then goto label_confirmationcode end 
+    if checkImageIsExists(profile_picture) then goto label_profilepicture end
+    if checkImageIsExists(turn_on_contact) then goto label_turnoncontact end
+    if checkImageIsExists(no_friend) then goto label_nofriend end
+    if checkImageIsExists(add_phone_number) then goto label_addphonenumber end
 
     toastr('end..')
     sleep(2)

@@ -19,7 +19,7 @@ function archiveCurrentAccount()
     local accounts = readFile(accountFilePath)
     
     info.uuid = 1
-    info.password = readFile(defaultPasswordFilePath)[1]
+    info.password = getRandomLineInFile(defaultPasswordFilePath)
 
     if #accounts > 0 then
         local current = accounts[#accounts]
@@ -63,19 +63,17 @@ function finishCurrentAccount()
     local accounts = readFile(accountFilePath)
     local splitted = split(accounts[#accounts], "|")
 
-    if splitted[2] == "INPROGRESS" then
-        info.status = "SUCCESS"
-        info.checkpoint = nil
-        if not info.mailLogin or info.mailLogin == '' then info.mailLogin = info.mailRegister end 
-        if not info.profileUid or info.profileUid == '' then info.profileUid = getUIDFBLogin() end 
-        local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
-        accounts[#accounts] = line
+    info.status = "SUCCESS"
+    info.checkpoint = nil
+    if not info.mailLogin or info.mailLogin == '' then info.mailLogin = info.mailRegister end 
+    if not info.profileUid or info.profileUid == '' then info.profileUid = getUIDFBLogin() end 
+    local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
+    accounts[#accounts] = line
 
-        log('finishCurrentAccount ' .. line)
-        writeFile(accountFilePath, accounts)
-        if info.profileUid and info.profileUid ~= '' then saveAccToGoogleForm() end
-        resetInfoObject()
-    end  
+    log('finishCurrentAccount ' .. line)
+    writeFile(accountFilePath, accounts)
+    saveAccToGoogleForm()
+    resetInfoObject()
 end
 
 function failedCurrentAccount(code)
@@ -83,19 +81,17 @@ function failedCurrentAccount(code)
     local accounts = readFile(accountFilePath)
     local splitted = split(accounts[#accounts], "|")
 
-    if splitted[2] ~= 'SUCCESS' then 
-        info.status = "FAILED"
-        info.checkpoint = code
-        if not info.mailLogin or info.mailLogin == '' then info.mailLogin = info.mailRegister end 
-        if not info.profileUid or info.profileUid == '' then info.profileUid = getUIDFBLogin() end 
-        local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
-        accounts[#accounts] = line
+    info.status = "FAILED"
+    info.checkpoint = code
+    if not info.mailLogin or info.mailLogin == '' then info.mailLogin = info.mailRegister end 
+    if not info.profileUid or info.profileUid == '' then info.profileUid = getUIDFBLogin() end 
+    local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
+    accounts[#accounts] = line
 
-        log(code .. ' - failedCurrentAccount ' .. line)
-        writeFile(accountFilePath, accounts)
-        if info.profileUid and info.profileUid ~= '' then saveAccToGoogleForm() end
-        resetInfoObject()
-    end
+    log(code .. ' - failedCurrentAccount ' .. line)
+    writeFile(accountFilePath, accounts)
+    saveAccToGoogleForm()
+    resetInfoObject()
 end
 
 function saveAccToGoogleForm()
