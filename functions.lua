@@ -59,31 +59,11 @@ function archiveCurrentAccount()
     -- log(info, 'Archive')
 end
 
-function failedCurrentAccount()
-    local accounts = readFile(accountFilePath)
-    local splitted = split(accounts[#accounts], "|")
-
-    if splitted[2] ~= 'SUCCESS' then 
-        info.status = "FAILED"
-        info.checkpoint = 1
-        if not info.mailLogin or info.mailLogin == '' then info.mailLogin = info.mailRegister end 
-        if not info.profileUid or info.profileUid == '' then info.profileUid = getUIDFBLogin() end 
-        local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
-        accounts[#accounts] = line
-
-        log('failedCurrentAccount ' .. line)
-        writeFile(accountFilePath, accounts)
-        if info.profileUid and info.profileUid ~= '' then saveAccToGoogleForm() end
-        resetInfoObject()
-    end
-    
-end
-
 function finishCurrentAccount()
     local accounts = readFile(accountFilePath)
     local splitted = split(accounts[#accounts], "|")
 
-    if splitted[2] == 'INPROGRESS' then
+    if splitted[2] == "INPROGRESS" then
         info.status = "SUCCESS"
         info.checkpoint = nil
         if not info.mailLogin or info.mailLogin == '' then info.mailLogin = info.mailRegister end 
@@ -96,6 +76,26 @@ function finishCurrentAccount()
         if info.profileUid and info.profileUid ~= '' then saveAccToGoogleForm() end
         resetInfoObject()
     end  
+end
+
+function failedCurrentAccount(code)
+    if code == nil then code = 282 end
+    local accounts = readFile(accountFilePath)
+    local splitted = split(accounts[#accounts], "|")
+
+    if splitted[2] ~= 'SUCCESS' then 
+        info.status = "FAILED"
+        info.checkpoint = code
+        if not info.mailLogin or info.mailLogin == '' then info.mailLogin = info.mailRegister end 
+        if not info.profileUid or info.profileUid == '' then info.profileUid = getUIDFBLogin() end 
+        local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
+        accounts[#accounts] = line
+
+        log('failedCurrentAccount ' .. line)
+        writeFile(accountFilePath, accounts)
+        if info.profileUid and info.profileUid ~= '' then saveAccToGoogleForm() end
+        resetInfoObject()
+    end
 end
 
 function saveAccToGoogleForm()
@@ -120,7 +120,7 @@ function saveAccToGoogleForm()
             -- log(infoClone, "Sent request to Google Form" )
             return
         else
-            log(error, "Error: Failed to send request. Reason")
+            log("Failed request acc_google_form.php. Reason: " .. tostring(error))
         end
     end
 end
@@ -147,7 +147,7 @@ function saveMailToGoogleForm()
             -- log(infoClone, "Sent request to Google Form" )
             return
         else
-            log(error, "Error: Failed to send request. Reason")
+            log("Failed request mail_google_form.php. Reason: " .. tostring(error))
         end
     end
 end
@@ -192,6 +192,8 @@ function saveMailThueMail()
         local line = info.mailRegister  .. "|1"
         addLineToFile(mailFilePath, line)
     end
+
+    saveMailToGoogleForm()
 end
 
 function retrieveMailThueMail()
@@ -265,7 +267,7 @@ function executeGmailFromThueMail()
                     info.mailRegister = res.email
 
                     saveMailThueMail()
-                    return true
+                    return 'success'
                 else
                     toastr(response.message)
                     log(response.message)
@@ -275,7 +277,7 @@ function executeGmailFromThueMail()
                     end
                 end
             else
-                log("Error: Failed to send request. Reason: " .. tostring(error))
+                log("Failed request rentals/re-rent. Reason: " .. tostring(error))
             end
         end
     end
@@ -317,7 +319,7 @@ function executeGmailFromThueMail()
                     log(response.message)
                 end
             else
-                log("Error: Failed to send request. Reason: " .. tostring(error))
+                log("Failed request rentals. Reason: " .. tostring(error))
             end
         end
     end
@@ -358,7 +360,7 @@ function executeHotmailFromDongVanFb()
                     log(response.message)
                 end
             else
-                log("Error: Failed to send request. Reason: " .. tostring(error))
+                log("Failed request user/buy. Reason: " .. tostring(error))
             end
         end
     end
@@ -367,17 +369,9 @@ end
 
 function executeGetMailRequest()
     if MAIL_SUPLY == 1 then 
-        local exec = executeHotmailFromDongVanFb()
-        if exec then 
-            saveMailToGoogleForm()
-        end 
-        return exec
+        return executeHotmailFromDongVanFb()
     elseif MAIL_SUPLY == 2 then
-        local exec = executeGmailFromThueMail()
-        if exec then 
-            saveMailToGoogleForm()
-        end 
-        return exec
+        return executeGmailFromThueMail()
     else 
         toastr('MAIL_SUPLY invalid.', 5)
         return false
@@ -407,7 +401,7 @@ function getThuemailConfirmCode()
                 log('Empty thuemails.com code.')
             end
         else
-            log("Error: Failed to send request. Reason: " .. tostring(error))
+            log("Failed request rentals/id. Reason: " .. tostring(error))
         end
     end
     return nil
@@ -446,7 +440,7 @@ function getDongvanfbConfirmCode()
                 log('Empty dongvanfb code.')
             end
         else
-            log("Error: Failed to send request. Reason: " .. tostring(error))
+            log("Failed request api/get_code_oauth2. Reason: " .. tostring(error))
         end
 
         sleep(5)
@@ -482,7 +476,7 @@ function getFreeMailConfirmCodeSecondTime()
                 toastr("Empty response code.");
             end
         else
-            log("Error: Failed to send request. Reason: " .. tostring(error))
+            log("Failed request confirm_free_mail.php. Reason: " .. tostring(error))
         end
     end
 end
@@ -506,7 +500,7 @@ function getFreeMailConfirmCode()
                 toastr("Empty response code.");
             end
         else
-            log("Error: Failed to send request. Reason: " .. tostring(error))
+            log("Failed request add_free_mail.php. Reason: " .. tostring(error))
         end
     end
 end
@@ -538,7 +532,7 @@ function get2FACode()
             log("Empty response get 2FA OTP.");
         end
     else
-        log("Error: Failed to send request. Reason: " .. tostring(error))
+        log("Failed request 2fa.live/tok. Reason: " .. tostring(error))
     end
 end
 
@@ -577,7 +571,7 @@ function checkSuspended()
     if waitImageVisible(confirm_human, 1) then
         toastr('Die')
 
-        failedCurrentAccount()
+        failedCurrentAccount(282)
 
         -- press(680, 90) -- help text
         -- if waitImageVisible(logout_suspend_icon, 10) then

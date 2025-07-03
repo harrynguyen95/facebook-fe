@@ -171,7 +171,7 @@ function main()
 
             if waitImageVisible(exist_account_in_mail) then
                 toastr('exist_account_in_mail')
-                failedCurrentAccount()
+                failedCurrentAccount(400)
                 goto label_continue
             end
         else
@@ -186,14 +186,14 @@ function main()
 
                     if waitImageVisible(exist_account_in_mail) then
                         toastr('exist_account_in_mail')
-                        failedCurrentAccount()
+                        failedCurrentAccount(400)
                         goto label_continue
                     end
                 end
             else 
-                toastr("Không có mail. Continue.", 10) sleep(5)
-                log("Không có mail. Continue.")
-                failedCurrentAccount()
+                toastr("Empty mail. Continue.", 10) sleep(5)
+                log("Empty mail. Continue.")
+                failedCurrentAccount(500)
                 goto label_continue
             end
         end
@@ -236,7 +236,7 @@ function main()
 
     if waitImageVisible(continue_creating_account, 3) then
         toastr("continue_creating_account")
-        failedCurrentAccount()
+        failedCurrentAccount(400)
         goto label_continue
     end
 
@@ -279,7 +279,7 @@ function main()
         
         if not waitImageNotVisible(agree_facebook_term, 60) then 
             toastr('Can not agree')
-            failedCurrentAccount()
+            failedCurrentAccount(400)
             goto label_continue
         end 
 
@@ -310,7 +310,7 @@ function main()
             press(55, 90) sleep(1) -- X back icon
             press(240, 820) sleep(1) -- Leave btn
 
-            failedCurrentAccount()
+            failedCurrentAccount(500)
             goto label_continue
         end
         
