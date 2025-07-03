@@ -145,9 +145,12 @@ function main()
         findAndClickByImage(next)
 
         if not waitImageNotVisible(what_is_birthday, 20) then 
-            toastr('Can not next')
-            swipeCloseApp()
-            goto label_openfacebook
+            findAndClickByImage(next)
+            if not waitImageNotVisible(what_is_birthday, 20) then 
+                toastr('Can not next')
+                swipeCloseApp()
+                goto label_openfacebook
+            end 
         end 
     end
 
@@ -232,13 +235,12 @@ function main()
         findAndClickByImage(next)
 
         if not waitImageNotVisible(what_is_birthday, 20) then 
-            if findAndClickByImage(next) then 
-                if not waitImageNotVisible(what_is_birthday, 20) then 
-                    toastr('Can not next')
-                    swipeCloseApp()
-                    goto label_openfacebook
-                end 
-            end
+            findAndClickByImage(next)  
+            if not waitImageNotVisible(what_is_birthday, 20) then 
+                toastr('Can not next')
+                swipeCloseApp()
+                goto label_openfacebook
+            end 
         end 
     end
 
@@ -259,10 +261,13 @@ function main()
         typeText(info.password)
         findAndClickByImage(next)
 
-        if not waitImageNotVisible(create_a_password, 60) then 
-            toastr('Can not next')
-            swipeCloseApp()
-            goto label_openfacebook
+        if not waitImageNotVisible(create_a_password, 40) then 
+            findAndClickByImage(next)
+            if not waitImageNotVisible(create_a_password, 30) then 
+                toastr('Can not next')
+                swipeCloseApp()
+                goto label_openfacebook
+            end 
         end 
     end
 
@@ -287,10 +292,13 @@ function main()
         findAndClickByImage(dont_allow)
         findAndClickByImage(i_agree_btn)
         
-        if not waitImageNotVisible(agree_facebook_term, 60) then 
-            toastr('Can not agree')
-            failedCurrentAccount(600)
-            goto label_continue
+        if not waitImageNotVisible(agree_facebook_term, 40) then 
+            findAndClickByImage(i_agree_btn)    
+            if not waitImageNotVisible(agree_facebook_term, 40) then 
+                toastr('Can not agree')
+                failedCurrentAccount(600)
+                goto label_continue
+            end 
         end 
 
         if waitImageVisible(already_have_account) then
