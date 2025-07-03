@@ -91,7 +91,7 @@ function failedCurrentAccount(code)
 
     log(code .. ' - failedCurrentAccount ' .. line)
     writeFile(accountFilePath, accounts)
-    saveAccToGoogleForm()
+    if code ~= 'can_not_agree' then saveAccToGoogleForm() end
     resetInfoObject()
 end
 
