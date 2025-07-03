@@ -91,7 +91,7 @@ function failedCurrentAccount(code)
         local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '')
         accounts[#accounts] = line
 
-        log('failedCurrentAccount ' .. line)
+        log(code .. ' - failedCurrentAccount ' .. line)
         writeFile(accountFilePath, accounts)
         if info.profileUid and info.profileUid ~= '' then saveAccToGoogleForm() end
         resetInfoObject()

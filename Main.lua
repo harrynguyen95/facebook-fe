@@ -87,7 +87,7 @@ function main()
         if checkImageIsExists(turn_on_contact) then goto label_turnoncontact end
         if checkImageIsExists(no_friend) then goto label_nofriend end
         if checkImageIsExists(add_phone_number) then goto label_addphonenumber end
-        if checkImageIsExists(to_sign_up_agree) or checkImageIsExists(agree_facebook_term) then goto label_agree end
+        if checkImageIsExists(agree_facebook_term) then goto label_agree end
         if checkImageIsExists(what_on_your_mind) then 
             if info.twoFA == nil or info.twoFA == '' then goto label_get2FA end 
             if info.twoFA ~= nil or info.twoFA ~= '' then goto label_searchtext end 
@@ -293,12 +293,10 @@ function main()
         
         if not waitImageNotVisible(agree_facebook_term, 60) then 
             if checkImageIsExists(agree_facebook_term) then findAndClickByImage(i_agree_btn) end
-            if not waitImageNotVisible(agree_facebook_term, 60) then 
+            if not waitImageNotVisible(agree_facebook_term, 30) then 
                 toastr('Can not agree')
-                -- failedCurrentAccount(600)
-                -- goto label_continue
-                swipeCloseApp()
-                goto label_openfacebook
+                failedCurrentAccount(600)
+                goto label_continue
             end 
         end 
 
@@ -329,7 +327,7 @@ function main()
             press(55, 90) sleep(1) -- X back icon
             press(240, 820) sleep(1) -- Leave btn
 
-            failedCurrentAccount(500)
+            failedCurrentAccount(501)
             goto label_continue
         end
         
