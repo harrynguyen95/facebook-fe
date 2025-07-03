@@ -205,11 +205,14 @@ function main()
             end
         end
 
-        if waitImageNotVisible(what_is_your_email, 60) then 
-        else 
-            toastr('Can not next')
-            swipeCloseApp()
-            goto label_openfacebook
+        if not waitImageNotVisible(what_is_your_email, 30) then 
+            findAndClickByImage(next)
+            if not waitImageNotVisible(what_is_your_email, 30) then 
+                findAndClickByImage(next)
+                toastr('Can not next')
+                swipeCloseApp()
+                goto label_openfacebook
+            end
         end
     end
 
@@ -389,8 +392,6 @@ function main()
     findAndClickByImage(accept)
     if checkSuspended() then goto label_continue end
 
-    if checkImageIsExists(enter_the_confirmation_code) then goto label_confirmationcode end 
-
     if checkImageIsExists(page_not_available_now) then 
         toastr('page_not_available_now')
         swipeCloseApp()
@@ -402,6 +403,7 @@ function main()
         findAndClickByImage(not_now)
     end
 
+    if checkImageIsExists(enter_the_confirmation_code) then goto label_confirmationcode end 
     if checkImageIsExists(profile_picture) then goto label_profilepicture end
     if checkImageIsExists(turn_on_contact) then goto label_turnoncontact end
     if checkImageIsExists(no_friend) then goto label_nofriend end
