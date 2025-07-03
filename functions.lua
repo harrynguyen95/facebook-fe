@@ -628,6 +628,18 @@ function setGender()
             press(x, y)
             findAndClickByImage(next)
             waitImageNotVisible(what_is_gender)
+        else 
+            math.randomseed(os.time() + math.random())
+            local x = math.random(500, 560)
+            local y = 440
+
+            local xRandom = math.random(1, 2)
+            if xRandom == 2 then
+                y = 540
+            end
+            press(x, y)
+            findAndClickByImage(next)
+            waitImageNotVisible(what_is_gender)
         end
     end
 end

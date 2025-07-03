@@ -406,13 +406,13 @@ function main()
         toastr('2FA what_on_your_mind')
         press(690, 1290) -- go to menu
 
-        if waitImageVisible(setting_menu, 8) then
+        if waitImageVisible(setting_menu, 10) then
             toastr('setting_menu')
             press(600, 90) -- setting cog icon
             waitImageNotVisible(setting_menu)
         end
 
-        if waitImageVisible(setting_privacy, 12) then
+        if waitImageVisible(setting_privacy, 20) then
             toastr('setting_privacy')
             if waitImageVisible(see_more_account_center, 10) then
                 findAndClickByImage(see_more_account_center)
@@ -420,7 +420,7 @@ function main()
             end
         end
 
-        if waitImageVisible(account_center, 12) then
+        if waitImageVisible(account_center, 20) then
             toastr('account_center')
             sleep(1)
             swipe(600, 800, 610, 650) sleep(1)
@@ -434,20 +434,20 @@ function main()
             end
         end
 
-        if waitImageVisible(personal_details_page, 12) or waitImageVisible(your_information_and_per_btn, 12) then
+        if waitImageVisible(personal_details_page, 15) or waitImageVisible(your_information_and_per_btn, 15) then
             toastr('personal_details_page')
             findAndClickByImage(identify_confirmation_btn)
             waitImageNotVisible(identify_confirmation_btn)
         end
 
-        if waitImageVisible(confirm_your_identity, 12) then
+        if waitImageVisible(confirm_your_identity, 15) then
             toastr('confirm_your_identity')
             findAndClickByImage(confirm_your_identity)
             press(130, 1290) -- protect your account
             waitImageNotVisible(confirm_your_identity)
         end
 
-        if waitImageVisible(reenter_password, 12) then
+        if waitImageVisible(reenter_password, 15) then
             toastr('reenter_password')
             press(135, 530) -- input password
             findAndClickByImage(password_eye)
