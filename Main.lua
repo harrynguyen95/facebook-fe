@@ -445,7 +445,7 @@ function main()
     if checkImageIsExists(add_phone_number) then goto label_addphonenumber end
 
     if checkSuspended() then goto label_continue end
-    local modeMenuLeft = checkModeMenuLeft()
+    modeMenuLeft = checkModeMenuLeft()
 
     ::label_get2FA::
     toastr('wait 2FA..')
