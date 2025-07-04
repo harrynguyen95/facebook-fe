@@ -75,6 +75,9 @@ function finishCurrentAccount()
     log('finishCurrentAccount ' .. line)
     writeFile(accountFilePath, accounts)
     if ENTER_VERIFY_CODE then saveAccToGoogleForm() else saveNoVerifyToGoogleForm() end
+    if HOTMAIL_SOURCE_FROM_FILE then 
+        removeLineFromFile(hotmailSourceFilePath, info.mailLogin)
+    end 
     resetInfoObject()
 end
 
@@ -464,6 +467,7 @@ function getDongvanfbConfirmCode()
     local tries = 6
     for i = 1, tries do 
         toastr('Call times ' .. i)
+        sleep(5)
 
         local postData = {
             email = info.mailRegister,
@@ -493,8 +497,6 @@ function getDongvanfbConfirmCode()
         else
             log("Failed request api/get_code_oauth2. Reason: " .. tostring(error))
         end
-
-        sleep(5)
     end
     return nil
 end
