@@ -76,7 +76,7 @@ function finishCurrentAccount()
     writeFile(accountFilePath, accounts)
 
     if HOTMAIL_SOURCE_FROM_FILE then 
-        info.mailRegister = "re-rent|" .. info.mailRegister
+        info.mailRegister = "re-use|" .. info.mailRegister
         removeLineFromFile(hotmailSourceFilePath, info.mailLogin)
     end 
     if ENTER_VERIFY_CODE then saveAccToGoogleForm() else saveNoVerifyToGoogleForm() end
@@ -100,11 +100,11 @@ function failedCurrentAccount(code)
     writeFile(accountFilePath, accounts)
 
     if HOTMAIL_SOURCE_FROM_FILE then 
-        info.mailRegister = "re-rent|" .. info.mailRegister
+        info.mailRegister = "re-use|" .. (info.mailRegister or '-')
         removeLineFromFile(hotmailSourceFilePath, info.mailLogin)
     end 
     saveAccToGoogleForm()
-    
+
     resetInfoObject()
 end
 
@@ -218,6 +218,9 @@ function retrieveHotmailFromSource()
         info.hotmailPassword     = splitted[2]
         info.hotmailRefreshToken = splitted[3]
         info.hotmailClientId     = splitted[4]
+        info.mailPrice           = 're-use'
+        info.thuemailId          = 2000000
+
         return true
     end 
     return false
