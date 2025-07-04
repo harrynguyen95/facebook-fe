@@ -166,6 +166,7 @@ function readFile(path)
 end
 
 function readLinesFromFile(filename)
+    if filename == nil then return {} end
     local names = {}
     for name in io.lines(filename) do
         table.insert(names, name)
