@@ -248,8 +248,6 @@ function saveMailThueMail()
         local line = info.mailRegister  .. "|1"
         addLineToFile(mailFilePath, line)
     end
-
-    -- saveMailToGoogleForm()
 end
 
 function retrieveMailThueMail()
@@ -420,6 +418,8 @@ function executeHotmailFromDongVanFb()
                         info.hotmailPassword = splitted[2]
                         info.hotmailRefreshToken = splitted[3]
                         info.hotmailClientId = splitted[4]
+
+                        saveMailToGoogleForm()
                         return true
                     else
                         toastr(response.message)
@@ -463,6 +463,7 @@ function getThuemailConfirmCode()
         if response then
             response = json.decode(response)
             if response.id and response.otp then
+                saveMailToGoogleForm()
                 return response.otp
             else
                 toastr('Empty thuemails.com code.')

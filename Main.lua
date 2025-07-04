@@ -330,7 +330,6 @@ function main()
         if OTPcode then 
             info.verifyCode = OTPcode
             archiveCurrentAccount()
-            saveMailToGoogleForm()
 
             if ENTER_VERIFY_CODE then 
                 findAndClickByImage(input_confirm_code)
