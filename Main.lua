@@ -382,7 +382,6 @@ function main()
             goto label_openfacebook
         end 
 
-        if checkSuspended() then goto label_continue end
         waitImageVisible(turn_on_contact)
     end
 

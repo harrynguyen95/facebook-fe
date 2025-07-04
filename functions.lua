@@ -590,7 +590,7 @@ function getCodeMailConfirm()
 end
 
 function get2FACode()
-    local tries = 2
+    local tries = 3
     for i = 1, tries do 
         toastr('Call times ' .. i)
 
