@@ -348,11 +348,13 @@ function main()
             goto label_continue
         end
         
-        if waitImageNotVisible(enter_the_confirmation_code) then 
+        if waitImageNotVisible(enter_the_confirmation_code, 20) then 
             if waitImageVisible(setting_up_for_fb) then
                 toastr('setting_up_for_fb')
                 waitImageNotVisible(setting_up_for_fb)
             end
+        else 
+            findAndClickByImage(next)
         end
 
         info.profileUid = getUIDFBLogin()
@@ -442,13 +444,15 @@ function main()
     if checkImageIsExists(add_phone_number) then goto label_addphonenumber end
 
     if checkSuspended() then goto label_continue end
+    local modeMenuLeft = checkModeMenuLeft()
 
     ::label_get2FA::
     toastr('wait 2FA..')
     if waitImageVisible(what_on_your_mind) then 
         toastr('2FA what_on_your_mind')
+        modeMenuLeft = checkModeMenuLeft()
 
-        if modeMenuLeft() then 
+        if modeMenuLeft then 
             press(40, 90) sleep(1) -- go to menu
             press(560, 1100) sleep(1) -- go to configuration
             press(110, 210) -- go to privacy
@@ -515,15 +519,11 @@ function main()
                 press(40, 90) sleep(1) -- back on protect your account
                 press(40, 90) sleep(1) -- back on confirm identity
                 press(45, 90) sleep(1) -- back to setting menu
-                press(45, 90)          -- back to main menu
+                if not modeMenuLeft then press(45, 90) end -- back to main menu
             end
-            if modeMenuLeft() then 
-                press(700, 90) -- back to homepage
-            else 
-                if waitImageVisible(home_icon) then
-                    press(60, 1290) -- back to homepage
-                end
-            end 
+            if waitImageVisible(home_icon) then
+                press(60, 1290) -- back to homepage
+            end
 
             goto label_searchtext
         end
@@ -565,15 +565,11 @@ function main()
                     press(40, 90) sleep(1) -- back on protect your account
                     press(40, 90) sleep(1) -- back on confirm identity
                     press(45, 90) sleep(1) -- back to setting menu
-                    press(45, 90)          -- back to main menu
+                    if not modeMenuLeft then press(45, 90) end -- back to main menu
                 end
-                if modeMenuLeft() then 
-                    press(700, 90) -- back to homepage
-                else 
-                    if waitImageVisible(home_icon) then
-                        press(60, 1290) -- back to homepage
-                    end
-                end 
+                if waitImageVisible(home_icon) then
+                    press(60, 1290) -- back to homepage
+                end
                 
                 goto label_searchtext
             end 
@@ -594,15 +590,11 @@ function main()
                 press(40, 90) sleep(1) -- back on protect your account
                 press(40, 90) sleep(1) -- back on confirm identity
                 press(45, 90) sleep(1) -- back to setting menu
-                press(45, 90)          -- back to main menu
+                if not modeMenuLeft then press(45, 90) end -- back to main menu
             end
-            if modeMenuLeft() then 
-                press(700, 90) -- back to homepage
-            else 
-                if waitImageVisible(home_icon) then
-                    press(60, 1290) -- back to homepage
-                end
-            end 
+            if waitImageVisible(home_icon) then
+                press(60, 1290) -- back to homepage
+            end
         end
     end
 
@@ -627,7 +619,9 @@ function main()
                     press(600, 90);
                 end
             else
-                press(60, 1290) -- back to homepage
+                if waitImageVisible(home_icon) then
+                    press(60, 1290) -- back to homepage
+                end
 
                 sleep(1)
                 resetInfoObject()

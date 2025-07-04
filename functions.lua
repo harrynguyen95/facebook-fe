@@ -387,9 +387,14 @@ end
 function executeHotmailFromDongVanFb()
     -- https://api.dongvanfb.net/user/buy?apikey=36458879248967a36&account_type=1&quality=1&type=full
 
+    local hasHotmailFromSource = retrieveHotmailFromSource()
     if HOTMAIL_SOURCE_FROM_FILE then 
-        return retrieveHotmailFromSource()
-    else 
+        if hasHotmailFromSource then
+            return true
+        end 
+    end
+
+    if not hasHotmailFromSource then 
         local account_type = {2, 6, 1, 3, 5, 59, 60}
         for i, service_id in pairs(account_type) do
             local tries = 1
@@ -789,7 +794,7 @@ function executeXoaInfo()
     sleep(1)
 end
 
-function modeMenuLeft()
+function checkModeMenuLeft()
     return waitImageVisible(fb_logo_menu_left, 2)
 end
 
