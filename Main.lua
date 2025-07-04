@@ -89,6 +89,7 @@ function main()
     else 
         toastr('Next')
         if checkSuspended() then goto label_continue end
+        sleep(2)
         if checkImageIsExists(what_is_birthday) then goto label_birthday end
         if checkImageIsExists(what_is_mobile_number) then goto label_what_is_mobile end
         if checkImageIsExists(what_is_your_email) then goto label_what_is_email end
