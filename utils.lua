@@ -173,6 +173,28 @@ function readLinesFromFile(filename)
     return names
 end
 
+function removeLineFromFile(filepath, pattern)
+    local f, err = io.open(filepath, "r")
+    if not f then return nil, "Không mở được file: " .. tostring(err) end
+
+    local lines = {}
+    for line in f:lines() do
+        if not string.find(line, pattern, 1, true) then
+            lines[#lines + 1] = line
+        end
+    end
+    f:close()
+
+    f, err = io.open(filepath, "w")
+    if not f then return nil, "Không ghi được file: " .. tostring(err) end
+
+    for i = 1, #lines do
+        f:write(lines[i], "\n")
+    end
+    f:close()
+    return true
+end
+
 function getRandomLineInFile(filename)
     local lines = readLinesFromFile(filename)
     local index = math.random(#lines)
@@ -761,6 +783,27 @@ function getUIDFBLogin()
     local luaTable = plist.read(path);
 
     return luaTable["kFBQPLLoggingPolicyLastKnownOwnerFbID"] or nil
+end
+
+function hasInternetConnection()
+    local url = "https://api.ipify.org?v=" .. math.random(1, 65535)
+
+    local response, error = httpRequest { url = url }
+    if response then
+        toastr(response)
+        return true
+    end
+    return false
+end
+
+function waitForInternet(timeout)
+    for i = 1, timeout, 1 do
+        if hasInternetConnection() then
+            return true
+        end
+        sleep(1)
+    end
+    return false
 end
 
 function checkInternetAndPublicIP()

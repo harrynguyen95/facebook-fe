@@ -12,6 +12,7 @@ searchTextFilePath = currentPath() .. "/input/searchtext.txt"
 accountFilePath = rootDir() .. "/Device/accounts.txt"
 mailFilePath = rootDir() .. "/Device/thuemails.txt"
 localIPFilePath = rootDir() .. "/Device/local_ip.txt"
+hotmailSourceFilePath = rootDir() .. "/Device/hotmail_source.txt"
 
 -- ====== LOGIC FUNCTION ======
 
@@ -78,7 +79,7 @@ function finishCurrentAccount()
 end
 
 function failedCurrentAccount(code)
-    if code == nil then code = 282 end
+    if code == nil then code = 'unknown' end
     local accounts = readFile(accountFilePath)
     local splitted = split(accounts[#accounts], "|")
 
@@ -92,6 +93,10 @@ function failedCurrentAccount(code)
     log(code .. ' - failedCurrentAccount ' .. line)
     writeFile(accountFilePath, accounts)
     saveAccToGoogleForm()
+
+    if HOTMAIL_SOURCE_FROM_FILE then 
+        removeLineFromFile(hotmailSourceFilePath, info.mailLogin)
+    end 
     resetInfoObject()
 end
 
@@ -195,6 +200,21 @@ function resetInfoObject()
     }
 end
 
+function retrieveHotmailFromSource()
+    local hotmailData = getRandomLineInFile(hotmailSourceFilePath)
+    local splitted = split(hotmailData, "|")
+
+    if #splitted >= 4 then 
+        info.mailRegister        = splitted[1]
+        info.mailLogin           = splitted[1]
+        info.hotmailPassword     = splitted[2]
+        info.hotmailRefreshToken = splitted[3]
+        info.hotmailClientId     = splitted[4]
+        return true
+    end 
+    return false
+end
+
 function saveMailThueMail()
     local mails = readFile(mailFilePath)
 
@@ -218,7 +238,7 @@ function saveMailThueMail()
         addLineToFile(mailFilePath, line)
     end
 
-    saveMailToGoogleForm()
+    -- saveMailToGoogleForm()
 end
 
 function retrieveMailThueMail()
@@ -353,42 +373,48 @@ end
 
 function executeHotmailFromDongVanFb()
     -- https://api.dongvanfb.net/user/buy?apikey=36458879248967a36&account_type=1&quality=1&type=full
-    
-    local account_type = {2, 6, 1, 3, 5, 59, 60}
-    for i, service_id in pairs(account_type) do
-        local tries = 1
-        for i = 1, tries do 
-            toastr('Mail id: ' .. service_id)
-            sleep(3)
 
-            local response, error = httpRequest {
-                url = "https://api.dongvanfb.net/user/buy?apikey=" .. MAIL_DONGVANFB_API_KEY .. "&account_type=" .. service_id .. "&quality=1&type=full",
-            }
-            log(response, 'executeHotmailFromDongVanFb')
+    if HOTMAIL_SOURCE_FROM_FILE then 
+        return retrieveHotmailFromSource()
+    else 
+        local account_type = {2, 6, 1, 3, 5, 59, 60}
+        for i, service_id in pairs(account_type) do
+            local tries = 1
+            for i = 1, tries do 
+                toastr('Mail id: ' .. service_id)
+                sleep(3)
 
-            if response then
-                response = json.decode(response)
-                if response.status or response.status == 'true' then
-                    local mailString = response.data.list_data[1]
-                    local splitted = split(mailString, '|')
+                local response, error = httpRequest {
+                    url = "https://api.dongvanfb.net/user/buy?apikey=" .. MAIL_DONGVANFB_API_KEY .. "&account_type=" .. service_id .. "&quality=1&type=full",
+                }
+                -- log(response, 'executeHotmailFromDongVanFb')
 
-                    info.mailLogin = splitted[1]
-                    info.mailRegister = splitted[1]
-                    info.mailPrice = response.data.price
-                    info.thuemailId = 2000000
-                    info.hotmailPassword = splitted[2]
-                    info.hotmailRefreshToken = splitted[3]
-                    info.hotmailClientId = splitted[4]
-                    return true
+                if response then
+                    response = json.decode(response)
+                    if response.status or response.status == 'true' then
+                        local mailString = response.data.list_data[1]
+                        local splitted = split(mailString, '|')
+
+                        info.mailLogin = splitted[1]
+                        info.mailRegister = splitted[1]
+                        info.mailPrice = response.data.price
+                        info.thuemailId = 2000000
+                        info.hotmailPassword = splitted[2]
+                        info.hotmailRefreshToken = splitted[3]
+                        info.hotmailClientId = splitted[4]
+                        return true
+                    else
+                        toastr(response.message)
+                        log(response.message)
+                    end
                 else
-                    toastr(response.message)
-                    log(response.message)
+                    log("Failed request user/buy. Reason: " .. tostring(error))
                 end
-            else
-                log("Failed request user/buy. Reason: " .. tostring(error))
             end
         end
-    end
+    end 
+    
+    
     return false
 end
 
@@ -641,7 +667,7 @@ function setGender()
     if waitImageVisible(what_is_gender, 2) then
         toastr("what_is_gender")
 
-        if waitImageVisible(gender_options, 20) then 
+        if waitImageVisible(gender_options, 10) then 
             math.randomseed(os.time() + math.random())
             local x = math.random(500, 560)
             local y = 440
