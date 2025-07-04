@@ -76,7 +76,6 @@ function finishCurrentAccount()
     writeFile(accountFilePath, accounts)
 
     if HOTMAIL_SOURCE_FROM_FILE then 
-        info.mailRegister = "re-use|" .. info.mailRegister
         removeLineFromFile(hotmailSourceFilePath, info.mailLogin)
     end 
     if ENTER_VERIFY_CODE then saveAccToGoogleForm() else saveNoVerifyToGoogleForm() end
@@ -100,7 +99,6 @@ function failedCurrentAccount(code)
     writeFile(accountFilePath, accounts)
 
     if HOTMAIL_SOURCE_FROM_FILE then 
-        info.mailRegister = "re-use|" .. (info.mailRegister or '-')
         removeLineFromFile(hotmailSourceFilePath, info.mailLogin)
     end 
     saveAccToGoogleForm()
@@ -163,30 +161,32 @@ function saveNoVerifyToGoogleForm()
 end
 
 function saveMailToGoogleForm()
-    local localIP = readFile(localIPFilePath)
-    local infoClone = info
-    infoClone.localIP = localIP[#localIP]
+    if not HOTMAIL_SOURCE_FROM_FILE then
+        local localIP = readFile(localIPFilePath)
+        local infoClone = info
+        infoClone.localIP = localIP[#localIP]
 
-    local tries = 2
-    for i = 1, tries do 
-        sleep(3)
+        local tries = 2
+        for i = 1, tries do 
+            sleep(3)
 
-        local response, error = httpRequest {
-            url = PHP_SERVER .. "mail_google_form.php",
-            method = "POST",
-            headers = {
-                ["Content-Type"] = "application/json",
-            },
-            data = infoClone
-        }
+            local response, error = httpRequest {
+                url = PHP_SERVER .. "mail_google_form.php",
+                method = "POST",
+                headers = {
+                    ["Content-Type"] = "application/json",
+                },
+                data = infoClone
+            }
 
-        if response then
-            -- log(infoClone, "Sent request to Google Form" )
-            return
-        else
-            log("Failed request mail_google_form.php. Reason: " .. tostring(error))
+            if response then
+                -- log(infoClone, "Sent request to Google Form" )
+                return
+            else
+                log("Failed request mail_google_form.php. Reason: " .. tostring(error))
+            end
         end
-    end
+    end 
 end
 
 function resetInfoObject()
