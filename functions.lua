@@ -492,7 +492,7 @@ function getDongvanfbConfirmCode()
             data = postData
         }
 
-        log(response, 'getDongvanfbConfirmCode')
+        -- log(response, 'getDongvanfbConfirmCode')
 
         if response then
             response = json.decode(response)
@@ -577,23 +577,29 @@ function getCodeMailConfirm()
 end
 
 function get2FACode()
-    local response, error = httpRequest {
-        url = "https://2fa.live/tok/" .. info.twoFA,
-        headers = {
-            ["Content-Type"] = "application/json",
-        },
-    }
+    local tries = 2
+    for i = 1, tries do 
+        toastr('Call times ' .. i)
+        sleep(3)
 
-    if response then
-        response = json.decode(response)
-        if response.token then
-            return response.token
+        local response, error = httpRequest {
+            url = "https://2fa.live/tok/" .. info.twoFA,
+            headers = {
+                ["Content-Type"] = "application/json",
+            },
+        }
+
+        if response then
+            response = json.decode(response)
+            if response.token then
+                return response.token
+            else
+                toastr("Empty response get 2FA OTP.");
+                log("Empty response get 2FA OTP.");
+            end
         else
-            toastr("Empty response get 2FA OTP.");
-            log("Empty response get 2FA OTP.");
+            log("Failed request 2fa.live/tok. Reason: " .. tostring(error))
         end
-    else
-        log("Failed request 2fa.live/tok. Reason: " .. tostring(error))
     end
 end
 
