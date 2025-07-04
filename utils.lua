@@ -166,7 +166,9 @@ function readFile(path)
 end
 
 function readLinesFromFile(filename)
-    if filename == nil then return {} end
+    local f, err = io.open(filename, "r")
+    if not f then return nil, "Không mở được file: " .. tostring(err) end
+
     local names = {}
     for name in io.lines(filename) do
         table.insert(names, name)
@@ -198,7 +200,7 @@ end
 
 function getRandomLineInFile(filename)
     local lines = readLinesFromFile(filename)
-    if #lines == 0 then 
+    if not lines or #lines == 0 then 
         return ""
     end
     local index = math.random(#lines)
