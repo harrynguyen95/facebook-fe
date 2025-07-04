@@ -296,7 +296,6 @@ function executeGmailFromThueMail()
         local tries = 2
         for i = 1, tries do 
             toastr('Call times ' .. i)
-            sleep(3)
 
             local postData = {
                 api_key = MAIL_THUEMAILS_API_KEY,
@@ -335,6 +334,8 @@ function executeGmailFromThueMail()
             else
                 log("Failed request rentals/re-rent. Reason: " .. tostring(error))
             end
+
+            sleep(3)
         end
     end
 
@@ -342,7 +343,6 @@ function executeGmailFromThueMail()
         local tries = 2
         for i = 1, tries do 
             toastr('Call times ' .. i)
-            sleep(3)
 
             local postData = {
                 api_key = MAIL_THUEMAILS_API_KEY,
@@ -377,6 +377,8 @@ function executeGmailFromThueMail()
             else
                 log("Failed request rentals. Reason: " .. tostring(error))
             end
+
+            sleep(3)
         end
     end
     return false
@@ -441,11 +443,10 @@ function executeGetMailRequest()
 end
 
 function getThuemailConfirmCode()
-    sleep(3)
+    sleep(5)
     local tries = 10
     for i = 1, tries do 
         toastr('Call times ' .. i)
-        sleep(5)
 
         local response, error = httpRequest {
             url = MAIL_THUEMAILS_DOMAIN .. "rentals/" .. info.thuemailId .. "?api_key=" .. MAIL_THUEMAILS_API_KEY,
@@ -465,17 +466,18 @@ function getThuemailConfirmCode()
         else
             log("Failed request rentals/id. Reason: " .. tostring(error))
         end
+
+        sleep(5)
     end
     return nil
 end
 
 function getDongvanfbConfirmCode()
-    sleep(3)
+    sleep(5)
 
     local tries = 6
     for i = 1, tries do 
         toastr('Call times ' .. i)
-        sleep(5)
 
         local postData = {
             email = info.mailRegister,
@@ -505,6 +507,8 @@ function getDongvanfbConfirmCode()
         else
             log("Failed request api/get_code_oauth2. Reason: " .. tostring(error))
         end
+
+        sleep(5)
     end
     return nil
 end
@@ -523,7 +527,6 @@ function getFreeMailConfirmCodeSecondTime()
     local tries = 3
     for i = 1, tries do 
         toastr('Call times ' .. i)
-        sleep(5)
 
         local response, error = httpRequest {
             url = PHP_SERVER .. "/confirm_free_mail.php?email=" .. info.mailLogin,
@@ -539,14 +542,17 @@ function getFreeMailConfirmCodeSecondTime()
         else
             log("Failed request confirm_free_mail.php. Reason: " .. tostring(error))
         end
+
+        sleep(5)
     end
 end
 
 function getFreeMailConfirmCode()
+    sleep(3)
+
     local tries = 3
     for i = 1, tries do 
         toastr('Call times ' .. i)
-        sleep(5)
 
         local response, error = httpRequest {
             url = PHP_SERVER .. "/add_free_mail.php?email=" .. info.mailLogin,
@@ -563,6 +569,8 @@ function getFreeMailConfirmCode()
         else
             log("Failed request add_free_mail.php. Reason: " .. tostring(error))
         end
+
+        sleep(5)
     end
 end
 
@@ -580,7 +588,6 @@ function get2FACode()
     local tries = 2
     for i = 1, tries do 
         toastr('Call times ' .. i)
-        sleep(3)
 
         local response, error = httpRequest {
             url = "https://2fa.live/tok/" .. info.twoFA,
@@ -600,6 +607,8 @@ function get2FACode()
         else
             log("Failed request 2fa.live/tok. Reason: " .. tostring(error))
         end
+
+        sleep(3)
     end
 end
 
