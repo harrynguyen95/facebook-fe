@@ -770,7 +770,7 @@ function homeAndUnlockScreen()
 end
 
 function executeXoaInfo()
-    if TIMES_XOA_INFO > 0 and waitImageVisible(xoainfo_logo) then
+    if TIMES_XOA_INFO > 0 and waitImageVisible(xoainfo_logo, 10) then
         toastr('executeXoaInfo')
 
         findAndClickByImage(xoainfo_logo)
