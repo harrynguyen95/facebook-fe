@@ -608,7 +608,7 @@ function main()
         toastr('Search what_on_your_mind')
         press(600, 90) -- go to search screen
 
-        local searchTexts = getSearchText(math.random(4, 6))
+        local searchTexts = getSearchText(math.random(3, 5))
         for i, line in ipairs(searchTexts) do
             typeText(line)
             press(700, 1300) sleep(2) -- btn search blue
