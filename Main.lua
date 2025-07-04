@@ -2,6 +2,7 @@
 LANGUAGE = 'ES'  -- EN|ES English|Spanish
 MAIL_SUPLY = 2  -- 1|2 hotmail_dongvanfb|thuemails.com
 ENTER_VERIFY_CODE = true  -- true|false
+
 HOTMAIL_SOURCE_FROM_FILE = false  -- true|false
 
 THUE_LAI_MAIL_THUEMAILS = false  -- true|false
@@ -557,16 +558,15 @@ function main()
                 info.twoFA = nil
                 finishCurrentAccount()
                 
-                press(55, 155) -- back
-                press(55, 155) -- back
-                press(55, 155) -- back
+                if waitImageVisible(reenter_password, 10) then
+                    press(55, 155) -- X on re-enter password
+                end
                 if waitImageVisible(protect_your_account) then
                     press(40, 90) sleep(1) -- back on protect your account
                     press(40, 90) sleep(1) -- back on confirm identity
                     press(45, 90) sleep(1) -- back to setting menu
                     press(45, 90)          -- back to main menu
                 end
-
                 if modeMenuLeft() then 
                     press(700, 90) -- back to homepage
                 else 
@@ -596,9 +596,13 @@ function main()
                 press(45, 90) sleep(1) -- back to setting menu
                 press(45, 90)          -- back to main menu
             end
-            if waitImageVisible(home_icon) then
-                press(60, 1290) -- back to homepage
-            end
+            if modeMenuLeft() then 
+                press(700, 90) -- back to homepage
+            else 
+                if waitImageVisible(home_icon) then
+                    press(60, 1290) -- back to homepage
+                end
+            end 
         end
     end
 

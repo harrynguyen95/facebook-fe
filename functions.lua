@@ -66,7 +66,7 @@ function finishCurrentAccount()
     local splitted = split(accounts[#accounts], "|")
 
     info.status = "SUCCESS"
-    info.checkpoint = nil
+    info.checkpoint = 'OK'
     if not info.mailLogin or info.mailLogin == '' then info.mailLogin = info.mailRegister end 
     if not info.profileUid or info.profileUid == '' then info.profileUid = getUIDFBLogin() end 
     local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '')
@@ -655,7 +655,7 @@ function checkSuspended()
         return true
     end
 
-    toastr('Ok')
+    toastr('OK')
     return false
 end
 
