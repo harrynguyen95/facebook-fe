@@ -65,6 +65,11 @@ function main()
     end
 
     findAndClickByImage(accept)
+    if checkImageIsExists(page_not_available_now) then 
+        toastr('page_not_available_now')
+        swipeCloseApp()
+        goto label_continue
+    end 
     if checkSuspended() then goto label_continue end
     
     ::label_createnewaccount::
@@ -131,13 +136,12 @@ function main()
     end
 
     if checkImageIsExists(create_new_account) then goto label_createnewaccount end 
-
-    if checkSuspended() then goto label_continue end
     if waitImageVisible(page_not_available_now, 2) then 
         toastr('page_not_available_now')
         swipeCloseApp()
         goto label_continue
     end 
+    if checkSuspended() then goto label_continue end
 
     setFirstNameLastName()
 
@@ -384,12 +388,12 @@ function main()
         waitImageVisible(turn_on_contact)
     end
 
-    if checkSuspended() then goto label_continue end
     if checkImageIsExists(page_not_available_now) then 
         toastr('page_not_available_now')
         swipeCloseApp()
         goto label_continue
     end 
+    if checkSuspended() then goto label_continue end
 
     ::label_turnoncontact::
     toastr('wait contact..')
