@@ -197,6 +197,9 @@ end
 
 function getRandomLineInFile(filename)
     local lines = readLinesFromFile(filename)
+    if #lines == 0 then 
+        return ""
+    end
     local index = math.random(#lines)
 
     return trim(lines[index])

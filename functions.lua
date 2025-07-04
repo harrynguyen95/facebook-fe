@@ -74,10 +74,13 @@ function finishCurrentAccount()
 
     log('finishCurrentAccount ' .. line)
     writeFile(accountFilePath, accounts)
-    if ENTER_VERIFY_CODE then saveAccToGoogleForm() else saveNoVerifyToGoogleForm() end
+
     if HOTMAIL_SOURCE_FROM_FILE then 
+        info.mailRegister = "re-rent|" .. info.mailRegister
         removeLineFromFile(hotmailSourceFilePath, info.mailLogin)
     end 
+    if ENTER_VERIFY_CODE then saveAccToGoogleForm() else saveNoVerifyToGoogleForm() end
+
     resetInfoObject()
 end
 
@@ -95,11 +98,13 @@ function failedCurrentAccount(code)
 
     log(code .. ' - failedCurrentAccount ' .. line)
     writeFile(accountFilePath, accounts)
-    saveAccToGoogleForm()
 
     if HOTMAIL_SOURCE_FROM_FILE then 
+        info.mailRegister = "re-rent|" .. info.mailRegister
         removeLineFromFile(hotmailSourceFilePath, info.mailLogin)
     end 
+    saveAccToGoogleForm()
+    
     resetInfoObject()
 end
 
