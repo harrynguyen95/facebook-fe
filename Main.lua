@@ -305,7 +305,7 @@ function main()
         end 
 
         if not waitImageNotVisible(agree_facebook_term, 90) then 
-            toastr('Can not agree')
+            toastr('Can not next')
             swipeCloseApp()
             goto label_openfacebook
         end 
@@ -333,6 +333,7 @@ function main()
 
             if ENTER_VERIFY_CODE then 
                 findAndClickByImage(input_confirm_code)
+                findAndClickByImage(x_input_icon)
                 typeText(OTPcode) sleep(1)
                 findAndClickByImage(next)
             else 
