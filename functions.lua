@@ -111,10 +111,8 @@ function saveAccToGoogleForm()
     local infoClone = info
     infoClone.localIP = localIP[#localIP]
 
-    local tries = 2
+    local tries = 3
     for i = 1, tries do 
-        sleep(3)
-
         local response, error = httpRequest {
             url = PHP_SERVER .. "acc_google_form.php",
             method = "POST",
@@ -130,6 +128,7 @@ function saveAccToGoogleForm()
         else
             log("Failed request acc_google_form.php. Reason: " .. tostring(error))
         end
+        sleep(3)
     end
 end
 
@@ -138,10 +137,8 @@ function saveNoVerifyToGoogleForm()
     local infoClone = info
     infoClone.localIP = localIP[#localIP]
 
-    local tries = 2
+    local tries = 3
     for i = 1, tries do 
-        sleep(3)
-
         local response, error = httpRequest {
             url = PHP_SERVER .. "no_verify_google_form.php",
             method = "POST",
@@ -157,6 +154,7 @@ function saveNoVerifyToGoogleForm()
         else
             log("Failed request no_verify_google_form.php. Reason: " .. tostring(error))
         end
+        sleep(3)
     end
 end
 
@@ -166,10 +164,8 @@ function saveMailToGoogleForm()
         local infoClone = info
         infoClone.localIP = localIP[#localIP]
 
-        local tries = 2
+        local tries = 3
         for i = 1, tries do 
-            sleep(3)
-
             local response, error = httpRequest {
                 url = PHP_SERVER .. "mail_google_form.php",
                 method = "POST",
@@ -185,6 +181,7 @@ function saveMailToGoogleForm()
             else
                 log("Failed request mail_google_form.php. Reason: " .. tostring(error))
             end
+            sleep(3)
         end
     end 
 end
@@ -338,7 +335,7 @@ function executeGmailFromThueMail()
     end
 
     if (not mailRerent) or (not rerentSuccess) then
-        local tries = 2
+        local tries = 3
         for i = 1, tries do 
             toastr('Call times ' .. i)
 
@@ -395,10 +392,9 @@ function executeHotmailFromDongVanFb()
     if not hasHotmailFromSource then 
         local account_type = {2, 6, 1, 3, 5, 59, 60}
         for i, service_id in pairs(account_type) do
-            local tries = 1
+            local tries = 3
             for i = 1, tries do 
                 toastr('Mail id: ' .. service_id)
-                sleep(3)
 
                 local response, error = httpRequest {
                     url = "https://api.dongvanfb.net/user/buy?apikey=" .. MAIL_DONGVANFB_API_KEY .. "&account_type=" .. service_id .. "&quality=1&type=full",
@@ -428,6 +424,8 @@ function executeHotmailFromDongVanFb()
                 else
                     log("Failed request user/buy. Reason: " .. tostring(error))
                 end
+
+                sleep(3)
             end
         end
     end 
