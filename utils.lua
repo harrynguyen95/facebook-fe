@@ -532,7 +532,7 @@ function httpRequest(params)
         ssl_verifyhost = params.ssl_verifyhost or false,
         customrequest = method,
         followlocation = true,
-        timeout = 60,
+        timeout = 40,
         writefunction = function(chunk)
             response = response .. tostring(chunk) -- Đảm bảo `chunk` là chuỗi
             return #chunk
