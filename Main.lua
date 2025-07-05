@@ -365,7 +365,7 @@ function main()
 
         if waitImageVisible(dont_allow, 1) then findAndClickByImage(dont_allow) end
 
-        if waitImageVisible(not_now, 3) then
+        if waitImageVisible(not_now, 1) then
             findAndClickByImage(not_now)
         else 
             press(380, 1260) -- skip
