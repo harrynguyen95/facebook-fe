@@ -391,64 +391,67 @@ function executeGmailFromThueMail()
     return false
 end
 
+function callRegisterHotmailFromDongVanFb()
+    local account_type = HOTMAIL_SERVICE_IDS
+    for i, service_id in pairs(account_type) do
+        local tries = 3
+        for i = 1, tries do 
+            toastr('Mail id: ' .. service_id)
+
+            local response, error = httpRequest {
+                url = "https://api.dongvanfb.net/user/buy?apikey=" .. MAIL_DONGVANFB_API_KEY .. "&account_type=" .. service_id .. "&quality=1&type=full",
+            }
+            -- log(response, 'executeHotmailFromDongVanFb')
+
+            if response then
+                local ok, response, err = safeJsonDecode(response)
+                if ok then 
+                    if response.status or response.status == 'true' then
+                        local mailString = response.data.list_data[1]
+                        local splitted = split(mailString, '|')
+
+                        info.mailLogin = splitted[1]
+                        info.mailRegister = splitted[1]
+                        info.mailPrice = response.data.price
+                        info.thuemailId = 2000000
+                        info.hotmailPassword = splitted[2]
+                        info.hotmailRefreshToken = splitted[3]
+                        info.hotmailClientId = splitted[4]
+
+                        saveMailToGoogleForm()
+                        return true
+                    else
+                        toastr(response.message)
+                        log(response.message)
+                    end
+                else 
+                    toastr("Failed decode response.");
+                    log("Failed decode response.");
+                end
+            else
+                toastr('Times ' .. i .. " - " .. tostring(error), 2)
+                log("Failed request user/buy. Times ".. i ..  " - " .. tostring(error))
+            end
+
+            sleep(3)
+        end
+    end
+    return false
+end
+
 function executeHotmailFromDongVanFb()
     -- https://api.dongvanfb.net/user/buy?apikey=36458879248967a36&account_type=1&quality=1&type=full
 
-    local hasHotmailFromSource = retrieveHotmailFromSource()
     if HOTMAIL_SOURCE_FROM_FILE then 
+        local hasHotmailFromSource = retrieveHotmailFromSource()
         if hasHotmailFromSource then
             return true
-        end 
-    end
-
-    if not hasHotmailFromSource then 
-        local account_type = HOTMAIL_SERVICE_IDS
-        for i, service_id in pairs(account_type) do
-            local tries = 3
-            for i = 1, tries do 
-                toastr('Mail id: ' .. service_id)
-
-                local response, error = httpRequest {
-                    url = "https://api.dongvanfb.net/user/buy?apikey=" .. MAIL_DONGVANFB_API_KEY .. "&account_type=" .. service_id .. "&quality=1&type=full",
-                }
-                -- log(response, 'executeHotmailFromDongVanFb')
-
-                if response then
-                    local ok, response, err = safeJsonDecode(response)
-                    if ok then 
-                        if response.status or response.status == 'true' then
-                            local mailString = response.data.list_data[1]
-                            local splitted = split(mailString, '|')
-
-                            info.mailLogin = splitted[1]
-                            info.mailRegister = splitted[1]
-                            info.mailPrice = response.data.price
-                            info.thuemailId = 2000000
-                            info.hotmailPassword = splitted[2]
-                            info.hotmailRefreshToken = splitted[3]
-                            info.hotmailClientId = splitted[4]
-
-                            saveMailToGoogleForm()
-                            return true
-                        else
-                            toastr(response.message)
-                            log(response.message)
-                        end
-                    else 
-                        toastr("Failed decode response.");
-                        log("Failed decode response.");
-                    end
-                else
-                    toastr('Times ' .. i .. " - " .. tostring(error), 2)
-                    log("Failed request user/buy. Times ".. i ..  " - " .. tostring(error))
-                end
-
-                sleep(3)
-            end
+        else 
+            return callRegisterHotmailFromDongVanFb()
         end
-    end 
-    
-    
+    else 
+        return callRegisterHotmailFromDongVanFb()
+    end
     return false
 end
 

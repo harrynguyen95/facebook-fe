@@ -77,8 +77,13 @@ function main()
     ::label_createnewaccount::
     showIphoneModel()
     if waitImageVisible(create_new_account, 30) then
-        toastr('create_new_account')
+        if waitImageVisible(logo_fb_modern, 2) then
+            toastr('not_support_this_FB_mode')
+            swipeCloseApp()
+            goto label_continue
+        end
 
+        toastr('create_new_account')
         findAndClickByImage(create_new_account) sleep(2)
         if waitImageNotVisible(logo_facebook_login, 30) then 
             sleep(3)
