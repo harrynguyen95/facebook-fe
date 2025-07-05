@@ -128,6 +128,8 @@ function main()
     if checkSuspended() then goto label_continue end
     if checkPageNotAvailable() then goto label_continue end
 
+    exit()
+
     setFirstNameLastName()
 
     ::label_birthday::
