@@ -681,6 +681,15 @@ function checkSuspended()
     return false
 end
 
+function checkPageNotAvailable()
+    if waitImageVisible(page_not_available_now, 1) then 
+        toastr('page_not_available_now')
+        swipeCloseApp()
+        return true
+    end 
+    return false
+end
+
 function setFirstNameLastName()
     if waitImageVisible(what_name) then
         toastr("what_name")
