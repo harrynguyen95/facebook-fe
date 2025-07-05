@@ -108,8 +108,7 @@ end
 
 function saveAccToGoogleForm()
     local localIP = readFile(localIPFilePath)
-    local infoClone = info
-    infoClone.localIP = localIP[#localIP]
+    info.localIP = localIP[#localIP]
 
     local tries = 3
     for i = 1, tries do 
@@ -119,11 +118,11 @@ function saveAccToGoogleForm()
             headers = {
                 ["Content-Type"] = "application/json",
             },
-            data = infoClone
+            data = info
         }
 
         if response then
-            -- log(infoClone, "Sent request to Google Form" )
+            -- log(info, "Sent request to Google Form" )
             return
         else
             toastr('Times ' .. i .. " - " .. tostring(error), 2)
@@ -135,8 +134,7 @@ end
 
 function saveNoVerifyToGoogleForm()
     local localIP = readFile(localIPFilePath)
-    local infoClone = info
-    infoClone.localIP = localIP[#localIP]
+    info.localIP = localIP[#localIP]
 
     local tries = 3
     for i = 1, tries do 
@@ -146,11 +144,11 @@ function saveNoVerifyToGoogleForm()
             headers = {
                 ["Content-Type"] = "application/json",
             },
-            data = infoClone
+            data = info
         }
 
         if response then
-            -- log(infoClone, "Sent request to Google Form" )
+            -- log(info, "Sent request to Google Form" )
             return
         else
             toastr('Times ' .. i .. " - " .. tostring(error), 2)
@@ -163,8 +161,7 @@ end
 function saveMailToGoogleForm()
     if not HOTMAIL_SOURCE_FROM_FILE then
         local localIP = readFile(localIPFilePath)
-        local infoClone = info
-        infoClone.localIP = localIP[#localIP]
+        info.localIP = localIP[#localIP]
 
         local tries = 3
         for i = 1, tries do 
@@ -174,11 +171,11 @@ function saveMailToGoogleForm()
                 headers = {
                     ["Content-Type"] = "application/json",
                 },
-                data = infoClone
+                data = info
             }
 
             if response then
-                -- log(infoClone, "Sent request to Google Form" )
+                -- log(info, "Sent request to Google Form" )
                 return
             else
                 toastr('Times ' .. i .. " - " .. tostring(error), 2)
@@ -642,10 +639,20 @@ function getSearchText(no)
 end
 
 function getConfigServer()
+    -- Máy 3 | Hiến | 192.168.1.63
+    local localIP = readFile(localIPFilePath)
+    local localName = localIP[#localIP]
+
+    if localName == nil then 
+        toastr('No local device name.', 2)
+        return false
+    end 
+    local splitted = split(localName, "|")
+
     local postData = {
-        ['action'] = 'select',
-        ['username'] = 'Hiến',
-        ['device'] = '192.168.1.68',
+        ['action']   = 'select',
+        ['username'] = string.gsub(splitted[2], " ", ""),
+        ['device']   = string.gsub(splitted[3], " ", ""),
     }
 
     local tries = 2
