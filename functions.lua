@@ -307,24 +307,29 @@ function executeGmailFromThueMail()
             }
 
             if response then
-                response = json.decode(response)
-                if response.status == 'success' then
-                    rerentSuccess = true
+                local ok, response, err = safeJsonDecode(response)
+                if ok then 
+                    if response.status == 'success' then
+                        rerentSuccess = true
 
-                    local res = response.data
-                    info.thuemailId = res.id
-                    info.mailPrice = res.price
-                    info.mailRegister = res.email
+                        local res = response.data
+                        info.thuemailId = res.id
+                        info.mailPrice = res.price
+                        info.mailRegister = res.email
 
-                    saveMailThueMail()
-                    return 'success'
-                else
-                    toastr(response.message)
-                    log(response.message)
-                    if rerentTime <= rerentMaxTries then 
-                        removeMailThueMail(mailRerent)
-                        goto start_rerent_mail
+                        saveMailThueMail()
+                        return 'success'
+                    else
+                        toastr(response.message)
+                        log(response.message)
+                        if rerentTime <= rerentMaxTries then 
+                            removeMailThueMail(mailRerent)
+                            goto start_rerent_mail
+                        end
                     end
+                else 
+                    toastr("Failed decode response.");
+                    log("Failed decode response.");
                 end
             else
                 toastr('Times ' .. i .. " - " .. tostring(error), 2)
@@ -356,66 +361,28 @@ function executeGmailFromThueMail()
             }
 
             if response then
-                response = json.decode(response)
-                if response.status == 'success' then
-                    local res = response.data[1]
+                local ok, response, err = safeJsonDecode(response)
+                if ok then 
+                    if response.status == 'success' then
+                        local res = response.data[1]
 
-                    info.thuemailId = res.id
-                    info.mailPrice = res.price
-                    info.mailRegister = res.email
+                        info.thuemailId = res.id
+                        info.mailPrice = res.price
+                        info.mailRegister = res.email
 
-                    saveMailThueMail()
-                    return true
-                else
-                    toastr(response.message)
-                    log(response.message)
+                        saveMailThueMail()
+                        return true
+                    else
+                        toastr(response.message)
+                        log(response.message)
+                    end
+                else 
+                    toastr("Failed decode response.");
+                    log("Failed decode response.");
                 end
             else
                 toastr('Times ' .. i .. " - " .. tostring(error), 2)
                 log("Failed request rentals. Times ".. i ..  " - " .. tostring(error))
-            end
-
-            sleep(3)
-        end
-    end
-    return false
-end
-
-function callRegisterHotmailFromDongVanFb()
-    local account_type = HOTMAIL_SERVICE_IDS
-    for i, service_id in pairs(account_type) do
-        local tries = 3
-        for i = 1, tries do 
-            toastr('Mail id: ' .. service_id)
-
-            local response, error = httpRequest {
-                url = "https://api.dongvanfb.net/user/buy?apikey=" .. MAIL_DONGVANFB_API_KEY .. "&account_type=" .. service_id .. "&quality=1&type=full",
-            }
-            -- log(response, 'executeHotmailFromDongVanFb')
-
-            if response then
-                response = json.decode(response)
-                if response.status or response.status == 'true' then
-                    local mailString = response.data.list_data[1]
-                    local splitted = split(mailString, '|')
-
-                    info.mailLogin = splitted[1]
-                    info.mailRegister = splitted[1]
-                    info.mailPrice = response.data.price
-                    info.thuemailId = 2000000
-                    info.hotmailPassword = splitted[2]
-                    info.hotmailRefreshToken = splitted[3]
-                    info.hotmailClientId = splitted[4]
-
-                    saveMailToGoogleForm()
-                    return true
-                else
-                    toastr(response.message)
-                    log(response.message)
-                end
-            else
-                toastr('Times ' .. i .. " - " .. tostring(error), 2)
-                log("Failed request user/buy. Times ".. i ..  " - " .. tostring(error))
             end
 
             sleep(3)
@@ -431,12 +398,57 @@ function executeHotmailFromDongVanFb()
     if HOTMAIL_SOURCE_FROM_FILE then 
         if hasHotmailFromSource then
             return true
-        else 
-            return callRegisterHotmailFromDongVanFb()
-        end
-    else 
-        return callRegisterHotmailFromDongVanFb()
+        end 
     end
+
+    if not hasHotmailFromSource then 
+        local account_type = HOTMAIL_SERVICE_IDS
+        for i, service_id in pairs(account_type) do
+            local tries = 3
+            for i = 1, tries do 
+                toastr('Mail id: ' .. service_id)
+
+                local response, error = httpRequest {
+                    url = "https://api.dongvanfb.net/user/buy?apikey=" .. MAIL_DONGVANFB_API_KEY .. "&account_type=" .. service_id .. "&quality=1&type=full",
+                }
+                -- log(response, 'executeHotmailFromDongVanFb')
+
+                if response then
+                    local ok, response, err = safeJsonDecode(response)
+                    if ok then 
+                        if response.status or response.status == 'true' then
+                            local mailString = response.data.list_data[1]
+                            local splitted = split(mailString, '|')
+
+                            info.mailLogin = splitted[1]
+                            info.mailRegister = splitted[1]
+                            info.mailPrice = response.data.price
+                            info.thuemailId = 2000000
+                            info.hotmailPassword = splitted[2]
+                            info.hotmailRefreshToken = splitted[3]
+                            info.hotmailClientId = splitted[4]
+
+                            saveMailToGoogleForm()
+                            return true
+                        else
+                            toastr(response.message)
+                            log(response.message)
+                        end
+                    else 
+                        toastr("Failed decode response.");
+                        log("Failed decode response.");
+                    end
+                else
+                    toastr('Times ' .. i .. " - " .. tostring(error), 2)
+                    log("Failed request user/buy. Times ".. i ..  " - " .. tostring(error))
+                end
+
+                sleep(3)
+            end
+        end
+    end 
+    
+    
     return false
 end
 
@@ -465,12 +477,17 @@ function getThuemailConfirmCode()
         }
 
         if response then
-            response = json.decode(response)
-            if response.id and response.otp then
-                saveMailToGoogleForm()
-                return response.otp
-            else
-                toastr('Empty thuemails code. Times ' .. i)
+            local ok, response, err = safeJsonDecode(response)
+            if ok then 
+                if response.id and response.otp then
+                    saveMailToGoogleForm()
+                    return response.otp
+                else
+                    toastr('Empty thuemails code. Times ' .. i)
+                end
+            else 
+                toastr("Failed decode response.");
+                log("Failed decode response.");
             end
         else
             toastr('Times ' .. i .. " - " .. tostring(error), 2)
@@ -507,11 +524,16 @@ function getDongvanfbConfirmCode()
         -- log(response, 'getDongvanfbConfirmCode')
 
         if response then
-            response = json.decode(response)
-            if response.status or response.status == 'true' then
-                return response.code
-            else
-                toastr('Empty hotmail code. Times ' .. i)
+            local ok, response, err = safeJsonDecode(response)
+            if ok then 
+                if response.status or response.status == 'true' then
+                    return response.code
+                else
+                    toastr('Empty hotmail code. Times ' .. i)
+                end
+            else 
+                toastr("Failed decode response.");
+                log("Failed decode response.");
             end
         else
             toastr('Times ' .. i .. " - " .. tostring(error), 2)
@@ -543,11 +565,16 @@ function getFreeMailConfirmCodeSecondTime()
         }
         -- log(response, 'getFreeMailConfirmCodeSecondTime')
         if response then
-            response = json.decode(response)
-            if response.code ~= '' then
-                return response.code
-            else
-                toastr("Empty response code.");
+            local ok, response, err = safeJsonDecode(response)
+            if ok then 
+                if response.code ~= '' then
+                    return response.code
+                else
+                    toastr("Empty response code.");
+                end
+            else 
+                toastr("Failed decode response.");
+                log("Failed decode response.");
             end
         else
             toastr('Times ' .. i .. " - " .. tostring(error), 2)
@@ -571,11 +598,16 @@ function getFreeMailConfirmCode()
         -- log(response, 'getFreeMailConfirmCode')
 
         if response then
-            response = json.decode(response)
-            if response.code ~= '' then
-                return response.code
-            else
-                toastr("Empty response code.");
+            local ok, response, err = safeJsonDecode(response)
+            if ok then 
+                if response.code ~= '' then
+                    return response.code
+                else
+                    toastr("Empty response code.");
+                end
+            else 
+                toastr("Failed decode response.");
+                log("Failed decode response.");
             end
         else
             toastr('Times ' .. i .. " - " .. tostring(error), 2)
@@ -609,13 +641,18 @@ function get2FACode()
         }
 
         if response then
-            response = json.decode(response)
-            if response.token then
-                return response.token
-            else
-                toastr("Empty response get 2FA OTP.");
-                log("Empty response get 2FA OTP.");
-            end
+            local ok, response, err = safeJsonDecode(response)
+            if ok then 
+                if response.token then
+                    return response.token
+                else
+                    toastr("Empty response get 2FA OTP.");
+                    log("Empty response get 2FA OTP.");
+                end
+            else 
+                toastr("Failed decode response.");
+                log("Failed decode response.");
+            end  
         else
             toastr('Times ' .. i .. " - " .. tostring(error), 2)
             log("Failed request 2fa.live. Times ".. i ..  " - " .. tostring(error))
@@ -670,25 +707,30 @@ function getConfigServer()
         }
 
         if response then
-            response = json.decode(response)
-            if response.status and response.status == 'success' then
-                local config = response.data
-                LANGUAGE                 = config.language
-                HOTMAIL_SERVICE_IDS      = parseStringToTable(config.hotmail_service_ids)
-                MAIL_SUPLY               = tonumber(config.mail_suply)
-                PROVIDER_MAIL_THUEMAILS  = tonumber(config.provider_mail_thuemails)
-                TIMES_XOA_INFO           = tonumber(config.times_xoa_info)
-                ENTER_VERIFY_CODE        = config.enter_verify_code ~= '0'
-                HOTMAIL_SOURCE_FROM_FILE = config.hot_mail_source_from_file ~= '0'
-                THUE_LAI_MAIL_THUEMAILS  = config.thue_lai_mail_thuemails ~= '0'
-                ADD_MAIL_DOMAIN          = config.add_mail_domain ~= '0'
-                REMOVE_REGISTER_MAIL     = config.remove_register_mail ~= '0'
+            local ok, response, err = safeJsonDecode(response)
+            if ok then 
+                if response.status and response.status == 'success' then
+                    local config = response.data
+                    LANGUAGE                 = config.language
+                    HOTMAIL_SERVICE_IDS      = parseStringToTable(config.hotmail_service_ids)
+                    MAIL_SUPLY               = tonumber(config.mail_suply)
+                    PROVIDER_MAIL_THUEMAILS  = tonumber(config.provider_mail_thuemails)
+                    TIMES_XOA_INFO           = tonumber(config.times_xoa_info)
+                    ENTER_VERIFY_CODE        = config.enter_verify_code ~= '0'
+                    HOTMAIL_SOURCE_FROM_FILE = config.hot_mail_source_from_file ~= '0'
+                    THUE_LAI_MAIL_THUEMAILS  = config.thue_lai_mail_thuemails ~= '0'
+                    ADD_MAIL_DOMAIN          = config.add_mail_domain ~= '0'
+                    REMOVE_REGISTER_MAIL     = config.remove_register_mail ~= '0'
 
-                return true
-            else
-                toastr(response.info)
-                log(response.info)
-            end
+                    return true
+                else
+                    toastr(response.info)
+                    log(response.info)
+                end
+            else 
+                toastr("Failed decode response.");
+                log("Failed decode response.");
+            end  
         else
             toastr('Times ' .. i .. " - " .. tostring(error), 2)
             log("Failed request device_config. Times ".. i ..  " - " .. tostring(error))

@@ -599,6 +599,32 @@ function httpRequest(params)
     return response, nil
 end
 
+function safeJsonDecode(raw, tag)
+    tag = tag or "JSON"
+
+    if type(raw) ~= "string" or raw == "" then
+        local err = "Input is empty or not a string"
+        log(("[%s] %s"):format(tag, err))
+        return false, nil, err
+    end
+
+    local first = string.sub(raw, 1, 1)
+    if first ~= "{" and first ~= "[" then
+        local err = "Not valid JSON (doesn't start with { or [)"
+        log(("[%s] %s -> %s"):format(tag, err, raw))
+        return false, nil, err
+    end
+
+    local ok, decoded = pcall(json.decode, raw)
+    if ok and decoded ~= nil then
+        return true, decoded, nil
+    else
+        local err = decoded or "Unknown JSON decode error"
+        log(("[%s] Decode failed: %s"):format(tag, err))
+        return false, nil, err
+    end
+end
+
 function typeText(text)
     if text == nil then return end
     usleep(300000)
