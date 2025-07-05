@@ -394,7 +394,7 @@ end
 function callRegisterHotmailFromDongVanFb()
     local account_type = HOTMAIL_SERVICE_IDS
     for i, service_id in pairs(account_type) do
-        local tries = 3
+        local tries = 1
         for i = 1, tries do 
             toastr('Mail id: ' .. service_id)
 
