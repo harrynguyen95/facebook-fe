@@ -1,16 +1,28 @@
+-- ====== LIB REQUIRED ======
+require('utils')
+require('functions')
+
 -- ====== CONFIG ======
 LANGUAGE = 'ES'  -- EN|ES English|Spanish
-MAIL_SUPLY = 2  -- 1|2 hotmail_dongvanfb|thuemails.com
+MAIL_SUPLY = 1  -- 1|2 hotmail_dongvanfb|thuemails.com
 ENTER_VERIFY_CODE = true  -- true|false
-
+HOTMAIL_SERVICE_IDS = {1, 3, 2, 6, 5, 59, 60}
 HOTMAIL_SOURCE_FROM_FILE = false  -- true|false
-
 THUE_LAI_MAIL_THUEMAILS = false  -- true|false
 ADD_MAIL_DOMAIN = false  -- true|false
 REMOVE_REGISTER_MAIL = false  -- true|false
 PROVIDER_MAIL_THUEMAILS = 1  -- 1|3 gmail|icloud
-
 TIMES_XOA_INFO = 3  -- 0|1|2|3
+
+if not waitForInternet(5) then alert("No internet!") exit() end
+getConfigServer()
+
+-- ====== LOCALE IMAGE REQUIRED ======
+function isES() return LANGUAGE == 'ES' end
+function isEN() return LANGUAGE == 'EN' end
+
+if isES() then require(currentDir() .. "/images_es") end
+if isEN() then require(currentDir() .. "/images_en") end
 
 -- ====== INFO ======
 info = {
@@ -30,15 +42,9 @@ info = {
     verifyCode = nil,
 }
 
--- ====== LIB REQUIRED ======
-function isES() return LANGUAGE == 'ES' end
-local images = require(isES() and (currentDir() .. "/images_es") or (currentDir() .. "images"))
-require('utils')
-require('functions')
-
 -- ====== MAIN ======
 function main()
-
+    
     ::label_continue::
     log('------------ Main running ------------')
     archiveCurrentAccount()
@@ -73,7 +79,7 @@ function main()
     if waitImageVisible(create_new_account, 30) then
         toastr('create_new_account')
 
-        findAndClickByImage(create_new_account)
+        findAndClickByImage(create_new_account) sleep(2)
         if waitImageNotVisible(logo_facebook_2, 30) then 
             sleep(3)
         else 
@@ -106,11 +112,7 @@ function main()
         goto label_continue
     end
 
-    if findAndClickByImage(accept) then 
-        swipeCloseApp()
-        goto label_openfacebook
-    end 
-
+    ::label_createnewaccountblue::
     if waitImageVisible(create_new_account_blue) then
         toastr('create_new_account_blue')
         findAndClickByImage(create_new_account_blue)
@@ -123,7 +125,6 @@ function main()
         end
     end
 
-    if checkImageIsExists(create_new_account) then goto label_createnewaccount end 
     if checkSuspended() then goto label_continue end
     if checkPageNotAvailable() then goto label_continue end
 
@@ -157,7 +158,12 @@ function main()
     end
 
     setGender()
-    sleep(2)
+
+    findAndClickByImage(accept) 
+    if checkImageIsExists(create_new_account) then goto label_createnewaccount end 
+    if checkImageIsExists(create_new_account_blue) then goto label_createnewaccountblue end 
+    if checkImageIsExists(get_started) then goto label_createnewaccountblue end 
+    sleep(1)
 
     ::label_what_is_mobile::
     if waitImageVisible(what_is_mobile_number) or waitImageVisible(sign_up_with_email) then

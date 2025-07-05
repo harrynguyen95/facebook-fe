@@ -114,7 +114,7 @@ function saveAccToGoogleForm()
     local tries = 3
     for i = 1, tries do 
         local response, error = httpRequest {
-            url = PHP_SERVER .. "acc_google_form.php",
+            url = PHP_SERVER .. "account_google_form.php",
             method = "POST",
             headers = {
                 ["Content-Type"] = "application/json",
@@ -395,7 +395,7 @@ function executeHotmailFromDongVanFb()
     end
 
     if not hasHotmailFromSource then 
-        local account_type = {2, 6, 1, 3, 5, 59, 60}
+        local account_type = HOTMAIL_SERVICE_IDS
         for i, service_id in pairs(account_type) do
             local tries = 3
             for i = 1, tries do 
@@ -639,6 +639,53 @@ function getSearchText(no)
         table.insert(result, table.remove(lines, i))
     end
     return result
+end
+
+function getConfigServer()
+    local postData = {
+        ['action'] = 'select',
+        ['username'] = 'Hiến',
+        ['device'] = '192.168.1.68',
+    }
+
+    local tries = 2
+    for i = 1, tries do 
+        local response, error = httpRequest {
+            url = PHP_SERVER .. "device_config.php",
+            method = "POST",
+            headers = {
+                ["Content-Type"] = "application/json",
+            },
+            data = postData
+        }
+
+        if response then
+            response = json.decode(response)
+            if response.status and response.status == 'success' then
+                local config = response.data
+                LANGUAGE                 = config.language
+                HOTMAIL_SERVICE_IDS      = parseStringToTable(config.hotmail_service_ids)
+                MAIL_SUPLY               = tonumber(config.mail_suply)
+                PROVIDER_MAIL_THUEMAILS  = tonumber(config.provider_mail_thuemails)
+                TIMES_XOA_INFO           = tonumber(config.times_xoa_info)
+                ENTER_VERIFY_CODE        = config.enter_verify_code ~= '0'
+                HOTMAIL_SOURCE_FROM_FILE = config.hot_mail_source_from_file ~= '0'
+                THUE_LAI_MAIL_THUEMAILS  = config.thue_lai_mail_thuemails ~= '0'
+                ADD_MAIL_DOMAIN          = config.add_mail_domain ~= '0'
+                REMOVE_REGISTER_MAIL     = config.remove_register_mail ~= '0'
+
+                return true
+            else
+                toastr(response.info)
+                log(response.info)
+            end
+        else
+            toastr('Times ' .. i .. " - " .. tostring(error), 2)
+            log("Failed request device_config. Times ".. i ..  " - " .. tostring(error))
+        end
+        sleep(3)
+    end
+    return false
 end
 
 -- ====== FE FUNCTION ======

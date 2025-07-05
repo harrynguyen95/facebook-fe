@@ -208,6 +208,15 @@ function getRandomLineInFile(filename)
     return trim(lines[index])
 end
 
+function parseStringToTable(s)
+    local t = {}
+    s = s:gsub("^%s*{%s*", ""):gsub("%s*}%s*$", "")
+    for num in s:gmatch("%d+") do
+        t[#t + 1] = tonumber(num)
+    end
+    return t
+end
+
 function findAndClickByImage(paths, threshold)
     if threshold == nil then
         threshold = THRESHOLD
