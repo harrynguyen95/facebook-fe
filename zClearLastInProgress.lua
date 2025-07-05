@@ -1,3 +1,5 @@
+require('utils')
+
 local path = rootDir() .. "/Device/accounts.txt"
 
 local function removeLastIfInProgress(filePath)
