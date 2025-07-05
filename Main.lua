@@ -44,7 +44,7 @@ info = {
 
 -- ====== MAIN ======
 function main()
-    
+
     ::label_continue::
     log('------------ Main running ------------')
     archiveCurrentAccount()
@@ -80,7 +80,7 @@ function main()
         toastr('create_new_account')
 
         findAndClickByImage(create_new_account) sleep(2)
-        if waitImageNotVisible(logo_facebook_2, 30) then 
+        if waitImageNotVisible(logo_facebook_login, 30) then 
             sleep(3)
         else 
             toastr('Can not next')
@@ -159,11 +159,11 @@ function main()
 
     setGender()
 
+    sleep(1)
     findAndClickByImage(accept) 
     if checkImageIsExists(create_new_account) then goto label_createnewaccount end 
     if checkImageIsExists(create_new_account_blue) then goto label_createnewaccountblue end 
     if checkImageIsExists(get_started) then goto label_createnewaccountblue end 
-    sleep(1)
 
     ::label_what_is_mobile::
     if waitImageVisible(what_is_mobile_number) or waitImageVisible(sign_up_with_email) then

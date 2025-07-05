@@ -1,4 +1,3 @@
-
 local dirPath = currentDir() .. "/images_es/"
 
 what_is_birthday = {dirPath .. "what_is_your_birthday.png"}
@@ -76,7 +75,7 @@ fb_logo_2 = {dirPath .. "fb_logo_2.png"}
 xoainfo_logo = {dirPath .. "xoainfo_logo.png"}
 xoainfo_reset_data = {dirPath .. "xoainfo_reset_data.png"}
 xoainfo_info_fake = {dirPath .. "xoainfo_info_fake.png"}
-logo_facebook_2 = {dirPath .. "logo_facebook_2.png"}
+logo_facebook_login = {dirPath .. "logo_facebook_login.png"}
 logo_fb_modern = {dirPath .. "logo_fb_modern.png"}
 page_not_available_now = {dirPath .. "page_not_available_now.png", dirPath .. "page_not_available_now2.png", dirPath .. "page_not_available_now3.png", dirPath .. "page_not_available_now4.png", dirPath .. "page_not_available_now5.png", dirPath .. "page_not_available_now6.png", dirPath .. "page_not_available_now7.png", dirPath .. "page_not_available_now8.png", dirPath .. "page_not_available_now9.png"}
 your_information_and_permission = {dirPath .. "your_information_and_permission.png"}
