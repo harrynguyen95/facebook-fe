@@ -126,7 +126,8 @@ function saveAccToGoogleForm()
             -- log(infoClone, "Sent request to Google Form" )
             return
         else
-            log("Failed request acc_google_form.php. Reason: " .. tostring(error))
+            toastr('Times ' .. i .. " - " .. tostring(error), 2)
+            log("Failed request acc_google_form. Times ".. i ..  " - " .. tostring(error))
         end
         sleep(3)
     end
@@ -152,7 +153,8 @@ function saveNoVerifyToGoogleForm()
             -- log(infoClone, "Sent request to Google Form" )
             return
         else
-            log("Failed request no_verify_google_form.php. Reason: " .. tostring(error))
+            toastr('Times ' .. i .. " - " .. tostring(error), 2)
+            log("Failed request no_verify_google_form. Times ".. i ..  " - " .. tostring(error))
         end
         sleep(3)
     end
@@ -179,7 +181,8 @@ function saveMailToGoogleForm()
                 -- log(infoClone, "Sent request to Google Form" )
                 return
             else
-                log("Failed request mail_google_form.php. Reason: " .. tostring(error))
+                toastr('Times ' .. i .. " - " .. tostring(error), 2)
+                log("Failed request mail_google_form. Times ".. i ..  " - " .. tostring(error))
             end
             sleep(3)
         end
@@ -327,7 +330,8 @@ function executeGmailFromThueMail()
                     end
                 end
             else
-                log("Failed request rentals/re-rent. Reason: " .. tostring(error))
+                toastr('Times ' .. i .. " - " .. tostring(error), 2)
+                log("Failed request rentals/re-rent. Times ".. i ..  " - " .. tostring(error))
             end
 
             sleep(3)
@@ -370,7 +374,8 @@ function executeGmailFromThueMail()
                     log(response.message)
                 end
             else
-                log("Failed request rentals. Reason: " .. tostring(error))
+                toastr('Times ' .. i .. " - " .. tostring(error), 2)
+                log("Failed request rentals. Times ".. i ..  " - " .. tostring(error))
             end
 
             sleep(3)
@@ -422,7 +427,8 @@ function executeHotmailFromDongVanFb()
                         log(response.message)
                     end
                 else
-                    log("Failed request user/buy. Reason: " .. tostring(error))
+                    toastr('Times ' .. i .. " - " .. tostring(error), 2)
+                    log("Failed request user/buy. Times ".. i ..  " - " .. tostring(error))
                 end
 
                 sleep(3)
@@ -464,11 +470,11 @@ function getThuemailConfirmCode()
                 saveMailToGoogleForm()
                 return response.otp
             else
-                toastr('Empty thuemails.com code.')
-                log('Empty thuemails.com code.')
+                toastr('Empty thuemails code. Times ' .. i)
             end
         else
-            log("Failed request rentals/id. Reason: " .. tostring(error))
+            toastr('Times ' .. i .. " - " .. tostring(error), 2)
+            log("Failed request rentals/id. Times ".. i ..  " - " .. tostring(error))
         end
 
         sleep(5)
@@ -505,11 +511,11 @@ function getDongvanfbConfirmCode()
             if response.status or response.status == 'true' then
                 return response.code
             else
-                toastr('Empty dongvanfb code.')
-                log('Empty dongvanfb code.')
+                toastr('Empty hotmail code. Times ' .. i)
             end
         else
-            log("Failed request api/get_code_oauth2. Reason: " .. tostring(error))
+            toastr('Times ' .. i .. " - " .. tostring(error), 2)
+            log("Failed request api/get_code_oauth2. Times ".. i ..  " - " .. tostring(error))
         end
 
         sleep(5)
@@ -544,7 +550,8 @@ function getFreeMailConfirmCodeSecondTime()
                 toastr("Empty response code.");
             end
         else
-            log("Failed request confirm_free_mail.php. Reason: " .. tostring(error))
+            toastr('Times ' .. i .. " - " .. tostring(error), 2)
+            log("Failed request confirm_free_mail. Times ".. i ..  " - " .. tostring(error))
         end
 
         sleep(5)
@@ -571,7 +578,8 @@ function getFreeMailConfirmCode()
                 toastr("Empty response code.");
             end
         else
-            log("Failed request add_free_mail.php. Reason: " .. tostring(error))
+            toastr('Times ' .. i .. " - " .. tostring(error), 2)
+            log("Failed request add_free_mail. Times ".. i ..  " - " .. tostring(error))
         end
 
         sleep(5)
@@ -609,7 +617,8 @@ function get2FACode()
                 log("Empty response get 2FA OTP.");
             end
         else
-            log("Failed request 2fa.live/tok. Reason: " .. tostring(error))
+            toastr('Times ' .. i .. " - " .. tostring(error), 2)
+            log("Failed request 2fa.live. Times ".. i ..  " - " .. tostring(error))
         end
 
         sleep(3)

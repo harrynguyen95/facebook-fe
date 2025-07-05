@@ -471,7 +471,7 @@ function main()
 
         if waitImageVisible(setting_privacy, 20) then
             toastr('setting_privacy')
-            if waitImageVisible(see_more_account_center, 10) then
+            if waitImageVisible(see_more_account_center, 20) then
                 findAndClickByImage(see_more_account_center)
                 waitImageNotVisible(see_more_account_center)
             end
