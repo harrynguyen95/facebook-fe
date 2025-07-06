@@ -639,11 +639,11 @@ function main()
         removeAccount()
     end
 
-    if checkImageIsExists(enter_the_confirmation_code) then goto label_confirmationcode end 
-    if checkImageIsExists(profile_picture) then goto label_profilepicture end
-    if checkImageIsExists(turn_on_contact) then goto label_turnoncontact end
-    if checkImageIsExists(no_friend) then goto label_nofriend end
-    if checkImageIsExists(add_phone_number) then goto label_addphonenumber end
+    if waitImageVisible(enter_the_confirmation_code, 1) then goto label_confirmationcode end 
+    if waitImageVisible(profile_picture, 1) then goto label_profilepicture end
+    if waitImageVisible(turn_on_contact, 1) then goto label_turnoncontact end
+    if waitImageVisible(no_friend, 1) then goto label_nofriend end
+    if waitImageVisible(add_phone_number, 1) then goto label_addphonenumber end
     if checkSuspended() then goto label_continue end
 
     toastr('end..')

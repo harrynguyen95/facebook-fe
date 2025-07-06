@@ -890,13 +890,11 @@ function homeAndUnlockScreen()
 end
 
 function executeXoaInfo()
-    if TIMES_XOA_INFO > 0 and waitImageVisible(xoainfo_logo, 10) then
+    if TIMES_XOA_INFO > 0 then
         toastr('executeXoaInfo')
+        appRun("com.ienthach.XoaInfo")
 
-        findAndClickByImage(xoainfo_logo)
-        waitImageNotVisible(xoainfo_logo)
-
-        if waitImageVisible(xoainfo_reset_data) then
+        if waitImageVisible(xoainfo_reset_data, 10) then
             for i = 1, TIMES_XOA_INFO do
                 findAndClickByImage(xoainfo_reset_data)
                 sleep(1)
@@ -915,7 +913,7 @@ function executeXoaInfo()
 end
 
 function checkModeMenuLeft()
-    return waitImageVisible(fb_logo_menu_left, 2)
+    return waitImageVisible(fb_logo_menu_left, 1)
 end
 
 -- function changeMailDomain()
