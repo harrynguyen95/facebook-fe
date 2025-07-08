@@ -15,6 +15,7 @@ xoainfo_set_proxy = {dirPath .. "xoainfo_set_proxy.png"}
 xoainfo_ip_adress = {dirPath .. "xoainfo_ip_adress.png"}
 xoainfo_done_btn = {dirPath .. "xoainfo_done_btn.png"}
 xoainfo_info_fake = {dirPath .. "xoainfo_info_fake.png"}
+xoainfo_port_input = {dirPath .. "xoainfo_port_input.png"}
 
 toastr('setProxyXoainfo')
 appRun("com.ienthach.XoaInfo")
@@ -45,18 +46,28 @@ if (PROXY ~= '') and waitImageVisible(xoainfo_reset_data, 10) then
         typeTextLongSpace(IP) sleep(0.5)
         findAndClickByImage(xoainfo_done_btn)
 
-        sleep(2)
-        
         -- Port typing
-        local result = findImage(xoainfo_sock5[1], 1, 0.99, nil, false, 1)
-        local sock5Pos = result[#result]
-        local x = sock5Pos[1]
-        local y = sock5Pos[2]
+        sleep(2)
+        if waitImageVisible(xoainfo_port_input, 2) then 
+            local result = findImage(xoainfo_sock5[1], 1, 0.99, nil, false, 1)
+            local sock5Pos = result[#result]
+            local x = sock5Pos[1]
+            local y = sock5Pos[2]
 
-        press(x, y + 150) sleep(0.5) -- IP input
-        findAndClickByImage(xoainfo_x_icon) sleep(0.5)
-        typeNumber(port) sleep(0.5)
-        findAndClickByImage(xoainfo_done_btn)
+            press(x, y + 150) sleep(0.5) -- IP input
+            typeNumber(port) sleep(0.5)
+            findAndClickByImage(xoainfo_done_btn)
+        else 
+            local result = findImage(xoainfo_sock5[1], 1, 0.99, nil, false, 1)
+            local sock5Pos = result[#result]
+            local x = sock5Pos[1]
+            local y = sock5Pos[2]
+
+            press(x, y + 150) sleep(0.5) -- IP input
+            findAndClickByImage(xoainfo_x_icon) sleep(0.5)
+            typeNumber(port) sleep(0.5)
+            findAndClickByImage(xoainfo_done_btn)
+        end 
 
         -- -- tap btn Set Proxy
         -- if findAndClickByImage(xoainfo_set_proxy) then
