@@ -1,5 +1,4 @@
 local dirPath = currentDir() .. "/images_es/"
-local enDirPath = currentDir() .. "/images_en/"
 
 what_is_birthday = {dirPath .. "what_is_your_birthday.png"}
 next = {dirPath .. "next.png", dirPath .. "next2.png", dirPath .. "next3.png"}
@@ -47,7 +46,7 @@ password_eye = {dirPath .. "password_eye.png"}
 
 i_agree_btn = {dirPath .. "agree.png"}
 dont_allow = {dirPath .. "dont_allow2.png"}
-space_short = {enDirPath .. "space_short.png"}
+space_short = {dirPath .. "space_short_en.png", dirPath .. "space_short_es.png"}
 shift_keyboard_on = {dirPath .. "shift_keyboard_on.png"}
 num_keyboard = {dirPath .. "num_keyboard.png"}
 home_icon = {dirPath .. "home_icon.png"}

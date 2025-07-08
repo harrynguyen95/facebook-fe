@@ -4,7 +4,7 @@ require('functions')
 
 -- ====== CONFIG ======
 LANGUAGE = 'ES'  -- EN|ES English|Spanish
-MAIL_SUPLY = 1  -- 1|2 hotmail_dongvanfb|thuemails.com
+MAIL_SUPLY = 1  -- 1|2|3 hotmail_dongvanfb|thuemails.com|yagisongs
 ENTER_VERIFY_CODE = true  -- true|false
 HOTMAIL_SERVICE_IDS = {1, 3, 2, 6, 5, 59, 60}
 HOTMAIL_SOURCE_FROM_FILE = false  -- true|false
@@ -18,11 +18,8 @@ if not waitForInternet(5) then alert("No internet!") exit() end
 getConfigServer()
 
 -- ====== LOCALE IMAGE REQUIRED ======
-function isES() return LANGUAGE == 'ES' end
-function isEN() return LANGUAGE == 'EN' end
-
-if isES() then require(currentDir() .. "/images_es") end
-if isEN() then require(currentDir() .. "/images_en") end
+if LANGUAGE == 'ES' then require(currentDir() .. "/images_es") end
+if LANGUAGE == 'EN' then require(currentDir() .. "/images_en") end
 
 -- ====== INFO ======
 info = {
@@ -386,12 +383,10 @@ function main()
     toastr('wait contact..')
     if waitImageVisible(turn_on_contact) then
         toastr("turn_on_contact")
-        press(380, 1200) sleep(1) -- next
 
-        if waitImageVisible(skip, 1) then findAndClickByImage(skip) end 
-        if waitImageVisible(next, 1) then findAndClickByImage(next) end 
-        if waitImageVisible(not_now, 1) then findAndClickByImage(not_now) end 
         if waitImageVisible(dont_allow, 1) then findAndClickByImage(dont_allow) end
+        if waitImageVisible(not_now, 1) then findAndClickByImage(not_now) end 
+        if waitImageVisible(next, 1) then findAndClickByImage(next) end 
         if waitImageVisible(skip, 1) then findAndClickByImage(skip) end 
 
         waitImageNotVisible(turn_on_contact)
@@ -488,24 +483,53 @@ function main()
             press(370, 710) -- continue_btn
             waitImageNotVisible(reenter_password)
         end
-        
+
         if waitImageVisible(check_your_email, 2) then
             toastr('check_your_email')
-            
-            finishCurrentAccount()
-            press(55, 160) -- X
+            if MAIL_SUPLY == 3 then 
+                local code = getMailDomainOwnerConfirmCode()
+                toastr('CODE: ' .. (code or '-'), 2)
 
-            if waitImageVisible(protect_your_account) then
-                press(40, 90) sleep(1) -- back on protect your account
-                press(40, 90) sleep(1) -- back on confirm identity
-                press(45, 90) sleep(1) -- back to setting menu
-                if not modeMenuLeft then press(45, 90) end -- back to main menu
-            end
-            if waitImageVisible(home_icon) then
-                press(60, 1290) -- back to homepage
-            end
+                if code and code ~= '' then
+                    press(100, 850) 
+                    typeText(code) sleep(1)
+                    if waitImageVisible(continue_code_mail) then
+                        findAndClickByImage(continue_code_mail)
 
-            goto label_searchtext
+                        waitImageNotVisible(check_your_email)
+                    end
+                else 
+                    finishCurrentAccount()
+                    press(55, 160) -- X
+
+                    if waitImageVisible(protect_your_account) then
+                        press(40, 90) sleep(1) -- back on protect your account
+                        press(40, 90) sleep(1) -- back on confirm identity
+                        press(45, 90) sleep(1) -- back to setting menu
+                        if not modeMenuLeft then press(45, 90) end -- back to main menu
+                    end
+                    if waitImageVisible(home_icon) then
+                        press(60, 1290) -- back to homepage
+                    end
+
+                    goto label_searchtext
+                end
+            else 
+                finishCurrentAccount()
+                press(55, 160) -- X
+
+                if waitImageVisible(protect_your_account) then
+                    press(40, 90) sleep(1) -- back on protect your account
+                    press(40, 90) sleep(1) -- back on confirm identity
+                    press(45, 90) sleep(1) -- back to setting menu
+                    if not modeMenuLeft then press(45, 90) end -- back to main menu
+                end
+                if waitImageVisible(home_icon) then
+                    press(60, 1290) -- back to homepage
+                end
+
+                goto label_searchtext
+            end 
         end
 
         if waitImageVisible(help_protect_account, 10) then

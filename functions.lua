@@ -456,11 +456,21 @@ function executeHotmailFromDongVanFb()
     return false
 end
 
+function executeDomainMail()
+    local mail = randomEmailLogin() 
+    info.mailLogin = mail
+    info.mailRegister = mail
+    info.mailPrice = 'free'
+    return true
+end 
+
 function executeGetMailRequest()
     if MAIL_SUPLY == 1 then 
         return executeHotmailFromDongVanFb()
     elseif MAIL_SUPLY == 2 then
         return executeGmailFromThueMail()
+    elseif MAIL_SUPLY == 3 then
+        return executeDomainMail()
     else 
         toastr('MAIL_SUPLY invalid.', 5)
         return false
@@ -554,20 +564,22 @@ function getCodeMailRegister()
         return getDongvanfbConfirmCode()
     elseif MAIL_SUPLY == 2 then
         return getThuemailConfirmCode()
+    elseif MAIL_SUPLY == 3 then
+        return getMailDomainRegisterConfirmCode()
     else 
         toastr('MAIL_SUPLY invalid.', 5)
     end
 end
 
-function getFreeMailConfirmCodeSecondTime()
+function getMailDomainRegisterConfirmCode()
     local tries = 3
     for i = 1, tries do 
         toastr('Call times ' .. i)
 
         local response, error = httpRequest {
-            url = PHP_SERVER .. "/confirm_free_mail.php?email=" .. info.mailLogin,
+            url = PHP_SERVER .. "/mail_domain_register_confirm.php?email=" .. info.mailLogin,
         }
-        -- log(response, 'getFreeMailConfirmCodeSecondTime')
+        -- log(response, 'getMailDomainRegisterConfirmCode')
         if response then
             local ok, response, err = safeJsonDecode(response)
             if ok then 
@@ -582,14 +594,44 @@ function getFreeMailConfirmCodeSecondTime()
             end
         else
             toastr('Times ' .. i .. " - " .. tostring(error), 2)
-            log("Failed request confirm_free_mail. Times ".. i ..  " - " .. tostring(error))
+            log("Failed request mail_domain_register_confirm. Times ".. i ..  " - " .. tostring(error))
         end
 
         sleep(5)
     end
 end
 
-function getFreeMailConfirmCode()
+function getMailDomainOwnerConfirmCode()
+    local tries = 3
+    for i = 1, tries do 
+        toastr('Call times ' .. i)
+
+        local response, error = httpRequest {
+            url = PHP_SERVER .. "/mail_domain_owner_confirm.php?email=" .. info.mailLogin,
+        }
+        -- log(response, 'getMailDomainOwnerConfirmCode')
+        if response then
+            local ok, response, err = safeJsonDecode(response)
+            if ok then 
+                if response.code ~= '' then
+                    return response.code
+                else
+                    toastr("Empty response code.");
+                end
+            else 
+                toastr("Failed decode response.");
+                log("Failed decode response.");
+            end
+        else
+            toastr('Times ' .. i .. " - " .. tostring(error), 2)
+            log("Failed request mail_domain_owner_confirm. Times ".. i ..  " - " .. tostring(error))
+        end
+
+        sleep(5)
+    end
+end
+
+function getMailDomainAddConfirmCode()
     sleep(3)
 
     local tries = 3
@@ -597,9 +639,9 @@ function getFreeMailConfirmCode()
         toastr('Call times ' .. i)
 
         local response, error = httpRequest {
-            url = PHP_SERVER .. "/add_free_mail.php?email=" .. info.mailLogin,
+            url = PHP_SERVER .. "/mail_domain_add_confirm.php?email=" .. info.mailLogin,
         }
-        -- log(response, 'getFreeMailConfirmCode')
+        -- log(response, 'getMailDomainAddConfirmCode')
 
         if response then
             local ok, response, err = safeJsonDecode(response)
@@ -615,20 +657,10 @@ function getFreeMailConfirmCode()
             end
         else
             toastr('Times ' .. i .. " - " .. tostring(error), 2)
-            log("Failed request add_free_mail. Times ".. i ..  " - " .. tostring(error))
+            log("Failed request mail_domain_add_confirm. Times ".. i ..  " - " .. tostring(error))
         end
 
         sleep(5)
-    end
-end
-
-function getCodeMailConfirm()
-    if MAIL_SUPLY == 1 then 
-        return getDongvanfbConfirmCode()
-    elseif MAIL_SUPLY == 2 then
-        return getFreeMailConfirmCodeSecondTime()
-    else 
-        toastr('MAIL_SUPLY invalid.', 5)
     end
 end
 
@@ -996,7 +1028,7 @@ end
 --                 else 
 --                     if waitImageVisible(enter_confirm_code, 10) then
 --                         toastr('enter_confirm_code')
---                         local code = getFreeMailConfirmCode()
+--                         local code = getMailDomainAddConfirmCode()
 --                         toastr('CODE: ' .. (code or '-'), 2)
 --                         if code then
 --                             press(130, 500) -- input code
@@ -1021,7 +1053,7 @@ end
 
 --                                         if waitImageVisible(check_your_email, 3) then
 --                                             toastr('check_your_email')
---                                             local code = getFreeMailConfirmCodeSecondTime()
+--                                             local code = getMailDomainOwnerConfirmCode()
 --                                             toastr('CODE: ' .. (code or '-'), 2)
 
 --                                             if code and code ~= '' then
