@@ -58,15 +58,15 @@ if (PROXY ~= '') and waitImageVisible(xoainfo_reset_data, 10) then
         typeNumber(port) sleep(0.5)
         findAndClickByImage(xoainfo_done_btn)
 
-        -- tap btn Set Proxy
-        if findAndClickByImage(xoainfo_set_proxy) then
-            sleep(5)
-            press(30, 80) sleep(1)
+        -- -- tap btn Set Proxy
+        -- if findAndClickByImage(xoainfo_set_proxy) then
+        --     sleep(5)
+        --     press(30, 80) sleep(1)
 
-            findAndClickByImage(xoainfo_reset_data)sleep(1)
-            if waitImageVisible(xoainfo_info_fake, 30) then
-                pressHome()
-            end 
-        end 
+        --     findAndClickByImage(xoainfo_reset_data)sleep(1)
+        --     if waitImageVisible(xoainfo_info_fake, 30) then
+        --         pressHome()
+        --     end 
+        -- end 
     end 
 end
