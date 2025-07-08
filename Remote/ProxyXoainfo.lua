@@ -45,6 +45,8 @@ if (PROXY ~= '') and waitImageVisible(xoainfo_reset_data, 10) then
         typeTextLongSpace(IP) sleep(0.5)
         findAndClickByImage(xoainfo_done_btn)
 
+        sleep(2)
+        
         -- Port typing
         local result = findImage(xoainfo_sock5[1], 1, 0.99, nil, false, 1)
         local sock5Pos = result[#result]
