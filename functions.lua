@@ -487,7 +487,7 @@ function getThuemailConfirmCode()
                     saveMailToGoogleForm()
                     return response.otp
                 else
-                    toastr('Empty thuemails code. Times ' .. i)
+                    toastr('Empty code. Times ' .. i)
                 end
             else 
                 toastr("Failed decode response.");
@@ -506,7 +506,7 @@ end
 function getDongvanfbConfirmCode()
     sleep(5)
 
-    local tries = 6
+    local tries = 10
     for i = 1, tries do 
         toastr('Call times ' .. i)
 
@@ -533,7 +533,7 @@ function getDongvanfbConfirmCode()
                 if response.status or response.status == 'true' then
                     return response.code
                 else
-                    toastr('Empty hotmail code. Times ' .. i)
+                    toastr('Empty code. Times ' .. i)
                 end
             else 
                 toastr("Failed decode response.");
@@ -725,6 +725,7 @@ function getConfigServer()
                     THUE_LAI_MAIL_THUEMAILS  = config.thue_lai_mail_thuemails ~= '0'
                     ADD_MAIL_DOMAIN          = config.add_mail_domain ~= '0'
                     REMOVE_REGISTER_MAIL     = config.remove_register_mail ~= '0'
+                    PROXY                    = config.proxy
 
                     return true
                 else

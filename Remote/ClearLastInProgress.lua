@@ -1,4 +1,7 @@
-require('utils')
+require(rootDir() .. '/Facebook/utils')
+require(rootDir() .. '/Facebook/functions')
+
+homeAndUnlockScreen()
 
 local path = rootDir() .. "/Device/accounts.txt"
 
@@ -30,25 +33,4 @@ local function removeLastIfInProgress(filePath)
     end
 end
 
-function homeAndUnlockScreen()
-    toast("Check Unlock Screen")
-
-    local i = 0
-    while true do
-        i = i + 1
-        if getColor(711, 17) == 16777215 and i > 3 then
-            break
-        end
-        if i > 5 then
-            lockAndUnlockScreen()
-            i = 0
-        end
-
-        keyDown(KEY_TYPE.HOME_BUTTON)
-        keyUp(KEY_TYPE.HOME_BUTTON)
-        usleep(1000000)
-    end
-end
-
 removeLastIfInProgress(path)
-homeAndUnlockScreen()

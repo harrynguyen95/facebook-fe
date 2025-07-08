@@ -31,6 +31,11 @@ function toastr(value, time)
     end
 end
 
+function dd(value)
+    sleep(1)
+    toastr(value, 5) exit()
+end 
+
 function showIphoneModel()
     local fh = io.popen("uname -m", "r")
     local model = fh:read("*l")
@@ -102,7 +107,7 @@ function press(x, y, duration)
     local randX = x + randOffset()
     local randY = y + randOffset()
     tap(randX, randY)
-    usleep(0.3 * 1000000)
+    usleep(duration * 1000000)
 end
 
 function split(str, delimiter)
@@ -664,8 +669,8 @@ function typeTextShortSpace(text)
     math.randomseed(os.time())
 
     local function randomTap(pos)
-        local x = math.random(-10, 10)
-        local y = math.random(-10, 10)
+        local x = math.random(-5, 5)
+        local y = math.random(-5, 5)
         tap(pos[1] + x, pos[2] + y)
         usleep(math.random(200000, 300000))
     end
@@ -728,19 +733,19 @@ function typeTextLongSpace(text)
     math.randomseed(os.time())
 
     local function randomTap(pos)
-        local x = math.random(-10, 10)
-        local y = math.random(-10, 10)
+        local x = math.random(-5, 5)
+        local y = math.random(-5, 5)
         tap(pos[1] + x, pos[2] + y)
-        usleep(math.random(200000, 300000))
+        usleep(math.random(250000, 300000))
     end
 
     local function tapSymbol(ch)
         randomTap(numberToggleKey)
-        usleep(math.random(300000, 400000))
+        usleep(math.random(350000, 400000))
         randomTap(symbolMap[ch])
-        usleep(math.random(200000, 300000))
+        usleep(math.random(250000, 300000))
         randomTap(numberToggleKey)
-        usleep(math.random(300000, 400000))
+        usleep(math.random(350000, 400000))
     end
 
     if waitImageVisible(shift_keyboard_on, 1) then

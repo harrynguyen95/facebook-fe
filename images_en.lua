@@ -1,31 +1,23 @@
+
 local dirPath = currentDir() .. "/images_en/"
 
-get_started = {dirPath .. "get_started.png"}
-what_is_birthday = {dirPath .. "what_is_your_birthday.png", dirPath .. "what_is_your_birthday2.png", dirPath .. "what_is_your_birthday11.png"}
+what_is_birthday = {dirPath .. "what_is_your_birthday2.png"}
 next = {dirPath .. "next.png", dirPath .. "next2.png", dirPath .. "next3.png"}
 what_is_gender = {dirPath .. "what_is_your_gender.png"}
 what_is_mobile_number = {dirPath .. "what_is_your_phone2.png"}
 sign_up_with_email = {dirPath .. "sign_up_with_email.png", dirPath .. "sign_up_with_mail2.png"}
 what_is_your_email = {dirPath .. "what_is_your_email.png"}
 continue_creating_account = {dirPath .. "continue_creating_account.png", dirPath .. "continue_create_account2.png"} 
-password = {dirPath .. "password.png", dirPath .. "password2.png", dirPath .. "password3.png"}
 save = {dirPath .. "save.png", dirPath .. "save2.png", dirPath .. "save5.png"}
 save_your_login_info = {dirPath .. "save_login_info.png"}
-agree_to = {dirPath .. "agree_to.png"}
-i_agree = {dirPath .. "i_agree.png"}
 enter_the_confirmation_code = {dirPath .. "enter_the_confirmation_code.png", dirPath .. "enter_the_confirmation_code2.png"}
-get_the_code = {dirPath .. "get_the_code.png", dirPath .. "get_the_code2.png"}
-confirm_by_email = {dirPath .. "confirm_by_email.png", dirPath .. "confirm_by_email2.png"}
-input_email = {dirPath .. "input_email2.png"}
 profile_picture = {dirPath .. "profile_picture.png", dirPath .. "profile_picture2.png"}
-turn_on_contact = {dirPath .. "turn_on_contact.png"}
+turn_on_contact = {dirPath .. "turn_on_contact.png", dirPath .. "turn_on_contact2.png"}
 skip = {dirPath .. "skip.png", dirPath .. "skip2.png", dirPath .. "skip3.png"}
-not_now = {dirPath .. "not_now4.png", dirPath .. "not_now2.png", dirPath .. "not_now3.png", dirPath .. "not_now.png", dirPath .. "not_now5.png", dirPath .. "not_now6.png"}
-turn_on_contact2 = {dirPath .. "turn_on_contact2.png"}
+not_now = {dirPath .. "not_now4.png", dirPath .. "not_now2.png", dirPath .. "not_now3.png", 
+    dirPath .. "not_now.png", dirPath .. "not_now5.png", dirPath .. "not_now6.png"}
 no_friend = {dirPath .. "no_friend2.png", dirPath .. "no_friend.png"}
-input_confirm_code = {dirPath .. "input_confirm_code.png"}
 what_on_your_mind = {dirPath .. "what_on_your_mind.png"}
-we_suspended = {dirPath .. "we_suspended.png"}
 
 create_new_account = {dirPath .. "create_new_acc.png", dirPath .. "create_new_acc2.png"}
 create_new_account_blue = {dirPath .. "create_new_acc_blue.png"}
@@ -50,6 +42,8 @@ logout_btn = {dirPath .. "logout_btn.png", dirPath .. "logout_red_btn.png", dirP
 logout_suspend_icon = {dirPath .. "logout_suspend_icon.png"}
 avatar_picture = {dirPath .. "avatar_picture.png"}
 create_a_password = {dirPath .. "create_a_password.png"}
+password_eye = {dirPath .. "password_eye.png"}
+
 
 i_agree_btn = {dirPath .. "agree_btn.png"}
 dont_allow = {dirPath .. "dont_allow_txt.png"}
@@ -57,15 +51,19 @@ space_short = {dirPath .. "space_short.png"}
 shift_keyboard_on = {dirPath .. "shift_keyboard_on.png"}
 num_keyboard = {dirPath .. "num_keyboard.png"}
 home_icon = {dirPath .. "home_icon.png"}
-agree_facebook_term = {dirPath .. "agree_facebook_term.png"}
+agree_facebook_term = {dirPath .. "agree_facebook_term.png", dirPath .. "agree_facebook_term2.png"}
 protect_your_account = {dirPath .. "protect_your_account.png"}
-contact_information = {dirPath .. "contact_information.png"}
-add_mail = {dirPath .. "add_mail2.png"} 
-add_email_address = {dirPath .. "add_email_address2.png", dirPath .. "enter_email_address.png"}
-enter_confirm_code = {dirPath .. "enter_confirm_code.png"}
-delete_mail = {dirPath .. "delete_mail.png"}
-deleted_previous_mail = {dirPath .. "deleted_previous_mail.png"}
+-- contact_information = {dirPath .. "contact_information.png"}
+-- add_mail = {dirPath .. "add_mail2.png"} 
+-- add_email_address = {dirPath .. "add_email_address2.png", dirPath .. "enter_email_address.png"}
+-- enter_confirm_code = {dirPath .. "enter_confirm_code.png"}
+-- delete_mail = {dirPath .. "delete_mail.png"}
+-- deleted_previous_mail = {dirPath .. "deleted_previous_mail.png"}
+-- added_email = {dirPath .. "added_email.png"}
+-- add_a_phone_number = {dirPath .. "add_a_phone_number.png"}
+-- email_used_added = {dirPath .. "email_used_added.png"}
 add_phone_number = {dirPath .. "add_phone_number.png"}
+add_phone_number_home = {dirPath .. "add_phone_number_home.png"}
 join_facebook = {dirPath .. "join_facebook.png", dirPath .. "we_will_help.png"}
 exist_account_in_mail = {dirPath .. "exist_account_in_mail.png"}
 you_are_logged_in = {dirPath .. "you_are_logged_in.png"}
@@ -73,22 +71,32 @@ check_your_email = {dirPath .. "check_your_email.png"}
 confirm_human = {dirPath .. "icon_suspended.png", dirPath .. "confirm_human.png", dirPath .. "human_confirm.png"} 
 continue_code_mail = {dirPath .. "continue_code_mail.png"}
 enter_code_2fa = {dirPath .. "enter_code_2fa.png"}
-added_email = {dirPath .. "added_email.png"}
-add_a_phone_number = {dirPath .. "add_a_phone_number.png"}
+
 leave_button = {dirPath .. "leave_button.png"}
-email_used_added = {dirPath .. "email_used_added.png"}
-do_you_already_have_account = {dirPath .. "do_you_already_have_account.png"}
 x_icon_search = {dirPath .. "x_icon_search.png"}
 fb_logo_2 = {dirPath .. "fb_logo_2.png"}
-to_sign_up_agree = {dirPath .. "to_sign_up_agree.png"}
-
 xoainfo_logo = {dirPath .. "xoainfo_logo.png"}
 xoainfo_reset_data = {dirPath .. "xoainfo_reset_data.png"}
 xoainfo_info_fake = {dirPath .. "xoainfo_info_fake.png"}
 logo_facebook_login = {dirPath .. "logo_facebook_login.png"}
-fb_logo_mode_new = {dirPath .. "fb_logo_mode_new.png"}
-page_not_available_now = {dirPath .. "page_not_available_now.png", dirPath .. "page_not_available_now2.png", dirPath .. "page_not_available_now3.png", dirPath .. "page_not_available_now4.png"}
+logo_fb_modern = {dirPath .. "logo_fb_modern.png"}
+page_not_available_now = {dirPath .. "page_not_available_now.png", dirPath .. "page_not_available_now2.png", 
+    dirPath .. "page_not_available_now3.png", dirPath .. "page_not_available_now4.png",
+    dirPath .. "page_not_available_now5.png", dirPath .. "page_not_available_now9.png",
+    dirPath .. "page_not_available_now9.png"}
 your_information_and_permission = {dirPath .. "your_information_and_permission.png"}
-your_information_and_2 = {dirPath .. "your_information_and_2.png"}
+your_information_and_per_btn = {dirPath .. "your_information_and_per_btn.png"}
 did_not_get_code = {dirPath .. "did_not_get_code.png"}
+input_confirm_code = {dirPath .. "input_confirm_code.png"}
 add_picture = {dirPath .. "add_picture.png"}
+contact_icon = {dirPath .. "contact_icon.png"}
+mail_did_not_receive_code = {dirPath .. "mail_did_not_receive_code.png"}
+setting_up_for_fb = {dirPath .. "setting_up_for_fb.png"}
+x_input_icon = {dirPath .. "x_input_icon.png"}
+gender_options = {dirPath .. "gender_options.png"}
+first_name_invalid = {dirPath .. "first_name_invalid.png"}
+accept = {dirPath .. "accept1.png", dirPath .. "accept2.png", dirPath .. "accept3.png"}
+can_not_agree = {dirPath .. "can_not_agree.png"}
+fb_logo_menu_left = {dirPath .. "fb_logo_menu_left.png"}
+
+do_you_already_have_account = {dirPath .. "do_you_already_have_account.png"}
