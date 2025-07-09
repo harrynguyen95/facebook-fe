@@ -7,7 +7,7 @@ swipeCloseApp()
 local dirPath = currentDir() .. "/images/"
 general_icon = {dirPath .. "general_icon.png"}
 general_back = {dirPath .. "general_back.png"}
-setting_back = {dirPath .. "setting_back.png"}
+setting_back = {dirPath .. "setting_back.png", dirPath .. "setting_back2.png"}
 setting_spanish = {dirPath .. "setting_spanish.png"}
 setting_english = {dirPath .. "setting_english.png"}
 english_us = {dirPath .. "english_us.png"}
@@ -35,6 +35,7 @@ sleep(1)
 swipe(600, 700, 610, 600) 
 sleep(2)
 
+toast('general_icon')
 if waitImageVisible(general_icon) then
     findAndClickByImage(general_icon) sleep(1)
 
