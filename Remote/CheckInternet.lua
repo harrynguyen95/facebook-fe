@@ -1,8 +1,8 @@
 require(rootDir() .. '/Facebook/utils')
 require(rootDir() .. '/Facebook/functions')
-clearAlert()
 
 homeAndUnlockScreen()
+clearAlert()
 
 if not waitForInternet(5) then
     alert([[

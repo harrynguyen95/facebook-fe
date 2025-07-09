@@ -1,8 +1,8 @@
 require(rootDir() .. '/Facebook/utils')
 require(rootDir() .. '/Facebook/functions')
-clearAlert()
 
 homeAndUnlockScreen()
+clearAlert()
 
 local path = rootDir() .. "/Device/accounts.txt"
 

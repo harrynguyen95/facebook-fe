@@ -4,9 +4,9 @@
 
 require(rootDir() .. '/Facebook/utils')
 require(rootDir() .. '/Facebook/functions')
-clearAlert()
 
 homeAndUnlockScreen()
+clearAlert()
 
 local dirPath = currentDir() .. "/images/"
 xoainfo_reset_data = {dirPath .. "xoainfo_reset_data.png"}
