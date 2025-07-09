@@ -128,7 +128,7 @@ end
 
 function clearAlert()
     local alertOK = {rootDir() .. "/Facebook/Remote/images/" .. "alert_ok.png"}
-    if waitImageVisible(alertOK, 1) then findAndClickByImage(alertOK) end
+    if waitImageVisible(alertOK, 1) then findAndClickByImage(alertOK) sleep(0.5) end
 end 
 
 function writeFile(path, data)
