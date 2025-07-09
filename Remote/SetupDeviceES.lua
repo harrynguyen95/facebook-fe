@@ -13,6 +13,8 @@ setting_english = {dirPath .. "setting_english.png"}
 espanol_ee_uu = {dirPath .. "espanol_ee_uu.png"}
 result_english = {dirPath .. "result_english.png"}
 result_spanish = {dirPath .. "result_spanish.png"}
+region_setting = {dirPath .. "region_setting.png", dirPath .. "region_setting2.png"}
+keyboard_setting = {dirPath .. "keyboard_setting.png", dirPath .. "keyboard_setting2.png"}
 
 toastr('setup Spanish')
 appRun("com.apple.Preferences") 
@@ -42,7 +44,7 @@ if waitImageVisible(general_icon) then
     swipe(600, 750, 610, 500) 
     sleep(2)
 
-    press(100, 500) sleep(1) -- go to region setting
+    findAndClickByImage(region_setting) sleep(1) -- go to region setting
     press(100, 250) sleep(1) -- select lang
 
     if waitImageVisible(espanol_ee_uu) then 
@@ -88,7 +90,7 @@ if waitImageVisible(general_icon) then
     swipe(600, 750, 610, 500) 
     sleep(2)
 
-    press(100, 310) sleep(1) -- go to input and text setting
+    findAndClickByImage(keyboard_setting) sleep(1) -- go to keyboard setting
     press(100, 250) sleep(1) -- select keyboard
     press(100, 250) sleep(1) -- select es keyboard
     press(100, 350) sleep(1) -- select QWERTY
