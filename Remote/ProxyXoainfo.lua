@@ -56,6 +56,7 @@ if (PROXY ~= '') and waitImageVisible(xoainfo_reset_data, 10) then
             local y = sock5Pos[2]
 
             press(x, y + 150) sleep(1) -- IP input
+            findAndClickByImage(xoainfo_x_icon) sleep(1)
             typeNumber(port) sleep(1)
             findAndClickByImage(xoainfo_done_btn)
         else 
@@ -63,7 +64,7 @@ if (PROXY ~= '') and waitImageVisible(xoainfo_reset_data, 10) then
             local sock5Pos = result[#result]
             local x = sock5Pos[1]
             local y = sock5Pos[2]
-
+            
             press(x, y + 150) sleep(1) -- IP input
             findAndClickByImage(xoainfo_x_icon) sleep(1)
             typeNumber(port) sleep(1)
