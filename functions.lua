@@ -905,6 +905,9 @@ end
 function homeAndUnlockScreen()
     toastr("Check Unlock Screen")
 
+    local alertOK = {rootDir() .. "/Facebook/Remote/images/" .. "alert_ok.png"}
+    if waitImageVisible(alertOK, 1) then findAndClickByImage(alertOK) end
+
     local i = 0
     while true do
         i = i + 1
