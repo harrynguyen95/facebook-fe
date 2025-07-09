@@ -60,7 +60,7 @@ function main()
 
     ::label_openfacebook::
     openFacebook()
-    sleep(15)
+    sleep(10)
 
     if waitImageVisible(logo_fb_modern, 5) then
         toastr('not_support_this_FB_mode')
