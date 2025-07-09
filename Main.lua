@@ -233,7 +233,7 @@ function main()
         end
     end
 
-    if waitImageVisible(what_is_birthday) then
+    if waitImageVisible(what_is_birthday, 3) then
         toastr("what_is_birthday")
         press(270, 470) sleep(0.5)
 
