@@ -42,9 +42,9 @@ if (PROXY ~= '') and waitImageVisible(xoainfo_reset_data, 10) then
         local x = sock5Pos[1]
         local y = sock5Pos[2]
 
-        press(x, y + 80) sleep(0.5) -- IP input
-        findAndClickByImage(xoainfo_x_icon) sleep(0.5)
-        typeTextLongSpace(IP) sleep(0.5)
+        press(x, y + 80) sleep(1) -- IP input
+        findAndClickByImage(xoainfo_x_icon) sleep(1)
+        typeTextLongSpace(IP) sleep(1)
         findAndClickByImage(xoainfo_done_btn)
 
         -- Port typing
@@ -55,8 +55,8 @@ if (PROXY ~= '') and waitImageVisible(xoainfo_reset_data, 10) then
             local x = sock5Pos[1]
             local y = sock5Pos[2]
 
-            press(x, y + 150) sleep(0.5) -- IP input
-            typeNumber(port) sleep(0.5)
+            press(x, y + 150) sleep(1) -- IP input
+            typeNumber(port) sleep(1)
             findAndClickByImage(xoainfo_done_btn)
         else 
             local result = findImage(xoainfo_sock5[1], 1, 0.99, nil, false, 1)
@@ -64,9 +64,9 @@ if (PROXY ~= '') and waitImageVisible(xoainfo_reset_data, 10) then
             local x = sock5Pos[1]
             local y = sock5Pos[2]
 
-            press(x, y + 150) sleep(0.5) -- IP input
-            findAndClickByImage(xoainfo_x_icon) sleep(0.5)
-            typeNumber(port) sleep(0.5)
+            press(x, y + 150) sleep(1) -- IP input
+            findAndClickByImage(xoainfo_x_icon) sleep(1)
+            typeNumber(port) sleep(1)
             findAndClickByImage(xoainfo_done_btn)
         end 
 
