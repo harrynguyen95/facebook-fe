@@ -913,6 +913,8 @@ function respring()
 end
 
 function swipeCloseApp()
+    clearAlert()
+
     keyPress(KEY_TYPE.HOME_BUTTON);
     sleep(0.1)
     keyPress(KEY_TYPE.HOME_BUTTON);

@@ -2,7 +2,7 @@ require(rootDir() .. '/Facebook/utils')
 require(rootDir() .. '/Facebook/functions')
 
 homeAndUnlockScreen()
-clearAlert()
+swipeCloseApp()
 
 PROXY = ''
 if not waitForInternet(5) then alert("No internet!") exit() end

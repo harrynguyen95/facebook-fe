@@ -2,7 +2,7 @@ require(rootDir() .. '/Facebook/utils')
 require(rootDir() .. '/Facebook/functions')
 
 homeAndUnlockScreen()
-clearAlert()
+swipeCloseApp()
 
 if not waitForInternet(5) then
     alert([[

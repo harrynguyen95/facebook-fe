@@ -2,7 +2,7 @@ require(rootDir() .. '/Facebook/utils')
 require(rootDir() .. '/Facebook/functions')
 
 homeAndUnlockScreen()
-clearAlert()
+swipeCloseApp()
 
 local path = rootDir() .. "/Device/accounts.txt"
 
