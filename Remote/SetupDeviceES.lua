@@ -1,8 +1,8 @@
 require(rootDir() .. '/Facebook/utils')
 require(rootDir() .. '/Facebook/functions')
-clearAlert()
 
 homeAndUnlockScreen()
+clearAlert()
 swipeCloseApp()
 
 local dirPath = currentDir() .. "/images/"
@@ -47,6 +47,8 @@ if waitImageVisible(general_icon) then
 
     findAndClickByImage(region_setting) sleep(1) -- go to region setting
     press(100, 250) sleep(1) -- select lang
+    press(100, 230) sleep(1) -- input lang
+    typeText('es') sleep(1)
 
     if waitImageVisible(espanol_ee_uu) then 
         findAndClickByImage(espanol_ee_uu)

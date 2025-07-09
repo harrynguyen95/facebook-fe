@@ -902,8 +902,17 @@ function openFacebook()
     -- sleep(1)
 end
 
+function clearAlert()
+    local alertOK = {rootDir() .. "/Facebook/Remote/images/" .. "alert_ok.png"}
+    if waitImageVisible(alertOK, 1) then 
+        findAndClickByImage(alertOK)
+        sleep(1)
+    end
+end 
+
 function homeAndUnlockScreen()
     toastr("Check Unlock Screen")
+    clearAlert()
 
     local i = 0
     while true do
