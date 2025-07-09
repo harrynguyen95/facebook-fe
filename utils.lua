@@ -126,6 +126,11 @@ function floor(num)
     return math.floor(num)
 end
 
+function clearAlert()
+    local alertOK = {rootDir() .. "/Facebook/Remote/images/" .. "alert_ok.png"}
+    if waitImageVisible(alertOK, 1) then findAndClickByImage(alertOK) end
+end 
+
 function writeFile(path, data)
     local f = io.open(path, "w")
     for i, v in ipairs(data) do

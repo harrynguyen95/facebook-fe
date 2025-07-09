@@ -1,6 +1,7 @@
 -- ====== LIB REQUIRED ======
 require('utils')
 require('functions')
+clearAlert()
 
 -- ====== CONFIG ======
 LANGUAGE = 'ES'  -- EN|ES English|Spanish
