@@ -449,6 +449,8 @@ function main()
             end
         end
 
+        if checkPageNotAvailable() then goto label_continue end
+
         if waitImageVisible(account_center, 20) then
             toastr('account_center')
             sleep(1)
