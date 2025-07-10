@@ -391,9 +391,12 @@ function main()
         toastr("turn_on_contact")
 
         if waitImageVisible(dont_allow, 1) then findAndClickByImage(dont_allow) end
+        if waitImageVisible(not_now, 1) then findAndClickByImage(not_now) end 
         if waitImageVisible(next, 1) then findAndClickByImage(next) end 
         if waitImageVisible(skip, 1) then findAndClickByImage(skip) end 
+
         if waitImageVisible(not_now, 1) then findAndClickByImage(not_now) end 
+        if waitImageVisible(skip, 1) then findAndClickByImage(skip) end 
 
         waitImageNotVisible(turn_on_contact)
         waitImageVisible(no_friend)
