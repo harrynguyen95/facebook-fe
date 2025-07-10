@@ -71,7 +71,8 @@ function main()
     findAndClickByImage(accept)
     if checkSuspended() then goto label_continue end
     if checkPageNotAvailable() then goto label_continue end
-    
+    if checkImageIsExists(find_friend) then goto label_findfriend_swipe end
+
     ::label_createnewaccount::
     showIphoneModel()
     if waitImageVisible(create_new_account, 20) then
