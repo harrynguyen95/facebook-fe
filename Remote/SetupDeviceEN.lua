@@ -46,6 +46,8 @@ if waitImageVisible(general_icon) then
 
     findAndClickByImage(region_setting) sleep(1) -- go to region setting
     press(100, 250) sleep(1) -- select lang
+    press(100, 230) sleep(1) -- input lang
+    typeText('es') sleep(1)
 
     if waitImageVisible(english_us) then 
         findAndClickByImage(english_us) 
@@ -58,6 +60,8 @@ if waitImageVisible(general_icon) then
             press(100, 90) -- back 2
             goto label_finish
         end 
+    else 
+        press(100, 430) -- first region
     end 
 end
 

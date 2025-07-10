@@ -60,6 +60,8 @@ if waitImageVisible(general_icon) then
             press(100, 90) -- back 2
             goto label_finish
         end 
+    else 
+        press(100, 430) -- first region
     end 
 end
 
