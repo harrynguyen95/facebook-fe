@@ -100,6 +100,7 @@ function main()
         if checkImageIsExists(profile_picture) then goto label_profilepicture end
         if checkImageIsExists(turn_on_contact) then goto label_turnoncontact end
         if checkImageIsExists(no_friend) then goto label_nofriend end
+        if checkImageIsExists(find_friend) then goto label_findfriend end
         if checkImageIsExists(add_phone_number) then goto label_addphonenumber end
         if checkImageIsExists(agree_facebook_term) then goto label_agree end
         if checkImageIsExists(what_on_your_mind) then 
@@ -400,10 +401,13 @@ function main()
         if waitImageVisible(skip, 1) then findAndClickByImage(skip) end 
         findAndClickByImage(next)
         waitImageVisible(no_friend)
-        if waitImageVisible(no_friend, 2) then
-            press(380, 1200)
-            press(380, 1200)
-        end
+    end
+
+    ::label_findfriend::
+    if waitImageVisible(find_friend) then
+        toastr("find_friend")
+        swipe(170, 600, 500, 600)
+        sleep(1)
     end
 
     findAndClickByImage(accept)
@@ -421,6 +425,7 @@ function main()
     if checkImageIsExists(profile_picture) then goto label_profilepicture end
     if checkImageIsExists(turn_on_contact) then goto label_turnoncontact end
     if checkImageIsExists(no_friend) then goto label_nofriend end
+    if checkImageIsExists(find_friend) then goto label_findfriend end
     if checkImageIsExists(add_phone_number) then goto label_addphonenumber end
 
     if checkPageNotAvailable() then goto label_continue end
@@ -674,10 +679,11 @@ function main()
     if waitImageVisible(profile_picture, 1) then goto label_profilepicture end
     if waitImageVisible(turn_on_contact, 1) then goto label_turnoncontact end
     if waitImageVisible(no_friend, 1) then goto label_nofriend end
+    if waitImageVisible(find_friend, 1) then goto label_findfriend end
     if waitImageVisible(add_phone_number, 1) then goto label_addphonenumber end
     if checkSuspended() then goto label_continue end
 
-    toastr('end..')
+    toastr('last check..')
     sleep(2)
     if info.status == 'INPROGRESS' then 
         if info.mailRegister ~= nil and info.mailRegister ~= '' then 

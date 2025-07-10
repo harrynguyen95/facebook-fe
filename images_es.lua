@@ -14,7 +14,8 @@ profile_picture = {dirPath .. "profile_picture.png", dirPath .. "profile_picture
 turn_on_contact = {dirPath .. "turn_on_contact.png", dirPath .. "turn_on_contact4.png", dirPath .. "turn_on_contact5.png"}
 skip = {dirPath .. "skip.png", dirPath .. "skip2.png", dirPath .. "skip3.png"}
 not_now = {dirPath .. "not_now.png", dirPath .. "not_now2.png", dirPath .. "not_now3.png", dirPath .. "not_now4.png"}
-no_friend = {dirPath .. "no_friend.png", dirPath .. "no_friend2.png", dirPath .. "no_friend3.png"}
+no_friend = {dirPath .. "no_friend.png", dirPath .. "no_friend2.png"}
+find_friend = {dirPath .. "find_friend.png"}
 what_on_your_mind = {dirPath .. "what_on_your_mind.png"}
 
 create_new_account = {dirPath .. "create_new_account1.png", dirPath .. "create_new_account2.png", 
