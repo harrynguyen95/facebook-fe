@@ -2,7 +2,6 @@ require(rootDir() .. '/Facebook/utils')
 require(rootDir() .. '/Facebook/functions')
 
 homeAndUnlockScreen()
-swipeCloseApp()
 
 local dirPath = currentDir() .. "/images/"
 general_icon = {dirPath .. "general_icon.png"}

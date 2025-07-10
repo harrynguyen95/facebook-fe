@@ -1,12 +1,7 @@
--- usleep(math.random(1000000, 2000000));
--- io.popen('killall -9 SpringBoard');
--- usleep(math.random(3000000, 4000000));
-
 require(rootDir() .. '/Facebook/utils')
 require(rootDir() .. '/Facebook/functions')
 
 homeAndUnlockScreen()
-swipeCloseApp()
 
 local dirPath = currentDir() .. "/images/"
 xoainfo_reset_data = {dirPath .. "xoainfo_reset_data.png"}
@@ -26,3 +21,7 @@ if waitImageVisible(xoainfo_reset_data, 10) then
     sleep(2)
     press(380, 740) -- respring button
 end
+
+-- usleep(math.random(1000000, 2000000));
+-- io.popen('killall -9 SpringBoard');
+-- usleep(math.random(3000000, 4000000));
