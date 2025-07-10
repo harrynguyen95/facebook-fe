@@ -61,6 +61,15 @@ if waitImageVisible(general_icon) then
         end 
     else 
         press(100, 430) -- first region
+        sleep(2)
+        press(350, 1130) sleep(10) -- confirm switch lang
+
+        if waitImageVisible(result_spanish, 30) then 
+            toast('Spanish', 3)
+            press(100, 90) sleep(1) -- back
+            press(100, 90) -- back 2
+            goto label_finish
+        end 
     end 
 end
 
