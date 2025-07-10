@@ -397,8 +397,23 @@ function randomEmailLogin()
     return part1 .. part2 .. "@yagisongs.com"
 end
 
+function swipeForce(x1, y1, x2, y2, duration)
+    duration = duration or 100000
+    local steps = 30
+    local sleepTime = duration / steps
+
+    touchDown(1, x1, y1)
+    for i = 1, steps do
+        local xi = x1 + (x2 - x1) * i / steps
+        local yi = y1 + (y2 - y1) * i / steps
+        usleep(sleepTime)
+        touchMove(1, xi, yi)
+    end
+    touchUp(1, x2, y2)
+end
+
 function swipe(x1, y1, x2, y2, duration)
-    duration = duration or 300
+    duration = duration or 200
     touchDown(0, x1, y1)
     usleep(50000)
     touchMove(0, x2, y2)
@@ -408,6 +423,7 @@ function swipe(x1, y1, x2, y2, duration)
 end
 
 function swipeVertically(n)
+toast('swipeVertically')
     math.randomseed(os.time());
     local x = math.random(5, 15)
     local x1 = math.random(200, 250)
