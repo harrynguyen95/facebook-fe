@@ -11,10 +11,10 @@ save = {dirPath .. "save.png", dirPath .. "save2.png", dirPath .. "save5.png"}
 save_your_login_info = {dirPath .. "save_your_login_info.png"}
 enter_the_confirmation_code = {dirPath .. "enter_the_confirmation_code.png", dirPath .. "enter_the_confirmation_code2.png"}
 profile_picture = {dirPath .. "profile_picture.png", dirPath .. "profile_picture2.png"}
-turn_on_contact = {dirPath .. "turn_on_contact.png", dirPath .. "turn_on_contact4.png"}
+turn_on_contact = {dirPath .. "turn_on_contact.png", dirPath .. "turn_on_contact4.png", dirPath .. "turn_on_contact5.png"}
 skip = {dirPath .. "skip.png", dirPath .. "skip2.png", dirPath .. "skip3.png"}
 not_now = {dirPath .. "not_now.png", dirPath .. "not_now2.png", dirPath .. "not_now3.png", dirPath .. "not_now4.png"}
-no_friend = {dirPath .. "no_friend.png", dirPath .. "no_friend2.png"}
+no_friend = {dirPath .. "no_friend.png", dirPath .. "no_friend2.png", , dirPath .. "no_friend3.png"}
 what_on_your_mind = {dirPath .. "what_on_your_mind.png"}
 
 create_new_account = {dirPath .. "create_new_account1.png", dirPath .. "create_new_account2.png", 

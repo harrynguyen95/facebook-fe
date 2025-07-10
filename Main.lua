@@ -400,6 +400,10 @@ function main()
         if waitImageVisible(skip, 1) then findAndClickByImage(skip) end 
         findAndClickByImage(next)
         waitImageVisible(no_friend)
+        if waitImageVisible(no_friend, 2) then
+            press(380, 1200)
+            press(380, 1200)
+        end
     end
 
     findAndClickByImage(accept)
