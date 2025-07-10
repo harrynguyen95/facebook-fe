@@ -614,7 +614,7 @@ function main()
             typeText(line)
             press(700, 1300) sleep(2) -- btn search blue
             sleep(3)
-            swipe(500, 900, 500, 800) sleep(2)
+            -- swipe(500, 900, 500, 800) sleep(2)
             if i < #searchTexts then
                 press(300, 90); -- click back into search box
 
