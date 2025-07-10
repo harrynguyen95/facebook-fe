@@ -46,7 +46,7 @@ if waitImageVisible(general_icon) then
     findAndClickByImage(region_setting) sleep(1) -- go to region setting
     press(100, 250) sleep(1) -- select lang
     press(100, 230) sleep(1) -- input lang
-    typeText('es') sleep(1)
+    typeText('en') sleep(1)
 
     if waitImageVisible(english_us) then 
         findAndClickByImage(english_us) 
