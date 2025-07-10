@@ -911,8 +911,7 @@ function clearAlert()
 end 
 
 function homeAndUnlockScreen()
-    toastr("Check Unlock Screen")
-    clearAlert()
+    toastr("Unlock Screen")
 
     local i = 0
     while true do
