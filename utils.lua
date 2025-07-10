@@ -40,7 +40,7 @@ function showIphoneModel()
     local fh = io.popen("uname -m", "r")
     local model = fh:read("*l")
     fh:close()
-    toastr(model or 'Unknown model', 4)
+    toastr(model or 'Unknown model', 1)
 end
 
 function shuffle(tbl)
