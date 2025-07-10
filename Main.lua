@@ -15,7 +15,7 @@ REMOVE_REGISTER_MAIL = false  -- true|false
 PROVIDER_MAIL_THUEMAILS = 1  -- 1|3 gmail|icloud
 TIMES_XOA_INFO = 3  -- 0|1|2|3
 
-if not waitForInternet(5) then alert("No Internet!") exit() end
+if not waitForInternet(3) then alert("No Internet!") exit() else toast('Connected!', 2) end
 getConfigServer()
 
 -- ====== LOCALE IMAGE REQUIRED ======
@@ -50,7 +50,7 @@ function main()
     goto debug
     ::debug::
 
-    if not waitForInternet(5) then alert("No Internet!") exit() end
+    if not waitForInternet(3) then alert("No Internet!") exit() else toast('Connected!', 2) end
     if info.mailRegister == nil or info.mailRegister == '' then 
         homeAndUnlockScreen()
         executeXoaInfo()
