@@ -407,7 +407,7 @@ function main()
     ::label_findfriend::
     if waitImageVisible(find_friend) then
         toastr("find_friend")
-        swipe(170, 600, 500, 600)
+        swipe(100, 600, 500, 600)
         sleep(1)
     end
 
