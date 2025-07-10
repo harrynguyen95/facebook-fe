@@ -62,7 +62,7 @@ function main()
     openFacebook()
     sleep(5)
 
-    if waitImageVisible(logo_fb_modern, 5) then
+    if waitImageVisible(logo_fb_modern, 3) then
         toastr('not_support_this_FB_mode')
         swipeCloseApp()
         goto label_continue
@@ -101,7 +101,7 @@ function main()
         if checkImageIsExists(profile_picture) then goto label_profilepicture end
         if checkImageIsExists(turn_on_contact) then goto label_turnoncontact end
         if checkImageIsExists(no_friend) then goto label_nofriend end
-        if checkImageIsExists(find_friend) then goto label_findfriend end
+        if checkImageIsExists(find_friend) then goto label_findfriend_swipe end
         if checkImageIsExists(add_phone_number) then goto label_addphonenumber end
         if checkImageIsExists(agree_facebook_term) then goto label_agree end
         if checkImageIsExists(what_on_your_mind) then 
@@ -404,9 +404,16 @@ function main()
         waitImageVisible(no_friend)
     end
 
-    ::label_findfriend::
+    ::label_findfriend_kill::
     if waitImageVisible(find_friend, 3) then
-        toastr("find_friend")
+        toastr("find_friend_kill")
+        swipeCloseApp()
+        goto label_openfacebook
+    end
+
+    ::label_findfriend_swipe::
+    if waitImageVisible(find_friend, 3) then
+        toastr("find_friend_swipe")
         swipeForce(50, 500, 600, 500)
     end
 
@@ -425,7 +432,7 @@ function main()
     if checkImageIsExists(profile_picture) then goto label_profilepicture end
     if checkImageIsExists(turn_on_contact) then goto label_turnoncontact end
     if checkImageIsExists(no_friend) then goto label_nofriend end
-    if checkImageIsExists(find_friend) then goto label_findfriend end
+    if checkImageIsExists(find_friend) then goto label_findfriend_kill end
     if checkImageIsExists(add_phone_number) then goto label_addphonenumber end
 
     if checkPageNotAvailable() then goto label_continue end
@@ -679,7 +686,7 @@ function main()
     if waitImageVisible(profile_picture, 1) then goto label_profilepicture end
     if waitImageVisible(turn_on_contact, 1) then goto label_turnoncontact end
     if waitImageVisible(no_friend, 1) then goto label_nofriend end
-    if waitImageVisible(find_friend, 1) then goto label_findfriend end
+    if waitImageVisible(find_friend, 1) then goto label_findfriend_kill end
     if waitImageVisible(add_phone_number, 1) then goto label_addphonenumber end
     if checkSuspended() then goto label_continue end
 
