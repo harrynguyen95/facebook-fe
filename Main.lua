@@ -91,7 +91,7 @@ function main()
             goto label_continue
         end
     else 
-        toastr('->', 1) sleep(1)
+        toastr('=>', 1) sleep(1)
         if checkImageIsExists(what_is_birthday) then goto label_birthday end
         if checkImageIsExists(what_is_mobile_number) then goto label_what_is_mobile end
         if checkImageIsExists(what_is_your_email) then goto label_what_is_email end
@@ -405,10 +405,9 @@ function main()
     end
 
     ::label_findfriend::
-    if waitImageVisible(find_friend) then
+    if waitImageVisible(find_friend, 3) then
         toastr("find_friend")
         swipeForce(50, 500, 600, 500)
-        sleep(1)
     end
 
     findAndClickByImage(accept)
