@@ -126,11 +126,6 @@ function floor(num)
     return math.floor(num)
 end
 
-function clearAlert()
-    local alertOK = {rootDir() .. "/Facebook/Remote/images/" .. "alert_ok.png"}
-    if waitImageVisible(alertOK, 1) then findAndClickByImage(alertOK) sleep(0.5) end
-end 
-
 function writeFile(path, data)
     local f = io.open(path, "w")
     for i, v in ipairs(data) do
@@ -913,8 +908,6 @@ function respring()
 end
 
 function swipeCloseApp()
-    clearAlert()
-
     keyPress(KEY_TYPE.HOME_BUTTON);
     sleep(0.1)
     keyPress(KEY_TYPE.HOME_BUTTON);

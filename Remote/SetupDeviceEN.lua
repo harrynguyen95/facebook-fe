@@ -65,19 +65,9 @@ if waitImageVisible(general_icon) then
     end 
 end
 
-alert([[
-+----------------------+
-|                                           |
-|               Failed                |
-|                                           |
-+----------------------+]])
+toast('FAILED...', 10)
 exit()
 
 ::label_finish::
-alert([[
-+----------------------+
-|                                           |
-|              English               |
-|                                           |
-+----------------------+]])
+toast('-----English-----', 10)
 exit()

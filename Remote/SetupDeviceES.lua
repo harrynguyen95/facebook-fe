@@ -65,21 +65,11 @@ if waitImageVisible(general_icon) then
     end 
 end
 
-alert([[
-+----------------------+
-|                                           |
-|               Failed                |
-|                                           |
-+----------------------+]])
+toast('FAILED...', 10)
 exit()
 
 ::label_finish::
-alert([[
-+----------------------+
-|                                           |
-|             Spanish               |
-|                                           |
-+----------------------+]])
+toast('-----Spanish-----', 10)
 exit()
 
 ::label_keyboard_es::
