@@ -60,7 +60,7 @@ function main()
 
     ::label_openfacebook::
     openFacebook()
-    sleep(10)
+    sleep(5)
 
     if waitImageVisible(logo_fb_modern, 5) then
         toastr('not_support_this_FB_mode')
@@ -74,7 +74,7 @@ function main()
     
     ::label_createnewaccount::
     showIphoneModel()
-    if waitImageVisible(create_new_account, 30) then
+    if waitImageVisible(create_new_account, 20) then
         if waitImageVisible(logo_fb_modern, 2) then
             toastr('not_support_this_FB_mode')
             swipeCloseApp()
@@ -91,6 +91,7 @@ function main()
             goto label_continue
         end
     else 
+        toastr('->', 1) sleep(1)
         if checkImageIsExists(what_is_birthday) then goto label_birthday end
         if checkImageIsExists(what_is_mobile_number) then goto label_what_is_mobile end
         if checkImageIsExists(what_is_your_email) then goto label_what_is_email end
