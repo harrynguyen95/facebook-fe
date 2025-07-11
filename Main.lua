@@ -14,6 +14,8 @@ ADD_MAIL_DOMAIN = false  -- true|false
 REMOVE_REGISTER_MAIL = false  -- true|false
 PROVIDER_MAIL_THUEMAILS = 1  -- 1|3 gmail|icloud
 TIMES_XOA_INFO = 3  -- 0|1|2|3
+MAIL_THUEMAILS_API_KEY = "94a3a21c-40b5-4c48-a690-f1584c390e3e" -- Hải
+MAIL_DONGVANFB_API_KEY = "iFI7ppA8JNDJ52yVedbPlMpSh" -- Hải
 
 if not waitForInternet(3) then alert("No Internet!") exit() else toast('Connected!', 2) end
 getConfigServer()
@@ -49,6 +51,7 @@ function main()
 
     goto debug
     ::debug::
+
     log(info, 'Main')
     if not waitForInternet(3) then alert("No Internet!") exit() else toast('Connected!', 2) end
     if info.mailRegister == nil or info.mailRegister == '' then 

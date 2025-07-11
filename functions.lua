@@ -1,9 +1,7 @@
 
 -- ====== CONFIG ======
 PHP_SERVER = "https://tuongtacthongminh.com/"
-MAIL_THUEMAILS_API_KEY = "94a3a21c-40b5-4c48-a690-f1584c390e3e" -- Hải
 MAIL_THUEMAILS_DOMAIN = "https://api.thuemails.com/api/"
-MAIL_DONGVANFB_API_KEY = "iFI7ppA8JNDJ52yVedbPlMpSh" -- Hải
 URL_2FA_FACEBOOK = "https://2fa.live/tok/"
 MAIL_FREE_DOMAIN = "https://api.temp-mailfree.com/"
 
@@ -762,8 +760,8 @@ function getConfigServer()
                     ADD_MAIL_DOMAIN          = config.add_mail_domain ~= '0'
                     REMOVE_REGISTER_MAIL     = config.remove_register_mail ~= '0'
                     PROXY                    = config.proxy
-                    MAIL_DONGVANFB_API_KEY   = config.api_key_thuemails
-                    MAIL_THUEMAILS_API_KEY   = config.api_key_dongvanfb
+                    MAIL_DONGVANFB_API_KEY   = config.api_key_dongvanfb
+                    MAIL_THUEMAILS_API_KEY   = config.api_key_thuemails
 
                     return true
                 else
