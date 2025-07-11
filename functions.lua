@@ -88,6 +88,7 @@ function failedCurrentAccount(code)
 
     info.status = "FAILED"
     info.checkpoint = code
+    if code == '282' and info.verifyCode ~= '' and info.verifyCode ~= nil then info.checkpoint = code .. '_has_code' end
     if not info.mailLogin or info.mailLogin == '' then info.mailLogin = info.mailRegister end 
     if not info.profileUid or info.profileUid == '' then info.profileUid = getUIDFBLogin() end 
     local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '')
@@ -801,7 +802,7 @@ function checkSuspended()
     if waitImageVisible(confirm_human, 1) then
         toastr('Die')
 
-        failedCurrentAccount(282)
+        failedCurrentAccount('282')
 
         -- press(680, 90) -- help text
         -- if waitImageVisible(logout_suspend_icon, 10) then
