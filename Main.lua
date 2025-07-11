@@ -16,6 +16,7 @@ PROVIDER_MAIL_THUEMAILS = 1  -- 1|3 gmail|icloud
 TIMES_XOA_INFO = 3  -- 0|1|2|3
 MAIL_THUEMAILS_API_KEY = "94a3a21c-40b5-4c48-a690-f1584c390e3e" -- Hải
 MAIL_DONGVANFB_API_KEY = "iFI7ppA8JNDJ52yVedbPlMpSh" -- Hải
+REG_PHONE_FIRST = true
 
 if not waitForInternet(3) then alert("No Internet!") exit() else toast('Connected!', 2) end
 getConfigServer()
@@ -63,7 +64,7 @@ function main()
 
     ::label_openfacebook::
     openFacebook()
-    sleep(5)
+    sleep(3)
 
     if waitImageVisible(logo_fb_modern, 3) then
         toastr('not_support_this_FB_mode')
@@ -81,8 +82,8 @@ function main()
 
     sleep(1)
     if checkImageIsExists(what_is_birthday) then goto label_birthday end
-    if checkImageIsExists(what_is_mobile_number) then goto label_what_is_mobile end
-    if checkImageIsExists(what_is_your_email) then goto label_what_is_email end
+    if checkImageIsExists(what_is_mobile_number) then goto label_whatisyourmobile end
+    if checkImageIsExists(what_is_your_email) then goto label_whatisyouremail end
     if checkImageIsExists(enter_the_confirmation_code) then goto label_confirmationcode end
     if checkImageIsExists(create_a_password) then goto label_createpassword end
     if checkImageIsExists(save_your_login_info) then goto label_saveyourlogin end
@@ -176,72 +177,23 @@ function main()
     if checkImageIsExists(create_new_account_blue) then goto label_createnewaccountblue end 
     if checkImageIsExists(get_started) then goto label_createnewaccountblue end 
 
-    ::label_what_is_mobile::
+    ::label_whatisyourmobile::
     if waitImageVisible(what_is_mobile_number) or waitImageVisible(sign_up_with_email) then
         toastr("what_is_mobile_number")
-        findAndClickByImage(sign_up_with_email)
-        waitImageNotVisible(what_is_mobile_number)
-    end
-
-    ::label_what_is_email::
-    if waitImageVisible(what_is_your_email) then
-        toastr("what_is_your_email")
-        -- or waitImageVisible(mail_did_not_receive_code) 
-
-        if info.mailRegister ~= nil and info.mailRegister ~= '' then 
-            press(310, 410)
-            findAndClickByImage(x_input_icon)
-            typeText(info.mailRegister)
-
+        if REG_PHONE_FIRST then 
+            typeText(randomUSPhone())
             findAndClickByImage(next)
-            archiveCurrentAccount()
-
-            if waitImageVisible(exist_account_in_mail) then
-                toastr('exist_account_in_mail')
-                failedCurrentAccount('email_has_account')
-                goto label_continue
+            waitImageNotVisible(what_is_mobile_number)
+            if waitImageVisible(continue_creating_account, 3) then
+                findAndClickByImage(continue_creating_account)
             end
         else
-            if executeGetMailRequest() then 
-                if info.mailRegister ~= nil and info.mailRegister ~= '' then 
-                    press(310, 410)
-                    findAndClickByImage(x_input_icon)
-                    typeText(info.mailRegister)
-
-                    findAndClickByImage(next)
-                    archiveCurrentAccount()
-
-                    if waitImageVisible(exist_account_in_mail) then
-                        toastr('exist_account_in_mail')
-                        failedCurrentAccount('email_has_account')
-                        goto label_continue
-                    end
-                end
-            else 
-                toastr("Empty mail. Continue.", 10) sleep(5)
-                log("Empty mail. Continue.")
-                failedCurrentAccount('empty_email')
-                goto label_continue
-            end
-        end
-
-        if not waitImageNotVisible(what_is_your_email, 30) then 
-            if checkImageIsExists(what_is_your_email) then findAndClickByImage(next) end
-            if not waitImageNotVisible(what_is_your_email, 30) then 
-                toastr('Can not next')
-                swipeCloseApp()
-                goto label_openfacebook
-            end
-        end
-
-        if waitImageVisible(continue_creating_account, 3) then
-            toastr("continue_creating_account")
-            failedCurrentAccount('email_has_account')
-            goto label_continue
+            findAndClickByImage(sign_up_with_email)
+            waitImageNotVisible(what_is_mobile_number)
         end
     end
 
-    if waitImageVisible(what_is_birthday, 3) then
+    if waitImageVisible(what_is_birthday, 2) then
         toastr("what_is_birthday")
         press(270, 470) sleep(0.5)
 
@@ -270,7 +222,7 @@ function main()
 
     ::label_createpassword::
     toastr('wait password..')
-    if waitImageVisible(create_a_password) then
+    if waitImageVisible(create_a_password, 3) then
         toastr("create_a_password")
         press(135, 450)
         findAndClickByImage(password_eye)
@@ -288,7 +240,7 @@ function main()
     end
 
     ::label_saveyourlogin::
-    if waitImageVisible(save_your_login_info) then
+    if waitImageVisible(save_your_login_info, 3) then
         toastr("save_your_login_info")
         findAndClickByImage(save)
         waitImageNotVisible(save_your_login_info)
@@ -317,6 +269,76 @@ function main()
         if waitImageVisible(already_have_account) then
             press(380, 600)
             waitImageNotVisible(already_have_account)
+        end
+    end
+
+    ::label_noreceivecode::
+    if REG_PHONE_FIRST then 
+        if waitImageVisible(no_receive_code, 10) and waitImageVisible(enter_confirm_code_phone, 10) then
+            toastr("no_receive_code")
+            findAndClickByImage(no_receive_code)
+            if waitImageVisible(confirm_via_email, 30) then 
+                findAndClickByImage(confirm_via_email)
+                sleep(2)
+                goto label_whatisyouremail
+            end
+        end
+    end
+
+    ::label_whatisyouremail::
+    if waitImageVisible(what_is_your_email, 3) or waitImageVisible(enter_an_email, 3) then
+        toastr("what_is_your_email")
+
+        if info.mailRegister ~= nil and info.mailRegister ~= '' then 
+            press(310, 420)
+            findAndClickByImage(x_input_icon)
+            typeText(info.mailRegister)
+
+            findAndClickByImage(next)
+            archiveCurrentAccount()
+
+            if waitImageVisible(exist_account_in_mail, 3) then
+                toastr('exist_account_in_mail')
+                failedCurrentAccount('email_has_account')
+                goto label_continue
+            end
+        else
+            if executeGetMailRequest() then 
+                if info.mailRegister ~= nil and info.mailRegister ~= '' then 
+                    press(310, 420)
+                    findAndClickByImage(x_input_icon)
+                    typeText(info.mailRegister)
+
+                    findAndClickByImage(next)
+                    archiveCurrentAccount()
+
+                    if waitImageVisible(exist_account_in_mail, 3) then
+                        toastr('exist_account_in_mail')
+                        failedCurrentAccount('email_has_account')
+                        goto label_continue
+                    end
+                end
+            else 
+                toastr("Empty mail. Continue.", 10) sleep(5)
+                log("Empty mail. Continue.")
+                failedCurrentAccount('empty_email')
+                goto label_continue
+            end
+        end
+
+        if not waitImageNotVisible(what_is_your_email, 30) then 
+            if checkImageIsExists(what_is_your_email) then findAndClickByImage(next) end
+            if not waitImageNotVisible(what_is_your_email, 30) then 
+                toastr('Can not next')
+                swipeCloseApp()
+                goto label_openfacebook
+            end
+        end
+
+        if waitImageVisible(continue_creating_account, 3) then
+            toastr("continue_creating_account")
+            failedCurrentAccount('email_has_account')
+            goto label_continue
         end
     end
 
@@ -406,7 +428,7 @@ function main()
     end
 
     ::label_nofriend::
-    if waitImageVisible(no_friend) then
+    if waitImageVisible(no_friend, 3) then
         toastr("no_friend")
         if waitImageVisible(skip, 1) then findAndClickByImage(skip) end 
         findAndClickByImage(next)
@@ -414,14 +436,14 @@ function main()
     end
 
     ::label_findfriend_kill::
-    if waitImageVisible(find_friend, 3) then
+    if waitImageVisible(find_friend, 2) then
         toastr("find_friend_kill")
         swipeCloseApp()
         goto label_openfacebook
     end
 
     ::label_findfriend_swipe::
-    if waitImageVisible(find_friend, 3) then
+    if waitImageVisible(find_friend, 2) then
         toastr("find_friend_swipe")
         swipeForce(50, 500, 600, 500)
     end
