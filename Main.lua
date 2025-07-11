@@ -184,8 +184,9 @@ function main()
             typeText(randomUSPhone())
             findAndClickByImage(next)
             waitImageNotVisible(what_is_mobile_number)
-            if waitImageVisible(continue_creating_account, 3) then
-                findAndClickByImage(continue_creating_account)
+            if waitImageVisible(continue_creating_account, 3) or waitImageVisible(red_warning_icon, 3) then
+                failedCurrentAccount('phone_invalid')
+                goto label_continue
             end
         else
             findAndClickByImage(sign_up_with_email)
@@ -297,7 +298,7 @@ function main()
             findAndClickByImage(next)
             archiveCurrentAccount()
 
-            if waitImageVisible(exist_account_in_mail, 3) then
+            if waitImageVisible(exist_account_in_mail, 3) or waitImageVisible(red_warning_icon, 3) then
                 toastr('exist_account_in_mail')
                 failedCurrentAccount('email_has_account')
                 goto label_continue
@@ -312,7 +313,7 @@ function main()
                     findAndClickByImage(next)
                     archiveCurrentAccount()
 
-                    if waitImageVisible(exist_account_in_mail, 3) then
+                    if waitImageVisible(exist_account_in_mail, 3) or waitImageVisible(red_warning_icon, 3) then
                         toastr('exist_account_in_mail')
                         failedCurrentAccount('email_has_account')
                         goto label_continue
@@ -335,9 +336,9 @@ function main()
             end
         end
 
-        if waitImageVisible(continue_creating_account, 3) then
+        if waitImageVisible(continue_creating_account, 3) or waitImageVisible(red_warning_icon, 3) then
             toastr("continue_creating_account")
-            failedCurrentAccount('email_has_account')
+            failedCurrentAccount('email_invalid')
             goto label_continue
         end
     end
