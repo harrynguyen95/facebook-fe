@@ -157,31 +157,29 @@ function saveNoVerifyToGoogleForm()
 end
 
 function saveMailToGoogleForm()
-    if not HOTMAIL_SOURCE_FROM_FILE then
-        local localIP = readFile(localIPFilePath)
-        info.localIP = localIP[#localIP]
+    local localIP = readFile(localIPFilePath)
+    info.localIP = localIP[#localIP]
 
-        local tries = 3
-        for i = 1, tries do 
-            local response, error = httpRequest {
-                url = PHP_SERVER .. "mail_google_form.php",
-                method = "POST",
-                headers = {
-                    ["Content-Type"] = "application/json",
-                },
-                data = info
-            }
+    local tries = 3
+    for i = 1, tries do 
+        local response, error = httpRequest {
+            url = PHP_SERVER .. "mail_google_form.php",
+            method = "POST",
+            headers = {
+                ["Content-Type"] = "application/json",
+            },
+            data = info
+        }
 
-            if response then
-                -- log(info, "Sent request to Google Form" )
-                return
-            else
-                toastr('Times ' .. i .. " - " .. tostring(error), 2)
-                log("Failed request mail_google_form. Times ".. i ..  " - " .. tostring(error))
-            end
-            sleep(3)
+        if response then
+            -- log(info, "Sent request to Google Form" )
+            return
+        else
+            toastr('Times ' .. i .. " - " .. tostring(error), 2)
+            log("Failed request mail_google_form. Times ".. i ..  " - " .. tostring(error))
         end
-    end 
+        sleep(3)
+    end
 end
 
 function resetInfoObject()
