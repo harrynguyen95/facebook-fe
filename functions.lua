@@ -476,8 +476,8 @@ function executeGetMailRequest()
 end
 
 function getThuemailConfirmCode()
-    sleep(5)
-    local tries = 10
+    sleep(10)
+    local tries = 20
     for i = 1, tries do 
         toastr('Call times ' .. i)
 
@@ -749,6 +749,7 @@ function getConfigServer()
             if ok then 
                 if response.status and response.status == 'success' then
                     local config = response.data
+                    log(config)
                     LANGUAGE                 = config.language
                     HOTMAIL_SERVICE_IDS      = parseStringToTable(config.hotmail_service_ids)
                     MAIL_SUPLY               = tonumber(config.mail_suply)
