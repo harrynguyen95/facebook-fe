@@ -506,7 +506,7 @@ function getThuemailConfirmCode()
             log("Failed request rentals/id. Times ".. i ..  " - " .. tostring(error))
         end
 
-        sleep(5)
+        sleep(10)
     end
     return nil
 end
