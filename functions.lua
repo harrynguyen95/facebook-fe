@@ -44,7 +44,7 @@ function archiveCurrentAccount()
             accounts[#accounts] = line
             writeFile(accountFilePath, accounts)
         else
-            info.uuid = floor(splitted[1] + 1)
+            if splitted[1] and splitted[1] ~= '' then info.uuid = floor(splitted[1] + 1) else info.uuid = 1 end
             info.status = 'INPROGRESS'
             if ADD_MAIL_DOMAIN then info.mailLogin = randomEmailLogin() end 
             local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '')
@@ -599,6 +599,7 @@ function getMailDomainRegisterConfirmCode()
 
         sleep(5)
     end
+    return nil
 end
 
 function getMailDomainOwnerConfirmCode()
@@ -629,6 +630,7 @@ function getMailDomainOwnerConfirmCode()
 
         sleep(5)
     end
+    return nil
 end
 
 function getMailDomainAddConfirmCode()
@@ -662,6 +664,7 @@ function getMailDomainAddConfirmCode()
 
         sleep(5)
     end
+    return nil
 end
 
 function get2FACode()
@@ -696,6 +699,7 @@ function get2FACode()
 
         sleep(3)
     end
+    return nil
 end
 
 function getSearchText(no)
