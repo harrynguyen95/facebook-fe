@@ -135,7 +135,7 @@ function writeFile(path, data)
 end
 
 function addLineToFile(path, line)
-    io.open(path, "a"):write(line, "\n"):close()
+    (io.open(path, "a")):write(line .. "\n"):close()
 end
 
 function readFile(path)
