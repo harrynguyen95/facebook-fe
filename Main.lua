@@ -203,6 +203,7 @@ function main()
     if checkImageIsExists(create_new_account) then goto label_createnewaccount end 
     if checkImageIsExists(create_new_account_blue) then goto label_createnewaccountblue end 
     if checkImageIsExists(get_started) then goto label_createnewaccountblue end 
+    if checkImageIsExists(enter_the_confirmation_code) then goto label_confirmationcode end
 
     ::label_whatisyourmobile::
     if waitImageVisible(what_is_mobile_number) or waitImageVisible(sign_up_with_email) then
