@@ -107,7 +107,7 @@ end
 
 function saveAccToGoogleForm()
     local localIP = readFile(localIPFilePath)
-    info.localIP = localIP[#localIP] .. "|" .. LANGUAGE
+    info.localIP = localIP[#localIP] .. " | " .. LANGUAGE .. " | " .. (REG_PHONE_FIRST and 'phone' or 'mail')
 
     local tries = 3
     for i = 1, tries do 
@@ -133,7 +133,7 @@ end
 
 function saveNoVerifyToGoogleForm()
     local localIP = readFile(localIPFilePath)
-    info.localIP = localIP[#localIP] .. "|" .. LANGUAGE
+    info.localIP = localIP[#localIP] .. " | " .. LANGUAGE .. " | " .. (REG_PHONE_FIRST and 'phone' or 'mail')
 
     local tries = 3
     for i = 1, tries do 
@@ -159,7 +159,7 @@ end
 
 function saveMailToGoogleForm()
     local localIP = readFile(localIPFilePath)
-    info.localIP = localIP[#localIP]
+    info.localIP = localIP[#localIP] .. " | " .. LANGUAGE .. " | " .. (REG_PHONE_FIRST and 'phone' or 'mail')
 
     local tries = 3
     for i = 1, tries do 
@@ -764,6 +764,7 @@ function getConfigServer()
                     PROXY                    = config.proxy
                     MAIL_DONGVANFB_API_KEY   = config.api_key_dongvanfb
                     MAIL_THUEMAILS_API_KEY   = config.api_key_thuemails
+                    REG_PHONE_FIRST          = config.reg_phone_first ~= '0'
 
                     return true
                 else

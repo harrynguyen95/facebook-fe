@@ -17,6 +17,7 @@ skip = {dirPath .. "skip.png", dirPath .. "skip2.png", dirPath .. "skip3.png"}
 not_now = {dirPath .. "not_now4.png", dirPath .. "not_now2.png", dirPath .. "not_now3.png", 
     dirPath .. "not_now.png", dirPath .. "not_now5.png", dirPath .. "not_now6.png"}
 no_friend = {dirPath .. "no_friend2.png", dirPath .. "no_friend.png"}
+find_friend = {dirPath .. "find_friend3.png"}
 what_on_your_mind = {dirPath .. "what_on_your_mind.png"}
 
 create_new_account = {dirPath .. "create_new_acc.png", dirPath .. "create_new_acc2.png"}
