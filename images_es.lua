@@ -72,7 +72,7 @@ red_warning_icon = {dirPath .. "red_warning_icon.png"}
 you_are_logged_in = {dirPath .. "you_are_logged_in.png"}
 check_your_email = {dirPath .. "check_your_email2.png"}
 confirm_human = {dirPath .. "icon_suspended.png", dirPath .. "human_confirm.png", dirPath .. "human_confirm2.png"} 
-continue_code_mail = {dirPath .. "continue_code_mail.png"}
+continue_code_mail = {dirPath .. "continue_code_mail.png", dirPath .. "continue_code_mail2.png"}
 enter_code_2fa = {dirPath .. "enter_code_2fa.png"}
 
 leave_button = {dirPath .. "leave_button.png"}
