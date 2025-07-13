@@ -767,6 +767,18 @@ function main()
         end
     end
 
+    if LOGIN_WITH_CODE then 
+        if waitImageVisible(what_app, 2) then
+            finishCurrentAccount('other_device')
+            goto label_continue
+        end
+
+        if waitImageVisible(check_notification_device, 2) then
+            finishCurrentAccount('other_device')
+            goto label_continue
+        end
+    end 
+
     ::label_searchtext::
     toastr('wait searchtext..')
     if waitImageVisible(what_on_your_mind) then
