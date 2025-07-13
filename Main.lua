@@ -83,7 +83,7 @@ function main()
     sleep(1)
     if checkImageIsExists(what_is_birthday) then goto label_birthday end
     if checkImageIsExists(what_is_mobile_number) then goto label_whatisyourmobile end
-    if checkImageIsExists(no_receive_code) then goto label_confirmationcode end 
+    if checkImageIsExists(enter_confirm_code_phone) then goto label_enterconfirmcodephone end 
     if checkImageIsExists(enter_the_confirmation_code) then goto label_confirmationcode end
     if checkImageIsExists(create_a_password) then goto label_createpassword end
     if checkImageIsExists(save_your_login_info) then goto label_saveyourlogin end
@@ -184,14 +184,18 @@ function main()
         if REG_PHONE_FIRST then 
             typeText(randomUSPhone())
             findAndClickByImage(next)
-            waitImageNotVisible(what_is_mobile_number)
-            if waitImageVisible(continue_creating_account) or waitImageVisible(red_warning_icon) then
+
+            if waitImageVisible(continue_creating_account) then
+                failedCurrentAccount('phone_has_account')
+                goto label_continue
+            end
+
+            if waitImageVisible(red_warning_icon, 2) then
                 press(320, 380)
                 findAndClickByImage(x_input_icon)
                 typeText(randomUSPhone())
                 findAndClickByImage(next)
-                waitImageNotVisible(what_is_mobile_number)
-                if waitImageVisible(continue_creating_account) or waitImageVisible(red_warning_icon) then
+                if waitImageVisible(continue_creating_account) then
                     failedCurrentAccount('phone_invalid')
                     goto label_continue
                 end
@@ -291,6 +295,7 @@ function main()
     toastr('wait password..')
     if waitImageVisible(create_a_password) then
         toastr("create_a_password")
+        log(info.password, 'CREATE PASSWORD')
         press(135, 450)
         findAndClickByImage(password_eye)
         typeText(info.password)
@@ -339,10 +344,10 @@ function main()
         end
     end
 
-    ::label_noreceivecode::
+    ::label_enterconfirmcodephone::
     if REG_PHONE_FIRST then 
-        if waitImageVisible(no_receive_code, 10) and waitImageVisible(enter_confirm_code_phone, 10) then
-            toastr("no_receive_code")
+        if waitImageVisible(enter_confirm_code_phone, 10) then
+            toastr("enter_confirm_code_phone")
             findAndClickByImage(no_receive_code)
             if waitImageVisible(confirm_via_email, 30) then 
                 findAndClickByImage(confirm_via_email)
@@ -409,6 +414,8 @@ function main()
 
     ::label_confirmationcode::
     if waitImageVisible(enter_the_confirmation_code, 10) then
+        if checkImageIsExists(enter_confirm_code_phone) then goto label_enterconfirmcodephone end
+        
         toastr("enter_the_confirmation_code")
 
         if waitImageVisible(dont_allow, 1) then findAndClickByImage(dont_allow) end
@@ -524,7 +531,7 @@ function main()
         waitImageVisible(add_phone_number)
     end
 
-    if checkImageIsExists(no_receive_code) then goto label_confirmationcode end 
+    if checkImageIsExists(enter_confirm_code_phone) then goto label_enterconfirmcodephone end 
     if checkImageIsExists(enter_the_confirmation_code) then goto label_confirmationcode end 
     if checkImageIsExists(profile_picture) then goto label_profilepicture end
     if checkImageIsExists(turn_on_contact) then goto label_turnoncontact end
@@ -596,6 +603,8 @@ function main()
 
         if waitImageVisible(reenter_password, 15) then
             toastr('reenter_password')
+            log(info.password, 'REENTER PASSWORD')
+
             press(135, 530) -- input password
             findAndClickByImage(password_eye)
             typeText(info.password)
@@ -786,7 +795,7 @@ function main()
         removeAccount()
     end
 
-    if waitImageVisible(no_receive_code, 1) then goto label_confirmationcode end 
+    if waitImageVisible(enter_confirm_code_phone, 1) then goto label_enterconfirmcodephone end 
     if waitImageVisible(enter_the_confirmation_code, 1) then goto label_confirmationcode end 
     if waitImageVisible(profile_picture, 1) then goto label_profilepicture end
     if waitImageVisible(turn_on_contact, 1) then goto label_turnoncontact end
