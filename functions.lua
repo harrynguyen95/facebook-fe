@@ -59,7 +59,7 @@ function archiveCurrentAccount()
         addLineToFile(accountFilePath, line)
     end
 
-    log(info, 'Archive')
+    log(info.password, 'Archive')
 end
 
 function finishCurrentAccount()
