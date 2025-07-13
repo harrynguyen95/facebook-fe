@@ -619,7 +619,7 @@ function main()
         if waitImageVisible(account_center, 20) then
             toastr('account_center')
             sleep(1)
-            swipe(600, 800, 610, 700) sleep(1)
+            swipe(600, 800, 610, 720) sleep(1)
 
             if waitImageVisible(personal_details_btn) then
                 findAndClickByImage(personal_details_btn)
@@ -786,7 +786,6 @@ function main()
             typeText(line)
             press(700, 1300) sleep(2) -- btn search blue
             sleep(3)
-            -- swipe(500, 900, 500, 800) sleep(2)
             if i < #searchTexts then
                 press(300, 90); -- click back into search box
 
