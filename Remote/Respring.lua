@@ -16,6 +16,8 @@ if waitImageVisible(xoainfo_reset_data, 10) then
     press(450, 410) -- menu Add on
     sleep(1)
     swipe(600, 800, 610, 500) 
+    sleep(1)
+    swipe(600, 800, 610, 500) 
     sleep(2)
     press(380, 740) -- respring button
 end
