@@ -689,13 +689,23 @@ function main()
             end 
         end
 
-        
-
         if waitImageVisible(help_protect_account, 10) then
             toastr('help_protect_account')
             findAndClickByImage(next)
             waitImageNotVisible(help_protect_account)
         end
+
+        if LOGIN_WITH_CODE then 
+            if waitImageVisible(what_app, 2) then
+                finishCurrentAccount('other_device')
+                goto label_continue
+            end
+
+            if waitImageVisible(check_notification_device, 2) then
+                finishCurrentAccount('other_device')
+                goto label_continue
+            end
+        end 
 
         if waitImageVisible(instructions_for_setup, 10) and waitImageVisible(copy_key, 10) then
             toastr('instructions_for_setup')
@@ -755,18 +765,6 @@ function main()
             end
             press(60, 1290) -- back to homepage
         end
-
-        if LOGIN_WITH_CODE then 
-            if waitImageVisible(what_app, 2) then
-                finishCurrentAccount('other_device')
-                goto label_continue
-            end
-
-            if waitImageVisible(check_notification_device, 2) then
-                finishCurrentAccount('other_device')
-                goto label_continue
-            end
-        end 
     end
 
     ::label_searchtext::
