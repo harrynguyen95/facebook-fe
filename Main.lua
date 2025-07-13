@@ -655,32 +655,6 @@ function main()
             waitImageNotVisible(reenter_password)
         end
 
-        if LOGIN_WITH_CODE then 
-            if waitImageVisible(continue_code_mail, 2) then
-                findAndClickByImage(continue_code_mail)
-            end
-
-            if waitImageVisible(what_app, 2) then
-                finishCurrentAccount()
-                press(55, 160) -- X
-
-                if waitImageVisible(protect_your_account) then
-                    press(40, 90) sleep(1) -- back on protect your account
-                    press(40, 90) sleep(1) -- back on confirm identity
-                    press(45, 90) sleep(1) -- back to setting menu
-                    if not modeMenuLeft then press(45, 90) end -- back to main menu
-                end
-                press(60, 1290) -- back to homepage
-
-                goto label_searchtext
-            end
-
-            if waitImageVisible(check_notification_device, 2) then
-                finishCurrentAccount('other_device')
-                goto label_continue
-            end
-        end 
-
         if waitImageVisible(check_your_email, 3) then
             toastr('check_your_email')
             local code = getCodeMailOwner()
@@ -708,6 +682,32 @@ function main()
                 goto label_searchtext
             end 
         end
+
+        if LOGIN_WITH_CODE then 
+            if waitImageVisible(continue_code_mail, 2) then
+                findAndClickByImage(continue_code_mail)
+            end
+
+            if waitImageVisible(what_app, 2) then
+                finishCurrentAccount()
+                press(55, 160) -- X
+
+                if waitImageVisible(protect_your_account) then
+                    press(40, 90) sleep(1) -- back on protect your account
+                    press(40, 90) sleep(1) -- back on confirm identity
+                    press(45, 90) sleep(1) -- back to setting menu
+                    if not modeMenuLeft then press(45, 90) end -- back to main menu
+                end
+                press(60, 1290) -- back to homepage
+
+                goto label_searchtext
+            end
+
+            if waitImageVisible(check_notification_device, 2) then
+                finishCurrentAccount('other_device')
+                goto label_continue
+            end
+        end 
 
         if waitImageVisible(help_protect_account, 10) then
             toastr('help_protect_account')
