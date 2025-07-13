@@ -17,6 +17,11 @@ hotmailSourceFilePath = rootDir() .. "/Device/hotmail_source.txt"
 
 function initCurrentAccountCode()
     local accounts = readFile(accountFilePath)
+    local code = readFile(accountCodeFilePath)
+    if code == nil or code[#code] == nil or code[#code] == '' then
+        alert('Empty UID and OTP')
+    end
+
     local current = accounts[#accounts]
     local splitted = split(current, "|")
 
