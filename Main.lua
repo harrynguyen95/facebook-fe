@@ -17,9 +17,11 @@ TIMES_XOA_INFO = 3  -- 0|1|2|3
 MAIL_THUEMAILS_API_KEY = "94a3a21c-40b5-4c48-a690-f1584c390e3e" -- Hải
 MAIL_DONGVANFB_API_KEY = "iFI7ppA8JNDJ52yVedbPlMpSh" -- Hải
 REG_PHONE_FIRST = true
+LOGIN_WITH_CODE = true
 
 if not waitForInternet(3) then alert("No Internet!") exit() else toast('Connected!', 2) end
 getConfigServer()
+LANGUAGE = 'ES'
 
 -- ====== LOCALE IMAGE REQUIRED ======
 if LANGUAGE == 'ES' then require(currentDir() .. "/images_es") end
@@ -61,6 +63,7 @@ function main()
     else 
         swipeCloseApp()
     end
+    if LOGIN_WITH_CODE then initCurrentAccountCode() end 
 
     ::label_openfacebook::
     openFacebook()
@@ -106,17 +109,40 @@ function main()
         end
 
         toastr('create_new_account')
-        findAndClickByImage(create_new_account) sleep(2)
-        if waitImageNotVisible(logo_facebook_login, 30) then 
-            sleep(3)
+
+        if LOGIN_WITH_CODE then 
+            findAndClickByImage(mobile_or_email)
+            typeText(info.profileUid)
+            findAndClickByImage(login_password)
+            findAndClickByImage(password_eye)
+            typeText(info.password)
+            findAndClickByImage(login_button)
+            if waitImageNotVisible(logo_facebook_login, 30) then 
+                sleep(3)
+            else 
+                toastr('Can not next')
+                swipeCloseApp()
+                goto label_continue
+            end
         else 
-            toastr('Can not next')
-            swipeCloseApp()
-            goto label_continue
-        end
+            findAndClickByImage(create_new_account) sleep(2)
+            if waitImageNotVisible(logo_facebook_login, 30) then 
+                sleep(3)
+            else 
+                toastr('Can not next')
+                swipeCloseApp()
+                goto label_continue
+            end
+        end 
     else         
         if checkSuspended() then goto label_continue end
     end
+
+    if LOGIN_WITH_CODE then 
+        if waitImageVisible(enter_the_confirmation_code, 20) then
+            goto label_confirmationcode
+        end
+    end 
 
     if waitImageVisible(join_facebook, 2) then 
         toastr('not_support_this_FB_mode', 2)
@@ -258,7 +284,7 @@ function main()
 
             if waitImageVisible(continue_creating_account, 3) or waitImageVisible(red_warning_icon, 3) then
                 toastr("continue_creating_account")
-                failedCurrentAccount('email_invalid')
+                failedCurrentAccount('email_has_account')
                 goto label_continue
             end
         end
@@ -295,7 +321,6 @@ function main()
     toastr('wait password..')
     if waitImageVisible(create_a_password) then
         toastr("create_a_password")
-        log(info.password, 'CREATE PASSWORD')
         press(135, 450)
         findAndClickByImage(password_eye)
         typeText(info.password)
@@ -411,7 +436,7 @@ function main()
 
             if waitImageVisible(continue_creating_account, 3) or waitImageVisible(red_warning_icon, 3) then
                 toastr("continue_creating_account")
-                failedCurrentAccount('email_invalid')
+                failedCurrentAccount('email_has_account')
                 goto label_continue
             end
         end
@@ -428,7 +453,13 @@ function main()
         if waitImageVisible(dont_allow, 1) then findAndClickByImage(dont_allow) end
         info.profileUid = getUIDFBLogin()
 
-        local OTPcode = getCodeMailRegister()
+        local OTPcode = nil
+        if (info.verifyCode and info.verifyCode ~= '') then
+            OTPcode = info.verifyCode
+        else
+            OTPcode = getCodeMailRegister()
+        end 
+
         toastr('OTPcode: ' .. (OTPcode or '-'))
         if OTPcode then 
             info.verifyCode = OTPcode
@@ -439,6 +470,11 @@ function main()
                 findAndClickByImage(x_input_icon)
                 typeText(OTPcode) sleep(1)
                 findAndClickByImage(next)
+
+                if waitImageVisible(red_warning_icon) then 
+                    failedCurrentAccount('code_invalid')
+                    goto label_continue
+                end 
             else 
                 finishCurrentAccount()
                 goto label_continue
@@ -488,6 +524,7 @@ function main()
 
     if checkSuspended() then goto label_continue end
     if checkPageNotAvailable() then goto label_continue end
+    if checkImageIsExists(what_on_your_mind) then goto label_get2FA end 
 
     ::label_turnoncontact::
     toastr('wait contact..')
@@ -538,6 +575,7 @@ function main()
         waitImageVisible(add_phone_number)
     end
 
+    if checkImageIsExists(create_a_password) then goto label_createpassword end 
     if checkImageIsExists(enter_confirm_code_phone) then goto label_enterconfirmcodephone end 
     if checkImageIsExists(enter_the_confirmation_code) then goto label_confirmationcode end 
     if checkImageIsExists(profile_picture) then goto label_profilepicture end
@@ -610,7 +648,6 @@ function main()
 
         if waitImageVisible(reenter_password, 15) then
             toastr('reenter_password')
-            log(info.password, 'REENTER PASSWORD')
 
             press(135, 530) -- input password
             findAndClickByImage(password_eye)
@@ -621,31 +658,15 @@ function main()
 
         if waitImageVisible(check_your_email, 2) then
             toastr('check_your_email')
-            if MAIL_SUPLY == 3 then 
-                local code = getMailDomainOwnerConfirmCode()
-                toastr('CODE: ' .. (code or '-'), 2)
+            local code = getCodeMailOwner()
+            toastr('CODE: ' .. (code or '-'), 2)
 
-                if code and code ~= '' then
-                    press(100, 850) 
-                    typeText(code) sleep(1)
-                    if waitImageVisible(continue_code_mail) then
-                        findAndClickByImage(continue_code_mail)
-
-                        waitImageNotVisible(check_your_email)
-                    end
-                else 
-                    finishCurrentAccount()
-                    press(55, 160) -- X
-
-                    if waitImageVisible(protect_your_account) then
-                        press(40, 90) sleep(1) -- back on protect your account
-                        press(40, 90) sleep(1) -- back on confirm identity
-                        press(45, 90) sleep(1) -- back to setting menu
-                        if not modeMenuLeft then press(45, 90) end -- back to main menu
-                    end
-                    press(60, 1290) -- back to homepage
-
-                    goto label_searchtext
+            if code and code ~= '' then 
+                press(100, 850) 
+                typeText(code) sleep(1)
+                if waitImageVisible(continue_code_mail) then
+                    findAndClickByImage(continue_code_mail)
+                    waitImageNotVisible(check_your_email)
                 end
             else 
                 finishCurrentAccount()

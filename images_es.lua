@@ -107,3 +107,6 @@ enter_confirm_code_phone = {dirPath .. "enter_confirm_code_phone.png"}
 no_receive_code = {dirPath .. "no_receive_code.png"}
 confirm_via_email = {dirPath .. "confirm_via_email.png"}
 enter_an_email = {dirPath .. "enter_an_email.png"}
+mobile_or_email = {dirPath .. "mobile_or_email.png", dirPath .. "mobile_or_email2.png"}
+login_password = {dirPath .. "login_password.png", dirPath .. "login_password2.png"}
+login_button = {dirPath .. "login_button.png", dirPath .. "login_button2.png"}

@@ -8,27 +8,75 @@ MAIL_FREE_DOMAIN = "https://api.temp-mailfree.com/"
 defaultPasswordFilePath = currentPath() .. "/input/password.txt"
 searchTextFilePath = currentPath() .. "/input/searchtext.txt"
 accountFilePath = rootDir() .. "/Device/accounts.txt"
+accountCodeFilePath = rootDir() .. "/Device/accounts_code.txt"
 mailFilePath = rootDir() .. "/Device/thuemails.txt"
 localIPFilePath = rootDir() .. "/Device/local_ip.txt"
 hotmailSourceFilePath = rootDir() .. "/Device/hotmail_source.txt"
 
 -- ====== LOGIC FUNCTION ======
 
+function initCurrentAccountCode()
+    local accounts = readFile(accountFilePath)
+    local current = accounts[#accounts]
+    local splitted = split(current, "|")
+
+    if splitted[2] == 'INPROGRESS' then 
+        if splitted[13] and splitted[13] ~= '' then 
+        else 
+            local accountCode = getRandomLineInFile(accountCodeFilePath)
+            local splittedCode = split(accountCode, "|")
+
+            info.status = 'INPROGRESS'
+            info.profileUid = splittedCode[1]
+            info.mailLogin = splittedCode[2]
+            info.mailRegister = splittedCode[2]
+            info.mailPrice = 'otp'
+            info.password = splittedCode[3]
+            info.hotmailPassword = splittedCode[4]
+            info.hotmailRefreshToken = splittedCode[5]
+            info.hotmailClientId = splittedCode[6]
+            info.verifyCode = splittedCode[7]
+
+            local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '')
+            accounts[#accounts] = line
+            writeFile(accountFilePath, accounts)
+        end 
+    else 
+        local accountCode = getRandomLineInFile(accountCodeFilePath)
+        local splittedCode = split(accountCode, "|")
+
+        local newUuid = 1
+        if splitted[1] and splitted[1] ~= '' then newUuid = floor(splitted[1] + 1) end
+        info.uuid = newUuid
+        info.status = 'INPROGRESS'
+        info.profileUid = splittedCode[1]
+        info.mailLogin = splittedCode[2]
+        info.mailRegister = splittedCode[2]
+        info.mailPrice = 'otp'
+        info.password = splittedCode[3]
+        info.hotmailPassword = splittedCode[4]
+        info.hotmailRefreshToken = splittedCode[5]
+        info.hotmailClientId = splittedCode[6]
+        info.verifyCode = splittedCode[7]
+
+        local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '')
+        addLineToFile(accountFilePath, line)
+    end
+    return
+end
+
 function archiveCurrentAccount()
     local accounts = readFile(accountFilePath)
-    
-    info.uuid = 1
     local randomPass = getRandomLineInFile(defaultPasswordFilePath)
 
     if #accounts > 0 then
         local current = accounts[#accounts]
         local splitted = split(current, "|")
         if splitted[2] == 'INPROGRESS' then
-            log(splitted[4], 'splitted[4]')
             info.uuid         = splitted[1]
             info.status       = info.status or splitted[2]
             info.mailLogin    = info.mailLogin or splitted[3]
-            info.password     = splitted[4] or randomPass
+            info.password     = info.password or splitted[4]
             info.profileUid   = info.profileUid or splitted[5]
             info.twoFA        = info.twoFA or splitted[6]
             info.mailRegister        = info.mailRegister or splitted[7]
@@ -59,7 +107,7 @@ function archiveCurrentAccount()
         addLineToFile(accountFilePath, line)
     end
 
-    log(info.password, 'Archive')
+    -- log(info, 'Archive')
 end
 
 function finishCurrentAccount()
@@ -78,6 +126,9 @@ function finishCurrentAccount()
 
     if HOTMAIL_SOURCE_FROM_FILE and info.mailLogin and info.mailLogin ~= '' then 
         removeLineFromFile(hotmailSourceFilePath, info.mailLogin)
+    end 
+    if LOGIN_WITH_CODE then 
+        removeLineFromFile(accountCodeFilePath, info.profileUid)
     end 
     if ENTER_VERIFY_CODE then saveAccToGoogleForm() else saveNoVerifyToGoogleForm() end
 
@@ -105,6 +156,9 @@ function failedCurrentAccount(code)
     if HOTMAIL_SOURCE_FROM_FILE and info.mailLogin and info.mailLogin ~= '' then 
         removeLineFromFile(hotmailSourceFilePath, info.mailLogin)
     end 
+    if LOGIN_WITH_CODE then 
+        removeLineFromFile(accountCodeFilePath, info.profileUid)
+    end 
     saveAccToGoogleForm()
 
     resetInfoObject()
@@ -126,7 +180,7 @@ function saveAccToGoogleForm()
         }
 
         if response then
-            -- log(info, "Sent request to Google Form" )
+            log(info, "Sent request to Google Form" )
             return
         else
             toastr('Times ' .. i .. " - " .. tostring(error), 2)
@@ -539,7 +593,7 @@ function getDongvanfbConfirmCode()
             data = postData
         }
 
-        -- log(response, 'getDongvanfbConfirmCode')
+        log(response, 'getDongvanfbConfirmCode')
 
         if response then
             local ok, response, err = safeJsonDecode(response)
@@ -561,18 +615,6 @@ function getDongvanfbConfirmCode()
         sleep(5)
     end
     return nil
-end
-
-function getCodeMailRegister()
-    if MAIL_SUPLY == 1 then 
-        return getDongvanfbConfirmCode()
-    elseif MAIL_SUPLY == 2 then
-        return getThuemailConfirmCode()
-    elseif MAIL_SUPLY == 3 then
-        return getMailDomainRegisterConfirmCode()
-    else 
-        toastr('MAIL_SUPLY invalid.', 5)
-    end
 end
 
 function getMailDomainRegisterConfirmCode()
@@ -606,6 +648,18 @@ function getMailDomainRegisterConfirmCode()
     return nil
 end
 
+function getCodeMailRegister()
+    if MAIL_SUPLY == 1 then 
+        return getDongvanfbConfirmCode()
+    elseif MAIL_SUPLY == 2 then
+        return getThuemailConfirmCode()
+    elseif MAIL_SUPLY == 3 then
+        return getMailDomainRegisterConfirmCode()
+    else 
+        toastr('MAIL_SUPLY invalid.', 5)
+    end
+end
+
 function getMailDomainOwnerConfirmCode()
     local tries = 3
     for i = 1, tries do 
@@ -635,6 +689,16 @@ function getMailDomainOwnerConfirmCode()
         sleep(5)
     end
     return nil
+end
+
+function getCodeMailOwner()
+    if MAIL_SUPLY == 1 then 
+        return getDongvanfbConfirmCode()
+    elseif MAIL_SUPLY == 3 then
+        return getMailDomainOwnerConfirmCode()
+    else 
+        toastr('MAIL_SUPLY invalid.', 5)
+    end
 end
 
 function getMailDomainAddConfirmCode()
