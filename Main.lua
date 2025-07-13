@@ -89,8 +89,8 @@ function main()
     if checkImageIsExists(save_your_login_info) then goto label_saveyourlogin end
     if checkImageIsExists(profile_picture) then goto label_profilepicture end
     if checkImageIsExists(turn_on_contact) then goto label_turnoncontact end
-    if checkImageIsExists(no_friend) then goto label_nofriend end
     if checkImageIsExists(find_friend) then goto label_findfriend_swipe end
+    if checkImageIsExists(no_friend) then goto label_nofriend end
     if checkImageIsExists(add_phone_number) then goto label_addphonenumber end
     if checkImageIsExists(agree_facebook_term) then goto label_agree end
     if checkImageIsExists(what_on_your_mind) then 
@@ -191,7 +191,7 @@ function main()
                 typeText(randomUSPhone())
                 findAndClickByImage(next)
                 if waitImageVisible(continue_creating_account) then
-                    failedCurrentAccount('phone_invalid')
+                    failedCurrentAccount('phone_has_account')
                     goto label_continue
                 end
             end
@@ -311,7 +311,7 @@ function main()
         end 
     end
 
-    if checkImageIsExists(continue_creating_account) then failedCurrentAccount('phone_invalid') goto label_continue end
+    if checkImageIsExists(continue_creating_account) then failedCurrentAccount('phone_has_account') goto label_continue end
 
     ::label_saveyourlogin::
     if waitImageVisible(save_your_login_info, 3) then
