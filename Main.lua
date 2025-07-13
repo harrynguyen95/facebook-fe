@@ -344,12 +344,14 @@ function main()
         end
     end
 
+    if checkImageIsExists(create_a_password) then goto label_createpassword end 
+
     ::label_enterconfirmcodephone::
     if REG_PHONE_FIRST then 
         if waitImageVisible(enter_confirm_code_phone, 10) then
             toastr("enter_confirm_code_phone")
             findAndClickByImage(no_receive_code)
-            if waitImageVisible(confirm_via_email, 30) then 
+            if waitImageVisible(confirm_via_email, 10) then 
                 findAndClickByImage(confirm_via_email)
                 sleep(2)
             end
