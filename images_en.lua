@@ -87,7 +87,7 @@ page_not_available_now = {dirPath .. "page_not_available_now.png", dirPath .. "p
     dirPath .. "page_not_available_now5.png", dirPath .. "page_not_available_now9.png",
     dirPath .. "page_not_available_now9.png"}
 your_information_and_permission = {dirPath .. "your_information_and_permission.png"}
-your_information_and_per_btn = {dirPath .. "your_information_and_per_btn.png"}
+your_information_and_per_btn = {dirPath .. "your_information_and_per_btn2.png"}
 did_not_get_code = {dirPath .. "did_not_get_code.png"}
 input_confirm_code = {dirPath .. "input_confirm_code.png"}
 add_picture = {dirPath .. "add_picture.png"}
