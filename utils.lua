@@ -944,3 +944,48 @@ function swipeCloseApp()
     keyPress(KEY_TYPE.HOME_BUTTON);
     sleep(math.random(1, 2));
 end
+
+function randomUSPhone()
+    math.randomseed(os.time())
+    local area_codes = {
+        ["New York"] = {"212", "315", "518"},
+        ["California"] = {"213", "310", "415", "818"},
+        ["Florida"] = {"305", "407", "786"},
+        ["Texas"] = {"214", "713", "512"},
+        ["Illinois"] = {"312", "630", "773"},
+        ["Nevada"] = {"702", "775"},
+        ["Georgia"] = {"404", "678"},
+        ["Washington"] = {"206", "253"},
+        ["Massachusetts"] = {"617", "508"},
+        -- ["New Mexico"] = {"505"},
+        ["Hawaii"] = {"808"},
+        ["Arizona"] = {"480", "602"},
+        ["Utah"] = {"801", "385"}
+    }
+
+    local function randomNXX()
+        local first = math.random(2, 9)
+        local second = math.random(0, 9)
+        local third = math.random(0, 9)
+        return string.format("%d%d%d", first, second, third)
+    end
+
+    local function randomLineNumber()
+        return string.format("%04d", math.random(0, 9999))
+    end
+
+    local function randomPhone()
+        local states = {}
+        for state in pairs(area_codes) do table.insert(states, state) end
+        local randomState = states[math.random(#states)]
+
+        local codes = area_codes[randomState]
+        local areaCode = codes[math.random(#codes)]
+
+        local phone = "01" .. areaCode .. randomNXX() .. randomLineNumber()
+        -- return phone, randomState
+        return phone
+    end
+
+    return randomPhone()
+end

@@ -102,3 +102,8 @@ first_name_invalid = {dirPath .. "first_name_invalid.png"}
 accept = {dirPath .. "accept1.png", dirPath .. "accept2.png", dirPath .. "accept3.png"}
 can_not_agree = {dirPath .. "can_not_agree.png"}
 fb_logo_menu_left = {dirPath .. "fb_logo_menu_left.png"}
+
+enter_confirm_code_phone = {dirPath .. "enter_confirm_code_phone.png"}
+no_receive_code = {dirPath .. "no_receive_code.png"}
+confirm_via_email = {dirPath .. "confirm_via_email.png"}
+enter_an_email = {dirPath .. "enter_an_email.png"}
