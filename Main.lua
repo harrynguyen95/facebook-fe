@@ -378,7 +378,7 @@ function main()
         if waitImageVisible(enter_confirm_code_phone, 10) then
             toastr("enter_confirm_code_phone")
             findAndClickByImage(no_receive_code)
-            if waitImageVisible(confirm_via_email, 10) then 
+            if waitImageVisible(confirm_via_email, 20) then 
                 findAndClickByImage(confirm_via_email)
                 sleep(2)
             end
@@ -654,6 +654,25 @@ function main()
             typeText(info.password)
             press(370, 710) -- continue_btn
             waitImageNotVisible(reenter_password)
+        end
+
+        if waitImageVisible(continue_code_mail, 2) then
+            findAndClickByImage(continue_code_mail)
+        end
+
+        if waitImageVisible(what_app, 2) then
+            finishCurrentAccount()
+            press(55, 160) -- X
+
+            if waitImageVisible(protect_your_account) then
+                press(40, 90) sleep(1) -- back on protect your account
+                press(40, 90) sleep(1) -- back on confirm identity
+                press(45, 90) sleep(1) -- back to setting menu
+                if not modeMenuLeft then press(45, 90) end -- back to main menu
+            end
+            press(60, 1290) -- back to homepage
+
+            goto label_searchtext
         end
 
         if waitImageVisible(check_your_email, 2) then

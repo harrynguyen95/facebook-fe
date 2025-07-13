@@ -109,3 +109,4 @@ enter_an_email = {dirPath .. "enter_an_email2.png"}
 mobile_or_email = {dirPath .. "mobile_or_email.png"}
 login_password = {dirPath .. "login_password.png"}
 login_button = {dirPath .. "login_button.png"}
+what_app = {dirPath .. "what_app.png"}
