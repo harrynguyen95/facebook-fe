@@ -16,9 +16,7 @@ hotmailSourceFilePath = rootDir() .. "/Device/hotmail_source.txt"
 
 function archiveCurrentAccount()
     local accounts = readFile(accountFilePath)
-    
-    info.uuid = 1
-    info.password = getRandomLineInFile(defaultPasswordFilePath)
+    local randomPassword = getRandomLineInFile(defaultPasswordFilePath)
 
     if #accounts > 0 then
         local current = accounts[#accounts]
@@ -27,7 +25,7 @@ function archiveCurrentAccount()
             info.uuid         = splitted[1]
             info.status       = info.status or splitted[2]
             info.mailLogin    = info.mailLogin or splitted[3]
-            info.password     = splitted[4] or info.password
+            if splitted[4] and splitted[4] ~= '' then info.password = splitted[4] else info.password = randomPassword end
             info.profileUid   = info.profileUid or splitted[5]
             info.twoFA        = info.twoFA or splitted[6]
             info.mailRegister        = info.mailRegister or splitted[7]
@@ -44,6 +42,7 @@ function archiveCurrentAccount()
         else
             if splitted[1] and splitted[1] ~= '' then info.uuid = floor(splitted[1] + 1) else info.uuid = 1 end
             info.status = 'INPROGRESS'
+            info.password = randomPassword
             if ADD_MAIL_DOMAIN then info.mailLogin = randomEmailLogin() end 
             local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '')
             addLineToFile(accountFilePath, line)
@@ -51,6 +50,7 @@ function archiveCurrentAccount()
     else 
         info.uuid = 1
         info.status = 'INPROGRESS'
+        info.password = randomPassword
         if ADD_MAIL_DOMAIN then info.mailLogin = randomEmailLogin() end 
         local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '')
         addLineToFile(accountFilePath, line)
