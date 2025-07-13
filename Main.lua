@@ -185,12 +185,7 @@ function main()
             typeText(randomUSPhone())
             findAndClickByImage(next)
 
-            if waitImageVisible(continue_creating_account) then
-                failedCurrentAccount('phone_has_account')
-                goto label_continue
-            end
-
-            if waitImageVisible(red_warning_icon, 2) then
+            if waitImageVisible(red_warning_icon) then
                 press(320, 380)
                 findAndClickByImage(x_input_icon)
                 typeText(randomUSPhone())
@@ -199,6 +194,11 @@ function main()
                     failedCurrentAccount('phone_invalid')
                     goto label_continue
                 end
+            end
+
+            if waitImageVisible(continue_creating_account, 2) then
+                failedCurrentAccount('phone_has_account')
+                goto label_continue
             end
         else
             findAndClickByImage(sign_up_with_email)
