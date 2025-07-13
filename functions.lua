@@ -819,7 +819,6 @@ function getConfigServer()
             if ok then 
                 if response.status and response.status == 'success' then
                     local config = response.data
-                    log(config)
                     LANGUAGE                 = config.language
                     HOTMAIL_SERVICE_IDS      = parseStringToTable(config.hotmail_service_ids)
                     MAIL_SUPLY               = tonumber(config.mail_suply)
@@ -834,6 +833,7 @@ function getConfigServer()
                     MAIL_DONGVANFB_API_KEY   = config.api_key_dongvanfb
                     MAIL_THUEMAILS_API_KEY   = config.api_key_thuemails
                     REG_PHONE_FIRST          = config.reg_phone_first ~= '0'
+                    LOGIN_WITH_CODE          = config.login_with_code ~= '0'
 
                     return true
                 else
