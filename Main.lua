@@ -660,6 +660,11 @@ function main()
                 findAndClickByImage(continue_code_mail)
             end
 
+            if waitImageVisible(check_notification_device, 2) then
+                finishCurrentAccount('other_device')
+                goto label_continue
+            end
+
             if waitImageVisible(what_app, 2) then
                 finishCurrentAccount()
                 press(55, 160) -- X

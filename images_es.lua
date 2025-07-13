@@ -111,3 +111,4 @@ mobile_or_email = {dirPath .. "mobile_or_email.png", dirPath .. "mobile_or_email
 login_password = {dirPath .. "login_password.png", dirPath .. "login_password2.png"}
 login_button = {dirPath .. "login_button.png", dirPath .. "login_button2.png"}
 what_app = {dirPath .. "what_app.png"}
+check_notification_device = {dirPath .. "check_notification_device.png"}
