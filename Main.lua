@@ -586,9 +586,9 @@ function main()
 
     if checkPageNotAvailable() then goto label_continue end
     if checkSuspended() then goto label_continue end
-    modeMenuLeft = checkModeMenuLeft()
 
     ::label_get2FA::
+    modeMenuLeft = checkModeMenuLeft()
     if waitImageVisible(what_on_your_mind) then 
         toastr('2FA what_on_your_mind')
 
