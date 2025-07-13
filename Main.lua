@@ -619,7 +619,7 @@ function main()
         if waitImageVisible(account_center, 20) then
             toastr('account_center')
             sleep(1)
-            swipe(600, 800, 610, 650) sleep(1)
+            swipe(600, 800, 610, 700) sleep(1)
 
             if waitImageVisible(personal_details_btn) then
                 findAndClickByImage(personal_details_btn)
