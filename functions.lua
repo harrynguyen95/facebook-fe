@@ -76,7 +76,7 @@ function finishCurrentAccount()
     log('finishCurrentAccount ' .. line)
     writeFile(accountFilePath, accounts)
 
-    if HOTMAIL_SOURCE_FROM_FILE then 
+    if HOTMAIL_SOURCE_FROM_FILE and info.mailLogin and info.mailLogin ~= '' then 
         removeLineFromFile(hotmailSourceFilePath, info.mailLogin)
     end 
     if ENTER_VERIFY_CODE then saveAccToGoogleForm() else saveNoVerifyToGoogleForm() end
@@ -102,7 +102,7 @@ function failedCurrentAccount(code)
     log(code .. ' - failedCurrentAccount ' .. line)
     writeFile(accountFilePath, accounts)
 
-    if HOTMAIL_SOURCE_FROM_FILE then 
+    if HOTMAIL_SOURCE_FROM_FILE and info.mailLogin and info.mailLogin ~= '' then 
         removeLineFromFile(hotmailSourceFilePath, info.mailLogin)
     end 
     saveAccToGoogleForm()
