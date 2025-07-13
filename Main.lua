@@ -21,7 +21,6 @@ LOGIN_WITH_CODE = true
 
 if not waitForInternet(3) then alert("No Internet!") exit() else toast('Connected!', 2) end
 getConfigServer()
-LANGUAGE = 'ES'
 
 -- ====== LOCALE IMAGE REQUIRED ======
 if LANGUAGE == 'ES' then require(currentDir() .. "/images_es") end
@@ -592,7 +591,6 @@ function main()
     ::label_get2FA::
     if waitImageVisible(what_on_your_mind) then 
         toastr('2FA what_on_your_mind')
-        modeMenuLeft = checkModeMenuLeft()
 
         if modeMenuLeft then 
             toast('modeMenuLeft')
@@ -657,26 +655,28 @@ function main()
             waitImageNotVisible(reenter_password)
         end
 
-        if waitImageVisible(continue_code_mail, 2) then
-            findAndClickByImage(continue_code_mail)
-        end
-
-        if waitImageVisible(what_app, 2) then
-            finishCurrentAccount()
-            press(55, 160) -- X
-
-            if waitImageVisible(protect_your_account) then
-                press(40, 90) sleep(1) -- back on protect your account
-                press(40, 90) sleep(1) -- back on confirm identity
-                press(45, 90) sleep(1) -- back to setting menu
-                if not modeMenuLeft then press(45, 90) end -- back to main menu
+        if LOGIN_WITH_CODE then 
+            if waitImageVisible(continue_code_mail, 2) then
+                findAndClickByImage(continue_code_mail)
             end
-            press(60, 1290) -- back to homepage
 
-            goto label_searchtext
-        end
+            if waitImageVisible(what_app, 2) then
+                finishCurrentAccount()
+                press(55, 160) -- X
 
-        if waitImageVisible(check_your_email, 2) then
+                if waitImageVisible(protect_your_account) then
+                    press(40, 90) sleep(1) -- back on protect your account
+                    press(40, 90) sleep(1) -- back on confirm identity
+                    press(45, 90) sleep(1) -- back to setting menu
+                    if not modeMenuLeft then press(45, 90) end -- back to main menu
+                end
+                press(60, 1290) -- back to homepage
+
+                goto label_searchtext
+            end
+        end 
+
+        if waitImageVisible(check_your_email, 3) then
             toastr('check_your_email')
             local code = getCodeMailOwner()
             toastr('CODE: ' .. (code or '-'), 2)

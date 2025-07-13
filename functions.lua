@@ -1030,7 +1030,7 @@ function executeXoaInfo()
 end
 
 function checkModeMenuLeft()
-    return waitImageVisible(fb_logo_menu_left, 1)
+    return waitImageVisible(fb_logo_menu_left, 2)
 end
 
 -- function changeMailDomain()
