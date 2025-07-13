@@ -311,6 +311,8 @@ function main()
         end 
     end
 
+    if checkImageIsExists(continue_creating_account) then failedCurrentAccount('phone_invalid') goto label_continue end
+
     ::label_saveyourlogin::
     if waitImageVisible(save_your_login_info, 3) then
         toastr("save_your_login_info")
@@ -357,6 +359,7 @@ function main()
             end
         end
 
+        ::label_emailafterphone::
         if waitImageVisible(what_is_your_email, 3) or waitImageVisible(enter_an_email, 3) then
             toastr("what_is_your_email")
 
@@ -412,6 +415,8 @@ function main()
                 goto label_continue
             end
         end
+
+        if checkImageIsExists(confirm_via_email) then goto label_emailafterphone end 
     end
 
     ::label_confirmationcode::

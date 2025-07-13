@@ -99,7 +99,7 @@ setting_up_for_fb = {dirPath .. "setting_up_for_fb.png"}
 x_input_icon = {dirPath .. "x_input_icon.png"}
 gender_options = {dirPath .. "gender_options.png"}
 first_name_invalid = {dirPath .. "first_name_invalid.png"}
-accept = {dirPath .. "accept1.png", dirPath .. "accept2.png", dirPath .. "accept3.png"}
+accept = {dirPath .. "accept1.png", dirPath .. "accept2.png", dirPath .. "accept3.png", dirPath .. "accept4.png"}
 can_not_agree = {dirPath .. "can_not_agree.png"}
 fb_logo_menu_left = {dirPath .. "fb_logo_menu_left.png"}
 
