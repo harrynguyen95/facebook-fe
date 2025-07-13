@@ -247,9 +247,9 @@ function main()
                 end
             end
 
-            if not waitImageNotVisible(what_is_your_email, 30) then 
+            if not waitImageNotVisible(what_is_your_email, 20) then 
                 if checkImageIsExists(what_is_your_email) then findAndClickByImage(next) end
-                if not waitImageNotVisible(what_is_your_email, 30) then 
+                if not waitImageNotVisible(what_is_your_email, 20) then 
                     toastr('Can not next')
                     swipeCloseApp()
                     goto label_openfacebook
@@ -301,9 +301,9 @@ function main()
         typeText(info.password)
         findAndClickByImage(next)
 
-        if not waitImageNotVisible(create_a_password, 40) then 
+        if not waitImageNotVisible(create_a_password, 30) then 
             if checkImageIsExists(create_a_password) then findAndClickByImage(next) end
-            if not waitImageNotVisible(create_a_password, 30) then 
+            if not waitImageNotVisible(create_a_password, 20) then 
                 toastr('Can not next')
                 swipeCloseApp()
                 goto label_openfacebook
@@ -332,7 +332,7 @@ function main()
             goto label_continue
         end 
 
-        if not waitImageNotVisible(agree_facebook_term, 90) then 
+        if not waitImageNotVisible(agree_facebook_term, 60) then 
             toastr('Can not next')
             swipeCloseApp()
             goto label_openfacebook
@@ -395,9 +395,9 @@ function main()
                 end
             end
 
-            if not waitImageNotVisible(what_is_your_email, 30) then 
+            if not waitImageNotVisible(what_is_your_email, 20) then 
                 if checkImageIsExists(what_is_your_email) then findAndClickByImage(next) end
-                if not waitImageNotVisible(what_is_your_email, 30) then 
+                if not waitImageNotVisible(what_is_your_email, 20) then 
                     toastr('Can not next')
                     swipeCloseApp()
                     goto label_openfacebook
@@ -636,9 +636,7 @@ function main()
                         press(45, 90) sleep(1) -- back to setting menu
                         if not modeMenuLeft then press(45, 90) end -- back to main menu
                     end
-                    if waitImageVisible(home_icon) then
-                        press(60, 1290) -- back to homepage
-                    end
+                    press(60, 1290) -- back to homepage
 
                     goto label_searchtext
                 end
@@ -652,9 +650,7 @@ function main()
                     press(45, 90) sleep(1) -- back to setting menu
                     if not modeMenuLeft then press(45, 90) end -- back to main menu
                 end
-                if waitImageVisible(home_icon) then
-                    press(60, 1290) -- back to homepage
-                end
+                press(60, 1290) -- back to homepage
 
                 goto label_searchtext
             end 
@@ -699,9 +695,7 @@ function main()
                     press(45, 90) sleep(1) -- back to setting menu
                     if not modeMenuLeft then press(45, 90) end -- back to main menu
                 end
-                if waitImageVisible(home_icon) then
-                    press(60, 1290) -- back to homepage
-                end
+                press(60, 1290) -- back to homepage
                 
                 goto label_searchtext
             end 
@@ -724,9 +718,7 @@ function main()
                 press(45, 90) sleep(1) -- back to setting menu
                 if not modeMenuLeft then press(45, 90) end -- back to main menu
             end
-            if waitImageVisible(home_icon) then
-                press(60, 1290) -- back to homepage
-            end
+            press(60, 1290) -- back to homepage
         end
     end
 
@@ -751,13 +743,7 @@ function main()
                     press(600, 90);
                 end
             else
-                if modeMenuLeft then 
-                    if waitImageVisible(home_icon) then
-                        press(60, 1290) -- back to homepage
-                    end
-                else 
-                    press(60, 1290) -- back to homepage
-                end 
+                press(60, 1290) -- back to homepage
 
                 sleep(1)
                 resetInfoObject()
