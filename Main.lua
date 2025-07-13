@@ -83,6 +83,7 @@ function main()
     sleep(1)
     if checkImageIsExists(what_is_birthday) then goto label_birthday end
     if checkImageIsExists(what_is_mobile_number) then goto label_whatisyourmobile end
+    if checkImageIsExists(no_receive_code) then goto label_confirmationcode end 
     if checkImageIsExists(enter_the_confirmation_code) then goto label_confirmationcode end
     if checkImageIsExists(create_a_password) then goto label_createpassword end
     if checkImageIsExists(save_your_login_info) then goto label_saveyourlogin end
@@ -523,6 +524,7 @@ function main()
         waitImageVisible(add_phone_number)
     end
 
+    if checkImageIsExists(no_receive_code) then goto label_confirmationcode end 
     if checkImageIsExists(enter_the_confirmation_code) then goto label_confirmationcode end 
     if checkImageIsExists(profile_picture) then goto label_profilepicture end
     if checkImageIsExists(turn_on_contact) then goto label_turnoncontact end
@@ -579,6 +581,8 @@ function main()
 
         if waitImageVisible(personal_details_page, 15) or waitImageVisible(your_information_and_per_btn, 15) then
             toastr('personal_details_page')
+            
+            waitImageVisible(identify_confirmation_btn)
             findAndClickByImage(identify_confirmation_btn)
             waitImageNotVisible(identify_confirmation_btn)
         end
@@ -782,6 +786,7 @@ function main()
         removeAccount()
     end
 
+    if waitImageVisible(no_receive_code, 1) then goto label_confirmationcode end 
     if waitImageVisible(enter_the_confirmation_code, 1) then goto label_confirmationcode end 
     if waitImageVisible(profile_picture, 1) then goto label_profilepicture end
     if waitImageVisible(turn_on_contact, 1) then goto label_turnoncontact end
