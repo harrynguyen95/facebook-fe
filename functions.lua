@@ -107,7 +107,7 @@ end
 
 function saveAccToGoogleForm()
     local localIP = readFile(localIPFilePath)
-    info.localIP = localIP[#localIP]
+    info.localIP = localIP[#localIP] .. "|" .. LANGUAGE
 
     local tries = 3
     for i = 1, tries do 
@@ -133,7 +133,7 @@ end
 
 function saveNoVerifyToGoogleForm()
     local localIP = readFile(localIPFilePath)
-    info.localIP = localIP[#localIP]
+    info.localIP = localIP[#localIP] .. "|" .. LANGUAGE
 
     local tries = 3
     for i = 1, tries do 
