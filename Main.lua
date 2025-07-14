@@ -705,12 +705,12 @@ function main()
         end
 
         if LOGIN_WITH_CODE then 
-            if waitImageVisible(what_app) then
+            if waitImageVisible(what_app, 2) then
                 finishCurrentAccount('other_device')
                 goto label_continue
             end
 
-            if waitImageVisible(check_notification_device, 2) then
+            if waitImageVisible(check_notification_device, 1) then
                 finishCurrentAccount('other_device')
                 goto label_continue
             end
@@ -775,18 +775,6 @@ function main()
             press(60, 1290) -- back to homepage
         end
     end
-
-    if LOGIN_WITH_CODE then 
-        if waitImageVisible(what_app) then
-            finishCurrentAccount('other_device')
-            goto label_continue
-        end
-
-        if waitImageVisible(check_notification_device, 2) then
-            finishCurrentAccount('other_device')
-            goto label_continue
-        end
-    end 
 
     ::label_searchtext::
     toastr('wait searchtext..')
