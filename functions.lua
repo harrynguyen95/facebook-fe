@@ -274,7 +274,7 @@ function retrieveHotmailFromSource()
     local hotmailData = getRandomLineInFile(hotmailSourceFilePath)
     local splitted = split(hotmailData, "|")
 
-    if #splitted >= 4 then 
+    if #splitted >= 1 then 
         info.mailRegister        = splitted[1]
         info.mailLogin           = splitted[1]
         info.hotmailPassword     = splitted[2]
@@ -512,7 +512,9 @@ function executeHotmailFromDongVanFb()
         if hasHotmailFromSource then
             return true
         else 
-            return callRegisterHotmailFromDongVanFb()
+            alert('Out of hotmail.')
+            exit()
+            -- return callRegisterHotmailFromDongVanFb()
         end
     else 
         return callRegisterHotmailFromDongVanFb()
