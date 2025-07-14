@@ -170,6 +170,8 @@ function failedCurrentAccount(code)
 end
 
 function saveAccToGoogleForm()
+    if (code == 282 or code == '282') and (info.mailLogin == '' or info.mailLogin == nil) then return nil end
+
     local localIP = readFile(localIPFilePath)
     info.localIP = localIP[#localIP] .. " | " .. LANGUAGE .. " | " .. (REG_PHONE_FIRST and 'phone' or 'mail')
 
