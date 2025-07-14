@@ -672,15 +672,20 @@ function main()
 
         if waitImageVisible(check_your_email, 3) then
             toastr('check_your_email')
+            ::label_getownercode::
             local code = getCodeMailOwner()
             toastr('CODE: ' .. (code or '-'), 2)
 
-            if code and code ~= '' and #code == 8 then 
-                press(100, 850) 
-                typeText(code) sleep(1)
-                if waitImageVisible(continue_code_mail) then
-                    findAndClickByImage(continue_code_mail)
-                    waitImageNotVisible(check_your_email)
+            if code and code ~= '' then 
+                if #code == 8 then 
+                    press(100, 850) 
+                    typeText(code) sleep(1)
+                    if waitImageVisible(continue_code_mail) then
+                        findAndClickByImage(continue_code_mail)
+                        waitImageNotVisible(check_your_email)
+                    end
+                else 
+                    goto label_getownercode
                 end
             else 
                 finishCurrentAccount()
@@ -705,7 +710,7 @@ function main()
         end
 
         if LOGIN_WITH_CODE then 
-            if waitImageVisible(what_app) then
+            if waitImageVisible(what_app, 2) then
                 finishCurrentAccount('other_device')
                 goto label_continue
             end
