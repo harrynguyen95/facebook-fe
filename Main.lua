@@ -101,7 +101,7 @@ function main()
     end
 
     if waitImageVisible(create_new_account, 20) then
-        if waitImageVisible(logo_fb_modern, 2) then
+        if waitImageVisible(logo_fb_modern, 3) then
             toastr('not_support_this_FB_mode')
             swipeCloseApp()
             goto label_continue

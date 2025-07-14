@@ -840,6 +840,8 @@ function getConfigServer()
                     PROXY                    = config.proxy
                     MAIL_DONGVANFB_API_KEY   = config.api_key_dongvanfb
                     MAIL_THUEMAILS_API_KEY   = config.api_key_thuemails
+                    LOCAL_SERVER             = config.local_server
+                    DESTINATION_FILENAME     = config.destination_filename
                     REG_PHONE_FIRST          = config.reg_phone_first ~= '0'
                     LOGIN_WITH_CODE          = config.login_with_code ~= '0'
 
