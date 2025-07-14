@@ -702,7 +702,7 @@ function main()
         end
 
         if LOGIN_WITH_CODE then 
-            if waitImageVisible(continue_code_mail, 3) then
+            if waitImageVisible(continue_code_mail, 10) then
                 findAndClickByImage(continue_code_mail)
             end
         end 
