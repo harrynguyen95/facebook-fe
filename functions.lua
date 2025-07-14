@@ -20,6 +20,7 @@ function initCurrentAccountCode()
     local code = readFile(accountCodeFilePath)
     if code == nil or code[#code] == nil or code[#code] == '' then
         alert('Empty UID and OTP')
+        exit()
     end
 
     local current = accounts[#accounts]
