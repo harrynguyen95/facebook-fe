@@ -382,7 +382,7 @@ function getRandomName()
     return { firstname, lastname }
 end
 
-function randomEmailLogin()
+function randomMailDomain()
     local letters = "abcdefghijklmnopqrstuvwxyz"
     local digits = "0123456789"
     local part1, part2 = "", ""
@@ -395,6 +395,36 @@ function randomEmailLogin()
         part2 = part2 .. digits:sub(idx, idx)
     end
     return part1 .. part2 .. "@yagisongs.com"
+end
+
+function randomGmail()
+    local letters = "abcdefghijklmnopqrstuvwxyz"
+    local digits = "0123456789"
+    local part1, part2 = "", ""
+    for i = 1, 12 do
+        local idx = math.random(1, #letters)
+        part1 = part1 .. letters:sub(idx, idx)
+    end
+    for i = 1, 5 do
+        local idx = math.random(1, #digits)
+        part2 = part2 .. digits:sub(idx, idx)
+    end
+    return part1 .. part2 .. "@gmail.com"
+end
+
+function randomIcloud()
+    local letters = "abcdefghijklmnopqrstuvwxyz"
+    local digits = "0123456789"
+    local part1, part2 = "", ""
+    for i = 1, 12 do
+        local idx = math.random(1, #letters)
+        part1 = part1 .. letters:sub(idx, idx)
+    end
+    for i = 1, 5 do
+        local idx = math.random(1, #digits)
+        part2 = part2 .. digits:sub(idx, idx)
+    end
+    return part1 .. part2 .. "@icloud.com"
 end
 
 function swipeForce(x1, y1, x2, y2, duration)

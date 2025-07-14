@@ -100,7 +100,7 @@ function archiveCurrentAccount()
             if splitted[1] and splitted[1] ~= '' then info.uuid = floor(splitted[1] + 1) else info.uuid = 1 end
             info.status = 'INPROGRESS'
             info.password = randomPass
-            if ADD_MAIL_DOMAIN then info.mailLogin = randomEmailLogin() end 
+            if ADD_MAIL_DOMAIN then info.mailLogin = randomMailDomain() end 
             local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '')
             addLineToFile(accountFilePath, line)
         end 
@@ -108,7 +108,7 @@ function archiveCurrentAccount()
         info.uuid = 1
         info.status = 'INPROGRESS'
         info.password = randomPass
-        if ADD_MAIL_DOMAIN then info.mailLogin = randomEmailLogin() end 
+        if ADD_MAIL_DOMAIN then info.mailLogin = randomMailDomain() end 
         local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '')
         addLineToFile(accountFilePath, line)
     end
@@ -174,7 +174,7 @@ function saveAccToGoogleForm()
     if (info.checkpoint == 282 or info.checkpoint == '282') and (info.mailLogin == '' or info.mailLogin == nil) then return nil end
 
     local localIP = readFile(localIPFilePath)
-    info.localIP = localIP[#localIP] .. " | " .. LANGUAGE .. " | " .. (REG_PHONE_FIRST and 'phone' or 'mail')
+    info.localIP = localIP[#localIP] .. " | " .. LANGUAGE .. " | " .. (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or 'mail')))
 
     local tries = 3
     for i = 1, tries do 
@@ -200,7 +200,7 @@ end
 
 function saveNoVerifyToGoogleForm()
     local localIP = readFile(localIPFilePath)
-    info.localIP = localIP[#localIP] .. " | " .. LANGUAGE .. " | " .. (REG_PHONE_FIRST and 'phone' or 'mail')
+    info.localIP = localIP[#localIP] .. " | " .. LANGUAGE .. " | " .. (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or 'mail')))
 
     local tries = 3
     for i = 1, tries do 
@@ -226,7 +226,7 @@ end
 
 function saveMailToGoogleForm()
     local localIP = readFile(localIPFilePath)
-    info.localIP = localIP[#localIP] .. " | " .. LANGUAGE .. " | " .. (REG_PHONE_FIRST and 'phone' or 'mail')
+    info.localIP = localIP[#localIP] .. " | " .. LANGUAGE .. " | " .. (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or 'mail')))
 
     local tries = 3
     for i = 1, tries do 
@@ -521,7 +521,7 @@ function executeHotmailFromDongVanFb()
 end
 
 function executeDomainMail()
-    local mail = randomEmailLogin() 
+    local mail = randomMailDomain() 
     info.mailLogin = mail
     info.mailRegister = mail
     info.mailPrice = 'free'
@@ -842,9 +842,9 @@ function getConfigServer()
                     MAIL_THUEMAILS_API_KEY   = config.api_key_thuemails
                     LOCAL_SERVER             = config.local_server
                     DESTINATION_FILENAME     = config.destination_filename
-                    REG_PHONE_FIRST          = config.reg_phone_first ~= '0'
                     LOGIN_WITH_CODE          = config.login_with_code ~= '0'
-
+                    DUMMY_MODE               = config.reg_phone_first
+    
                     return true
                 else
                     toastr(response.info)

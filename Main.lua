@@ -16,13 +16,18 @@ PROVIDER_MAIL_THUEMAILS = 1  -- 1|3 gmail|icloud
 TIMES_XOA_INFO = 3  -- 0|1|2|3
 MAIL_THUEMAILS_API_KEY = "94a3a21c-40b5-4c48-a690-f1584c390e3e" -- Hải
 MAIL_DONGVANFB_API_KEY = "iFI7ppA8JNDJ52yVedbPlMpSh" -- Hải
-REG_PHONE_FIRST = true
-LOGIN_WITH_CODE = true
+LOGIN_WITH_CODE = false
+DUMMY_MODE = '0'
 
 if not waitForInternet(3) then alert("No Internet!") exit() else toast('Connected!', 2) end
 getConfigServer()
 
--- ====== LOCALE IMAGE REQUIRED ======
+-- ====== VARIABLE REQUIRED ======
+SHOULD_DUMMY = DUMMY_MODE ~= '0'
+DUMMY_PHONE = DUMMY_MODE == '1'
+DUMMY_GMAIL = DUMMY_MODE == '2'
+DUMMY_ICLOUD = DUMMY_MODE == '3'
+
 if LANGUAGE == 'ES' then require(currentDir() .. "/images_es") end
 if LANGUAGE == 'EN' then require(currentDir() .. "/images_en") end
 
@@ -85,7 +90,7 @@ function main()
     sleep(1)
     if checkImageIsExists(what_is_birthday) then goto label_birthday end
     if checkImageIsExists(what_is_mobile_number) then goto label_whatisyourmobile end
-    if checkImageIsExists(enter_confirm_code_phone) then goto label_enterconfirmcodephone end 
+    if checkImageIsExists(enter_confirm_code_phone) then goto label_enterconfirmcodedummy end 
     if checkImageIsExists(enter_the_confirmation_code) then goto label_confirmationcode end
     if checkImageIsExists(create_a_password) then goto label_createpassword end
     if checkImageIsExists(save_your_login_info) then goto label_saveyourlogin end
@@ -220,7 +225,7 @@ function main()
     ::label_whatisyourmobile::
     if waitImageVisible(what_is_mobile_number) or waitImageVisible(sign_up_with_email) then
         toastr("what_is_mobile_number")
-        if REG_PHONE_FIRST then 
+        if DUMMY_PHONE then 
             typeText(randomUSPhone())
             findAndClickByImage(next)
 
@@ -245,9 +250,12 @@ function main()
         end
     end
 
-    if not REG_PHONE_FIRST then 
+    if not DUMMY_PHONE then 
         if waitImageVisible(what_is_your_email, 3) or waitImageVisible(enter_an_email, 3) then
             toastr("what_is_your_email")
+
+            if DUMMY_GMAIL then info.mailRegister = randomGmail() end
+            if DUMMY_ICLOUD then info.mailRegister = randomIcloud() end
 
             if info.mailRegister ~= nil and info.mailRegister ~= '' then 
                 press(310, 420)
@@ -386,14 +394,27 @@ function main()
 
     if checkImageIsExists(create_a_password) then goto label_createpassword end 
 
-    ::label_enterconfirmcodephone::
-    if REG_PHONE_FIRST then 
-        if waitImageVisible(enter_confirm_code_phone, 10) then
-            toastr("enter_confirm_code_phone")
-            findAndClickByImage(no_receive_code)
-            if waitImageVisible(confirm_via_email, 20) then 
-                findAndClickByImage(confirm_via_email)
-                sleep(2)
+    ::label_enterconfirmcodedummy::
+    if SHOULD_DUMMY then 
+        if DUMMY_PHONE then
+            if waitImageVisible(enter_confirm_code_phone, 10) then
+                toastr("enter_confirm_code_phone")
+                findAndClickByImage(no_receive_code)
+                if waitImageVisible(confirm_via_email, 15) then 
+                    findAndClickByImage(confirm_via_email)
+                    sleep(2)
+                end
+            end
+        end
+
+        if DUMMY_GMAIL or DUMMY_ICLOUD then
+            if waitImageVisible(enter_the_confirmation_code, 10) then
+                toastr("enter_the_confirmation_code gmail|iloud")
+                findAndClickByImage(no_receive_code)
+                if waitImageVisible(confirm_via_change_email, 15) then 
+                    findAndClickByImage(confirm_via_change_email)
+                    sleep(2)
+                end
             end
         end
 
@@ -459,7 +480,7 @@ function main()
 
     ::label_confirmationcode::
     if waitImageVisible(enter_the_confirmation_code, 10) then
-        if checkImageIsExists(enter_confirm_code_phone) then goto label_enterconfirmcodephone end
+        if checkImageIsExists(enter_confirm_code_phone) then goto label_enterconfirmcodedummy end
         
         toastr("enter_the_confirmation_code")
 
@@ -589,7 +610,7 @@ function main()
     end
 
     if checkImageIsExists(create_a_password) then goto label_createpassword end 
-    if checkImageIsExists(enter_confirm_code_phone) then goto label_enterconfirmcodephone end 
+    if checkImageIsExists(enter_confirm_code_phone) then goto label_enterconfirmcodedummy end 
     if checkImageIsExists(enter_the_confirmation_code) then goto label_confirmationcode end 
     if checkImageIsExists(profile_picture) then goto label_profilepicture end
     if checkImageIsExists(turn_on_contact) then goto label_turnoncontact end
@@ -845,7 +866,7 @@ function main()
         removeAccount()
     end
 
-    if waitImageVisible(enter_confirm_code_phone, 1) then goto label_enterconfirmcodephone end 
+    if waitImageVisible(enter_confirm_code_phone, 1) then goto label_enterconfirmcodedummy end 
     if waitImageVisible(enter_the_confirmation_code, 1) then goto label_confirmationcode end 
     if waitImageVisible(profile_picture, 1) then goto label_profilepicture end
     if waitImageVisible(turn_on_contact, 1) then goto label_turnoncontact end
