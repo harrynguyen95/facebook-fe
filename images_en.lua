@@ -9,7 +9,7 @@ sign_up_with_email = {dirPath .. "sign_up_with_email.png", dirPath .. "sign_up_w
 what_is_your_email = {dirPath .. "what_is_your_email.png"}
 continue_creating_account = {dirPath .. "continue_creating_account.png", dirPath .. "continue_create_account2.png"} 
 save = {dirPath .. "save.png", dirPath .. "save2.png", dirPath .. "save5.png"}
-save_your_login_info = {dirPath .. "save_your_login_info.png"}
+save_your_login_info = {dirPath .. "save_your_login_info.png", dirPath .. "save_login_info.png"}
 enter_the_confirmation_code = {dirPath .. "enter_the_confirmation_code.png", dirPath .. "enter_the_confirmation_code2.png"}
 profile_picture = {dirPath .. "profile_picture.png", dirPath .. "profile_picture2.png",
     dirPath .. "profile_picture4.png", dirPath .. "add_picture.png"}

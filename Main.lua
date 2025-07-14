@@ -247,11 +247,12 @@ function main()
         else
             findAndClickByImage(sign_up_with_email)
             waitImageNotVisible(what_is_mobile_number)
+            sleep(2)
         end
     end
 
     if not DUMMY_PHONE then 
-        if waitImageVisible(what_is_your_email, 3) or waitImageVisible(enter_an_email, 3) then
+        if waitImageVisible(what_is_your_email) or waitImageVisible(enter_an_email) then
             toastr("what_is_your_email")
 
             if DUMMY_GMAIL then info.mailRegister = randomGmail() end
@@ -400,7 +401,7 @@ function main()
             if waitImageVisible(enter_confirm_code_phone, 10) then
                 toastr("enter_confirm_code_phone")
                 findAndClickByImage(no_receive_code)
-                if waitImageVisible(confirm_via_email, 15) then 
+                if waitImageVisible(confirm_via_email, 20) then 
                     findAndClickByImage(confirm_via_email)
                     sleep(2)
                 end
@@ -411,8 +412,9 @@ function main()
             if waitImageVisible(enter_the_confirmation_code, 10) then
                 toastr("enter_the_confirmation_code gmail|iloud")
                 findAndClickByImage(no_receive_code)
-                if waitImageVisible(confirm_via_change_email, 15) then 
+                if waitImageVisible(confirm_via_change_email, 20) then 
                     findAndClickByImage(confirm_via_change_email)
+                    info.mailRegister = nil -- reset mailRegister
                     sleep(2)
                 end
             end
@@ -480,9 +482,8 @@ function main()
 
     ::label_confirmationcode::
     if waitImageVisible(enter_the_confirmation_code, 10) then
-        if checkImageIsExists(enter_confirm_code_phone) then goto label_enterconfirmcodedummy end
-        
         toastr("enter_the_confirmation_code")
+        if DUMMY_PHONE and checkImageIsExists(enter_confirm_code_phone) then goto label_enterconfirmcodedummy end
 
         if waitImageVisible(dont_allow, 1) then findAndClickByImage(dont_allow) end
         info.profileUid = getUIDFBLogin()
