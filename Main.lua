@@ -658,7 +658,7 @@ function main()
             waitImageNotVisible(confirm_your_identity)
         end
 
-        if waitImageVisible(reenter_password, 15) then
+        if waitImageVisible(reenter_password, 10) then
             toastr('reenter_password')
 
             press(135, 530) -- input password
@@ -669,7 +669,7 @@ function main()
         end
 
         if LOGIN_WITH_CODE then 
-            if waitImageVisible(continue_code_mail) then
+            if waitImageVisible(continue_code_mail, 3) then
                 findAndClickByImage(continue_code_mail)
             end
         end 
