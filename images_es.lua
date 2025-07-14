@@ -114,3 +114,4 @@ login_button = {dirPath .. "login_button.png", dirPath .. "login_button2.png"}
 what_app = {dirPath .. "what_app.png"}
 check_notification_device = {dirPath .. "check_notification_device.png"}
 confirm_via_change_email = {dirPath .. "confirm_via_change_email2.png"}
+wrong_credentials = {dirPath .. "wrong_credentials2.png"}

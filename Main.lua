@@ -126,6 +126,11 @@ function main()
                     findAndClickByImage(accept) sleep(0.5)
                     findAndClickByImage(login_button)
                 end 
+                if waitImageVisible(wrong_credentials) then 
+                    swipeCloseApp()
+                    onOffAirplaneMode()
+                    goto label_openfacebook
+                end 
                 sleep(3)
             else 
                 toastr('Can not next')
