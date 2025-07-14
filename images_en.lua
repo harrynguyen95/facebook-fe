@@ -111,3 +111,4 @@ login_password = {dirPath .. "login_password.png"}
 login_button = {dirPath .. "login_button.png"}
 what_app = {dirPath .. "what_app.png"}
 check_notification_device = {dirPath .. "check_notification_device.png"}
+save_your_login_info = {dirPath .. "save_your_login_info.png"}

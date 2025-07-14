@@ -142,6 +142,10 @@ function main()
     end
 
     if LOGIN_WITH_CODE then 
+        if waitImageVisible(save_your_login_info, 3) then 
+            findAndClickByImage(save) 
+            sleep(1)
+        end 
         if waitImageVisible(enter_the_confirmation_code, 20) then
             goto label_confirmationcode
         end
