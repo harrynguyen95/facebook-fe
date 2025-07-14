@@ -689,6 +689,8 @@ function main()
                         waitImageNotVisible(check_your_email)
                     end
                 else 
+                    toast('Get code again', 3)
+                    sleep(10)
                     goto label_getownercode
                 end
             else 
