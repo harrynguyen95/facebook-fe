@@ -147,7 +147,8 @@ function main()
         end
         if checkImageIsExists(profile_picture) then goto label_profilepicture end
         if checkImageIsExists(turn_on_contact) then goto label_turnoncontact end
-        if checkPageNotAvailable() then goto label_continue end
+        if checkImageIsExists(find_friend) then goto label_findfriend_swipe end
+        if checkImageIsExists(no_friend) then goto label_nofriend end
     end 
 
     if waitImageVisible(join_facebook, 2) then 
