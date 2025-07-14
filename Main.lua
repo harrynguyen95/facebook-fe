@@ -626,6 +626,7 @@ function main()
 
     if checkPageNotAvailable() then goto label_continue end
     if checkSuspended() then goto label_continue end
+    swipe(600, 750, 610, 800) 
 
     ::label_get2FA::
     modeMenuLeft = checkModeMenuLeft()
