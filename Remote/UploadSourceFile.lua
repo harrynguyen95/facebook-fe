@@ -26,31 +26,34 @@ function getSourceFileContent()
         ['localIP']   = string.gsub(splitted[3], " ", ""),
     }
 
-    local response, error = httpRequest {
-        url = LOCAL_SERVER .. "/api/get_source_file_content",
-        method = "POST",
-        headers = {
-            ["Content-Type"] = "application/json",
-        },
-        data = postData
-    }
+    local tries = 2
+    for i = 1, tries do 
+        local response, error = httpRequest {
+            url = LOCAL_SERVER .. "/api/get_source_file_content",
+            method = "POST",
+            headers = {
+                ["Content-Type"] = "application/json",
+            },
+            data = postData
+        }
 
-    if response then
-        local ok, response, err = safeJsonDecode(response)
-        if ok then 
-            if response.status and response.status == 'success' then
-                return response.data
-            else
-                toastr(response.info)
-                log(response.info)
-            end
-        else 
-            toastr("Failed decode response.");
-            log("Failed decode response.");
-        end  
-    else
-        toastr('Times ' .. i .. " - " .. tostring(error), 2)
-        log("Failed request device_config. Times ".. i ..  " - " .. tostring(error))
+        if response then
+            local ok, response, err = safeJsonDecode(response)
+            if ok then 
+                if response.status and response.status == 'success' then
+                    return response.data
+                else
+                    toastr(response.info)
+                    log(response.info)
+                end
+            else 
+                toastr("Failed decode response.");
+                log("Failed decode response.");
+            end  
+        else
+            toastr('Times ' .. i .. " - " .. tostring(error), 2)
+            log("Failed request device_config. Times ".. i ..  " - " .. tostring(error))
+        end
     end
 end 
 
