@@ -675,7 +675,7 @@ function main()
             local code = getCodeMailOwner()
             toastr('CODE: ' .. (code or '-'), 2)
 
-            if code and code ~= '' then 
+            if code and code ~= '' and #code == 8 then 
                 press(100, 850) 
                 typeText(code) sleep(1)
                 if waitImageVisible(continue_code_mail) then
@@ -705,7 +705,7 @@ function main()
         end
 
         if LOGIN_WITH_CODE then 
-            if waitImageVisible(what_app, 2) then
+            if waitImageVisible(what_app) then
                 finishCurrentAccount('other_device')
                 goto label_continue
             end
