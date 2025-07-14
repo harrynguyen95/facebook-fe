@@ -12,7 +12,7 @@ end
 if LOCAL_SERVER:sub(-1) == "/" then LOCAL_SERVER = text:sub(1, -2) end
 local destination = rootDir() .. "/Device/".. DESTINATION_FILENAME
 
-function getSourceFileContent() 
+function execute() 
     local localIP = readFile(localIPFilePath)
     local localName = localIP[#localIP]
 
@@ -22,14 +22,17 @@ function getSourceFileContent()
     end 
     local splitted = split(localName, "|")
 
+    local sourceFile = readFile(destination)
+
     local postData = {
         ['localIP']   = string.gsub(splitted[3], " ", ""),
+        ['countLine'] = #sourceFile,
     }
 
     local tries = 2 
     for i = 1, tries do 
         local response, error = httpRequest {
-            url = LOCAL_SERVER .. "/api/get_source_file_content",
+            url = LOCAL_SERVER .. "/api/count_line_source_file",
             method = "POST",
             headers = {
                 ["Content-Type"] = "application/json",
@@ -41,7 +44,8 @@ function getSourceFileContent()
             local ok, response, err = safeJsonDecode(response)
             if ok then 
                 if response.status and response.status == 'success' then
-                    return response.data
+                    toast('Line: ' .. #sourceFile, 5)
+                    -- return response.data
                 else
                     toastr(response.info)
                     log(response.info)
@@ -52,40 +56,9 @@ function getSourceFileContent()
             end  
         else
             toastr('Times ' .. i .. " - " .. tostring(error), 2)
-            log("Failed request get_source_file_content. Times ".. i ..  " - " .. tostring(error))
+            log("Failed request count_line_source_file. Times ".. i ..  " - " .. tostring(error))
         end
     end
 end 
 
-local lines = getSourceFileContent() 
-if lines and lines[#lines] ~= nil then
-    for i, v in ipairs(lines) do
-        addLineToFile(destination, v)
-    end
-end 
-
--- Lọc line trùng
-local inputPath = destination
-local outputPath = inputPath  
-
-local uniqueLines = {}
-local seen = {}
-
-local function trim(s)
-    return s:match("^%s*(.-)%s*$")
-end
-
-for line in io.lines(inputPath) do
-    local clean = trim(line)
-    if clean ~= "" and not seen[clean] then
-        table.insert(uniqueLines, clean)
-        seen[clean] = true
-    end
-end
-
-local f = io.open(outputPath, "w")
-for _, line in ipairs(uniqueLines) do
-    f:write(line .. "\n")
-end
-f:close()
-
+execute() 
