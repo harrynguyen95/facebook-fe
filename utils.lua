@@ -208,6 +208,7 @@ function getRandomLineInFile(filename)
     if not lines or #lines == 0 then 
         return ""
     end
+    math.randomseed(os.time() + math.random()) -- đảm bảo random khác nhau mỗi lần
     local index = math.random(#lines)
 
     return trim(lines[index])
