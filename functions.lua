@@ -544,7 +544,7 @@ function getThuemailConfirmCode()
     if info.thuemailId == nil then return nil end
     
     sleep(10)
-    local tries = 20
+    local tries = 30
     for i = 1, tries do 
         toastr('Call times ' .. i)
 
