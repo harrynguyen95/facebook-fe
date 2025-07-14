@@ -837,6 +837,7 @@ function typeNumber(so)
 end
 
 function typeNumberLongSpace(text)
+    sleep(0.5)
     local numberToggleKey = {72, 1273}
     local symbolMap = {
         ["0"] = {704, 945}, ["1"] = {29, 947}, ["2"] = {105, 947}, ["3"] = {179, 946},
@@ -859,7 +860,7 @@ function typeNumberLongSpace(text)
         usleep(math.random(250000, 300000))
     end
 
-    randomTap(numberToggleKey)
+    randomTap(numberToggleKey) sleep(0.5)
     for i = 1, #text do
         local ch = text:sub(i, i)
 
