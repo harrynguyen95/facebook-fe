@@ -583,7 +583,10 @@ function main()
         toastr("no_friend")
         if waitImageVisible(skip, 1) then findAndClickByImage(skip) end 
         findAndClickByImage(next)
-        waitImageVisible(no_friend)
+        if waitImageNotVisible(no_friend, 30) then 
+            swipeCloseApp()
+            goto label_openfacebook
+        end
     end
 
     ::label_findfriend_kill::
