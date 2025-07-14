@@ -185,7 +185,7 @@ function saveAccToGoogleForm()
         }
 
         if response then
-            log(info, "Sent request to Google Form" )
+            -- log(info, "Sent request to Google Form" )
             return
         else
             toastr('Times ' .. i .. " - " .. tostring(error), 2)
@@ -598,7 +598,7 @@ function getDongvanfbConfirmCode()
             data = postData
         }
 
-        log(response, 'getDongvanfbConfirmCode')
+        -- log(response, 'getDongvanfbConfirmCode')
 
         if response then
             local ok, response, err = safeJsonDecode(response)

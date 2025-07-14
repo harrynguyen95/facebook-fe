@@ -836,6 +836,41 @@ function typeNumber(so)
     end
 end
 
+function typeNumberLongSpace(text)
+    local numberToggleKey = {72, 1273}
+    local symbolMap = {
+        ["0"] = {704, 945}, ["1"] = {29, 947}, ["2"] = {105, 947}, ["3"] = {179, 946},
+        ["4"] = {257, 954}, ["5"] = {328, 952}, ["6"] = {406, 953}, ["7"] = {479, 953},
+        ["8"] = {557, 950}, ["9"] = {635, 965}, ["@"] = {625, 1070}, ["!"] = {467, 1165},
+        ["."] = {115, 1167}
+    }
+
+    math.randomseed(os.time())
+
+    local function randomTap(pos)
+        local x = math.random(-5, 5)
+        local y = math.random(-5, 5)
+        tap(pos[1] + x, pos[2] + y)
+        usleep(math.random(250000, 300000))
+    end
+
+    local function tapSymbol(ch)
+        randomTap(symbolMap[ch])
+        usleep(math.random(250000, 300000))
+    end
+
+    randomTap(numberToggleKey)
+    for i = 1, #text do
+        local ch = text:sub(i, i)
+
+        if symbolMap[ch] then
+            tapSymbol(ch)
+        elseif ch == " " then
+            randomTap(keymap[" "])
+        end
+    end
+end
+
 function getUIDFBLogin()
     local plist = require("plist")
     local result = appInfo("com.facebook.Facebook")

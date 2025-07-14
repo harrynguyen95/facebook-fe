@@ -111,12 +111,16 @@ function main()
 
         if LOGIN_WITH_CODE then 
             findAndClickByImage(mobile_or_email)
-            typeText(info.profileUid)
+            typeNumberLongSpace(info.profileUid)
             findAndClickByImage(login_password)
             findAndClickByImage(password_eye)
             typeText(info.password)
             findAndClickByImage(login_button)
             if waitImageNotVisible(logo_facebook_login, 30) then 
+                if waitImageVisible(accept) then 
+                    findAndClickByImage(accept) sleep(0.5)
+                    findAndClickByImage(login_button)
+                end 
                 sleep(3)
             else 
                 toastr('Can not next')
@@ -141,6 +145,9 @@ function main()
         if waitImageVisible(enter_the_confirmation_code, 20) then
             goto label_confirmationcode
         end
+        if checkImageIsExists(profile_picture) then goto label_profilepicture end
+        if checkImageIsExists(turn_on_contact) then goto label_turnoncontact end
+        if checkPageNotAvailable() then goto label_continue end
     end 
 
     if waitImageVisible(join_facebook, 2) then 
@@ -619,7 +626,7 @@ function main()
         if waitImageVisible(account_center, 20) then
             toastr('account_center')
             sleep(1)
-            swipe(600, 800, 610, 720) sleep(1)
+            swipe(600, 800, 610, 720) sleep(2)
 
             if waitImageVisible(personal_details_btn) then
                 findAndClickByImage(personal_details_btn)
@@ -656,7 +663,7 @@ function main()
         end
 
         if LOGIN_WITH_CODE then 
-            if waitImageVisible(continue_code_mail, 2) then
+            if waitImageVisible(continue_code_mail) then
                 findAndClickByImage(continue_code_mail)
             end
         end 
@@ -696,7 +703,7 @@ function main()
         end
 
         if LOGIN_WITH_CODE then 
-            if waitImageVisible(what_app, 2) then
+            if waitImageVisible(what_app) then
                 finishCurrentAccount('other_device')
                 goto label_continue
             end
@@ -754,7 +761,7 @@ function main()
             finishCurrentAccount()
 
             waitImageNotVisible(two_factor_is_on)
-            if waitImageVisible(reenter_password, 10) then
+            if waitImageVisible(reenter_password) then
                 press(55, 155) -- X on re-enter password
             end
             if waitImageVisible(protect_your_account) then
@@ -768,7 +775,7 @@ function main()
     end
 
     if LOGIN_WITH_CODE then 
-        if waitImageVisible(what_app, 2) then
+        if waitImageVisible(what_app) then
             finishCurrentAccount('other_device')
             goto label_continue
         end
