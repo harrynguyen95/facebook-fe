@@ -272,9 +272,10 @@ end
 
 function retrieveHotmailFromSource()
     local hotmailData = getRandomLineInFile(hotmailSourceFilePath)
-    local splitted = split(hotmailData, "|")
 
-    if #splitted >= 1 then 
+    if hotmailData and hotmailData ~= '' then 
+        local splitted = split(hotmailData, "|")
+
         info.mailRegister        = splitted[1]
         info.mailLogin           = splitted[1]
         info.hotmailPassword     = splitted[2]
