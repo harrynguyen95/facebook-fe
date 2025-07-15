@@ -748,8 +748,6 @@ function main()
             end 
         end
 
-        dd('out')
-
         if waitImageVisible(help_protect_account, 10) then
             toastr('help_protect_account')
             findAndClickByImage(next)
