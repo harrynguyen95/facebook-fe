@@ -130,7 +130,6 @@ Veronica
 Jimena
 Bianca
 Gloria
-Dayana
 Brenda
 Cecilia
 Ines
@@ -139,11 +138,9 @@ Magdalena
 Julieta
 Ivanna
 Camila
-America
 Melina
 Tamara
 Vanessa
-Yesenia
 Rocio
 Rebeca
 Mireya
@@ -154,26 +151,20 @@ Esperanza
 Nayeli
 Araceli
 Alma
-Abril
 Sarai
 Belen
 Luz
-Rosaura
 Florencia
 Marisol
 Milagros
 Guadalupe
-Fatima
 Noelia
 Liseth
-Zaira
 Mariela
-Xiomara
 Jazmin
 Iris
 Norma
 Elsa
-Genesis
 Leticia
 Samanta
 Johanna
@@ -227,35 +218,6 @@ Luan
 Andre Luiz
 Sandro
 Cristiano
-Fabio Junior
-Antonio Carlos
-Luiz Henrique
-Fabio Henrique
-Vinicius Junior
-Carlos Eduardo
-Matheus Henrique
-Gabriel Luiz
-Leonardo Henrique
-Felipe Gabriel
-Jose Antonio
-Francisco Carlos
-Joao Victor
-Pedro Henrique
-Enzo Gabriel
-Arthur Miguel
-Davi Lucas
-Nicolas Gabriel
-Gabriel Santos
-Rafael Souza
-Matheus Oliveira
-Joao Pedro
-Lucas Gabriel
-Gustavo Henrique
-Daniel Silva
-Bruno Henrique
-Thiago Santos
-Leonardo Souza
-Andre Santos
 Larissa
 Amanda
 Rafaela
@@ -285,54 +247,6 @@ Valeria
 Melissa
 Carla
 Thais
-Camila Oliveira
-Ana Paula
-Maria Eduarda
-Julia Beatriz
-Larissa Souza
-Leticia Oliveira
-Gabriela Santos
-Amanda Silva
-Rafaela Souza
-Isabela Santos
-Luana Souza
-Bruna Silva
-Patricia Oliveira
-Daniela Souza
-Fernanda Santos
-Carolina Silva
-Sophia Oliveira
-Yasmin Souza
-Eduarda Santos
-Laura Silva
-Bianca Oliveira
-Jessica Souza
-Renata Silva
-Monique Santos
-Tais Souza
-Priscila Oliveira
-Simone Souza
-Debora Santos
-Paula Oliveira
-Flavia Souza
-Aline Santos
-Claudia Oliveira
-Juliana Souza
-Cristiane Santos
-Cintia Oliveira
-Silvia Souza
-Alessandra Santos
-Adriana Oliveira
-Karina Souza
-Sonia Santos
-Eliane Oliveira
-Veronica Souza
-Vitoria Santos
-Rebeca Oliveira
-Valeria Souza
-Melissa Santos
-Carla Oliveira
-
 James
 Mary
 John
@@ -609,7 +523,6 @@ Kaden
 Dakota
 Ryder
 Adalynn
-Brantley
 Alina
 Jude
 Norah
@@ -624,20 +537,15 @@ Kameron
 Amaya
 Holden
 Lena
-Remington
 Raelynn
 Reid
-Journee
-Knox
 Kyler
 Daisy
 Ellis
 Brooklynn
 Cohen
 Lilliana
-Zander
 Alayna
-Rhett
 Nash
 Jayla
 Erick
@@ -646,14 +554,10 @@ Bodhi
 Lilah
 Beckett
 Sage
-Daxton
 Camille
 Archer
 Haven
 Anderson
 Hallie
-Kayson
 Aidan
-Royal
-Kash
 Alivia

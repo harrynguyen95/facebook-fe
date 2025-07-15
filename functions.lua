@@ -1,25 +1,79 @@
 
 -- ====== CONFIG ======
 PHP_SERVER = "https://tuongtacthongminh.com/"
-MAIL_THUEMAILS_API_KEY = "94a3a21c-40b5-4c48-a690-f1584c390e3e"
 MAIL_THUEMAILS_DOMAIN = "https://api.thuemails.com/api/"
-MAIL_DONGVANFB_API_KEY = "iFI7ppA8JNDJ52yVedbPlMpSh"
 URL_2FA_FACEBOOK = "https://2fa.live/tok/"
 MAIL_FREE_DOMAIN = "https://api.temp-mailfree.com/"
 
 defaultPasswordFilePath = currentPath() .. "/input/password.txt"
 searchTextFilePath = currentPath() .. "/input/searchtext.txt"
 accountFilePath = rootDir() .. "/Device/accounts.txt"
+accountCodeFilePath = rootDir() .. "/Device/accounts_code.txt"
 mailFilePath = rootDir() .. "/Device/thuemails.txt"
 localIPFilePath = rootDir() .. "/Device/local_ip.txt"
+hotmailSourceFilePath = rootDir() .. "/Device/hotmail_source.txt"
 
 -- ====== LOGIC FUNCTION ======
 
+function initCurrentAccountCode()
+    local accounts = readFile(accountFilePath)
+    local code = readFile(accountCodeFilePath)
+    if code == nil or code[#code] == nil or code[#code] == '' then
+        alert('Empty UID and OTP')
+        exit()
+    end
+
+    local current = accounts[#accounts]
+    local splitted = split(current, "|")
+
+    if splitted[2] == 'INPROGRESS' then 
+        if splitted[13] and splitted[13] ~= '' then 
+        else 
+            local accountCode = getRandomLineInFile(accountCodeFilePath)
+            local splittedCode = split(accountCode, "|")
+
+            info.status = 'INPROGRESS'
+            info.profileUid = splittedCode[1]
+            info.mailLogin = splittedCode[2]
+            info.mailRegister = splittedCode[2]
+            info.mailPrice = 'otp'
+            info.password = splittedCode[3]
+            info.hotmailPassword = splittedCode[4]
+            info.hotmailRefreshToken = splittedCode[5]
+            info.hotmailClientId = splittedCode[6]
+            info.verifyCode = splittedCode[7]
+
+            local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '')
+            accounts[#accounts] = line
+            writeFile(accountFilePath, accounts)
+        end 
+    else 
+        local accountCode = getRandomLineInFile(accountCodeFilePath)
+        local splittedCode = split(accountCode, "|")
+
+        local newUuid = 1
+        if splitted[1] and splitted[1] ~= '' then newUuid = floor(splitted[1] + 1) end
+        info.uuid = newUuid
+        info.status = 'INPROGRESS'
+        info.profileUid = splittedCode[1]
+        info.mailLogin = splittedCode[2]
+        info.mailRegister = splittedCode[2]
+        info.mailPrice = 'otp'
+        info.password = splittedCode[3]
+        info.hotmailPassword = splittedCode[4]
+        info.hotmailRefreshToken = splittedCode[5]
+        info.hotmailClientId = splittedCode[6]
+        info.verifyCode = splittedCode[7]
+
+        local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '')
+        addLineToFile(accountFilePath, line)
+    end
+    return
+end
+
 function archiveCurrentAccount()
     local accounts = readFile(accountFilePath)
-    
-    info.uuid = 1
-    info.password = getRandomLineInFile(defaultPasswordFilePath)
+    local randomPass = getRandomLineInFile(defaultPasswordFilePath)
 
     if #accounts > 0 then
         local current = accounts[#accounts]
@@ -28,7 +82,7 @@ function archiveCurrentAccount()
             info.uuid         = splitted[1]
             info.status       = info.status or splitted[2]
             info.mailLogin    = info.mailLogin or splitted[3]
-            info.password     = splitted[4] or info.password
+            info.password     = info.password or splitted[4]
             info.profileUid   = info.profileUid or splitted[5]
             info.twoFA        = info.twoFA or splitted[6]
             info.mailRegister        = info.mailRegister or splitted[7]
@@ -39,21 +93,23 @@ function archiveCurrentAccount()
             info.hotmailPassword     = info.hotmailPassword or splitted[12]
             info.verifyCode          = info.verifyCode or splitted[13]
 
-            local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '')
+            local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '')
             accounts[#accounts] = line
             writeFile(accountFilePath, accounts)
         else
-            info.uuid = floor(splitted[1] + 1)
+            if splitted[1] and splitted[1] ~= '' then info.uuid = floor(splitted[1] + 1) else info.uuid = 1 end
             info.status = 'INPROGRESS'
-            if ADD_MAIL_DOMAIN then info.mailLogin = randomEmailLogin() end 
-            local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '')
+            info.password = randomPass
+            if ADD_MAIL_DOMAIN then info.mailLogin = randomMailDomain() end 
+            local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '')
             addLineToFile(accountFilePath, line)
         end 
     else 
         info.uuid = 1
         info.status = 'INPROGRESS'
-        if ADD_MAIL_DOMAIN then info.mailLogin = randomEmailLogin() end 
-        local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '')
+        info.password = randomPass
+        if ADD_MAIL_DOMAIN then info.mailLogin = randomMailDomain() end 
+        local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '')
         addLineToFile(accountFilePath, line)
     end
 
@@ -65,114 +121,132 @@ function finishCurrentAccount()
     local splitted = split(accounts[#accounts], "|")
 
     info.status = "SUCCESS"
-    info.checkpoint = nil
+    info.checkpoint = 'OK'
     if not info.mailLogin or info.mailLogin == '' then info.mailLogin = info.mailRegister end 
     if not info.profileUid or info.profileUid == '' then info.profileUid = getUIDFBLogin() end 
-    local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '')
+    local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '')
     accounts[#accounts] = line
 
     log('finishCurrentAccount ' .. line)
     writeFile(accountFilePath, accounts)
+
+    if HOTMAIL_SOURCE_FROM_FILE and info.mailLogin and info.mailLogin ~= '' then 
+        removeLineFromFile(hotmailSourceFilePath, info.mailLogin)
+    end 
+    if LOGIN_WITH_CODE then 
+        removeLineFromFile(accountCodeFilePath, info.profileUid)
+    end 
     if ENTER_VERIFY_CODE then saveAccToGoogleForm() else saveNoVerifyToGoogleForm() end
+
     resetInfoObject()
 end
 
 function failedCurrentAccount(code)
-    if code == nil then code = 282 end
+    if code == nil then code = 'unknown' end
+    if code == 'phone_has_account' then return end
+
     local accounts = readFile(accountFilePath)
     local splitted = split(accounts[#accounts], "|")
 
     info.status = "FAILED"
     info.checkpoint = code
+    if code == '282' and info.verifyCode ~= '' and info.verifyCode ~= nil then info.checkpoint = code .. '_has_code' end
     if not info.mailLogin or info.mailLogin == '' then info.mailLogin = info.mailRegister end 
     if not info.profileUid or info.profileUid == '' then info.profileUid = getUIDFBLogin() end 
-    local line = info.uuid .. "|" .. info.status .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '')
+    local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '')
     accounts[#accounts] = line
 
     log(code .. ' - failedCurrentAccount ' .. line)
     writeFile(accountFilePath, accounts)
+
+    if HOTMAIL_SOURCE_FROM_FILE and info.mailLogin and info.mailLogin ~= '' then 
+        removeLineFromFile(hotmailSourceFilePath, info.mailLogin)
+    end 
+    if LOGIN_WITH_CODE then 
+        removeLineFromFile(accountCodeFilePath, info.profileUid)
+    end 
     saveAccToGoogleForm()
+
     resetInfoObject()
 end
 
 function saveAccToGoogleForm()
+    if (info.checkpoint == 282 or info.checkpoint == '282') and (info.mailLogin == '' or info.mailLogin == nil) then return nil end
+
     local localIP = readFile(localIPFilePath)
-    local infoClone = info
-    infoClone.localIP = localIP[#localIP]
+    info.localIP = localIP[#localIP] .. " | " .. LANGUAGE .. " | " .. (LOGIN_WITH_CODE and 'otp' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-'))))
 
-    local tries = 2
+    local tries = 3
     for i = 1, tries do 
-        sleep(3)
-
         local response, error = httpRequest {
-            url = PHP_SERVER .. "acc_google_form.php",
+            url = PHP_SERVER .. "account_google_form.php",
             method = "POST",
             headers = {
                 ["Content-Type"] = "application/json",
             },
-            data = infoClone
+            data = info
         }
 
         if response then
-            -- log(infoClone, "Sent request to Google Form" )
+            -- log(info, "Sent request to Google Form" )
             return
         else
-            log("Failed request acc_google_form.php. Reason: " .. tostring(error))
+            toastr('Times ' .. i .. " - " .. tostring(error), 2)
+            log("Failed request acc_google_form. Times ".. i ..  " - " .. tostring(error))
         end
+        sleep(3)
     end
 end
 
 function saveNoVerifyToGoogleForm()
     local localIP = readFile(localIPFilePath)
-    local infoClone = info
-    infoClone.localIP = localIP[#localIP]
+    info.localIP = localIP[#localIP] .. " | " .. LANGUAGE .. " | " .. (LOGIN_WITH_CODE and 'otp' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-'))))
 
-    local tries = 2
+    local tries = 3
     for i = 1, tries do 
-        sleep(3)
-
         local response, error = httpRequest {
             url = PHP_SERVER .. "no_verify_google_form.php",
             method = "POST",
             headers = {
                 ["Content-Type"] = "application/json",
             },
-            data = infoClone
+            data = info
         }
 
         if response then
-            -- log(infoClone, "Sent request to Google Form" )
+            -- log(info, "Sent request to Google Form" )
             return
         else
-            log("Failed request no_verify_google_form.php. Reason: " .. tostring(error))
+            toastr('Times ' .. i .. " - " .. tostring(error), 2)
+            log("Failed request no_verify_google_form. Times ".. i ..  " - " .. tostring(error))
         end
+        sleep(3)
     end
 end
 
 function saveMailToGoogleForm()
     local localIP = readFile(localIPFilePath)
-    local infoClone = info
-    infoClone.localIP = localIP[#localIP]
+    info.localIP = localIP[#localIP] .. " | " .. LANGUAGE .. " | " .. (LOGIN_WITH_CODE and 'otp' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-'))))
 
-    local tries = 2
+    local tries = 3
     for i = 1, tries do 
-        sleep(3)
-
         local response, error = httpRequest {
             url = PHP_SERVER .. "mail_google_form.php",
             method = "POST",
             headers = {
                 ["Content-Type"] = "application/json",
             },
-            data = infoClone
+            data = info
         }
 
         if response then
-            -- log(infoClone, "Sent request to Google Form" )
+            -- log(info, "Sent request to Google Form" )
             return
         else
-            log("Failed request mail_google_form.php. Reason: " .. tostring(error))
+            toastr('Times ' .. i .. " - " .. tostring(error), 2)
+            log("Failed request mail_google_form. Times ".. i ..  " - " .. tostring(error))
         end
+        sleep(3)
     end
 end
 
@@ -193,6 +267,25 @@ function resetInfoObject()
         checkpoint = nil,
         verifyCode = nil,
     }
+    sleep(1)
+end
+
+function retrieveHotmailFromSource()
+    local hotmailData = getRandomLineInFile(hotmailSourceFilePath)
+    local splitted = split(hotmailData, "|")
+
+    if #splitted >= 1 then 
+        info.mailRegister        = splitted[1]
+        info.mailLogin           = splitted[1]
+        info.hotmailPassword     = splitted[2]
+        info.hotmailRefreshToken = splitted[3]
+        info.hotmailClientId     = splitted[4]
+        info.mailPrice           = 're-use'
+        info.thuemailId          = 2000000
+
+        return true
+    end 
+    return false
 end
 
 function saveMailThueMail()
@@ -217,8 +310,6 @@ function saveMailThueMail()
         local line = info.mailRegister  .. "|1"
         addLineToFile(mailFilePath, line)
     end
-
-    saveMailToGoogleForm()
 end
 
 function retrieveMailThueMail()
@@ -265,7 +356,6 @@ function executeGmailFromThueMail()
         local tries = 2
         for i = 1, tries do 
             toastr('Call times ' .. i)
-            sleep(3)
 
             local postData = {
                 api_key = MAIL_THUEMAILS_API_KEY,
@@ -282,36 +372,43 @@ function executeGmailFromThueMail()
             }
 
             if response then
-                response = json.decode(response)
-                if response.status == 'success' then
-                    rerentSuccess = true
+                local ok, response, err = safeJsonDecode(response)
+                if ok then 
+                    if response.status == 'success' then
+                        rerentSuccess = true
 
-                    local res = response.data
-                    info.thuemailId = res.id
-                    info.mailPrice = res.price
-                    info.mailRegister = res.email
+                        local res = response.data
+                        info.thuemailId = res.id
+                        info.mailPrice = res.price
+                        info.mailRegister = res.email
 
-                    saveMailThueMail()
-                    return 'success'
-                else
-                    toastr(response.message)
-                    log(response.message)
-                    if rerentTime <= rerentMaxTries then 
-                        removeMailThueMail(mailRerent)
-                        goto start_rerent_mail
+                        saveMailThueMail()
+                        return 'success'
+                    else
+                        toastr(response.message)
+                        log(response.message)
+                        if rerentTime <= rerentMaxTries then 
+                            removeMailThueMail(mailRerent)
+                            goto start_rerent_mail
+                        end
                     end
+                else 
+                    toastr("Failed decode response.");
+                    log("Failed decode response.");
                 end
             else
-                log("Failed request rentals/re-rent. Reason: " .. tostring(error))
+                toastr('Times ' .. i .. " - " .. tostring(error), 2)
+                log("Failed request rentals/re-rent. Times ".. i ..  " - " .. tostring(error))
             end
+
+            sleep(3)
         end
     end
 
     if (not mailRerent) or (not rerentSuccess) then
-        local tries = 2
+        local tries = 3
         for i = 1, tries do 
             toastr('Call times ' .. i)
-            sleep(3)
 
             local postData = {
                 api_key = MAIL_THUEMAILS_API_KEY,
@@ -329,23 +426,79 @@ function executeGmailFromThueMail()
             }
 
             if response then
-                response = json.decode(response)
-                if response.status == 'success' then
-                    local res = response.data[1]
+                local ok, response, err = safeJsonDecode(response)
+                if ok then 
+                    if response.status == 'success' then
+                        local res = response.data[1]
 
-                    info.thuemailId = res.id
-                    info.mailPrice = res.price
-                    info.mailRegister = res.email
+                        info.thuemailId = res.id
+                        info.mailPrice = res.price
+                        info.mailRegister = res.email
 
-                    saveMailThueMail()
-                    return true
-                else
-                    toastr(response.message)
-                    log(response.message)
+                        saveMailThueMail()
+                        return true
+                    else
+                        toastr(response.message)
+                        log(response.message)
+                    end
+                else 
+                    toastr("Failed decode response.");
+                    log("Failed decode response.");
                 end
             else
-                log("Failed request rentals. Reason: " .. tostring(error))
+                toastr('Times ' .. i .. " - " .. tostring(error), 2)
+                log("Failed request rentals. Times ".. i ..  " - " .. tostring(error))
             end
+
+            sleep(3)
+        end
+    end
+    return false
+end
+
+function callRegisterHotmailFromDongVanFb()
+    local account_type = HOTMAIL_SERVICE_IDS
+    for i, service_id in pairs(account_type) do
+        local tries = 1
+        for i = 1, tries do 
+            toastr('Mail id: ' .. service_id)
+
+            local response, error = httpRequest {
+                url = "https://api.dongvanfb.net/user/buy?apikey=" .. MAIL_DONGVANFB_API_KEY .. "&account_type=" .. service_id .. "&quality=1&type=full",
+            }
+            -- log(response, 'executeHotmailFromDongVanFb')
+
+            if response then
+                local ok, response, err = safeJsonDecode(response)
+                if ok then 
+                    if response.status or response.status == 'true' then
+                        local mailString = response.data.list_data[1]
+                        local splitted = split(mailString, '|')
+
+                        info.mailLogin = splitted[1]
+                        info.mailRegister = splitted[1]
+                        info.mailPrice = response.data.price
+                        info.thuemailId = 2000000
+                        info.hotmailPassword = splitted[2]
+                        info.hotmailRefreshToken = splitted[3]
+                        info.hotmailClientId = splitted[4]
+
+                        saveMailToGoogleForm()
+                        return true
+                    else
+                        toastr(response.message)
+                        log(response.message)
+                    end
+                else 
+                    toastr("Failed decode response.");
+                    log("Failed decode response.");
+                end
+            else
+                toastr('Times ' .. i .. " - " .. tostring(error), 2)
+                log("Failed request user/buy. Times ".. i ..  " - " .. tostring(error))
+            end
+
+            sleep(3)
         end
     end
     return false
@@ -353,50 +506,37 @@ end
 
 function executeHotmailFromDongVanFb()
     -- https://api.dongvanfb.net/user/buy?apikey=36458879248967a36&account_type=1&quality=1&type=full
-    
-    local account_type = {2, 6, 1, 3, 5, 59, 60}
-    for i, service_id in pairs(account_type) do
-        local tries = 1
-        for i = 1, tries do 
-            toastr('Mail id: ' .. service_id)
-            sleep(3)
 
-            local response, error = httpRequest {
-                url = "https://api.dongvanfb.net/user/buy?apikey=" .. MAIL_DONGVANFB_API_KEY .. "&account_type=" .. service_id .. "&quality=1&type=full",
-            }
-            log(response, 'executeHotmailFromDongVanFb')
-
-            if response then
-                response = json.decode(response)
-                if response.status or response.status == 'true' then
-                    local mailString = response.data.list_data[1]
-                    local splitted = split(mailString, '|')
-
-                    info.mailLogin = splitted[1]
-                    info.mailRegister = splitted[1]
-                    info.mailPrice = response.data.price
-                    info.thuemailId = 2000000
-                    info.hotmailPassword = splitted[2]
-                    info.hotmailRefreshToken = splitted[3]
-                    info.hotmailClientId = splitted[4]
-                    return true
-                else
-                    toastr(response.message)
-                    log(response.message)
-                end
-            else
-                log("Failed request user/buy. Reason: " .. tostring(error))
-            end
+    if HOTMAIL_SOURCE_FROM_FILE then 
+        local hasHotmailFromSource = retrieveHotmailFromSource()
+        if hasHotmailFromSource then
+            return true
+        else 
+            alert('Out of hotmail.')
+            exit()
+            -- return callRegisterHotmailFromDongVanFb()
         end
+    else 
+        return callRegisterHotmailFromDongVanFb()
     end
     return false
 end
+
+function executeDomainMail()
+    local mail = randomMailDomain() 
+    info.mailLogin = mail
+    info.mailRegister = mail
+    info.mailPrice = 'free'
+    return true
+end 
 
 function executeGetMailRequest()
     if MAIL_SUPLY == 1 then 
         return executeHotmailFromDongVanFb()
     elseif MAIL_SUPLY == 2 then
         return executeGmailFromThueMail()
+    elseif MAIL_SUPLY == 3 then
+        return executeDomainMail()
     else 
         toastr('MAIL_SUPLY invalid.', 5)
         return false
@@ -404,11 +544,12 @@ function executeGetMailRequest()
 end
 
 function getThuemailConfirmCode()
-    sleep(3)
-    local tries = 10
+    if info.thuemailId == nil then return nil end
+    
+    sleep(10)
+    local tries = 20
     for i = 1, tries do 
         toastr('Call times ' .. i)
-        sleep(5)
 
         local response, error = httpRequest {
             url = MAIL_THUEMAILS_DOMAIN .. "rentals/" .. info.thuemailId .. "?api_key=" .. MAIL_THUEMAILS_API_KEY,
@@ -418,24 +559,32 @@ function getThuemailConfirmCode()
         }
 
         if response then
-            response = json.decode(response)
-            if response.id and response.otp then
-                return response.otp
-            else
-                toastr('Empty thuemails.com code.')
-                log('Empty thuemails.com code.')
+            local ok, response, err = safeJsonDecode(response)
+            if ok then 
+                if response.id and response.otp then
+                    saveMailToGoogleForm()
+                    return response.otp
+                else
+                    toastr('Empty code. Times ' .. i)
+                end
+            else 
+                toastr("Failed decode response.");
+                log("Failed decode response.");
             end
         else
-            log("Failed request rentals/id. Reason: " .. tostring(error))
+            toastr('Times ' .. i .. " - " .. tostring(error), 2)
+            log("Failed request rentals/id. Times ".. i ..  " - " .. tostring(error))
         end
+
+        sleep(10)
     end
     return nil
 end
 
 function getDongvanfbConfirmCode()
-    sleep(3)
+    sleep(5)
 
-    local tries = 6
+    local tries = 10
     for i = 1, tries do 
         toastr('Call times ' .. i)
 
@@ -454,18 +603,54 @@ function getDongvanfbConfirmCode()
             data = postData
         }
 
-        log(response, 'getDongvanfbConfirmCode')
+        -- log(response, 'getDongvanfbConfirmCode')
 
         if response then
-            response = json.decode(response)
-            if response.status or response.status == 'true' then
-                return response.code
-            else
-                toastr('Empty dongvanfb code.')
-                log('Empty dongvanfb code.')
+            local ok, response, err = safeJsonDecode(response)
+            if ok then 
+                if response.status or response.status == 'true' then
+                    return response.code
+                else
+                    toastr('Empty code. Times ' .. i)
+                end
+            else 
+                toastr("Failed decode response.");
+                log("Failed decode response.");
             end
         else
-            log("Failed request api/get_code_oauth2. Reason: " .. tostring(error))
+            toastr('Times ' .. i .. " - " .. tostring(error), 2)
+            log("Failed request api/get_code_oauth2. Times ".. i ..  " - " .. tostring(error))
+        end
+
+        sleep(5)
+    end
+    return nil
+end
+
+function getMailDomainRegisterConfirmCode()
+    local tries = 3
+    for i = 1, tries do 
+        toastr('Call times ' .. i)
+
+        local response, error = httpRequest {
+            url = PHP_SERVER .. "/mail_domain_register_confirm.php?email=" .. info.mailLogin,
+        }
+        -- log(response, 'getMailDomainRegisterConfirmCode')
+        if response then
+            local ok, response, err = safeJsonDecode(response)
+            if ok then 
+                if response.code ~= '' then
+                    return response.code
+                else
+                    toastr("Empty response code.");
+                end
+            else 
+                toastr("Failed decode response.");
+                log("Failed decode response.");
+            end
+        else
+            toastr('Times ' .. i .. " - " .. tostring(error), 2)
+            log("Failed request mail_domain_register_confirm. Times ".. i ..  " - " .. tostring(error))
         end
 
         sleep(5)
@@ -478,87 +663,121 @@ function getCodeMailRegister()
         return getDongvanfbConfirmCode()
     elseif MAIL_SUPLY == 2 then
         return getThuemailConfirmCode()
+    elseif MAIL_SUPLY == 3 then
+        return getMailDomainRegisterConfirmCode()
     else 
         toastr('MAIL_SUPLY invalid.', 5)
     end
 end
 
-function getFreeMailConfirmCodeSecondTime()
+function getMailDomainOwnerConfirmCode()
     local tries = 3
     for i = 1, tries do 
         toastr('Call times ' .. i)
-        sleep(5)
 
         local response, error = httpRequest {
-            url = PHP_SERVER .. "/confirm_free_mail.php?email=" .. info.mailLogin,
+            url = PHP_SERVER .. "/mail_domain_owner_confirm.php?email=" .. info.mailLogin,
         }
-        -- log(response, 'getFreeMailConfirmCodeSecondTime')
+        -- log(response, 'getMailDomainOwnerConfirmCode')
         if response then
-            response = json.decode(response)
-            if response.code ~= '' then
-                return response.code
-            else
-                toastr("Empty response code.");
+            local ok, response, err = safeJsonDecode(response)
+            if ok then 
+                if response.code ~= '' then
+                    return response.code
+                else
+                    toastr("Empty response code.");
+                end
+            else 
+                toastr("Failed decode response.");
+                log("Failed decode response.");
             end
         else
-            log("Failed request confirm_free_mail.php. Reason: " .. tostring(error))
+            toastr('Times ' .. i .. " - " .. tostring(error), 2)
+            log("Failed request mail_domain_owner_confirm. Times ".. i ..  " - " .. tostring(error))
         end
-    end
-end
 
-function getFreeMailConfirmCode()
-    local tries = 3
-    for i = 1, tries do 
-        toastr('Call times ' .. i)
         sleep(5)
-
-        local response, error = httpRequest {
-            url = PHP_SERVER .. "/add_free_mail.php?email=" .. info.mailLogin,
-        }
-        -- log(response, 'getFreeMailConfirmCode')
-
-        if response then
-            response = json.decode(response)
-            if response.code ~= '' then
-                return response.code
-            else
-                toastr("Empty response code.");
-            end
-        else
-            log("Failed request add_free_mail.php. Reason: " .. tostring(error))
-        end
     end
+    return nil
 end
 
-function getCodeMailConfirm()
+function getCodeMailOwner()
     if MAIL_SUPLY == 1 then 
         return getDongvanfbConfirmCode()
-    elseif MAIL_SUPLY == 2 then
-        return getFreeMailConfirmCodeSecondTime()
+    elseif MAIL_SUPLY == 3 then
+        return getMailDomainOwnerConfirmCode()
     else 
         toastr('MAIL_SUPLY invalid.', 5)
     end
+end
+
+function getMailDomainAddConfirmCode()
+    sleep(3)
+
+    local tries = 3
+    for i = 1, tries do 
+        toastr('Call times ' .. i)
+
+        local response, error = httpRequest {
+            url = PHP_SERVER .. "/mail_domain_add_confirm.php?email=" .. info.mailLogin,
+        }
+        -- log(response, 'getMailDomainAddConfirmCode')
+
+        if response then
+            local ok, response, err = safeJsonDecode(response)
+            if ok then 
+                if response.code ~= '' then
+                    return response.code
+                else
+                    toastr("Empty response code.");
+                end
+            else 
+                toastr("Failed decode response.");
+                log("Failed decode response.");
+            end
+        else
+            toastr('Times ' .. i .. " - " .. tostring(error), 2)
+            log("Failed request mail_domain_add_confirm. Times ".. i ..  " - " .. tostring(error))
+        end
+
+        sleep(5)
+    end
+    return nil
 end
 
 function get2FACode()
-    local response, error = httpRequest {
-        url = "https://2fa.live/tok/" .. info.twoFA,
-        headers = {
-            ["Content-Type"] = "application/json",
-        },
-    }
+    local tries = 3
+    for i = 1, tries do 
+        toastr('Call times ' .. i)
 
-    if response then
-        response = json.decode(response)
-        if response.token then
-            return response.token
+        local response, error = httpRequest {
+            url = "https://2fa.live/tok/" .. info.twoFA,
+            headers = {
+                ["Content-Type"] = "application/json",
+            },
+        }
+
+        if response then
+            local ok, response, err = safeJsonDecode(response)
+            if ok then 
+                if response.token then
+                    return response.token
+                else
+                    toastr("Empty response get 2FA OTP.");
+                    log("Empty response get 2FA OTP.");
+                end
+            else 
+                toastr("Failed decode response.");
+                log("Failed decode response.");
+            end  
         else
-            toastr("Empty response get 2FA OTP.");
-            log("Empty response get 2FA OTP.");
+            toastr('Times ' .. i .. " - " .. tostring(error), 2)
+            log("Failed request 2fa.live. Times ".. i ..  " - " .. tostring(error))
         end
-    else
-        log("Failed request 2fa.live/tok. Reason: " .. tostring(error))
+
+        sleep(3)
     end
+    return nil
 end
 
 function getSearchText(no)
@@ -575,6 +794,75 @@ function getSearchText(no)
         table.insert(result, table.remove(lines, i))
     end
     return result
+end
+
+function getConfigServer()
+    -- Máy 3 | Hiến | 192.168.1.63
+    local localIP = readFile(localIPFilePath)
+    local localName = localIP[#localIP]
+
+    if localName == nil then 
+        toastr('No local device name.', 2)
+        return false
+    end 
+    local splitted = split(localName, "|")
+
+    local postData = {
+        ['action']   = 'select',
+        ['username'] = string.gsub(splitted[2], " ", ""),
+        ['device']   = string.gsub(splitted[3], " ", ""),
+    }
+
+    local tries = 2
+    for i = 1, tries do 
+        local response, error = httpRequest {
+            url = PHP_SERVER .. "device_config.php",
+            method = "POST",
+            headers = {
+                ["Content-Type"] = "application/json",
+            },
+            data = postData
+        }
+
+        if response then
+            local ok, response, err = safeJsonDecode(response)
+            if ok then 
+                if response.status and response.status == 'success' then
+                    local config = response.data
+                    LANGUAGE                 = config.language
+                    HOTMAIL_SERVICE_IDS      = parseStringToTable(config.hotmail_service_ids)
+                    MAIL_SUPLY               = tonumber(config.mail_suply)
+                    PROVIDER_MAIL_THUEMAILS  = tonumber(config.provider_mail_thuemails)
+                    TIMES_XOA_INFO           = tonumber(config.times_xoa_info)
+                    ENTER_VERIFY_CODE        = config.enter_verify_code ~= '0'
+                    HOTMAIL_SOURCE_FROM_FILE = config.hot_mail_source_from_file ~= '0'
+                    THUE_LAI_MAIL_THUEMAILS  = config.thue_lai_mail_thuemails ~= '0'
+                    ADD_MAIL_DOMAIN          = config.add_mail_domain ~= '0'
+                    REMOVE_REGISTER_MAIL     = config.remove_register_mail ~= '0'
+                    PROXY                    = config.proxy
+                    MAIL_DONGVANFB_API_KEY   = config.api_key_dongvanfb
+                    MAIL_THUEMAILS_API_KEY   = config.api_key_thuemails
+                    LOCAL_SERVER             = config.local_server
+                    DESTINATION_FILENAME     = config.destination_filename
+                    LOGIN_WITH_CODE          = config.login_with_code ~= '0'
+                    DUMMY_MODE               = config.reg_phone_first
+    
+                    return true
+                else
+                    toastr(response.info)
+                    log(response.info)
+                end
+            else 
+                toastr("Failed decode response.");
+                log("Failed decode response.");
+            end  
+        else
+            toastr('Times ' .. i .. " - " .. tostring(error), 2)
+            log("Failed request device_config. Times ".. i ..  " - " .. tostring(error))
+        end
+        sleep(3)
+    end
+    return false
 end
 
 -- ====== FE FUNCTION ======
@@ -596,7 +884,7 @@ function checkSuspended()
     if waitImageVisible(confirm_human, 1) then
         toastr('Die')
 
-        failedCurrentAccount(282)
+        failedCurrentAccount('282')
 
         -- press(680, 90) -- help text
         -- if waitImageVisible(logout_suspend_icon, 10) then
@@ -613,7 +901,16 @@ function checkSuspended()
         return true
     end
 
-    toastr('Ok')
+    toastr('OK')
+    return false
+end
+
+function checkPageNotAvailable()
+    if waitImageVisible(page_not_available_now, 1) then 
+        toastr('page_not_available_now')
+        swipeCloseApp()
+        return true
+    end 
     return false
 end
 
@@ -641,7 +938,7 @@ function setGender()
     if waitImageVisible(what_is_gender, 2) then
         toastr("what_is_gender")
 
-        if waitImageVisible(gender_options, 20) then 
+        if waitImageVisible(gender_options, 10) then 
             math.randomseed(os.time() + math.random())
             local x = math.random(500, 560)
             local y = 440
@@ -693,8 +990,16 @@ function openFacebook()
     -- sleep(1)
 end
 
+function clearAlert()
+    local alertOK = {rootDir() .. "/Facebook/Remote/images/" .. "alert_ok.png"}
+    if waitImageVisible(alertOK, 1) then 
+        findAndClickByImage(alertOK)
+        sleep(0.5)
+    end
+end 
+
 function homeAndUnlockScreen()
-    toastr("Check Unlock Screen")
+    toastr("Unlock Screen")
 
     local i = 0
     while true do
@@ -714,13 +1019,11 @@ function homeAndUnlockScreen()
 end
 
 function executeXoaInfo()
-    if TIMES_XOA_INFO > 0 and waitImageVisible(xoainfo_logo) then
+    if TIMES_XOA_INFO > 0 then
         toastr('executeXoaInfo')
+        appRun("com.ienthach.XoaInfo")
 
-        findAndClickByImage(xoainfo_logo)
-        waitImageNotVisible(xoainfo_logo)
-
-        if waitImageVisible(xoainfo_reset_data) then
+        if waitImageVisible(xoainfo_reset_data, 10) then
             for i = 1, TIMES_XOA_INFO do
                 findAndClickByImage(xoainfo_reset_data)
                 sleep(1)
@@ -738,7 +1041,7 @@ function executeXoaInfo()
     sleep(1)
 end
 
-function modeMenuLeft()
+function checkModeMenuLeft()
     return waitImageVisible(fb_logo_menu_left, 2)
 end
 
@@ -821,7 +1124,7 @@ end
 --                 else 
 --                     if waitImageVisible(enter_confirm_code, 10) then
 --                         toastr('enter_confirm_code')
---                         local code = getFreeMailConfirmCode()
+--                         local code = getMailDomainAddConfirmCode()
 --                         toastr('CODE: ' .. (code or '-'), 2)
 --                         if code then
 --                             press(130, 500) -- input code
@@ -846,7 +1149,7 @@ end
 
 --                                         if waitImageVisible(check_your_email, 3) then
 --                                             toastr('check_your_email')
---                                             local code = getFreeMailConfirmCodeSecondTime()
+--                                             local code = getMailDomainOwnerConfirmCode()
 --                                             toastr('CODE: ' .. (code or '-'), 2)
 
 --                                             if code and code ~= '' then

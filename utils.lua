@@ -31,11 +31,16 @@ function toastr(value, time)
     end
 end
 
+function dd(value)
+    sleep(1)
+    toastr(value, 5) exit()
+end 
+
 function showIphoneModel()
     local fh = io.popen("uname -m", "r")
     local model = fh:read("*l")
     fh:close()
-    toastr(model or 'Unknown model', 4)
+    toastr(model or 'Unknown model', 1)
 end
 
 function shuffle(tbl)
@@ -102,7 +107,7 @@ function press(x, y, duration)
     local randX = x + randOffset()
     local randY = y + randOffset()
     tap(randX, randY)
-    usleep(0.3 * 1000000)
+    usleep(duration * 1000000)
 end
 
 function split(str, delimiter)
@@ -130,15 +135,14 @@ function writeFile(path, data)
 end
 
 function addLineToFile(path, line)
-    io.open(path, "a"):write(line, "\n"):close()
+    (io.open(path, "a")):write("\n" .. line):close()
 end
 
 function readFile(path)
     local file = io.open(path, "r")
     if not file then
         log("File không tồn tại, tạo mới: " .. path, 3)
-        
-        -- Tạo file mới
+
         file = io.open(path, "w")
         if not file then
             log("Không thể tạo file: " .. path, 3)
@@ -146,7 +150,6 @@ function readFile(path)
         end
         file:close()
 
-        -- Mở lại ở chế độ đọc
         file = io.open(path, "r")
         if not file then
             log("Không thể mở file vừa tạo: " .. path, 3)
@@ -156,8 +159,9 @@ function readFile(path)
 
     local lines = {}
     for line in file:lines() do
-        if line and line ~= "" then
-            line = line:gsub("\r", "")
+        line = line:gsub("\r", ""):gsub("^%s*(.-)%s*$", "%1")
+        
+        if line ~= "" then
             table.insert(lines, line)
         end
     end
@@ -166,6 +170,9 @@ function readFile(path)
 end
 
 function readLinesFromFile(filename)
+    local f, err = io.open(filename, "r")
+    if not f then return nil, "Không mở được file: " .. tostring(err) end
+
     local names = {}
     for name in io.lines(filename) do
         table.insert(names, name)
@@ -173,11 +180,46 @@ function readLinesFromFile(filename)
     return names
 end
 
+function removeLineFromFile(filepath, pattern)
+    local f, err = io.open(filepath, "r")
+    if not f then return nil, "Không mở được file: " .. tostring(err) end
+
+    local lines = {}
+    for line in f:lines() do
+        if not string.find(line, pattern, 1, true) then
+            lines[#lines + 1] = line
+        end
+    end
+    f:close()
+
+    f, err = io.open(filepath, "w")
+    if not f then return nil, "Không ghi được file: " .. tostring(err) end
+
+    for i = 1, #lines do
+        f:write(lines[i], "\n")
+    end
+    f:close()
+    return true
+end
+
 function getRandomLineInFile(filename)
     local lines = readLinesFromFile(filename)
+    if not lines or #lines == 0 then 
+        return ""
+    end
+    math.randomseed(os.time() + math.random()) -- đảm bảo random khác nhau mỗi lần
     local index = math.random(#lines)
 
     return trim(lines[index])
+end
+
+function parseStringToTable(s)
+    local t = {}
+    s = s:gsub("^%s*{%s*", ""):gsub("%s*}%s*$", "")
+    for num in s:gmatch("%d+") do
+        t[#t + 1] = tonumber(num)
+    end
+    return t
 end
 
 function findAndClickByImage(paths, threshold)
@@ -340,7 +382,7 @@ function getRandomName()
     return { firstname, lastname }
 end
 
-function randomEmailLogin()
+function randomMailDomain()
     local letters = "abcdefghijklmnopqrstuvwxyz"
     local digits = "0123456789"
     local part1, part2 = "", ""
@@ -355,8 +397,53 @@ function randomEmailLogin()
     return part1 .. part2 .. "@yagisongs.com"
 end
 
+function randomGmail()
+    local letters = "abcdefghijklmnopqrstuvwxyz"
+    local digits = "0123456789"
+    local part1, part2 = "", ""
+    for i = 1, 12 do
+        local idx = math.random(1, #letters)
+        part1 = part1 .. letters:sub(idx, idx)
+    end
+    for i = 1, 5 do
+        local idx = math.random(1, #digits)
+        part2 = part2 .. digits:sub(idx, idx)
+    end
+    return part1 .. part2 .. "@gmail.com"
+end
+
+function randomIcloud()
+    local letters = "abcdefghijklmnopqrstuvwxyz"
+    local digits = "0123456789"
+    local part1, part2 = "", ""
+    for i = 1, 12 do
+        local idx = math.random(1, #letters)
+        part1 = part1 .. letters:sub(idx, idx)
+    end
+    for i = 1, 5 do
+        local idx = math.random(1, #digits)
+        part2 = part2 .. digits:sub(idx, idx)
+    end
+    return part1 .. part2 .. "@icloud.com"
+end
+
+function swipeForce(x1, y1, x2, y2, duration)
+    duration = duration or 100000
+    local steps = 30
+    local sleepTime = duration / steps
+
+    touchDown(1, x1, y1)
+    for i = 1, steps do
+        local xi = x1 + (x2 - x1) * i / steps
+        local yi = y1 + (y2 - y1) * i / steps
+        usleep(sleepTime)
+        touchMove(1, xi, yi)
+    end
+    touchUp(1, x2, y2)
+end
+
 function swipe(x1, y1, x2, y2, duration)
-    duration = duration or 300
+    duration = duration or 200
     touchDown(0, x1, y1)
     usleep(50000)
     touchMove(0, x2, y2)
@@ -366,6 +453,7 @@ function swipe(x1, y1, x2, y2, duration)
 end
 
 function swipeVertically(n)
+toast('swipeVertically')
     math.randomseed(os.time());
     local x = math.random(5, 15)
     local x1 = math.random(200, 250)
@@ -504,7 +592,7 @@ function httpRequest(params)
         ssl_verifyhost = params.ssl_verifyhost or false,
         customrequest = method,
         followlocation = true,
-        timeout = 30,
+        timeout = 60,
         writefunction = function(chunk)
             response = response .. tostring(chunk) -- Đảm bảo `chunk` là chuỗi
             return #chunk
@@ -562,6 +650,32 @@ function httpRequest(params)
     return response, nil
 end
 
+function safeJsonDecode(raw, tag)
+    tag = tag or "JSON"
+
+    if type(raw) ~= "string" or raw == "" then
+        local err = "Input is empty or not a string"
+        log(("[%s] %s"):format(tag, err))
+        return false, nil, err
+    end
+
+    local first = string.sub(raw, 1, 1)
+    if first ~= "{" and first ~= "[" then
+        local err = "Not valid JSON (doesn't start with { or [)"
+        log(("[%s] %s -> %s"):format(tag, err, raw))
+        return false, nil, err
+    end
+
+    local ok, decoded = pcall(json.decode, raw)
+    if ok and decoded ~= nil then
+        return true, decoded, nil
+    else
+        local err = decoded or "Unknown JSON decode error"
+        log(("[%s] Decode failed: %s"):format(tag, err))
+        return false, nil, err
+    end
+end
+
 function typeText(text)
     if text == nil then return end
     usleep(300000)
@@ -601,8 +715,8 @@ function typeTextShortSpace(text)
     math.randomseed(os.time())
 
     local function randomTap(pos)
-        local x = math.random(-10, 10)
-        local y = math.random(-10, 10)
+        local x = math.random(-5, 5)
+        local y = math.random(-5, 5)
         tap(pos[1] + x, pos[2] + y)
         usleep(math.random(200000, 300000))
     end
@@ -665,19 +779,19 @@ function typeTextLongSpace(text)
     math.randomseed(os.time())
 
     local function randomTap(pos)
-        local x = math.random(-10, 10)
-        local y = math.random(-10, 10)
+        local x = math.random(-5, 5)
+        local y = math.random(-5, 5)
         tap(pos[1] + x, pos[2] + y)
-        usleep(math.random(200000, 300000))
+        usleep(math.random(250000, 300000))
     end
 
     local function tapSymbol(ch)
         randomTap(numberToggleKey)
-        usleep(math.random(300000, 400000))
+        usleep(math.random(350000, 400000))
         randomTap(symbolMap[ch])
-        usleep(math.random(200000, 300000))
+        usleep(math.random(250000, 300000))
         randomTap(numberToggleKey)
-        usleep(math.random(300000, 400000))
+        usleep(math.random(350000, 400000))
     end
 
     if waitImageVisible(shift_keyboard_on, 1) then
@@ -752,6 +866,42 @@ function typeNumber(so)
     end
 end
 
+function typeNumberLongSpace(text)
+    sleep(0.5)
+    local numberToggleKey = {72, 1273}
+    local symbolMap = {
+        ["0"] = {704, 945}, ["1"] = {29, 947}, ["2"] = {105, 947}, ["3"] = {179, 946},
+        ["4"] = {257, 954}, ["5"] = {328, 952}, ["6"] = {406, 953}, ["7"] = {479, 953},
+        ["8"] = {557, 950}, ["9"] = {635, 965}, ["@"] = {625, 1070}, ["!"] = {467, 1165},
+        ["."] = {115, 1167}
+    }
+
+    math.randomseed(os.time())
+
+    local function randomTap(pos)
+        local x = math.random(-5, 5)
+        local y = math.random(-5, 5)
+        tap(pos[1] + x, pos[2] + y)
+        usleep(math.random(250000, 300000))
+    end
+
+    local function tapSymbol(ch)
+        randomTap(symbolMap[ch])
+        usleep(math.random(250000, 300000))
+    end
+
+    randomTap(numberToggleKey) sleep(0.5)
+    for i = 1, #text do
+        local ch = text:sub(i, i)
+
+        if symbolMap[ch] then
+            tapSymbol(ch)
+        elseif ch == " " then
+            randomTap(keymap[" "])
+        end
+    end
+end
+
 function getUIDFBLogin()
     local plist = require("plist")
     local result = appInfo("com.facebook.Facebook")
@@ -761,6 +911,27 @@ function getUIDFBLogin()
     local luaTable = plist.read(path);
 
     return luaTable["kFBQPLLoggingPolicyLastKnownOwnerFbID"] or nil
+end
+
+function hasInternetConnection()
+    local url = "https://api.ipify.org?v=" .. math.random(1, 65535)
+
+    local response, error = httpRequest { url = url }
+    if response then
+        toastr(response)
+        return true
+    end
+    return false
+end
+
+function waitForInternet(timeout)
+    for i = 1, timeout, 1 do
+        if hasInternetConnection() then
+            return true
+        end
+        sleep(1)
+    end
+    return false
 end
 
 function checkInternetAndPublicIP()
@@ -838,4 +1009,52 @@ function swipeCloseApp()
     end
     keyPress(KEY_TYPE.HOME_BUTTON);
     sleep(math.random(1, 2));
+end
+
+function randomUSPhone()
+    math.randomseed(os.time())
+    local area_codes = {
+        ["New York"] = {"917", "929", "347"},
+        ["California"] = {"213", "415", "818", "619", "323"},
+        ["Florida"] = {"786", "954", "321"},
+        ["Texas"] = {"832", "956", "469", "972"},
+        ["Illinois"] = {"773", "872"},
+        ["Georgia"] = {"678", "470"},
+        ["Washington"] = {"360", "564"},
+        ["Massachusetts"] = {"774", "857"},
+        ["Arizona"] = {"602", "623"},
+        ["Hawaii"] = {"808"},
+        ["Utah"] = {"385"}
+    }
+
+    local function randomMobileNXX()
+        local nxx
+        repeat
+            local first = math.random(2, 9)
+            local second = math.random(0, 9)
+            local third = math.random(0, 9)
+            nxx = string.format("%d%d%d", first, second, third)
+        until nxx ~= "555" and nxx ~= "911" and nxx ~= "411" and nxx ~= "000"
+        return nxx
+    end
+
+    local function randomLineNumber()
+        return string.format("%04d", math.random(0, 9999))
+    end
+
+    local function randomPhone()
+        local states = {}
+        for state in pairs(area_codes) do table.insert(states, state) end
+        local randomState = states[math.random(#states)]
+        local codes = area_codes[randomState]
+        local areaCode = codes[math.random(#codes)]
+
+        local prefixes = {"+1", ""}
+        local prefix = prefixes[math.random(#prefixes)]
+
+        local phone = prefix .. areaCode .. randomMobileNXX() .. randomLineNumber()
+        return phone
+    end
+
+    return randomPhone()
 end
