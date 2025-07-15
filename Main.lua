@@ -378,13 +378,21 @@ function main()
     if waitImageVisible(agree_facebook_term) then
         toastr("agree_facebook_term")
 
+        local times = 1
+        ::label_clickagree::
         if waitImageVisible(dont_allow, 1) then findAndClickByImage(dont_allow) end
         findAndClickByImage(i_agree_btn)
-        
+
         if waitImageVisible(can_not_agree) then 
             toastr('Can not agree')
-            failedCurrentAccount('can_not_agree')
-            goto label_continue
+            if times < 4 then 
+                times = times + 1
+                onOffAirplaneMode()
+                goto label_clickagree
+            else 
+                failedCurrentAccount('can_not_agree')
+                goto label_continue
+            end 
         end 
 
         if not waitImageNotVisible(agree_facebook_term, 60) then 
