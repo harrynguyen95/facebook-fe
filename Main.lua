@@ -388,7 +388,7 @@ function main()
         findAndClickByImage(i_agree_btn)
 
         if waitImageVisible(can_not_agree, 15) then 
-            if times < 4 then 
+            if times < 3 then 
                 times = times + 1
                 onOffAirplaneMode()
                 openFacebook()
