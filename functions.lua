@@ -407,7 +407,7 @@ function executeGmailFromThueMail()
     end
 
     if (not mailRerent) or (not rerentSuccess) then
-        local tries = 60
+        local tries = 30
         for i = 1, tries do 
             toastr('Call times ' .. i)
 
@@ -451,7 +451,7 @@ function executeGmailFromThueMail()
                 log("Failed request rentals. Times ".. i ..  " - " .. tostring(error))
             end
 
-            sleep(5)
+            sleep(10)
         end
     end
     return false

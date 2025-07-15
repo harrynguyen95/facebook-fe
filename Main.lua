@@ -300,6 +300,12 @@ function main()
                 end
             end
 
+            if waitImageVisible(continue_creating_account, 3) or waitImageVisible(red_warning_icon, 3) then
+                toastr("continue_creating_account")
+                failedCurrentAccount('email_has_account')
+                goto label_continue
+            end
+            
             if not waitImageNotVisible(what_is_your_email, 20) then 
                 if checkImageIsExists(what_is_your_email) then findAndClickByImage(next) end
                 if not waitImageNotVisible(what_is_your_email, 20) then 
@@ -307,12 +313,6 @@ function main()
                     swipeCloseApp()
                     goto label_openfacebook
                 end
-            end
-
-            if waitImageVisible(continue_creating_account, 3) or waitImageVisible(red_warning_icon, 3) then
-                toastr("continue_creating_account")
-                failedCurrentAccount('email_has_account')
-                goto label_continue
             end
         end
     end
@@ -383,8 +383,7 @@ function main()
         if waitImageVisible(dont_allow, 1) then findAndClickByImage(dont_allow) end
         findAndClickByImage(i_agree_btn)
 
-        if waitImageVisible(can_not_agree) then 
-            toastr('Can not agree')
+        if waitImageVisible(can_not_agree, 15) then 
             if times < 4 then 
                 times = times + 1
                 onOffAirplaneMode()
@@ -395,7 +394,7 @@ function main()
             end 
         end 
 
-        if not waitImageNotVisible(agree_facebook_term, 90) then 
+        if not waitImageNotVisible(agree_facebook_term, 60) then 
             toastr('Can not next')
             swipeCloseApp()
             goto label_openfacebook
@@ -475,6 +474,12 @@ function main()
                 end
             end
 
+            if waitImageVisible(continue_creating_account, 3) or waitImageVisible(red_warning_icon, 3) then
+                toastr("continue_creating_account")
+                failedCurrentAccount('email_has_account')
+                goto label_continue
+            end
+
             if not waitImageNotVisible(what_is_your_email, 20) then 
                 if checkImageIsExists(what_is_your_email) then findAndClickByImage(next) end
                 if not waitImageNotVisible(what_is_your_email, 20) then 
@@ -482,12 +487,6 @@ function main()
                     swipeCloseApp()
                     goto label_openfacebook
                 end
-            end
-
-            if waitImageVisible(continue_creating_account, 3) or waitImageVisible(red_warning_icon, 3) then
-                toastr("continue_creating_account")
-                failedCurrentAccount('email_has_account')
-                goto label_continue
             end
         end
 
