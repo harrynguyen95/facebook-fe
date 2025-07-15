@@ -395,7 +395,7 @@ function main()
             end 
         end 
 
-        if not waitImageNotVisible(agree_facebook_term, 60) then 
+        if not waitImageNotVisible(agree_facebook_term, 90) then 
             toastr('Can not next')
             swipeCloseApp()
             goto label_openfacebook
