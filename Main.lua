@@ -714,7 +714,7 @@ function main()
             toastr('CODE: ' .. (code or '-'), 2)
 
             if code and code ~= '' then 
-                if #code == 8 then 
+                if #code == 8 or #code == 6 then 
                     press(100, 850) 
                     typeText(code) sleep(1)
                     if waitImageVisible(continue_code_mail) then

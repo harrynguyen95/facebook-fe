@@ -174,7 +174,7 @@ function saveAccToGoogleForm()
     if (info.checkpoint == 282 or info.checkpoint == '282') and (info.mailLogin == '' or info.mailLogin == nil) then return nil end
 
     local localIP = readFile(localIPFilePath)
-    info.localIP = localIP[#localIP] .. " | " .. LANGUAGE .. " | " .. (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or 'mail')))
+    info.localIP = localIP[#localIP] .. " | " .. LANGUAGE .. " | " .. (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-')))
 
     local tries = 3
     for i = 1, tries do 
@@ -200,7 +200,7 @@ end
 
 function saveNoVerifyToGoogleForm()
     local localIP = readFile(localIPFilePath)
-    info.localIP = localIP[#localIP] .. " | " .. LANGUAGE .. " | " .. (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or 'mail')))
+    info.localIP = localIP[#localIP] .. " | " .. LANGUAGE .. " | " .. (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-')))
 
     local tries = 3
     for i = 1, tries do 
@@ -226,7 +226,7 @@ end
 
 function saveMailToGoogleForm()
     local localIP = readFile(localIPFilePath)
-    info.localIP = localIP[#localIP] .. " | " .. LANGUAGE .. " | " .. (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or 'mail')))
+    info.localIP = localIP[#localIP] .. " | " .. LANGUAGE .. " | " .. (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-')))
 
     local tries = 3
     for i = 1, tries do 
