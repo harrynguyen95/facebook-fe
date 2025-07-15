@@ -365,7 +365,7 @@ function main()
     end
 
     if checkImageIsExists(continue_creating_account) then failedCurrentAccount('phone_has_account') goto label_continue end
-    if checkImageIsExists(what_is_your_email) then goto label_whatisyouremail end 
+    if checkImageIsExists(what_is_your_email) and not DUMMY_PHONE then goto label_whatisyouremail end 
 
     ::label_saveyourlogin::
     if waitImageVisible(save_your_login_info, 3) then
