@@ -702,8 +702,10 @@ function main()
         end
 
         if LOGIN_WITH_CODE then 
-            if waitImageVisible(continue_code_mail, 10) then
+            if waitImageVisible(continue_code_mail) then
+                toast('continue_code_mail')
                 findAndClickByImage(continue_code_mail)
+                waitImageVisible(check_your_email, 10)
             end
         end 
 
@@ -738,6 +740,8 @@ function main()
                 goto label_searchtext
             end 
         end
+
+        dd('out')
 
         if waitImageVisible(help_protect_account, 10) then
             toastr('help_protect_account')
