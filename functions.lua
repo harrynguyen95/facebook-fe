@@ -702,6 +702,7 @@ function getMailDomainOwnerConfirmCode()
 end
 
 function getCodeMailOwner()
+    sleep(10)
     if MAIL_SUPLY == 1 then 
         return getDongvanfbConfirmCode()
     elseif MAIL_SUPLY == 3 then

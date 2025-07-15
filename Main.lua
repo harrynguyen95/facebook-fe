@@ -709,23 +709,20 @@ function main()
 
         if waitImageVisible(check_your_email, 3) then
             toastr('check_your_email')
-            ::label_getownercode::
+
             local code = getCodeMailOwner()
             toastr('CODE: ' .. (code or '-'), 2)
 
-            if code and code ~= '' then 
-                if #code == 8 or #code == 6 then 
-                    press(100, 850) 
-                    typeText(code) sleep(1)
-                    if waitImageVisible(continue_code_mail) then
-                        findAndClickByImage(continue_code_mail)
-                        waitImageNotVisible(check_your_email)
-                    end
+            if code and code ~= '' and (#code == 8 or #code == 6) then 
+                press(100, 850) 
+                typeText(code) sleep(1)
+                if waitImageVisible(continue_code_mail) then
+                    findAndClickByImage(continue_code_mail)
+                    waitImageNotVisible(check_your_email)
                 else 
-                    toast('Get code again', 3)
-                    sleep(10)
-                    goto label_getownercode
-                end
+                    findAndClickByImage(next)
+                    waitImageNotVisible(check_your_email)
+                end 
             else 
                 finishCurrentAccount()
                 press(55, 160) -- X
