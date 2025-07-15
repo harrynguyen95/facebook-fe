@@ -127,9 +127,8 @@ function main()
                     findAndClickByImage(login_button)
                 end 
                 if waitImageVisible(wrong_credentials) then 
-                    swipeCloseApp()
-                    onOffAirplaneMode()
-                    goto label_openfacebook
+                    failedCurrentAccount('wrong_cre')
+                    goto label_continue
                 end 
                 sleep(3)
             else 
