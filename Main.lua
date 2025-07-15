@@ -387,6 +387,7 @@ function main()
             if times < 4 then 
                 times = times + 1
                 onOffAirplaneMode()
+                openFacebook()
                 goto label_clickagree
             else 
                 failedCurrentAccount('can_not_agree')
