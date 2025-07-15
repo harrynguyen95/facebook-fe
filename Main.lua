@@ -714,12 +714,16 @@ function main()
             local again = 1
 
             ::label_getownercodeagain::
+            sleep(5)
             local code = getCodeMailOwner()
             toastr('CODE: ' .. (code or '-'), 2)
             again = again + 1
 
             if code and code ~= '' and (#code == 8 or #code == 6) then 
                 press(100, 850) 
+                swipe(600, 330, 600, 500)
+                sleep(1)
+                findAndClickByImage(x_input_icon)
                 typeText(code) sleep(1)
                 if waitImageVisible(continue_code_mail) then
                     findAndClickByImage(continue_code_mail)
