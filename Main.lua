@@ -388,6 +388,7 @@ function main()
                 times = times + 1
                 onOffAirplaneMode()
                 openFacebook()
+                sleep(2)
                 goto label_clickagree
             else 
                 failedCurrentAccount('can_not_agree')

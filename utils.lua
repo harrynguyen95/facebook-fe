@@ -964,7 +964,7 @@ end
 
 function onOffAirplaneMode()
     appRun("com.apple.Preferences")
-    if waitImageVisible(wifi_icon, 3) then 
+    if waitImageVisible(wifi_icon, 2) then 
         toast('wifi_icon')
         findAndClickByImage(wifi_icon)
         sleep(1)
