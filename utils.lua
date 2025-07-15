@@ -1014,28 +1014,26 @@ end
 function randomUSPhone()
     math.randomseed(os.time())
     local area_codes = {
-        ["New York"] = {"917", "929", "347"},
-        ["California"] = {"213", "415", "818", "619", "323"},
-        ["Florida"] = {"786", "954", "321"},
-        ["Texas"] = {"832", "956", "469", "972"},
-        ["Illinois"] = {"773", "872"},
-        ["Georgia"] = {"678", "470"},
-        ["Washington"] = {"360", "564"},
-        ["Massachusetts"] = {"774", "857"},
-        ["Arizona"] = {"602", "623"},
+        ["New York"] = {"212", "315", "518"},
+        ["California"] = {"213", "310", "415", "818"},
+        ["Florida"] = {"305", "407", "786"},
+        ["Texas"] = {"214", "713", "512"},
+        ["Illinois"] = {"312", "630", "773"},
+        ["Nevada"] = {"702", "775"},
+        ["Georgia"] = {"404", "678"},
+        ["Washington"] = {"206", "253"},
+        ["Massachusetts"] = {"617", "508"},
+        -- ["New Mexico"] = {"505"},
         ["Hawaii"] = {"808"},
-        ["Utah"] = {"385"}
+        ["Arizona"] = {"480", "602"},
+        ["Utah"] = {"801", "385"}
     }
 
-    local function randomMobileNXX()
-        local nxx
-        repeat
-            local first = math.random(2, 9)
-            local second = math.random(0, 9)
-            local third = math.random(0, 9)
-            nxx = string.format("%d%d%d", first, second, third)
-        until nxx ~= "555" and nxx ~= "911" and nxx ~= "411" and nxx ~= "000"
-        return nxx
+    local function randomNXX()
+        local first = math.random(2, 9)
+        local second = math.random(0, 9)
+        local third = math.random(0, 9)
+        return string.format("%d%d%d", first, second, third)
     end
 
     local function randomLineNumber()
@@ -1046,13 +1044,12 @@ function randomUSPhone()
         local states = {}
         for state in pairs(area_codes) do table.insert(states, state) end
         local randomState = states[math.random(#states)]
+
         local codes = area_codes[randomState]
         local areaCode = codes[math.random(#codes)]
 
-        local prefixes = {"+1", ""}
-        local prefix = prefixes[math.random(#prefixes)]
-
-        local phone = prefix .. areaCode .. randomMobileNXX() .. randomLineNumber()
+        local phone = "01" .. areaCode .. randomNXX() .. randomLineNumber()
+        -- return phone, randomState
         return phone
     end
 
