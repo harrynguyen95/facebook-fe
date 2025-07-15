@@ -151,6 +151,10 @@ function main()
     end
 
     if LOGIN_WITH_CODE then 
+        if waitImageVisible(wrong_credentials, 3) then 
+            failedCurrentAccount('wrong_cre')
+            goto label_continue
+        end 
         if waitImageVisible(save_your_login_info, 3) then 
             findAndClickByImage(save) 
             sleep(1)
