@@ -590,7 +590,7 @@ function main()
         toastr("no_friend")
         if waitImageVisible(skip, 1) then findAndClickByImage(skip) end 
         findAndClickByImage(next)
-        if not waitImageNotVisible(no_friend, 30) then 
+        if not waitImageNotVisible(no_friend, 10) then 
             swipeCloseApp()
             goto label_openfacebook
         end
