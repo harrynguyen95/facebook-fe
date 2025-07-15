@@ -711,9 +711,12 @@ function main()
 
         if waitImageVisible(check_your_email, 3) then
             toastr('check_your_email')
+            local again = 1
 
+            ::label_getownercodeagain::
             local code = getCodeMailOwner()
             toastr('CODE: ' .. (code or '-'), 2)
+            again = again + 1
 
             if code and code ~= '' and (#code == 8 or #code == 6) then 
                 press(100, 850) 
@@ -724,6 +727,10 @@ function main()
                 else 
                     findAndClickByImage(next)
                     waitImageNotVisible(check_your_email)
+                end 
+
+                if checkImageIsExists(red_warning_icon) and again < 3 then 
+                    goto label_getownercodeagain
                 end 
             else 
                 finishCurrentAccount()
