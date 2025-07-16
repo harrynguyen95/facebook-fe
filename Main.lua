@@ -391,7 +391,7 @@ function main()
             if times < 3 then 
                 times = times + 1
                 onOffAirplaneMode()
-                openFacebook()
+                -- openFacebook()
                 sleep(2)
                 goto label_clickagree
             else 

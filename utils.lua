@@ -963,37 +963,37 @@ function checkInternetAndPublicIP()
 end
 
 function onOffAirplaneMode()
-    appRun("com.apple.Preferences")
-    if waitImageVisible(wifi_icon, 2) then 
-        toast('wifi_icon')
-        findAndClickByImage(wifi_icon)
-        sleep(1)
-    end 
-    if waitImageVisible(wifi_on, 3) then 
-        press(630, 250) sleep(2) -- off
-        press(630, 250) sleep(3) -- on
-    elseif waitImageVisible(wifi_off, 3) then
-        press(630, 250) sleep(3) -- on
-    end
+    -- appRun("com.apple.Preferences")
+    -- if waitImageVisible(wifi_icon, 2) then 
+    --     toast('wifi_icon')
+    --     findAndClickByImage(wifi_icon)
+    --     sleep(1)
+    -- end 
+    -- if waitImageVisible(wifi_on, 3) then 
+    --     press(630, 250) sleep(2) -- off
+    --     press(630, 250) sleep(3) -- on
+    -- elseif waitImageVisible(wifi_off, 3) then
+    --     press(630, 250) sleep(3) -- on
+    -- end
 
-    -- toastr('onOffAirplaneMode')
-    -- io.popen("activator send switch-off.com.a3tweaks.switch.vpn")
-    -- sleep(0.5)
-    -- io.popen('activator send switch-on.com.a3tweaks.switch.airplane-mode');
-    -- sleep(0.5)
-    -- io.popen('activator send switch-on.com.a3tweaks.switch.airplane-mode');
-    -- sleep(0.5)
-    -- io.popen('activator send switch-off.com.a3tweaks.switch.airplane-mode');
-    -- sleep(0.5)
-    -- io.popen('activator send switch-off.com.a3tweaks.switch.airplane-mode');
-    -- sleep(0.5)
-    -- io.popen('activator send switch-off.com.a3tweaks.switch.wifi');
-    -- sleep(0.5)
-    -- io.popen('activator send switch-off.com.a3tweaks.switch.wifi');
-    -- sleep(0.5)
-    -- io.popen('activator send switch-on.com.a3tweaks.switch.cellular-data');
-    -- sleep(0.5)
-    -- sleep(2)
+    toastr('onOffAirplaneMode')
+    io.popen("activator send switch-off.com.a3tweaks.switch.vpn")
+    sleep(0.5)
+    io.popen('activator send switch-on.com.a3tweaks.switch.airplane-mode');
+    sleep(0.5)
+    io.popen('activator send switch-on.com.a3tweaks.switch.airplane-mode');
+    sleep(0.5)
+    io.popen('activator send switch-off.com.a3tweaks.switch.airplane-mode');
+    sleep(0.5)
+    io.popen('activator send switch-off.com.a3tweaks.switch.airplane-mode');
+    sleep(0.5)
+    io.popen('activator send switch-off.com.a3tweaks.switch.wifi');
+    sleep(0.5)
+    io.popen('activator send switch-off.com.a3tweaks.switch.wifi');
+    sleep(0.5)
+    io.popen('activator send switch-on.com.a3tweaks.switch.cellular-data');
+    sleep(0.5)
+    sleep(2)
 end
 
 function respring()
