@@ -970,7 +970,7 @@ function onOffAirplaneMode()
         sleep(1)
     end 
     if waitImageVisible(wifi_on, 3) then 
-        press(630, 250) sleep(1) -- off
+        press(630, 250) sleep(2) -- off
         press(630, 250) sleep(3) -- on
     elseif waitImageVisible(wifi_off, 3) then
         press(630, 250) sleep(3) -- on
