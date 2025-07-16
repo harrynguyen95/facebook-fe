@@ -117,3 +117,4 @@ wrong_credentials = {dirPath .. "wrong_credentials.png"}
 wifi_icon = {dirPath .. "wifi_icon.png"}
 wifi_on = {dirPath .. "wifi_on.png", dirPath .. "wifi_on2.png"}
 wifi_off = {dirPath .. "wifi_off.png"}
+select_your_name = {dirPath .. "select_your_name.png"}

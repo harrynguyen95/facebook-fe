@@ -932,6 +932,13 @@ function setFirstNameLastName()
         if not waitImageNotVisible(what_name, 10) then 
             if waitImageVisible(first_name_invalid, 2) or waitImageVisible(red_warning_icon, 2) then goto label_input_name end 
         end
+
+        if waitImageVisible(select_your_name) then 
+            if waitImageVisible(gender_options, 10) then 
+                findAndClickByImage(gender_options)
+                findAndClickByImage(next)
+            end
+        end 
     end
 end
 
