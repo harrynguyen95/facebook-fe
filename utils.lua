@@ -1062,7 +1062,7 @@ function randomUSPhone()
         local codes = area_codes[randomState]
         local areaCode = codes[math.random(#codes)]
 
-        local prefixes = {"+1", ""}
+        local prefixes = {"+1"}
         local prefix = prefixes[math.random(#prefixes)]
 
         local phone = prefix .. areaCode .. randomMobileNXX() .. randomLineNumber()
