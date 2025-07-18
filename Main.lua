@@ -4,10 +4,11 @@ require('functions')
 clearAlert()
 
 -- ====== CONFIG ======
-LANGUAGE = 'ES'  -- EN|ES English|Spanish
+LANGUAGE = 'EN'  -- EN|ES English|Spanish
+ACCOUNT_REGION = 'US'  
 MAIL_SUPLY = 1  -- 1|2|3 hotmail_dongvanfb|thuemails.com|yagisongs
 ENTER_VERIFY_CODE = true  -- true|false
-HOTMAIL_SERVICE_IDS = {1, 3, 2, 6, 5, 59, 60}
+HOTMAIL_SERVICE_IDS = {1, 3, 2, 6, 5}
 HOTMAIL_SOURCE_FROM_FILE = false  -- true|false
 THUE_LAI_MAIL_THUEMAILS = false  -- true|false
 ADD_MAIL_DOMAIN = false  -- true|false
@@ -23,13 +24,13 @@ if not waitForInternet(3) then alert("No Internet!") exit() else toast('Connecte
 getConfigServer()
 
 -- ====== VARIABLE REQUIRED ======
+if LANGUAGE == 'ES' then require(currentDir() .. "/images_es") end
+if LANGUAGE == 'EN' then require(currentDir() .. "/images_en") end
+if ACCOUNT_REGION == 'VN' then enter_confirm_code_phone = enter_confirm_code_phone_vn end
 SHOULD_DUMMY = DUMMY_MODE ~= '0'
 DUMMY_PHONE = DUMMY_MODE == '1'
 DUMMY_GMAIL = DUMMY_MODE == '2'
 DUMMY_ICLOUD = DUMMY_MODE == '3'
-
-if LANGUAGE == 'ES' then require(currentDir() .. "/images_es") end
-if LANGUAGE == 'EN' then require(currentDir() .. "/images_en") end
 
 -- ====== INFO ======
 info = {
@@ -64,7 +65,6 @@ function main()
     if info.mailRegister == nil or info.mailRegister == '' then 
         homeAndUnlockScreen()
         executeXoaInfo()
-        onOffAirplaneMode2()
     else 
         swipeCloseApp()
     end
@@ -235,13 +235,13 @@ function main()
     if waitImageVisible(what_is_mobile_number) or waitImageVisible(sign_up_with_email) then
         toastr("what_is_mobile_number")
         if DUMMY_PHONE then 
-            typeText(randomUSPhone())
+            typeText(randomPhone())
             findAndClickByImage(next)
 
             if waitImageVisible(red_warning_icon) then
                 press(320, 380)
                 findAndClickByImage(x_input_icon)
-                typeText(randomUSPhone())
+                typeText(randomPhone())
                 findAndClickByImage(next)
                 if waitImageVisible(continue_creating_account) then
                     failedCurrentAccount('phone_has_account')

@@ -104,6 +104,7 @@ fb_logo_menu_left = {dirPath .. "fb_logo_menu_left.png"}
 
 do_you_already_have_account = {dirPath .. "do_you_already_have_account.png"}
 enter_confirm_code_phone = {dirPath .. "enter_confirm_code_phone2.png"}
+enter_confirm_code_phone_vn = {dirPath .. "enter_confirm_code_phone3.png"}
 no_receive_code = {dirPath .. "did_not_get_code.png"}
 confirm_via_email = {dirPath .. "confirm_via_email2.png"}
 enter_an_email = {dirPath .. "enter_an_email2.png"}

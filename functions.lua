@@ -6,7 +6,6 @@ URL_2FA_FACEBOOK = "https://2fa.live/tok/"
 MAIL_FREE_DOMAIN = "https://api.temp-mailfree.com/"
 
 defaultPasswordFilePath = currentPath() .. "/input/password.txt"
-searchTextFilePath = currentPath() .. "/input/searchtext.txt"
 accountFilePath = rootDir() .. "/Device/accounts.txt"
 accountCodeFilePath = rootDir() .. "/Device/accounts_code.txt"
 mailFilePath = rootDir() .. "/Device/thuemails.txt"
@@ -176,7 +175,7 @@ function saveAccToGoogleForm()
     if (info.checkpoint == 282 or info.checkpoint == '282') and (info.mailLogin == '' or info.mailLogin == nil) then return nil end
 
     local localIP = readFile(localIPFilePath)
-    info.localIP = localIP[#localIP] .. " | " .. LANGUAGE .. " | " .. (LOGIN_WITH_CODE and 'otp' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-'))))
+    info.localIP = localIP[#localIP] .. " | " .. ACCOUNT_REGION .. " | " .. LANGUAGE .. " | " .. (LOGIN_WITH_CODE and 'otp' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-'))))
 
     local tries = 3
     for i = 1, tries do 
@@ -202,7 +201,7 @@ end
 
 function saveNoVerifyToGoogleForm()
     local localIP = readFile(localIPFilePath)
-    info.localIP = localIP[#localIP] .. " | " .. LANGUAGE .. " | " .. (LOGIN_WITH_CODE and 'otp' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-'))))
+    info.localIP = localIP[#localIP] .. " | " .. ACCOUNT_REGION .. " | " .. LANGUAGE .. " | " .. (LOGIN_WITH_CODE and 'otp' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-'))))
 
     local tries = 3
     for i = 1, tries do 
@@ -228,7 +227,7 @@ end
 
 function saveMailToGoogleForm()
     local localIP = readFile(localIPFilePath)
-    info.localIP = localIP[#localIP] .. " | " .. LANGUAGE .. " | " .. (LOGIN_WITH_CODE and 'otp' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-'))))
+    info.localIP = localIP[#localIP] .. " | " .. ACCOUNT_REGION .. " | " .. LANGUAGE .. " | " .. (LOGIN_WITH_CODE and 'otp' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-'))))
 
     local tries = 3
     for i = 1, tries do 
@@ -788,6 +787,13 @@ function getSearchText(no)
         no = 3
     end
 
+    if ACCOUNT_REGION == 'VN' then
+        local searchTextFilePath = currentPath() .. "/input/searchtext.txt"
+    end
+    if ACCOUNT_REGION == 'US' then
+        local searchTextFilePath = currentPath() .. "/input/searchtext_us.txt"
+    end
+
     local lines = readFile(searchTextFilePath)
     local result = {}
 
@@ -833,6 +839,7 @@ function getConfigServer()
                 if response.status and response.status == 'success' then
                     local config = response.data
                     LANGUAGE                 = config.language
+                    ACCOUNT_REGION           = config.account_region
                     HOTMAIL_SERVICE_IDS      = parseStringToTable(config.hotmail_service_ids)
                     MAIL_SUPLY               = tonumber(config.mail_suply)
                     PROVIDER_MAIL_THUEMAILS  = tonumber(config.provider_mail_thuemails)
@@ -915,6 +922,19 @@ function checkPageNotAvailable()
         return true
     end 
     return false
+end
+
+function getRandomName()
+    if ACCOUNT_REGION == 'VN' then 
+        local firstname = getRandomLineInFile(currentPath() .. "/input/firstname.txt")
+        local lastname = getRandomLineInFile(currentPath() .. "/input/lastname.txt")
+    end
+    if ACCOUNT_REGION == 'US' then 
+        local firstname = getRandomLineInFile(currentPath() .. "/input/firstname_us.txt")
+        local lastname = getRandomLineInFile(currentPath() .. "/input/lastname_us.txt")
+    end
+    
+    return { firstname, lastname }
 end
 
 function setFirstNameLastName()
@@ -1050,6 +1070,15 @@ function executeXoaInfo()
     end
     sleep(1)
 end
+
+function randomPhone() 
+    if ACCOUNT_REGION == 'VN' then 
+        return randomVNPhone()
+    elseif ACCOUNT_REGION == 'US' then
+        return randomUSPhone()
+    end
+    return '00000'
+end 
 
 function checkModeMenuLeft()
     return waitImageVisible(fb_logo_menu_left, 2)

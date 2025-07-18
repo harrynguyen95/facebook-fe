@@ -377,12 +377,6 @@ function randomPassword(length)
     return pass
 end
 
-function getRandomName()
-    local firstname = getRandomLineInFile(currentPath() .. "/input/firstname.txt")
-    local lastname = getRandomLineInFile(currentPath() .. "/input/lastname.txt")
-    return { firstname, lastname }
-end
-
 function randomMailDomain()
     local letters = "abcdefghijklmnopqrstuvwxyz"
     local digits = "0123456789"
@@ -1041,8 +1035,55 @@ end
 
 function randomUSPhone()
     math.randomseed(os.time())
+    local area_codes = {
+        ["New York"] = {"917", "929", "347"},
+        ["California"] = {"213", "415", "818", "619", "323"},
+        ["Florida"] = {"786", "954", "321"},
+        ["Texas"] = {"832", "956", "469", "972"},
+        ["Illinois"] = {"773", "872"},
+        ["Georgia"] = {"678", "470"},
+        ["Washington"] = {"360", "564"},
+        ["Massachusetts"] = {"774", "857"},
+        ["Arizona"] = {"602", "623"},
+        ["Hawaii"] = {"808"},
+        ["Utah"] = {"385"}
+    }
 
-    -- Đầu số di động Việt Nam (đã chuyển đổi 10 số)
+    local function randomMobileNXX()
+        local nxx
+        repeat
+            local first = math.random(2, 9)
+            local second = math.random(0, 9)
+            local third = math.random(0, 9)
+            nxx = string.format("%d%d%d", first, second, third)
+        until nxx ~= "555" and nxx ~= "911" and nxx ~= "411" and nxx ~= "000"
+        return nxx
+    end
+
+    local function randomLineNumber()
+        return string.format("%04d", math.random(0, 9999))
+    end
+
+    local function randomPhone()
+        local states = {}
+        for state in pairs(area_codes) do table.insert(states, state) end
+        local randomState = states[math.random(#states)]
+        local codes = area_codes[randomState]
+        local areaCode = codes[math.random(#codes)]
+
+        local prefixes = {"+1", ""}
+        local prefix = prefixes[math.random(#prefixes)]
+
+        local phone = prefix .. areaCode .. randomMobileNXX() .. randomLineNumber()
+        return phone
+    end
+
+    return randomPhone()
+end
+
+function randomVNPhone()
+    math.randomseed(os.time())
+
     local area_codes = {
         ["Viettel"] = {"32", "33", "34", "35", "36", "37", "38", "39"},
         ["MobiFone"] = {"70", "76", "77", "78", "79"},
@@ -1053,12 +1094,10 @@ function randomUSPhone()
     }
 
     local function randomMobileNXX()
-        -- Random 7 số tiếp theo
         return string.format("%07d", math.random(0, 9999999))
     end
 
     local function randomLineNumber()
-        -- Hàm này giữ nguyên nhưng không cần dùng nữa
         return string.format("%04d", math.random(0, 9999))
     end
 
@@ -1078,4 +1117,3 @@ function randomUSPhone()
 
     return randomPhone()
 end
-
