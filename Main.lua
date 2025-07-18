@@ -61,7 +61,7 @@ function main()
     ::debug::
 
     log(info, 'Main')
-    if not waitForInternet(3) then alert("No Internet!") exit() else toast('Connected!', 2) end
+    if not waitForInternet(2) then alert("No Internet!") exit() else toast('Connected!', 2) end
     if info.mailRegister == nil or info.mailRegister == '' then 
         homeAndUnlockScreen()
         executeXoaInfo()

@@ -787,11 +787,9 @@ function getSearchText(no)
         no = 3
     end
 
+    local searchTextFilePath = currentPath() .. "/input/searchtext_us.txt"
     if ACCOUNT_REGION == 'VN' then
-        local searchTextFilePath = currentPath() .. "/input/searchtext.txt"
-    end
-    if ACCOUNT_REGION == 'US' then
-        local searchTextFilePath = currentPath() .. "/input/searchtext_us.txt"
+        searchTextFilePath = currentPath() .. "/input/searchtext.txt"
     end
 
     local lines = readFile(searchTextFilePath)
@@ -928,13 +926,14 @@ function getRandomName()
     if ACCOUNT_REGION == 'VN' then 
         local firstname = getRandomLineInFile(currentPath() .. "/input/firstname.txt")
         local lastname = getRandomLineInFile(currentPath() .. "/input/lastname.txt")
+        return { firstname, lastname }
+
     end
     if ACCOUNT_REGION == 'US' then 
         local firstname = getRandomLineInFile(currentPath() .. "/input/firstname_us.txt")
         local lastname = getRandomLineInFile(currentPath() .. "/input/lastname_us.txt")
+        return { firstname, lastname }
     end
-    
-    return { firstname, lastname }
 end
 
 function setFirstNameLastName()
