@@ -772,12 +772,12 @@ function main()
 
         if LOGIN_WITH_CODE then 
             if waitImageVisible(what_app, 2) then
-                finishCurrentAccount('other_device')
+                failedCurrentAccount('other_device')
                 goto label_continue
             end
 
             if waitImageVisible(check_notification_device, 1) then
-                finishCurrentAccount('other_device')
+                failedCurrentAccount('other_device')
                 goto label_continue
             end
         end 
