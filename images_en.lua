@@ -118,3 +118,4 @@ wifi_icon = {dirPath .. "wifi_icon.png"}
 wifi_on = {dirPath .. "wifi_on.png", dirPath .. "wifi_on2.png"}
 wifi_off = {dirPath .. "wifi_off.png"}
 select_your_name = {dirPath .. "select_your_name.png"}
+airplane_icon = {dirPath .. "airplane_icon.png"}

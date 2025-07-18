@@ -64,6 +64,7 @@ function main()
     if info.mailRegister == nil or info.mailRegister == '' then 
         homeAndUnlockScreen()
         executeXoaInfo()
+        onOffAirplaneMode2()
     else 
         swipeCloseApp()
     end

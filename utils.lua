@@ -264,6 +264,7 @@ function checkImageIsExist(path, threshold)
         local result = findImage(path, 1, threshold, nil, DEBUG_IMAGE, 1)
         for i, v in pairs(result) do
             if v ~= nil then
+                log(v)
                 return true
             end
         end
@@ -962,38 +963,52 @@ function checkInternetAndPublicIP()
     end
 end
 
-function onOffAirplaneMode()
-    -- appRun("com.apple.Preferences")
-    -- if waitImageVisible(wifi_icon, 2) then 
-    --     toast('wifi_icon')
-    --     findAndClickByImage(wifi_icon)
-    --     sleep(1)
-    -- end 
-    -- if waitImageVisible(wifi_on, 3) then 
-    --     press(630, 250) sleep(2) -- off
-    --     press(630, 250) sleep(3) -- on
-    -- elseif waitImageVisible(wifi_off, 3) then
-    --     press(630, 250) sleep(3) -- on
-    -- end
+function onOffAirplaneMode2()
+    appRun("com.apple.Preferences")
+    if waitImageVisible(airplane_icon, 2) then 
+        local result = findImage(airplane_icon[#airplane_icon], 1, threshold, nil, DEBUG_IMAGE, 1)
+        if #result > 0 then 
+            local img = result[1]
+            local x = img[1]
+            local y = img[2]
+            press(x + 540, y) sleep(1) -- on air
+            press(x + 540, y) sleep(3) -- off air
+        end 
+    end 
+end
 
-    toastr('onOffAirplaneMode')
-    io.popen("activator send switch-off.com.a3tweaks.switch.vpn")
-    sleep(0.5)
-    io.popen('activator send switch-on.com.a3tweaks.switch.airplane-mode');
-    sleep(0.5)
-    io.popen('activator send switch-on.com.a3tweaks.switch.airplane-mode');
-    sleep(0.5)
-    io.popen('activator send switch-off.com.a3tweaks.switch.airplane-mode');
-    sleep(0.5)
-    io.popen('activator send switch-off.com.a3tweaks.switch.airplane-mode');
-    sleep(0.5)
-    io.popen('activator send switch-off.com.a3tweaks.switch.wifi');
-    sleep(0.5)
-    io.popen('activator send switch-off.com.a3tweaks.switch.wifi');
-    sleep(0.5)
-    io.popen('activator send switch-on.com.a3tweaks.switch.cellular-data');
-    sleep(0.5)
-    sleep(2)
+function onOffAirplaneMode()
+    appRun("com.apple.Preferences")
+    if waitImageVisible(wifi_icon, 2) then 
+        toast('wifi_icon')
+        findAndClickByImage(wifi_icon)
+        sleep(1)
+    end 
+    if waitImageVisible(wifi_on, 3) then 
+        press(630, 250) sleep(2) -- off
+        press(630, 250) sleep(3) -- on
+    elseif waitImageVisible(wifi_off, 3) then
+        press(630, 250) sleep(3) -- on
+    end
+
+    -- toastr('onOffAirplaneMode')
+    -- io.popen("activator send switch-off.com.a3tweaks.switch.vpn")
+    -- sleep(0.5)
+    -- io.popen('activator send switch-on.com.a3tweaks.switch.airplane-mode');
+    -- sleep(0.5)
+    -- io.popen('activator send switch-on.com.a3tweaks.switch.airplane-mode');
+    -- sleep(0.5)
+    -- io.popen('activator send switch-off.com.a3tweaks.switch.airplane-mode');
+    -- sleep(0.5)
+    -- io.popen('activator send switch-off.com.a3tweaks.switch.airplane-mode');
+    -- sleep(0.5)
+    -- io.popen('activator send switch-off.com.a3tweaks.switch.wifi');
+    -- sleep(0.5)
+    -- io.popen('activator send switch-off.com.a3tweaks.switch.wifi');
+    -- sleep(0.5)
+    -- io.popen('activator send switch-on.com.a3tweaks.switch.cellular-data');
+    -- sleep(0.5)
+    -- sleep(2)
 end
 
 function respring()
@@ -1026,48 +1041,41 @@ end
 
 function randomUSPhone()
     math.randomseed(os.time())
+
+    -- Đầu số di động Việt Nam (đã chuyển đổi 10 số)
     local area_codes = {
-        ["New York"] = {"917", "929", "347"},
-        ["California"] = {"213", "415", "818", "619", "323"},
-        ["Florida"] = {"786", "954", "321"},
-        ["Texas"] = {"832", "956", "469", "972"},
-        ["Illinois"] = {"773", "872"},
-        ["Georgia"] = {"678", "470"},
-        ["Washington"] = {"360", "564"},
-        ["Massachusetts"] = {"774", "857"},
-        ["Arizona"] = {"602", "623"},
-        ["Hawaii"] = {"808"},
-        ["Utah"] = {"385"}
+        ["Viettel"] = {"32", "33", "34", "35", "36", "37", "38", "39"},
+        ["MobiFone"] = {"70", "76", "77", "78", "79"},
+        ["VinaPhone"] = {"81", "82", "83", "84", "85"},
+        ["Vietnamobile"] = {"56", "58"},
+        ["Gmobile"] = {"59"},
+        ["Khac"] = {"86", "88", "89"}
     }
 
     local function randomMobileNXX()
-        local nxx
-        repeat
-            local first = math.random(2, 9)
-            local second = math.random(0, 9)
-            local third = math.random(0, 9)
-            nxx = string.format("%d%d%d", first, second, third)
-        until nxx ~= "555" and nxx ~= "911" and nxx ~= "411" and nxx ~= "000"
-        return nxx
+        -- Random 7 số tiếp theo
+        return string.format("%07d", math.random(0, 9999999))
     end
 
     local function randomLineNumber()
+        -- Hàm này giữ nguyên nhưng không cần dùng nữa
         return string.format("%04d", math.random(0, 9999))
     end
 
     local function randomPhone()
-        local states = {}
-        for state in pairs(area_codes) do table.insert(states, state) end
-        local randomState = states[math.random(#states)]
-        local codes = area_codes[randomState]
+        local telcos = {}
+        for telco in pairs(area_codes) do table.insert(telcos, telco) end
+        local randomTelco = telcos[math.random(#telcos)]
+        local codes = area_codes[randomTelco]
         local areaCode = codes[math.random(#codes)]
 
-        local prefixes = {"+1"}
+        local prefixes = {"+84", "0"}
         local prefix = prefixes[math.random(#prefixes)]
 
-        local phone = prefix .. areaCode .. randomMobileNXX() .. randomLineNumber()
+        local phone = prefix .. areaCode .. randomMobileNXX()
         return phone
     end
 
     return randomPhone()
 end
+
