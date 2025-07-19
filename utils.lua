@@ -264,7 +264,6 @@ function checkImageIsExist(path, threshold)
         local result = findImage(path, 1, threshold, nil, DEBUG_IMAGE, 1)
         for i, v in pairs(result) do
             if v ~= nil then
-                log(v)
                 return true
             end
         end

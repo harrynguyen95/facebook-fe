@@ -836,23 +836,24 @@ function getConfigServer()
             if ok then 
                 if response.status and response.status == 'success' then
                     local config = response.data
+
                     LANGUAGE                 = config.language
                     ACCOUNT_REGION           = config.account_region
                     HOTMAIL_SERVICE_IDS      = parseStringToTable(config.hotmail_service_ids)
                     MAIL_SUPLY               = tonumber(config.mail_suply)
                     PROVIDER_MAIL_THUEMAILS  = tonumber(config.provider_mail_thuemails)
                     TIMES_XOA_INFO           = tonumber(config.times_xoa_info)
-                    ENTER_VERIFY_CODE        = config.enter_verify_code ~= '0'
-                    HOTMAIL_SOURCE_FROM_FILE = config.hot_mail_source_from_file ~= '0'
-                    THUE_LAI_MAIL_THUEMAILS  = config.thue_lai_mail_thuemails ~= '0'
-                    ADD_MAIL_DOMAIN          = config.add_mail_domain ~= '0'
-                    REMOVE_REGISTER_MAIL     = config.remove_register_mail ~= '0'
+                    ENTER_VERIFY_CODE        = config.enter_verify_code ~= 0
+                    HOTMAIL_SOURCE_FROM_FILE = config.hot_mail_source_from_file ~= 0
+                    THUE_LAI_MAIL_THUEMAILS  = config.thue_lai_mail_thuemails ~= 0
+                    ADD_MAIL_DOMAIN          = config.add_mail_domain ~= 0
+                    REMOVE_REGISTER_MAIL     = config.remove_register_mail ~= 0
                     PROXY                    = config.proxy
                     MAIL_DONGVANFB_API_KEY   = config.api_key_dongvanfb
                     MAIL_THUEMAILS_API_KEY   = config.api_key_thuemails
                     LOCAL_SERVER             = config.local_server
                     DESTINATION_FILENAME     = config.destination_filename
-                    LOGIN_WITH_CODE          = config.login_with_code ~= '0'
+                    LOGIN_WITH_CODE          = config.login_with_code ~= 0
                     DUMMY_MODE               = config.reg_phone_first
     
                     return true
