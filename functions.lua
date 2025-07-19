@@ -1,6 +1,6 @@
 
 -- ====== CONFIG ======
-PHP_SERVER = "https://tuongtacthongminh.com/reg_tool/"
+PHP_SERVER = "http://42.96.4.180/reg_clone/"
 MAIL_THUEMAILS_DOMAIN = "https://api.thuemails.com/api/"
 URL_2FA_FACEBOOK = "https://2fa.live/tok/"
 MAIL_FREE_DOMAIN = "https://api.temp-mailfree.com/"
