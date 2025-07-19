@@ -908,7 +908,6 @@ function getUIDFBLogin()
 end
 
 function hasInternetConnection()
-    return true
     local url = "https://api.ipify.org?v=" .. math.random(1, 65535)
 
     local response, error = httpRequest { url = url }
@@ -920,13 +919,15 @@ function hasInternetConnection()
 end
 
 function waitForInternet(timeout)
-    for i = 1, timeout, 1 do
-        if hasInternetConnection() then
-            return true
-        end
-        sleep(1)
-    end
-    return false
+    return true
+
+    -- for i = 1, timeout, 1 do
+    --     if hasInternetConnection() then
+    --         return true
+    --     end
+    --     sleep(1)
+    -- end
+    -- return false
 end
 
 function checkInternetAndPublicIP()
