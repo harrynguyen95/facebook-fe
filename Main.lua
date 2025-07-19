@@ -20,6 +20,7 @@ MAIL_DONGVANFB_API_KEY = "iFI7ppA8JNDJ52yVedbPlMpSh" -- Hải
 LOGIN_WITH_CODE = false
 DUMMY_MODE = 0
 
+if not waitForInternet(2) then alert("No Internet!") exit() end
 if not getConfigServer() then alert("No config from server!") exit() end
 
 -- ====== VARIABLE REQUIRED ======
@@ -60,6 +61,7 @@ function main()
     ::debug::
 
     log(info, 'Main')
+    if not waitForInternet(2) then alert("No Internet!") exit() end
     if info.mailRegister == nil or info.mailRegister == '' then 
         homeAndUnlockScreen()
         executeXoaInfo()
@@ -846,9 +848,14 @@ function main()
 
         local searchTexts = getSearchText(math.random(3, 5))
         for i, line in ipairs(searchTexts) do
-            typeText(line)
+            if ACCOUNT_REGION == 'VN' then 
+                inputText(line)
+            else 
+                typeText(line)
+            end
+            
             press(700, 1300) sleep(2) -- btn search blue
-            sleep(3)
+            sleep(2)
             if i < #searchTexts then
                 press(300, 90); -- click back into search box
 

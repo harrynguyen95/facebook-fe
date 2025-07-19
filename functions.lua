@@ -957,10 +957,18 @@ function setFirstNameLastName()
         local name = getRandomName()
         press(200, 380) sleep(0.5)
         findAndClickByImage(x_input_icon)
-        typeText(name[1]) sleep(0.5)
+        if ACCOUNT_REGION == 'VN' then 
+            inputText(name[1]) sleep(0.5)
+        else 
+            typeText(name[1]) sleep(0.5)
+        end
         press(600, 380) sleep(0.5)
         findAndClickByImage(x_input_icon)
-        typeText(name[2]) sleep(0.5)
+        if ACCOUNT_REGION == 'VN' then 
+            inputText(name[2]) sleep(0.5)
+        else 
+            typeText(name[2]) sleep(0.5)
+        end
         findAndClickByImage(next)
 
         if not waitImageNotVisible(what_name, 10) then 

@@ -908,12 +908,11 @@ end
 
 function hasInternetConnection()
     -- local url = "https://api.ipify.org?v=" .. math.random(1, 65535)
-    local url = 'https://ip.seeip.org/jsonip'
+    local url = 'https://icanhazip.com?format=json'
 
     local response, error = httpRequest { url = url }
     if response then
-        local cleaned = response:gsub(": connect: .*", "")
-        toastr(cleaned)
+        toastr(response, 3)
         return true
     end
     return false
