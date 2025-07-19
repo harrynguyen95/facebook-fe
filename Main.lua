@@ -18,7 +18,7 @@ TIMES_XOA_INFO = 3  -- 0|1|2|3
 MAIL_THUEMAILS_API_KEY = "94a3a21c-40b5-4c48-a690-f1584c390e3e" -- Hải
 MAIL_DONGVANFB_API_KEY = "iFI7ppA8JNDJ52yVedbPlMpSh" -- Hải
 LOGIN_WITH_CODE = false
-DUMMY_MODE = '0'
+DUMMY_MODE = 0
 
 if not getConfigServer() then alert("No config from server!") exit() end
 
@@ -26,10 +26,10 @@ if not getConfigServer() then alert("No config from server!") exit() end
 if LANGUAGE == 'ES' then require(currentDir() .. "/images_es") end
 if LANGUAGE == 'EN' then require(currentDir() .. "/images_en") end
 if ACCOUNT_REGION == 'VN' then enter_confirm_code_phone = enter_confirm_code_phone_vn end
-SHOULD_DUMMY = DUMMY_MODE ~= '0'
-DUMMY_PHONE = DUMMY_MODE == '1'
-DUMMY_GMAIL = DUMMY_MODE == '2'
-DUMMY_ICLOUD = DUMMY_MODE == '3'
+SHOULD_DUMMY = DUMMY_MODE ~= 0
+DUMMY_PHONE = DUMMY_MODE == 1
+DUMMY_GMAIL = DUMMY_MODE == 2
+DUMMY_ICLOUD = DUMMY_MODE == 3
 
 -- ====== INFO ======
 info = {
@@ -71,7 +71,7 @@ function main()
     ::label_openfacebook::
     openFacebook()
 
-    if waitImageVisible(logo_fb_modern, 5) then
+    if waitImageVisible(logo_fb_modern) then
         toastr('not_support_this_FB_mode')
         swipeCloseApp()
         goto label_continue
