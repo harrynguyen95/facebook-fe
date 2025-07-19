@@ -912,7 +912,7 @@ function hasInternetConnection()
 
     local response, error = httpRequest { url = url }
     if response then
-        toastr(response, 3)
+        toastr(response, 5)
         return true
     end
     return false
