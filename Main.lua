@@ -21,7 +21,7 @@ LOGIN_WITH_CODE = false
 DUMMY_MODE = '0'
 
 if not waitForInternet(3) then alert("No Internet!") exit() else toast('Connected!', 2) end
-getConfigServer()
+if not getConfigServer() then alert("No config from server!") exit() end
 
 -- ====== VARIABLE REQUIRED ======
 if LANGUAGE == 'ES' then require(currentDir() .. "/images_es") end

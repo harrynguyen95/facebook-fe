@@ -820,7 +820,7 @@ function getConfigServer()
         ['device']   = string.gsub(splitted[3], " ", ""),
     }
 
-    local tries = 2
+    local tries = 3
     for i = 1, tries do 
         local response, error = httpRequest {
             url = PHP_SERVER .. "device_config.php",
