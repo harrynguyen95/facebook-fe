@@ -908,6 +908,7 @@ function getUIDFBLogin()
 end
 
 function hasInternetConnection()
+    return true
     local url = "https://api.ipify.org?v=" .. math.random(1, 65535)
 
     local response, error = httpRequest { url = url }
