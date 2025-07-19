@@ -908,26 +908,26 @@ function getUIDFBLogin()
 end
 
 function hasInternetConnection()
-    local url = "https://api.ipify.org?v=" .. math.random(1, 65535)
+    -- local url = "https://api.ipify.org?v=" .. math.random(1, 65535)
+    local url = 'https://ip.seeip.org/jsonip'
 
     local response, error = httpRequest { url = url }
     if response then
-        toastr(response)
+        local cleaned = response:gsub(": connect: .*", "")
+        toastr(cleaned)
         return true
     end
     return false
 end
 
 function waitForInternet(timeout)
-    return true
-
-    -- for i = 1, timeout, 1 do
-    --     if hasInternetConnection() then
-    --         return true
-    --     end
-    --     sleep(1)
-    -- end
-    -- return false
+    for i = 1, timeout, 1 do
+        if hasInternetConnection() then
+            return true
+        end
+        sleep(1)
+    end
+    return false
 end
 
 function checkInternetAndPublicIP()

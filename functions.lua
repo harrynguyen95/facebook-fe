@@ -1,6 +1,9 @@
 
 -- ====== CONFIG ======
-PHP_SERVER = "http://42.96.4.180/reg_clone/"
+PHP_SERVER = "https://tuongtacthongminh.com/reg_clone/"
+HAI_LOCAL_SERVER = "http://192.168.31.176/reg_clone/"
+HIEN_LOCAL_SERVER = "http://192.168.31.236/reg_clone/"
+NAM_LOCAL_SERVER = "http://192.168.31.157/reg_clone/"
 MAIL_THUEMAILS_DOMAIN = "https://api.thuemails.com/api/"
 URL_2FA_FACEBOOK = "https://2fa.live/tok/"
 MAIL_FREE_DOMAIN = "https://api.temp-mailfree.com/"
@@ -813,12 +816,21 @@ function getConfigServer()
         return false
     end 
     local splitted = split(localName, "|")
+    local username = string.gsub(splitted[2], " ", "")
 
     local postData = {
         ['action']   = 'select',
-        ['username'] = string.gsub(splitted[2], " ", ""),
+        ['username'] = username,
         ['device']   = string.gsub(splitted[3], " ", ""),
     }
+
+    if username == 'Hải' or username == 'hải' then 
+        PHP_SERVER = HAI_LOCAL_SERVER
+    elseif username == 'Hiến' or username == 'hiến' then
+        PHP_SERVER = HIEN_LOCAL_SERVER
+    elseif username == 'Nam' or username == 'nam' then
+        PHP_SERVER = NAM_LOCAL_SERVER
+    end 
 
     local tries = 3
     for i = 1, tries do 

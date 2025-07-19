@@ -20,7 +20,6 @@ MAIL_DONGVANFB_API_KEY = "iFI7ppA8JNDJ52yVedbPlMpSh" -- Hải
 LOGIN_WITH_CODE = false
 DUMMY_MODE = '0'
 
-if not waitForInternet(3) then alert("No Internet!") exit() else toast('Connected!', 2) end
 if not getConfigServer() then alert("No config from server!") exit() end
 
 -- ====== VARIABLE REQUIRED ======
@@ -61,7 +60,6 @@ function main()
     ::debug::
 
     log(info, 'Main')
-    if not waitForInternet(2) then alert("No Internet!") exit() else toast('Connected!', 2) end
     if info.mailRegister == nil or info.mailRegister == '' then 
         homeAndUnlockScreen()
         executeXoaInfo()
@@ -72,9 +70,8 @@ function main()
 
     ::label_openfacebook::
     openFacebook()
-    sleep(5)
 
-    if waitImageVisible(logo_fb_modern, 3) then
+    if waitImageVisible(logo_fb_modern, 5) then
         toastr('not_support_this_FB_mode')
         swipeCloseApp()
         goto label_continue
@@ -131,7 +128,6 @@ function main()
                     failedCurrentAccount('wrong_cre')
                     goto label_continue
                 end 
-                sleep(3)
             else 
                 toastr('Can not next')
                 swipeCloseApp()
@@ -140,7 +136,6 @@ function main()
         else 
             findAndClickByImage(create_new_account) sleep(2)
             if waitImageNotVisible(logo_facebook_login, 30) then 
-                sleep(3)
             else 
                 toastr('Can not next')
                 swipeCloseApp()
@@ -627,7 +622,7 @@ function main()
     if checkSuspended() then goto label_continue end
 
     ::label_addphonenumber::
-    if waitImageVisible(add_phone_number) then
+    if waitImageVisible(add_phone_number, 1) then
         toastr("add_phone_number")
         press(380, 1220) -- skip
         waitImageVisible(add_phone_number)
