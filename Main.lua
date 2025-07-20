@@ -586,10 +586,6 @@ function main()
         waitImageVisible(turn_on_contact)
     end
 
-    if checkSuspended() then goto label_continue end
-    if checkPageNotAvailable() then goto label_continue end
-    if checkImageIsExists(what_on_your_mind) then goto label_get2FA end 
-
     ::label_turnoncontact::
     toastr('wait contact..')
     if waitImageVisible(turn_on_contact) then
@@ -606,6 +602,10 @@ function main()
         waitImageNotVisible(turn_on_contact)
         waitImageVisible(no_friend)
     end
+
+    if checkSuspended() then goto label_continue end
+    if checkPageNotAvailable() then goto label_continue end
+    if checkImageIsExists(what_on_your_mind) then goto label_get2FA end 
 
     ::label_nofriend::
     if waitImageVisible(no_friend, 3) then

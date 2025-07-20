@@ -73,7 +73,7 @@ you_are_logged_in = {dirPath .. "you_are_logged_in.png"}
 -- check_your_email = {dirPath .. "check_your_email.png", dirPath .. "check_your_email4.png", dirPath .. "check_your_email5.png"}
 confirm_human = {dirPath .. "icon_suspended.png", dirPath .. "confirm_human2.png", dirPath .. "human_confirm2.png"} 
 -- continue_code_mail = {dirPath .. "continue_code_mail.png"}
--- enter_code_2fa = {dirPath .. "enter_code_2fa.png"}
+enter_code_2fa = {dirPath .. "enter_code_2fa2.png"}
 
 leave_button = {dirPath .. "leave_button2.png"}
 x_icon_search = {dirPath .. "x_icon_search.png"}
@@ -83,10 +83,10 @@ xoainfo_reset_data = {dirPath .. "xoainfo_reset_data.png"}
 xoainfo_info_fake = {dirPath .. "xoainfo_info_fake.png"}
 logo_facebook_login = {dirPath .. "logo_facebook_login.png"}
 logo_fb_modern = {dirPath .. "logo_fb_modern.png"}
--- page_not_available_now = {dirPath .. "page_not_available_now.png", dirPath .. "page_not_available_now2.png", 
---     dirPath .. "page_not_available_now3.png", dirPath .. "page_not_available_now4.png",
---     dirPath .. "page_not_available_now5.png", dirPath .. "page_not_available_now9.png",
---     dirPath .. "page_not_available_now9.png"}
+page_not_available_now = {dirPath .. "page_not_available_now.png", dirPath .. "page_not_available_now2.png", 
+    dirPath .. "page_not_available_now3.png", dirPath .. "page_not_available_now4.png",
+    dirPath .. "page_not_available_now5.png", dirPath .. "page_not_available_now9.png",
+    dirPath .. "page_not_available_now9.png"}
 did_not_get_code = {dirPath .. "did_not_get_code.png"}
 input_confirm_code = {dirPath .. "input_confirm_code2.png"}
 add_picture = {dirPath .. "add_picture.png"}
