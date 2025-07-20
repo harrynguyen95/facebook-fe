@@ -1113,7 +1113,7 @@ function checkOnShadowRocket()
     toastr('checkOnShadowRocket')
     openURL("shadowrocket://")
 
-    local dirPath = currentDir() .. "/images/"
+    local dirPath = currentDir() .. "/Remote/images/"
     shadowrocket_logo = {dirPath .. "shadowrocket_logo.png"}
     shadowrocket_on = {dirPath .. "shadowrocket_on.png"}
     shadowrocket_off = {dirPath .. "shadowrocket_off.png"}
