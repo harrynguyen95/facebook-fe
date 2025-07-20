@@ -14,7 +14,7 @@ enter_the_confirmation_code = {dirPath .. "enter_the_confirmation_code.png", dir
 profile_picture = {dirPath .. "profile_picture.png", dirPath .. "add_picture.png"}
 turn_on_contact = {dirPath .. "turn_on_contact7.png", dirPath .. "turn_on_contact8.png"}
 skip = {dirPath .. "skip.png", dirPath .. "skip2.png", dirPath .. "skip3.png", dirPath .. "skip4.png"}
-not_now = {dirPath .. "not_now.png", dirPath .. "not_now7.png"}
+not_now = {dirPath .. "not_now.png", dirPath .. "not_now7.png", dirPath .. "not_now8.png"}
 no_friend = {dirPath .. "no_friend.png"}
 find_friend = {dirPath .. "find_friend3.png"}
 what_on_your_mind = {dirPath .. "what_on_your_mind.png"}
@@ -64,7 +64,7 @@ added_email = {dirPath .. "added_email.png"}
 
 add_a_phone_number = {dirPath .. "add_a_phone_number.png"}
 email_used_added = {dirPath .. "email_used_added.png"}
-add_phone_number = {dirPath .. "add_phone_number.png"}
+add_phone_number = {dirPath .. "add_phone_number2.png"}
 add_phone_number_home = {dirPath .. "add_phone_number_home.png"}
 -- join_facebook = {dirPath .. "join_facebook.png", dirPath .. "we_will_help.png"}
 exist_account_in_mail = {dirPath .. "exist_account_in_mail2.png", dirPath .. "email_used_added.png"}
