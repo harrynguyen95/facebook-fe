@@ -5,14 +5,14 @@ homeAndUnlockScreen()
 
 local dirPath = currentDir() .. "/images/"
 general_icon = {dirPath .. "general_icon.png"}
-general_back = {dirPath .. "general_back.png"}
-setting_back = {dirPath .. "setting_back.png", dirPath .. "setting_back2.png"}
+general_back = {dirPath .. "general_back.png", dirPath .. "general_back3.png"}
+setting_back = {dirPath .. "setting_back.png", dirPath .. "setting_back2.png", dirPath .. "setting_back3.png"}
 setting_spanish = {dirPath .. "setting_spanish.png"}
 setting_english = {dirPath .. "setting_english.png"}
 espanol_ee_uu = {dirPath .. "espanol_ee_uu.png"}
 result_english = {dirPath .. "result_english.png"}
 result_spanish = {dirPath .. "result_spanish.png"}
-region_setting = {dirPath .. "region_setting.png", dirPath .. "region_setting2.png"}
+region_setting = {dirPath .. "region_setting.png", dirPath .. "region_setting2.png", dirPath .. "region_setting3.png"}
 keyboard_setting = {dirPath .. "keyboard_setting.png", dirPath .. "keyboard_setting2.png"}
 
 toastr('setup Spanish')
