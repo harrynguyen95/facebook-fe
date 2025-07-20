@@ -67,6 +67,7 @@ function main()
     if info.mailRegister == nil or info.mailRegister == '' then 
         homeAndUnlockScreen()
         executeXoaInfo()
+        resetShadowRocket()
     else 
         swipeCloseApp()
     end

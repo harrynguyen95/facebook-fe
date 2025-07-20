@@ -4,6 +4,7 @@ ltn12 = require("ltn12")
 
 DEBUG_IMAGE = false
 THRESHOLD = 0.99
+math.randomseed(os.time() + math.random())
 
 function sleep(timeout)
     usleep(timeout * 1000000)
@@ -44,7 +45,6 @@ function showIphoneModel()
 end
 
 function shuffle(tbl)
-    math.randomseed(os.time())
     for i = #tbl, 2, -1 do
         local j = math.random(i)
         tbl[i], tbl[j] = tbl[j], tbl[i]
@@ -207,7 +207,6 @@ function getRandomLineInFile(filename)
     if not lines or #lines == 0 then 
         return ""
     end
-    math.randomseed(os.time() + math.random()) -- đảm bảo random khác nhau mỗi lần
     local index = math.random(#lines)
 
     return trim(lines[index])
@@ -365,8 +364,6 @@ function randomPassword(length)
     local chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
     local pass = ""
 
-    math.randomseed(os.time() + math.random()) -- đảm bảo random khác nhau mỗi lần
-
     for i = 1, length do
         local index = math.random(1, #chars)
         pass = pass .. string.sub(chars, index, index)
@@ -446,8 +443,7 @@ function swipe(x1, y1, x2, y2, duration)
 end
 
 function swipeVertically(n)
-toast('swipeVertically')
-    math.randomseed(os.time());
+    toast('swipeVertically')
     local x = math.random(5, 15)
     local x1 = math.random(200, 250)
     local y = math.random(850, 1150)
@@ -705,8 +701,6 @@ function typeTextShortSpace(text)
         ["."] = {180, 1180}
     }
 
-    math.randomseed(os.time())
-
     local function randomTap(pos)
         local x = math.random(-5, 5)
         local y = math.random(-5, 5)
@@ -769,8 +763,6 @@ function typeTextLongSpace(text)
         ["."] = {115, 1167}
     }
 
-    math.randomseed(os.time())
-
     local function randomTap(pos)
         local x = math.random(-5, 5)
         local y = math.random(-5, 5)
@@ -816,7 +808,6 @@ function typeNumber(so)
     stringSo = " " .. so;
     for i = 1, #stringSo do
         dayso = string.sub(stringSo, i, i);
-        math.randomseed(os.time());
         local x = math.random(-5, 5)
         local y = math.random(-5, 5)
         local timecho = math.random(300000, 500000)
@@ -868,8 +859,6 @@ function typeNumberLongSpace(text)
         ["8"] = {557, 950}, ["9"] = {635, 965}, ["@"] = {625, 1070}, ["!"] = {467, 1165},
         ["."] = {115, 1167}
     }
-
-    math.randomseed(os.time())
 
     local function randomTap(pos)
         local x = math.random(-5, 5)
@@ -1033,7 +1022,6 @@ function swipeCloseApp()
 end
 
 function randomUSPhone()
-    math.randomseed(os.time())
     local area_codes = {
         ["New York"] = {"917", "929", "347"},
         ["California"] = {"213", "415", "818", "619", "323"},
@@ -1081,8 +1069,6 @@ function randomUSPhone()
 end
 
 function randomVNPhone()
-    math.randomseed(os.time())
-
     local area_codes = {
         ["Viettel"] = {"32", "33", "34", "35", "36", "37", "38", "39"},
         ["MobiFone"] = {"70", "76", "77", "78", "79"},

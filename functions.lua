@@ -15,6 +15,8 @@ mailFilePath = rootDir() .. "/Device/thuemails.txt"
 localIPFilePath = rootDir() .. "/Device/local_ip.txt"
 hotmailSourceFilePath = rootDir() .. "/Device/hotmail_source.txt"
 
+math.randomseed(os.time() + math.random())
+
 -- ====== LOGIC FUNCTION ======
 
 function initCurrentAccountCode()
@@ -800,7 +802,6 @@ function getSearchText(no)
     local lines = readFile(searchTextFilePath)
     local result = {}
 
-    math.randomseed(os.time() + math.random())
     for _ = 1, math.min(no, #lines) do
         local i = math.random(#lines)
         table.insert(result, table.remove(lines, i))
@@ -991,7 +992,6 @@ function setGender()
         toastr("what_is_gender")
 
         if waitImageVisible(gender_options, 10) then 
-            math.randomseed(os.time() + math.random())
             local x = math.random(500, 560)
             local y = 440
 
@@ -1003,7 +1003,6 @@ function setGender()
             findAndClickByImage(next)
             waitImageNotVisible(what_is_gender)
         else 
-            math.randomseed(os.time() + math.random())
             local x = math.random(500, 560)
             local y = 440
 
@@ -1091,6 +1090,32 @@ function executeXoaInfo()
         onOffAirplaneMode()
     end
     sleep(1)
+end
+
+function resetShadowRocket()
+    toastr('OnShadowRocket')
+    openURL("shadowrocket://route/proxy")
+
+    local dirPath = currentDir() .. "/Remote/images/"
+    shadowrocket_logo = {dirPath .. "shadowrocket_logo.png"}
+    shadowrocket_on = {dirPath .. "shadowrocket_on.png"}
+    shadowrocket_off = {dirPath .. "shadowrocket_off.png"}
+
+    if waitImageVisible(shadowrocket_logo) then
+        if waitImageVisible(shadowrocket_on, 2) then 
+            findAndClickByImage(shadowrocket_on) sleep(1)
+
+            local random = math.random(1, 2)
+            if random == 1 then press(390, 720) sleep(1) else press(390, 640) sleep(1) end
+
+            findAndClickByImage(shadowrocket_off)
+        elseif waitImageVisible(shadowrocket_off, 2) then
+            findAndClickByImage(shadowrocket_off)
+        end
+        toastr('OnShadowRocket', 5)
+        sleep(3)
+    end
+
 end
 
 function randomPhone() 
