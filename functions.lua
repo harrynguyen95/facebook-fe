@@ -1086,7 +1086,7 @@ end
 
 function rotateShadowRocket()
     toastr('OnShadowRocket')
-    openURL("shadowrocket://route/proxy")
+    openURL("shadowrocket://")
 
     local dirPath = currentDir() .. "/Remote/images/"
     shadowrocket_logo = {dirPath .. "shadowrocket_logo.png"}
@@ -1111,7 +1111,7 @@ end
 
 function checkOnShadowRocket()
     toastr('checkOnShadowRocket')
-    openURL("shadowrocket://route/proxy")
+    openURL("shadowrocket://")
 
     local dirPath = currentDir() .. "/images/"
     shadowrocket_logo = {dirPath .. "shadowrocket_logo.png"}

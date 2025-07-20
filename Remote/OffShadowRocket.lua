@@ -7,7 +7,7 @@ shadowrocket_on = {dirPath .. "shadowrocket_on.png"}
 shadowrocket_off = {dirPath .. "shadowrocket_off.png"}
 
 toastr('OffShadowRocket')
-openURL("shadowrocket://route/proxy")
+openURL("shadowrocket://")
 
 if waitImageVisible(shadowrocket_logo) then
     if waitImageVisible(shadowrocket_on) then 
