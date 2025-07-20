@@ -67,9 +67,10 @@ function main()
     if info.mailRegister == nil or info.mailRegister == '' then 
         homeAndUnlockScreen()
         executeXoaInfo()
-        resetShadowRocket()
+        rotateShadowRocket()
     else 
         swipeCloseApp()
+        checkOnShadowRocket()
     end
     if LOGIN_WITH_CODE then initCurrentAccountCode() end 
 

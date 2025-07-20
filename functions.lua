@@ -1084,7 +1084,7 @@ function executeXoaInfo()
     sleep(1)
 end
 
-function resetShadowRocket()
+function rotateShadowRocket()
     toastr('OnShadowRocket')
     openURL("shadowrocket://route/proxy")
 
@@ -1107,7 +1107,24 @@ function resetShadowRocket()
         toastr('OnShadowRocket', 5)
         sleep(3)
     end
+end
 
+function checkOnShadowRocket()
+    toastr('checkOnShadowRocket')
+    openURL("shadowrocket://route/proxy")
+
+    local dirPath = currentDir() .. "/images/"
+    shadowrocket_logo = {dirPath .. "shadowrocket_logo.png"}
+    shadowrocket_on = {dirPath .. "shadowrocket_on.png"}
+    shadowrocket_off = {dirPath .. "shadowrocket_off.png"}
+
+    if waitImageVisible(shadowrocket_logo) then
+        if waitImageVisible(shadowrocket_off) then 
+            findAndClickByImage(shadowrocket_off)
+        end
+        toastr('OnShadowRocket', 2)
+        sleep(2)
+    end
 end
 
 function randomPhone() 
