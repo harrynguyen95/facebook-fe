@@ -8,10 +8,9 @@ shadowrocket_off = {dirPath .. "shadowrocket_off.png"}
 
 toastr('OffShadowRocket')
 openURL("shadowrocket://route/proxy")
-sleep(1)
 
-if waitImageVisible(shadowrocket_logo, 5) then
-    if waitImageVisible(shadowrocket_on, 1) then 
+if waitImageVisible(shadowrocket_logo) then
+    if waitImageVisible(shadowrocket_on) then 
         findAndClickByImage(shadowrocket_on)
     end
     toastr('OffShadowRocket', 5)
