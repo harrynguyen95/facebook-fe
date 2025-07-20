@@ -20,7 +20,7 @@ MAIL_DONGVANFB_API_KEY = "iFI7ppA8JNDJ52yVedbPlMpSh" -- Hải
 LOGIN_WITH_CODE = false
 DUMMY_MODE = 0
 
-if not waitForInternet(2) then alert("No Internet!") exit() end
+if not waitForInternet(2) then toast("No Internet!", 5) end
 if not getConfigServer() then alert("No config from server!") exit() end
 LANGUAGE = 'VN'
 
@@ -63,7 +63,7 @@ function main()
     ::debug::
 
     log(info, 'Main')
-    if not waitForInternet(2) then alert("No Internet!") exit() end
+    if not waitForInternet(2) then toast("No Internet!", 5) end
     if info.mailRegister == nil or info.mailRegister == '' then 
         homeAndUnlockScreen()
         executeXoaInfo()
