@@ -89,23 +89,7 @@ function main()
 
     ::label_createnewaccount::
     showIphoneModel()
-
-    sleep(1)
-    if checkImageIsExists(what_is_birthday) then goto label_birthday end
-    if checkImageIsExists(what_is_mobile_number) then goto label_whatisyourmobile end
-    if checkImageIsExists(enter_confirm_code_phone) then goto label_enterconfirmcodedummy end 
-    if checkImageIsExists(enter_the_confirmation_code) then goto label_confirmationcode end
-    if checkImageIsExists(create_a_password) then goto label_createpassword end
-    if checkImageIsExists(save_your_login_info) then goto label_saveyourlogin end
-    if checkImageIsExists(profile_picture) then goto label_profilepicture end
-    if checkImageIsExists(turn_on_contact) then goto label_turnoncontact end
-    if checkImageIsExists(find_friend) then goto label_findfriend_swipe end
-    if checkImageIsExists(no_friend) then goto label_nofriend end
-    if checkImageIsExists(add_phone_number) then goto label_addphonenumber end
-    if checkImageIsExists(agree_facebook_term) then goto label_agree end
-    if checkImageIsExists(what_on_your_mind) then if info.twoFA == nil or info.twoFA == '' then goto label_get2FA end end
-
-    if waitImageVisible(create_new_account, 20) then
+    if waitImageVisible(create_new_account, 10) then
         if waitImageVisible(logo_fb_modern, 3) then
             toastr('not_support_this_FB_mode')
             swipeCloseApp()
@@ -147,6 +131,20 @@ function main()
     else         
         if checkSuspended() then goto label_continue end
     end
+
+    if checkImageIsExists(what_is_birthday) then goto label_birthday end
+    if checkImageIsExists(what_is_mobile_number) then goto label_whatisyourmobile end
+    if checkImageIsExists(enter_confirm_code_phone) then goto label_enterconfirmcodedummy end 
+    if checkImageIsExists(enter_the_confirmation_code) then goto label_confirmationcode end
+    if checkImageIsExists(create_a_password) then goto label_createpassword end
+    if checkImageIsExists(save_your_login_info) then goto label_saveyourlogin end
+    if checkImageIsExists(profile_picture) then goto label_profilepicture end
+    if checkImageIsExists(turn_on_contact) then goto label_turnoncontact end
+    if checkImageIsExists(find_friend) then goto label_findfriend_swipe end
+    if checkImageIsExists(no_friend) then goto label_nofriend end
+    if checkImageIsExists(add_phone_number) then goto label_addphonenumber end
+    if checkImageIsExists(agree_facebook_term) then goto label_agree end
+    if checkImageIsExists(what_on_your_mind) then if info.twoFA == nil or info.twoFA == '' then goto label_get2FA end end
 
     if LOGIN_WITH_CODE then 
         if waitImageVisible(wrong_credentials, 3) then 
