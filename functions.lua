@@ -1094,14 +1094,14 @@ function resetShadowRocket()
     shadowrocket_off = {dirPath .. "shadowrocket_off.png"}
 
     if waitImageVisible(shadowrocket_logo) then
-        if waitImageVisible(shadowrocket_on, 2) then 
+        if waitImageVisible(shadowrocket_on) then 
             findAndClickByImage(shadowrocket_on) sleep(1)
 
             local random = math.random(1, 2)
             if random == 1 then press(390, 720) sleep(1) else press(390, 640) sleep(1) end
 
             findAndClickByImage(shadowrocket_off)
-        elseif waitImageVisible(shadowrocket_off, 2) then
+        elseif waitImageVisible(shadowrocket_off) then
             findAndClickByImage(shadowrocket_off)
         end
         toastr('OnShadowRocket', 5)
