@@ -149,7 +149,7 @@ end
 
 function failedCurrentAccount(code)
     if code == nil then code = 'unknown' end
-    -- if code == 'phone_has_account' then return end
+    if code == 'phone_has_account' then return end
 
     local accounts = readFile(accountFilePath)
     local splitted = split(accounts[#accounts], "|")
