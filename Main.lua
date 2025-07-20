@@ -4,8 +4,8 @@ require('functions')
 clearAlert()
 
 -- ====== CONFIG ======
-LANGUAGE = 'EN'  -- EN|ES English|Spanish
-ACCOUNT_REGION = 'US'  
+LANGUAGE = 'VN'  -- EN|ES|VN English|Spanish|Vietnamese
+ACCOUNT_REGION = 'VN'  
 MAIL_SUPLY = 1  -- 1|2|3 hotmail_dongvanfb|thuemails.com|yagisongs
 ENTER_VERIFY_CODE = true  -- true|false
 HOTMAIL_SERVICE_IDS = {1, 3, 2, 6, 5}
@@ -14,7 +14,7 @@ THUE_LAI_MAIL_THUEMAILS = false  -- true|false
 ADD_MAIL_DOMAIN = false  -- true|false
 REMOVE_REGISTER_MAIL = false  -- true|false
 PROVIDER_MAIL_THUEMAILS = 1  -- 1|3 gmail|icloud
-TIMES_XOA_INFO = 3  -- 0|1|2|3
+TIMES_XOA_INFO = 2  -- 0|1|2|3
 MAIL_THUEMAILS_API_KEY = "94a3a21c-40b5-4c48-a690-f1584c390e3e" -- Hải
 MAIL_DONGVANFB_API_KEY = "iFI7ppA8JNDJ52yVedbPlMpSh" -- Hải
 LOGIN_WITH_CODE = false
@@ -22,10 +22,12 @@ DUMMY_MODE = 0
 
 if not waitForInternet(2) then alert("No Internet!") exit() end
 if not getConfigServer() then alert("No config from server!") exit() end
+LANGUAGE = 'VN'
 
 -- ====== VARIABLE REQUIRED ======
 if LANGUAGE == 'ES' then require(currentDir() .. "/images_es") end
 if LANGUAGE == 'EN' then require(currentDir() .. "/images_en") end
+if LANGUAGE == 'VN' then require(currentDir() .. "/images_vn") end
 if ACCOUNT_REGION == 'VN' then enter_confirm_code_phone = enter_confirm_code_phone_vn end
 SHOULD_DUMMY = DUMMY_MODE ~= 0
 DUMMY_PHONE = DUMMY_MODE == 1
@@ -73,7 +75,7 @@ function main()
     ::label_openfacebook::
     openFacebook()
 
-    if waitImageVisible(logo_fb_modern) then
+    if waitImageVisible(logo_fb_modern, 3) then
         toastr('not_support_this_FB_mode')
         swipeCloseApp()
         goto label_continue
@@ -100,10 +102,7 @@ function main()
     if checkImageIsExists(no_friend) then goto label_nofriend end
     if checkImageIsExists(add_phone_number) then goto label_addphonenumber end
     if checkImageIsExists(agree_facebook_term) then goto label_agree end
-    if checkImageIsExists(what_on_your_mind) then 
-        if info.twoFA == nil or info.twoFA == '' then goto label_get2FA end 
-        if info.twoFA ~= nil or info.twoFA ~= '' then goto label_searchtext end 
-    end
+    if checkImageIsExists(what_on_your_mind) then if info.twoFA == nil or info.twoFA == '' then goto label_get2FA end end
 
     if waitImageVisible(create_new_account, 20) then
         if waitImageVisible(logo_fb_modern, 3) then
@@ -619,10 +618,6 @@ function main()
         swipeForce(50, 500, 600, 500)
     end
 
-    findAndClickByImage(accept)
-    if checkImageIsExists(profile_picture) then goto label_profilepicture end
-    if checkSuspended() then goto label_continue end
-
     ::label_addphonenumber::
     if waitImageVisible(add_phone_number, 1) then
         toastr("add_phone_number")
@@ -630,6 +625,7 @@ function main()
         waitImageVisible(add_phone_number)
     end
 
+    findAndClickByImage(accept)
     if checkImageIsExists(create_a_password) then goto label_createpassword end 
     if checkImageIsExists(enter_confirm_code_phone) then goto label_enterconfirmcodedummy end 
     if checkImageIsExists(enter_the_confirmation_code) then goto label_confirmationcode end 
@@ -707,7 +703,8 @@ function main()
             press(135, 530) -- input password
             findAndClickByImage(password_eye)
             typeText(info.password)
-            press(370, 710) -- continue_btn
+            findAndClickByImage(next)
+            findAndClickByImage(continue)
             waitImageNotVisible(reenter_password)
         end
 

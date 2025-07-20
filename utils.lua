@@ -912,7 +912,7 @@ function hasInternetConnection()
 
     local response, error = httpRequest { url = url }
     if response then
-        toastr(response, 5)
+        toastr(response, 2)
         return true
     end
     return false
@@ -1115,4 +1115,18 @@ function randomVNPhone()
     end
 
     return randomPhone()
+end
+
+function hasUppercase(email)
+    local count = 0
+    for i = 1, #email do
+        local char = email:sub(i, i)
+        if char:match("%u") then
+            count = count + 1
+            if count >= 1 then
+                return true
+            end
+        end
+    end
+    return false
 end

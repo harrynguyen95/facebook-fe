@@ -358,7 +358,7 @@ function executeGmailFromThueMail()
         rerentTime = floor(rerentTime + 1)
         log('Times mail rerent: ' .. rerentTime .. ' - ' .. mailRerent)
 
-        local tries = 2
+        local tries = 5
         for i = 1, tries do 
             toastr('Call times ' .. i)
 
@@ -388,7 +388,7 @@ function executeGmailFromThueMail()
                         info.mailRegister = res.email
 
                         saveMailThueMail()
-                        return 'success'
+                        return true
                     else
                         toastr(response.message)
                         log(response.message)
@@ -436,12 +436,14 @@ function executeGmailFromThueMail()
                     if response.status == 'success' then
                         local res = response.data[1]
 
-                        info.thuemailId = res.id
-                        info.mailPrice = res.price
-                        info.mailRegister = res.email
+                        if not hasUppercase(res.email) then 
+                            info.thuemailId = res.id
+                            info.mailPrice = res.price
+                            info.mailRegister = res.email
 
-                        saveMailThueMail()
-                        return true
+                            saveMailThueMail()
+                            return true
+                        end 
                     else
                         toastr(response.message)
                         log(response.message)
