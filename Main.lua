@@ -846,12 +846,7 @@ function main()
 
         local searchTexts = getSearchText(math.random(3, 5))
         for i, line in ipairs(searchTexts) do
-            if ACCOUNT_REGION == 'VN' then 
-                inputText(line)
-            else 
-                typeText(line)
-            end
-            
+            typeText(line)
             press(700, 1300) sleep(2) -- btn search blue
             sleep(2)
             if i < #searchTexts then

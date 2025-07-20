@@ -673,10 +673,12 @@ function typeText(text)
         typeNumber(text)
     elseif checkImageIsExists(space_short) then
         -- toastr('short keyboard')
-        typeTextShortSpace(text)
+        -- typeTextShortSpace(text)
+        inputText(text)
     else 
         -- toastr('long keyboard')
-        typeTextLongSpace(text)
+        -- typeTextLongSpace(text)
+        inputText(text)
     end
     usleep(300000)
 end

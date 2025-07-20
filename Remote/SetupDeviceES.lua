@@ -18,7 +18,7 @@ keyboard_setting = {dirPath .. "keyboard_setting.png", dirPath .. "keyboard_sett
 toastr('setup Spanish')
 appRun("com.apple.Preferences") 
 
-if waitImageVisible(setting_spanish, 2) then goto label_keyboard_es end
+if waitImageVisible(setting_spanish, 2) then goto label_finish end
 
 if waitImageVisible(general_back, 2) then 
     press(100, 90) sleep(1) -- back
@@ -29,7 +29,7 @@ if waitImageVisible(setting_back, 2) then
     press(100, 90) -- back
 end 
 
-if waitImageVisible(setting_spanish, 2) then goto label_keyboard_es end
+if waitImageVisible(setting_spanish, 2) then goto label_finish end
 
 swipe(600, 200, 610, 600) 
 sleep(1)
@@ -79,26 +79,3 @@ exit()
 ::label_finish::
 toast('-----Spanish-----', 10)
 exit()
-
-::label_keyboard_es::
-toast('label_keyboard_es')
-swipe(600, 200, 610, 600) 
-sleep(1)
-swipe(600, 700, 610, 600) 
-sleep(2)
-if waitImageVisible(general_icon) then
-    findAndClickByImage(general_icon) sleep(1)
-
-    swipe(600, 750, 610, 500) 
-    sleep(2)
-
-    findAndClickByImage(keyboard_setting) sleep(1) -- go to keyboard setting
-    press(100, 250) sleep(1) -- select keyboard
-    press(100, 250) sleep(1) -- select es keyboard
-    press(100, 350) sleep(1) -- select QWERTY
-
-    press(50, 80) sleep(1) -- back 1
-    press(50, 80) sleep(1) -- back 2
-    press(50, 80) sleep(1) -- back 3
-    goto label_finish
-end
