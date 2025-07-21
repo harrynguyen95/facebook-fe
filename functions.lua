@@ -441,7 +441,7 @@ function executeGmailFromThueMail()
                             info.mailPrice = res.price
                             info.mailRegister = res.email
 
-                            saveMailThueMail()
+                            if THUE_LAI_MAIL_THUEMAILS > 0 then saveMailThueMail() end
                             return true
                         end 
                     else

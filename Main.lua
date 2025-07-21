@@ -1032,7 +1032,7 @@ function main()
     end
 
     ::label_addcontactfriend::
-    if 1 then 
+    if ACCOUNT_REGION == 'VN' then 
         ::label_reopencontact::
         openURL("fb://friends")
         if waitImageVisible(friend_add_friend) then 
