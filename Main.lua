@@ -659,7 +659,7 @@ function main()
     if checkSuspended() then goto label_continue end
 
     ::label_changeinfo::
-    if CHANGE_INFO and LANGUAGE == 'VN' then 
+    if CHANGE_INFO and LANGUAGE == 'VN' and waitImageVisible(what_on_your_mind) then 
         toastr('change_info what_on_your_mind')
 
         if waitImageVisible(what_on_your_mind) then openURL("fb://profile") end
@@ -726,7 +726,7 @@ function main()
     end 
 
     ::label_removemail::
-    if ADD_MAIL_DOMAIN > 0 and LANGUAGE == 'VN' then 
+    if ADD_MAIL_DOMAIN > 0 and LANGUAGE == 'VN' and waitImageVisible(what_on_your_mind) then 
         toastr('remove_mail what_on_your_mind')
 
         if modeMenuLeft then 
@@ -1032,7 +1032,7 @@ function main()
     end
 
     ::label_addcontactfriend::
-    if ACCOUNT_REGION == 'VN' then 
+    if LANGUAGE == 'VN' and waitImageVisible(what_on_your_mind) then 
         ::label_reopencontact::
         openURL("fb://friends")
         if waitImageVisible(friend_add_friend) then 
