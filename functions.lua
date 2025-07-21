@@ -861,8 +861,7 @@ function getConfigServer()
                     ENTER_VERIFY_CODE        = config.enter_verify_code ~= 0
                     HOTMAIL_SOURCE_FROM_FILE = config.hot_mail_source_from_file ~= 0
                     THUE_LAI_MAIL_THUEMAILS  = config.thue_lai_mail_thuemails ~= 0
-                    ADD_MAIL_DOMAIN          = config.add_mail_domain ~= 0
-                    REMOVE_REGISTER_MAIL     = config.remove_register_mail ~= 0
+                    CHANGE_INFO              = config.change_info ~= 0
                     PROXY                    = config.proxy
                     MAIL_DONGVANFB_API_KEY   = config.api_key_dongvanfb
                     MAIL_THUEMAILS_API_KEY   = config.api_key_thuemails
@@ -870,7 +869,7 @@ function getConfigServer()
                     DESTINATION_FILENAME     = config.destination_filename
                     LOGIN_WITH_CODE          = config.login_with_code ~= 0
                     DUMMY_MODE               = config.reg_phone_first
-    
+
                     return true
                 else
                     toastr(response.info)
@@ -892,15 +891,24 @@ end
 -- ====== FE FUNCTION ======
 function removeAccount()
     sleep(2)
-    if  waitImageVisible(create_new_account) or waitImageVisible(avatar_picture) then
-        press(695, 90) sleep(5) -- three dots icon
-        press(300, 1250) sleep(4) -- remove profiles from this device
-        press(600, 330) sleep(5) -- btn remove gray
-        press(400, 1150) sleep(1) -- btn remove blue confirm
-
-        if waitImageVisible(avatar_picture) or waitImageVisible(create_new_account) then 
-            swipeCloseApp() sleep(1)
+    if  waitImageVisible(create_new_account) then
+        if LANGUAGE == 'VN' then 
+            if waitImageVisible(remove_account_from_device, 10) then 
+                findAndClickByImage(remove_account_from_device)
+            end 
+            if waitImageVisible(go_xoa_account) then 
+                findAndClickByImage(go_xoa_account)
+            end 
+            if waitImageVisible(go_xoa_account_blue) then 
+                findAndClickByImage(go_xoa_account_blue)
+            end 
+        else   
+            press(695, 90) sleep(5) -- three dots icon
+            press(300, 1250) sleep(4) -- remove profiles from this device
+            press(600, 330) sleep(5) -- btn remove gray
+            press(400, 1150) sleep(1) -- btn remove blue confirm
         end
+
     end
 end
 
@@ -950,6 +958,18 @@ function getRandomName()
         local lastname = getRandomLineInFile(currentPath() .. "/input/lastname_us.txt")
         return { firstname, lastname }
     end
+end
+
+function getRandomCity()
+    return getRandomLineInFile(currentPath() .. "/input/vn_city.txt")
+end
+
+function getRandomHighSchool()
+    return getRandomLineInFile(currentPath() .. "/input/vn_highschool.txt")
+end
+
+function getRandomUniversity()
+    return getRandomLineInFile(currentPath() .. "/input/vn_university.txt")
 end
 
 function setFirstNameLastName()
@@ -1140,157 +1160,29 @@ function checkModeMenuLeft()
     return waitImageVisible(fb_logo_menu_left, 2)
 end
 
--- function changeMailDomain()
---     ::label_addmail::
---     if ADD_MAIL_DOMAIN then
---         if waitImageVisible(what_on_your_mind) then 
---             toastr('Add mail what_on_your_mind')
+function saveRandomServerAvatar()
+    toast('saveRandomServerAvatar', 3)
+    clearSystemAlbum()
 
---             press(690, 1290) -- go to menu
+    local url = PHP_SERVER .. "random_avatar.php"
+    local filename = "avatar_" .. os.time() .. ".jpg"
+    local save_path = "/var/mobile/Media/DCIM/100APPLE/" .. filename
 
---             press(690, 1290) -- go to menu
+    local f = io.open(save_path, "wb")
+    if not f then
+        print("❌ Không thể mở file để ghi: " .. save_path)
+        return
+    end
 
---             if waitImageVisible(setting_menu, 8) then
---                 toastr('setting_menu')
---                 press(600, 90) -- setting cog icon
---                 waitImageNotVisible(setting_menu)
---             end
+    curl.easy{
+        url = url,
+        writefunction = function(buffer)
+            f:write(buffer)
+            return #buffer
+        end
+    }:perform()
 
---             if waitImageVisible(setting_privacy, 12) then
---                 toastr('setting_privacy')
---                 if waitImageVisible(see_more_account_center, 10) then
---                     findAndClickByImage(see_more_account_center)
---                     waitImageNotVisible(see_more_account_center)
---                 end
---             end
+    f:close()
 
---             if waitImageVisible(account_center, 12) then
---                 toastr('account_center')
---                 sleep(1)
---                 swipe(600, 800, 610, 650) sleep(1)
-
---                 if waitImageVisible(personal_details_btn) then
---                     findAndClickByImage(personal_details_btn)
---                 else
---                     if waitImageVisible(your_information_and_permission) then
---                         findAndClickByImage(your_information_and_permission)
---                     end
---                 end
---             end
-
---             if waitImageVisible(personal_details_page, 12) or waitImageVisible(your_information_and_per_btn, 12) then
---                 toastr('personal_details_page')
---                 press(630, 550) -- Contact info btn
-
---                 if waitImageVisible(contact_information) then
---                     press(370, 1260) -- Add new contact btn
---                 end
-                
---                 if waitImageVisible(add_mail) then
---                     toastr('add_mail')
---                     sleep(1)
---                     findAndClickByImage(add_mail)
---                 else 
---                     toastr('add_mail else')
---                     press(130, 730) sleep(2) -- add mail options
---                 end
-
---                 if waitImageVisible(add_a_phone_number, 2) then
---                     toastr('add_a_phone_number')
---                     press(380, 1260) -- add email instead
---                 end
---             end
-
---             if waitImageVisible(add_email_address) then
---                 toastr('add_email_address')
-
---                 press(110, 560) -- Input new mail address
---                 typeText(info.mailLogin) sleep(0.5)
---                 press(700, 1280) -- enter done typing
---                 findAndClickByImage(next)
-
---                 if waitImageVisible(email_used_added) then
---                     press(55, 155) -- X icon
---                     press(45, 155) -- back
---                     press(45, 155) -- back
---                     press(55, 155) -- X icon
---                     press(45, 90) -- back
---                     press(60, 1290) -- back to homepage
---                 else 
---                     if waitImageVisible(enter_confirm_code, 10) then
---                         toastr('enter_confirm_code')
---                         local code = getMailDomainAddConfirmCode()
---                         toastr('CODE: ' .. (code or '-'), 2)
---                         if code then
---                             press(130, 500) -- input code
---                             press(660, 475) -- X icon
---                             typeText(code) sleep(0.5)
---                             press(530, 630) -- click to outside
-
---                             press(380, 1260) -- next btn
---                             waitImageNotVisible(enter_confirm_code)
-
---                             if waitImageVisible(added_email, 8) then 
---                                 press(380, 1260) -- close btn
---                             end
-
---                             if waitImageVisible(contact_information) then
---                                 if REMOVE_REGISTER_MAIL then
---                                     press(650, 600) -- mail register
---                                     if waitImageVisible(delete_mail) then
---                                         findAndClickByImage(delete_mail)
---                                         sleep(1)
---                                         press(240, 850)
-
---                                         if waitImageVisible(check_your_email, 3) then
---                                             toastr('check_your_email')
---                                             local code = getMailDomainOwnerConfirmCode()
---                                             toastr('CODE: ' .. (code or '-'), 2)
-
---                                             if code and code ~= '' then
---                                                 press(100, 850) -- code input
---                                                 typeText(code) sleep(1)
---                                                 if waitImageVisible(continue_code_mail) then
---                                                     findAndClickByImage(continue_code_mail)
-
---                                                     waitImageNotVisible(check_your_email)
---                                                 end
---                                             else 
---                                                 goto get2FA
---                                             end
---                                         end
-
---                                         if waitImageVisible(deleted_previous_mail, 8) then
---                                             press(380, 1260) -- close btn
---                                             if waitImageVisible(contact_information) then
---                                                 press(50, 155) -- back
---                                                 if waitImageVisible(personal_details_page) then
---                                                     press(50, 155) -- back
---                                                     press(55, 155) -- back
-
---                                                     press(45, 90) -- back to setting menu
---                                                     press(60, 1290) -- back to homepage
---                                                 end
---                                             end
---                                         end
---                                     end
---                                 else 
---                                     press(50, 155) -- back
---                                     if waitImageVisible(personal_details_page) then
---                                         press(50, 155) -- back
---                                         press(55, 155) -- back
-
---                                         press(45, 90) -- back to setting menu
---                                         press(60, 1290) -- back to homepage
---                                     end
---                                 end
---                             end
---                         else 
---                             info.mailLogin = info.mailRegister -- set mail register is mail login
---                         end
---                     end
---                 end
---             end
---         end
---     end
--- end
+    saveToSystemAlbum(save_path);
+end

@@ -11,8 +11,7 @@ ENTER_VERIFY_CODE = true  -- true|false
 HOTMAIL_SERVICE_IDS = {1, 3, 2, 6, 5}
 HOTMAIL_SOURCE_FROM_FILE = false  -- true|false
 THUE_LAI_MAIL_THUEMAILS = false  -- true|false
-ADD_MAIL_DOMAIN = false  -- true|false
-REMOVE_REGISTER_MAIL = false  -- true|false
+CHANGE_INFO = false  -- true|false
 PROVIDER_MAIL_THUEMAILS = 1  -- 1|3 gmail|icloud
 TIMES_XOA_INFO = 2  -- 0|1|2|3
 MAIL_THUEMAILS_API_KEY = "94a3a21c-40b5-4c48-a690-f1584c390e3e" -- Hải
@@ -22,7 +21,6 @@ DUMMY_MODE = 0
 
 if not waitForInternet(2) then toast("No Internet!", 5) end
 if not getConfigServer() then alert("No config from server!") exit() end
-LANGUAGE = 'VN'
 
 -- ====== VARIABLE REQUIRED ======
 if LANGUAGE == 'ES' then require(currentDir() .. "/images_es") end
@@ -99,7 +97,7 @@ function main()
     if checkImageIsExists(no_friend) then goto label_nofriend end
     if checkImageIsExists(add_phone_number) then goto label_addphonenumber end
     if checkImageIsExists(agree_facebook_term) then goto label_agree end
-    if checkImageIsExists(what_on_your_mind) then if info.twoFA == nil or info.twoFA == '' then goto label_get2FA end end
+    if checkImageIsExists(what_on_your_mind) then if info.twoFA == nil or info.twoFA == '' then goto label_changeinfo end end
 
     ::label_createnewaccount::
     showIphoneModel()
@@ -215,7 +213,7 @@ function main()
         for i = 1, math.random(3, 10) do
             press(400, math.random(1003, 1008))
         end
-        for i = 1, math.random(10, 18) do
+        for i = 1, math.random(10, 25) do
             press(600, math.random(1003, 1008))
         end
         findAndClickByImage(next)
@@ -650,11 +648,51 @@ function main()
 
     if checkPageNotAvailable() then goto label_continue end
     if checkSuspended() then goto label_continue end
-    swipe(600, 750, 610, 800) 
+
+    ::label_changeinfo::
+    if CHANGE_INFO and LANGUAGE == 'VN' then 
+        toast('change_info')
+        openURL("fb://profile")
+        if waitImageVisible(welcome_to_profile) then 
+            saveRandomServerAvatar()
+
+            sleep(2)
+            press(550, 1260) sleep(2) -- btn thêm ảnh
+            press(150, 480) sleep(1) -- chọn ảnh đầu tiên
+            press(680, 95) sleep(2) -- btn lưu
+
+            if waitImageVisible(current_city) then 
+                findAndClickByImage(select_position) sleep(1)
+                typeText(getRandomCity()) sleep(1)
+                press(220, 280) -- select lựa chọn đầu tiên
+                waitImageVisible(save) findAndClickByImage(save)
+            end
+            if waitImageVisible(high_school) then 
+                findAndClickByImage(select_position) sleep(1)
+                typeText(getRandomHighSchool()) sleep(1)
+                press(220, 280) -- select lựa chọn đầu tiên
+                waitImageVisible(save) findAndClickByImage(save)
+            end
+            if waitImageVisible(add_university) then 
+                findAndClickByImage(select_position) sleep(1)
+                typeText(getRandomUniversity()) sleep(1)
+                press(220, 280) -- select lựa chọn đầu tiên
+                waitImageVisible(save) findAndClickByImage(save)
+            end
+            if waitImageVisible(view_profile_page) then 
+                findAndClickByImage(view_profile_page)
+            end
+        end
+
+        if waitImageVisible(edit_profile_page, 10) then 
+            press(60, 1290) -- back to homepage
+        end
+    end 
 
     ::label_get2FA::
+    swipe(600, 750, 610, 800) 
     modeMenuLeft = checkModeMenuLeft()
-    if waitImageVisible(what_on_your_mind) then 
+    if (info.twoFA == nil or info.twoFA == '') and waitImageVisible(what_on_your_mind) then 
         toastr('2FA what_on_your_mind')
 
         if modeMenuLeft then 
@@ -880,8 +918,8 @@ function main()
         end
     end
 
-    ::label_logout::
-    if waitImageVisible(what_on_your_mind, 2) then 
+    -- ::label_logout::
+    if info.status == 'SUCCESS' and waitImageVisible(what_on_your_mind) then 
         toastr('Logout what_on_your_mind')
 
         if modeMenuLeft then 
