@@ -10,7 +10,8 @@ MAIL_SUPLY = 1  -- 1|2|3 hotmail_dongvanfb|thuemails.com|yagisongs
 ENTER_VERIFY_CODE = true  -- true|false
 HOTMAIL_SERVICE_IDS = {1, 3, 2, 6, 5}
 HOTMAIL_SOURCE_FROM_FILE = false  -- true|false
-THUE_LAI_MAIL_THUEMAILS = false  -- true|false
+THUE_LAI_MAIL_THUEMAILS = 0  
+ADD_MAIL_DOMAIN = 0
 CHANGE_INFO = false  -- true|false
 PROVIDER_MAIL_THUEMAILS = 1  -- 1|3 gmail|icloud
 TIMES_XOA_INFO = 2  -- 0|1|2|3
@@ -64,18 +65,20 @@ function main()
     if not waitForInternet(2) then toast("No Internet!", 5) end
     if info.mailRegister == nil or info.mailRegister == '' then 
         homeAndUnlockScreen()
-        executeXoaInfo()
         rotateShadowRocket()
+        executeXoaInfo()
     else 
         swipeCloseApp()
         checkOnShadowRocket()
     end
     if LOGIN_WITH_CODE then initCurrentAccountCode() end 
 
+    uploadRandomContact()
+
     ::label_openfacebook::
     openFacebook()
 
-    if waitImageVisible(logo_fb_modern, 3) then
+    if waitImageVisible(logo_fb_modern, 1) then
         toastr('not_support_this_FB_mode')
         swipeCloseApp()
         goto label_continue
@@ -84,7 +87,6 @@ function main()
     findAndClickByImage(accept)
     if checkSuspended() then goto label_continue end
     if checkPageNotAvailable() then goto label_continue end
-    sleep(1)
     if checkImageIsExists(what_is_birthday) then goto label_birthday end
     if checkImageIsExists(what_is_mobile_number) then goto label_whatisyourmobile end
     if checkImageIsExists(enter_confirm_code_phone) then goto label_enterconfirmcodedummy end 
@@ -97,12 +99,12 @@ function main()
     if checkImageIsExists(no_friend) then goto label_nofriend end
     if checkImageIsExists(add_phone_number) then goto label_addphonenumber end
     if checkImageIsExists(agree_facebook_term) then goto label_agree end
-    if checkImageIsExists(what_on_your_mind) then if info.twoFA == nil or info.twoFA == '' then goto label_changeinfo end end
+    if checkImageIsExists(what_on_your_mind) then if info.twoFA == nil or info.twoFA == '' then goto label_get2FA end end
 
     ::label_createnewaccount::
     showIphoneModel()
     if waitImageVisible(create_new_account, 10) then
-        if waitImageVisible(logo_fb_modern, 3) then
+        if waitImageVisible(logo_fb_modern, 1) then
             toastr('not_support_this_FB_mode')
             swipeCloseApp()
             goto label_continue
@@ -156,7 +158,7 @@ function main()
     if checkImageIsExists(no_friend) then goto label_nofriend end
     if checkImageIsExists(add_phone_number) then goto label_addphonenumber end
     if checkImageIsExists(agree_facebook_term) then goto label_agree end
-    if checkImageIsExists(what_on_your_mind) then if info.twoFA == nil or info.twoFA == '' then goto label_get2FA end end
+    if checkImageIsExists(what_on_your_mind) then if info.twoFA == nil or info.twoFA == '' then goto label_changeinfo end end
 
     if LOGIN_WITH_CODE then 
         if waitImageVisible(wrong_credentials, 3) then 
@@ -176,7 +178,7 @@ function main()
         if checkImageIsExists(no_friend) then goto label_nofriend end
     end 
 
-    if waitImageVisible(join_facebook, 2) then 
+    if checkImageIsExists(join_facebook) then 
         toastr('not_support_this_FB_mode', 2)
         swipeCloseApp()
         goto label_continue
@@ -196,7 +198,6 @@ function main()
     end
 
     if checkSuspended() then goto label_continue end
-    if checkPageNotAvailable() then goto label_continue end
     if checkImageIsExists(no_friend) then goto label_nofriend end
 
     setFirstNameLastName()
@@ -230,35 +231,30 @@ function main()
 
     setGender()
 
-    sleep(1)
     findAndClickByImage(accept) 
     if checkImageIsExists(create_new_account) then goto label_createnewaccount end 
     if checkImageIsExists(create_new_account_blue) then goto label_createnewaccountblue end 
     if checkImageIsExists(get_started) then goto label_createnewaccountblue end 
     if checkImageIsExists(profile_picture) then goto label_profilepicture end
     if checkImageIsExists(enter_the_confirmation_code) then goto label_confirmationcode end
+    if waitImageVisible(register_by_phone, 2) and waitImageVisible(what_is_your_email, 2) then
+        findAndClickByImage(register_by_phone)
+    end
 
     ::label_whatisyourmobile::
     if waitImageVisible(what_is_mobile_number) or waitImageVisible(sign_up_with_email) then
         toastr("what_is_mobile_number")
         if DUMMY_PHONE then 
+            ::label_randomphone::
+            press(320, 450)
+            press(320, 450)
+            findAndClickByImage(x_input_icon)
             typeText(randomPhone())
             findAndClickByImage(next)
 
-            if waitImageVisible(red_warning_icon) then
-                press(320, 380)
-                findAndClickByImage(x_input_icon)
-                typeText(randomPhone())
-                findAndClickByImage(next)
-                if waitImageVisible(continue_creating_account) then
-                    failedCurrentAccount('phone_has_account')
-                    goto label_continue
-                end
-            end
-
-            if waitImageVisible(continue_creating_account, 2) then
-                failedCurrentAccount('phone_has_account')
-                goto label_continue
+            if waitImageVisible(red_warning_icon, 3) or waitImageVisible(continue_creating_account, 3) then
+                toast('phone_invalid')
+                goto label_randomphone
             end
         else
             findAndClickByImage(sign_up_with_email)
@@ -284,11 +280,12 @@ function main()
                 archiveCurrentAccount()
 
                 if waitImageVisible(exist_account_in_mail, 3) or waitImageVisible(red_warning_icon, 3) then
-                    toastr('exist_account_in_mail')
+                    toastr('email_has_account')
                     failedCurrentAccount('email_has_account')
                     goto label_continue
                 end
             else
+                ::label_executegetmailrequest::
                 if executeGetMailRequest() then 
                     if info.mailRegister ~= nil and info.mailRegister ~= '' then 
                         press(310, 420)
@@ -300,9 +297,13 @@ function main()
 
                         if waitImageVisible(exist_account_in_mail, 3) or waitImageVisible(red_warning_icon, 3) then
                             toastr('exist_account_in_mail')
-                            failedCurrentAccount('email_has_account')
-                            goto label_continue
+                            goto label_executegetmailrequest
                         end
+                    end
+
+                    if waitImageVisible(continue_creating_account, 3) or waitImageVisible(red_warning_icon, 3) then
+                        toastr("email_has_account")
+                        goto label_executegetmailrequest
                     end
                 else 
                     toastr("Empty mail. Continue.", 10) sleep(5)
@@ -310,12 +311,6 @@ function main()
                     failedCurrentAccount('empty_email')
                     goto label_continue
                 end
-            end
-
-            if waitImageVisible(continue_creating_account, 3) or waitImageVisible(red_warning_icon, 3) then
-                toastr("continue_creating_account")
-                failedCurrentAccount('email_has_account')
-                goto label_continue
             end
             
             if not waitImageNotVisible(what_is_your_email, 20) then 
@@ -329,7 +324,7 @@ function main()
         end
     end
 
-    if waitImageVisible(what_is_birthday, 2) then
+    if waitImageVisible(what_is_birthday, 1) then
         toastr("what_is_birthday")
         press(270, 470) sleep(0.5)
 
@@ -414,7 +409,7 @@ function main()
             goto label_openfacebook
         end 
 
-        if waitImageVisible(already_have_account) then
+        if waitImageVisible(already_have_account, 2) then
             press(380, 600)
             waitImageNotVisible(already_have_account)
         end
@@ -424,24 +419,25 @@ function main()
 
     ::label_enterconfirmcodedummy::
     if SHOULD_DUMMY then 
-        if DUMMY_PHONE then
-            if waitImageVisible(enter_confirm_code_phone, 10) then
-                toastr("enter_confirm_code_phone")
+        if DUMMY_GMAIL or DUMMY_ICLOUD then
+            if waitImageVisible(enter_the_confirmation_code, 10) then
+                toastr("enter_the_confirmation_code gmail|iloud")
                 findAndClickByImage(no_receive_code)
-                if waitImageVisible(confirm_via_email, 20) then 
-                    findAndClickByImage(confirm_via_email)
+                if waitImageVisible(confirm_via_change_email, 10) then 
+                    findAndClickByImage(confirm_via_change_email)
+                    info.mailRegister = nil -- reset mailRegister
                     sleep(2)
                 end
             end
         end
 
-        if DUMMY_GMAIL or DUMMY_ICLOUD then
-            if waitImageVisible(enter_the_confirmation_code, 10) then
-                toastr("enter_the_confirmation_code gmail|iloud")
+        if DUMMY_PHONE then
+            if waitImageVisible(enter_confirm_code_phone, 10) then
+                toastr("enter_confirm_code_phone")
                 findAndClickByImage(no_receive_code)
-                if waitImageVisible(confirm_via_change_email, 20) then 
-                    findAndClickByImage(confirm_via_change_email)
-                    info.mailRegister = nil -- reset mailRegister
+
+                if waitImageVisible(confirm_via_email, 10) then 
+                    findAndClickByImage(confirm_via_email)
                     sleep(2)
                 end
             end
@@ -450,6 +446,25 @@ function main()
         ::label_emailafterphone::
         if waitImageVisible(what_is_your_email, 3) or waitImageVisible(enter_an_email, 3) then
             toastr("what_is_your_email")
+
+            if ADD_MAIL_DOMAIN > 0 then 
+                -- add mail domain
+                executeDomainMail() sleep(1)
+                info.mailRegister = nil
+                press(310, 420)
+                findAndClickByImage(x_input_icon)
+                typeText(info.mailLogin)
+                findAndClickByImage(next)
+
+                -- add mail gmail
+                if waitImageVisible(enter_the_confirmation_code) then
+                    findAndClickByImage(no_receive_code)
+                    if waitImageVisible(confirm_via_change_email, 10) then 
+                        findAndClickByImage(confirm_via_change_email)
+                        waitImageVisible(what_is_your_email)
+                    end
+                end
+            end
 
             if info.mailRegister ~= nil and info.mailRegister ~= '' then 
                 press(310, 420)
@@ -460,11 +475,12 @@ function main()
                 archiveCurrentAccount()
 
                 if waitImageVisible(exist_account_in_mail, 3) or waitImageVisible(red_warning_icon, 3) then
-                    toastr('exist_account_in_mail')
+                    toastr('email_has_account')
                     failedCurrentAccount('email_has_account')
                     goto label_continue
                 end
             else
+                ::label_executegetmailrequest::
                 if executeGetMailRequest() then 
                     if info.mailRegister ~= nil and info.mailRegister ~= '' then 
                         press(310, 420)
@@ -476,8 +492,7 @@ function main()
 
                         if waitImageVisible(exist_account_in_mail, 3) or waitImageVisible(red_warning_icon, 3) then
                             toastr('exist_account_in_mail')
-                            failedCurrentAccount('email_has_account')
-                            goto label_continue
+                            goto label_executegetmailrequest
                         end
                     end
                 else 
@@ -486,12 +501,6 @@ function main()
                     failedCurrentAccount('empty_email')
                     goto label_continue
                 end
-            end
-
-            if waitImageVisible(continue_creating_account, 3) or waitImageVisible(red_warning_icon, 3) then
-                toastr("continue_creating_account")
-                failedCurrentAccount('email_has_account')
-                goto label_continue
             end
 
             if not waitImageNotVisible(what_is_your_email, 20) then 
@@ -537,6 +546,8 @@ function main()
                     failedCurrentAccount('code_invalid')
                     goto label_continue
                 end 
+
+                sleep(2)
             else 
                 finishCurrentAccount()
                 goto label_continue
@@ -603,7 +614,6 @@ function main()
 
     if checkSuspended() then goto label_continue end
     if checkPageNotAvailable() then goto label_continue end
-    if checkImageIsExists(what_on_your_mind) then goto label_get2FA end 
 
     ::label_nofriend::
     if waitImageVisible(no_friend, 3) then
@@ -617,14 +627,14 @@ function main()
     end
 
     ::label_findfriend_kill::
-    if waitImageVisible(find_friend, 2) then
+    if waitImageVisible(find_friend, 1) then
         toastr("find_friend_kill")
         swipeCloseApp()
         goto label_openfacebook
     end
 
     ::label_findfriend_swipe::
-    if waitImageVisible(find_friend, 2) then
+    if waitImageVisible(find_friend, 1) then
         toastr("find_friend_swipe")
         swipeForce(50, 500, 600, 500)
     end
@@ -636,7 +646,6 @@ function main()
         waitImageVisible(add_phone_number)
     end
 
-    findAndClickByImage(accept)
     if checkImageIsExists(create_a_password) then goto label_createpassword end 
     if checkImageIsExists(enter_confirm_code_phone) then goto label_enterconfirmcodedummy end 
     if checkImageIsExists(enter_the_confirmation_code) then goto label_confirmationcode end 
@@ -651,41 +660,169 @@ function main()
 
     ::label_changeinfo::
     if CHANGE_INFO and LANGUAGE == 'VN' then 
-        toast('change_info')
-        openURL("fb://profile")
-        if waitImageVisible(welcome_to_profile) then 
+        toastr('change_info what_on_your_mind')
+
+        if waitImageVisible(what_on_your_mind) then openURL("fb://profile") end
+        if waitImageVisible(welcome_to_profile, 10) then 
             saveRandomServerAvatar()
 
             sleep(2)
             press(550, 1260) sleep(2) -- btn thêm ảnh
             press(150, 480) sleep(1) -- chọn ảnh đầu tiên
-            press(680, 95) sleep(2) -- btn lưu
+            press(680, 95) sleep(5) -- btn lưu
+        end
+        if waitImageVisible(add_coverphoto, 3) then findAndClickByImage(skip) sleep(1) end
+        if waitImageVisible(lock_profile_page, 3) then 
+            waitImageVisible(skip, 10)
+            findAndClickByImage(skip)
+            waitImageNotVisible(lock_profile_page) sleep(2)
+        end
+        if waitImageVisible(current_city, 2) then 
+            findAndClickByImage(select_position)
+            waitImageVisible(bio_search_icon)
+            typeText(getRandomCity()) sleep(2)
+            press(220, 280) -- select lựa chọn đầu tiên
+            waitImageVisible(save) findAndClickByImage(save)
+            waitImageNotVisible(current_city) sleep(2)
+        end
+        if waitImageVisible(add_hometown, 2) then 
+            findAndClickByImage(select_position)
+            waitImageVisible(bio_search_icon)
+            typeText(getRandomCity()) sleep(2)
+            press(220, 280) -- select lựa chọn đầu tiên
+            waitImageVisible(save) findAndClickByImage(save)
+            waitImageNotVisible(current_city) sleep(2)
+        end
+        if waitImageVisible(add_school, 2) then 
+            findAndClickByImage(select_position)
+            waitImageVisible(bio_search_icon)
+            typeText(getRandomHighSchool()) sleep(2)
+            press(220, 280) -- select lựa chọn đầu tiên
+            waitImageVisible(save) findAndClickByImage(save)
+            waitImageNotVisible(add_school) sleep(2)
+        end
+        if waitImageVisible(high_school, 2) then 
+            findAndClickByImage(select_position)
+            waitImageVisible(bio_search_icon)
+            typeText(getRandomHighSchool()) sleep(2)
+            press(220, 280) -- select lựa chọn đầu tiên
+            waitImageVisible(save) findAndClickByImage(save)
+            waitImageNotVisible(high_school) sleep(2)
+        end
+        if waitImageVisible(add_university, 2) then 
+            findAndClickByImage(select_position)
+            waitImageVisible(bio_search_icon)
+            typeText(getRandomUniversity()) sleep(2)
+            press(220, 280) -- select lựa chọn đầu tiên
+            waitImageVisible(save) findAndClickByImage(save)
+            waitImageNotVisible(add_university, 1) sleep(2)
+        end
+        if waitImageVisible(add_company, 3) then findAndClickByImage(skip) sleep(1) end
+        if waitImageVisible(add_relationship, 2) then findAndClickByImage(skip) sleep(1) end
+        if waitImageVisible(add_coverphoto, 2) then findAndClickByImage(skip) sleep(1) end
+        if waitImageVisible(add_moreinformation, 2) then findAndClickByImage(skip) sleep(1) end
+        if waitImageVisible(view_profile_page, 2) then findAndClickByImage(view_profile_page) sleep(1) end
+        if waitImageVisible(edit_profile_page, 2) then press(60, 1290) sleep(2) end
+    end 
 
-            if waitImageVisible(current_city) then 
-                findAndClickByImage(select_position) sleep(1)
-                typeText(getRandomCity()) sleep(1)
-                press(220, 280) -- select lựa chọn đầu tiên
-                waitImageVisible(save) findAndClickByImage(save)
+    ::label_removemail::
+    if ADD_MAIL_DOMAIN > 0 and LANGUAGE == 'VN' then 
+        toastr('remove_mail what_on_your_mind')
+
+        if modeMenuLeft then 
+            toast('modeMenuLeft')
+            press(40, 90) sleep(2) -- go to menu
+            press(560, 1100) sleep(2) -- go to configuration
+            press(110, 210) -- go to privacy
+        else 
+            press(690, 1290) -- go to menu
+            if waitImageVisible(setting_menu, 10) then
+                toastr('setting_menu')
+                press(600, 90) -- setting cog icon
+                waitImageNotVisible(setting_menu)
             end
-            if waitImageVisible(high_school) then 
-                findAndClickByImage(select_position) sleep(1)
-                typeText(getRandomHighSchool()) sleep(1)
-                press(220, 280) -- select lựa chọn đầu tiên
-                waitImageVisible(save) findAndClickByImage(save)
-            end
-            if waitImageVisible(add_university) then 
-                findAndClickByImage(select_position) sleep(1)
-                typeText(getRandomUniversity()) sleep(1)
-                press(220, 280) -- select lựa chọn đầu tiên
-                waitImageVisible(save) findAndClickByImage(save)
-            end
-            if waitImageVisible(view_profile_page) then 
-                findAndClickByImage(view_profile_page)
+        end 
+
+        if waitImageVisible(setting_privacy, 20) then
+            toastr('setting_privacy')
+            if waitImageVisible(see_more_account_center, 20) then
+                findAndClickByImage(see_more_account_center)
+                waitImageNotVisible(see_more_account_center)
             end
         end
 
-        if waitImageVisible(edit_profile_page, 10) then 
-            press(60, 1290) -- back to homepage
+        if checkPageNotAvailable() then goto label_continue end
+
+        if waitImageVisible(account_center, 20) then
+            toastr('account_center')
+            sleep(1)
+            swipe(600, 800, 610, 720) sleep(2)
+
+            if waitImageVisible(personal_details_btn) then
+                findAndClickByImage(personal_details_btn)
+            else
+                if waitImageVisible(your_information_and_permission) then
+                    findAndClickByImage(your_information_and_permission)
+                end
+            end
+        end
+
+        if waitImageVisible(personal_details_page, 15) or waitImageVisible(your_information_and_per_btn, 15) then
+            toastr('personal_details_page')
+            if waitImageVisible(contact_information_btn) then
+                findAndClickByImage(contact_information_btn)
+            end
+        end
+
+        if waitImageVisible(add_new_contact_information) then
+            toast('add_new_contact_information')
+
+            if waitImageVisible(contact_yagi) or waitImageVisible(contact_wait_confirm) then 
+                local click = findAndClickByImage(contact_yagi) or findAndClickByImage(contact_wait_confirm) 
+                if waitImageVisible(contact_confirm_mail) then findAndClickByImage(contact_confirm_mail) end
+                if waitImageVisible(contact_checkbox_account) then findAndClickByImage(contact_checkbox_account) end
+                if waitImageVisible(next) then findAndClickByImage(next) end
+                if waitImageVisible(enter_confirm_code) then 
+                    local code = getMailDomainOwnerConfirmCode()
+                    if code and code ~= '' then
+                        press(200, 480)
+                        findAndClickByImage(x_input_icon)
+                        typeText(code) sleep(1)
+                        press(360, 580)
+                        findAndClickByImage(next)
+                    end 
+                end
+                if waitImageVisible(contact_email_added) then 
+                    press(380, 1260) sleep(2) -- btn đóng
+                end 
+            end 
+            if waitImageVisible(contact_gmail) then 
+                findAndClickByImage(contact_gmail) 
+                if waitImageVisible(delete_mail) then findAndClickByImage(delete_mail) end
+                sleep(1) press(240, 850)
+                if waitImageVisible(deleted_previous_mail, 10) then
+                    press(380, 1260) sleep(2) -- close btn
+                end
+            end
+            if waitImageVisible(contact_phone) or waitImageVisible(contact_wait_confirm) then 
+                local click = findAndClickByImage(contact_phone) or findAndClickByImage(contact_wait_confirm) 
+                if waitImageVisible(contact_delete_phone) then findAndClickByImage(contact_delete_phone) end
+                sleep(1) press(240, 850)
+                if waitImageVisible(deleted_previous_phone, 10) then
+                    press(380, 1260) -- close btn
+                end
+            end
+            if waitImageVisible(add_new_contact_information) then
+                press(50, 155) -- back
+                if waitImageVisible(personal_details_page) then
+                    press(50, 155) -- back
+                    press(55, 155) -- back
+
+                    press(45, 90) -- back to setting menu
+                    if not modeMenuLeft then press(45, 90) end -- back to main menu
+                    press(60, 1290) sleep(2) -- back to homepage
+                end
+            end
         end
     end 
 
@@ -773,7 +910,13 @@ function main()
 
             ::label_getownercodeagain::
             sleep(5)
-            local code = getCodeMailOwner()
+
+            local code = ''
+            if ADD_MAIL_DOMAIN > 0 then 
+                code = getMailDomainOwnerConfirmCode()
+            else 
+                code = getCodeMailOwner()
+            end
             toastr('CODE: ' .. (code or '-'), 2)
             again = again + 1
 
@@ -888,13 +1031,53 @@ function main()
         end
     end
 
+    ::label_addcontactfriend::
+    if 1 then 
+        ::label_reopencontact::
+        openURL("fb://friends")
+        if waitImageVisible(friend_add_friend) then 
+            findAndClickByImage(friend_add_friend)
+            if waitImageVisible(friend_upload_contact, 2) then findAndClickByImage(friend_upload_contact) end
+            if waitImageVisible(friend_allow_contact, 2) then 
+                if checkImageIsExists(next) then 
+                    findAndClickByImage(next)
+                else 
+                    press(380, 1320) -- next hidden btn
+                end
+                if waitImageVisible(contact_search_friend_page) then
+                    sleep(10)
+                    goto label_reopencontact
+                end 
+            end 
+        end 
+        if waitImageVisible(friend_send_add_friend) then 
+            local totalAdd = math.random(10, 20)
+            local added = 0
+            while added < totalAdd do
+                local found = findImage(friend_send_add_friend[#friend_send_add_friend], 0, 0.99, nil, false, 1)
+                log(found, 'found')
+                for i, v in pairs(found) do
+                    if v ~= nil then
+                        local x = v[1]
+                        local y = v[2]
+                        press(x, y)
+                        added = added + 1
+                    end
+                    sleep(0,5)
+                end
+                if added < totalAdd then swipe(480, 800, 480, 650) sleep(2) end
+            end
+        end 
+        press(60, 1290) sleep(2) -- homepage
+    end 
+
     ::label_searchtext::
     toastr('wait searchtext..')
     if waitImageVisible(what_on_your_mind) then
         toastr('Search what_on_your_mind')
         press(600, 90) -- go to search screen
 
-        local searchTexts = getSearchText(math.random(3, 5))
+        local searchTexts = getSearchText(math.random(2, 4))
         for i, line in ipairs(searchTexts) do
             typeText(line)
             press(700, 1300) sleep(2) -- btn search blue
@@ -913,14 +1096,13 @@ function main()
                 sleep(1)
                 resetInfoObject()
                 toastr('+1 nick live', 3)
-                goto label_continue
             end
         end
     end
 
-    -- ::label_logout::
+    ::label_logout::
     if info.status == 'SUCCESS' and waitImageVisible(what_on_your_mind) then 
-        toastr('Logout what_on_your_mind')
+        toastr('logout what_on_your_mind')
 
         if modeMenuLeft then 
             press(40, 90) sleep(1) -- go to menu
@@ -944,6 +1126,8 @@ function main()
         end
 
         removeAccount()
+        sleep(1)
+        goto label_continue
     end
 
     if waitImageVisible(enter_confirm_code_phone, 1) then goto label_enterconfirmcodedummy end 

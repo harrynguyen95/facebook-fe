@@ -104,7 +104,6 @@ function archiveCurrentAccount()
             if splitted[1] and splitted[1] ~= '' then info.uuid = floor(splitted[1] + 1) else info.uuid = 1 end
             info.status = 'INPROGRESS'
             info.password = randomPass
-            if ADD_MAIL_DOMAIN then info.mailLogin = randomMailDomain() end 
             local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '')
             addLineToFile(accountFilePath, line)
         end 
@@ -112,7 +111,6 @@ function archiveCurrentAccount()
         info.uuid = 1
         info.status = 'INPROGRESS'
         info.password = randomPass
-        if ADD_MAIL_DOMAIN then info.mailLogin = randomMailDomain() end 
         local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '')
         addLineToFile(accountFilePath, line)
     end
@@ -128,7 +126,7 @@ function finishCurrentAccount()
     info.checkpoint = 'OK'
     if not info.mailLogin or info.mailLogin == '' then info.mailLogin = info.mailRegister end 
     if not info.profileUid or info.profileUid == '' then info.profileUid = getUIDFBLogin() end 
-    -- if not info.mailLogin or info.mailLogin == '' then return false end 
+    if not info.mailLogin or info.mailLogin == '' then return false end 
 
     local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '')
     accounts[#accounts] = line
@@ -321,14 +319,14 @@ end
 
 function retrieveMailThueMail()
     local mails = readFile(mailFilePath)
-    if #mails < 5 then
+    if #mails < 10 then
         return
     end
 
     shuffle(mails)
     for i, v in ipairs(mails) do
         local splitted = split(v, "|")
-        if floor(splitted[2]) < 4 then 
+        if floor(splitted[2]) <= THUE_LAI_MAIL_THUEMAILS then 
             return splitted[1]
         end
     end
@@ -356,9 +354,9 @@ function executeGmailFromThueMail()
     local rerentSuccess = false
     local mailRerent = retrieveMailThueMail()
 
-    if THUE_LAI_MAIL_THUEMAILS and mailRerent then
+    if THUE_LAI_MAIL_THUEMAILS > 0 and mailRerent then
         rerentTime = floor(rerentTime + 1)
-        log('Times mail rerent: ' .. rerentTime .. ' - ' .. mailRerent)
+        -- log('Times mail rerent: ' .. rerentTime .. ' - ' .. mailRerent)
 
         local tries = 5
         for i = 1, tries do 
@@ -484,7 +482,6 @@ function callRegisterHotmailFromDongVanFb()
                         local mailString = response.data.list_data[1]
                         local splitted = split(mailString, '|')
 
-                        info.mailLogin = splitted[1]
                         info.mailRegister = splitted[1]
                         info.mailPrice = response.data.price
                         info.thuemailId = 2000000
@@ -705,7 +702,7 @@ function getMailDomainOwnerConfirmCode()
             log("Failed request mail_domain_owner_confirm. Times ".. i ..  " - " .. tostring(error))
         end
 
-        sleep(5)
+        sleep(10)
     end
     return nil
 end
@@ -860,7 +857,8 @@ function getConfigServer()
                     TIMES_XOA_INFO           = tonumber(config.times_xoa_info)
                     ENTER_VERIFY_CODE        = config.enter_verify_code ~= 0
                     HOTMAIL_SOURCE_FROM_FILE = config.hot_mail_source_from_file ~= 0
-                    THUE_LAI_MAIL_THUEMAILS  = config.thue_lai_mail_thuemails ~= 0
+                    THUE_LAI_MAIL_THUEMAILS  = config.thue_lai_mail_thuemails
+                    ADD_MAIL_DOMAIN          = config.add_mail_domain
                     CHANGE_INFO              = config.change_info ~= 0
                     PROXY                    = config.proxy
                     MAIL_DONGVANFB_API_KEY   = config.api_key_dongvanfb
@@ -891,8 +889,9 @@ end
 -- ====== FE FUNCTION ======
 function removeAccount()
     sleep(2)
-    if  waitImageVisible(create_new_account) then
+    if waitImageVisible(create_new_account) then
         if LANGUAGE == 'VN' then 
+            press(695, 90) -- three dots icon
             if waitImageVisible(remove_account_from_device, 10) then 
                 findAndClickByImage(remove_account_from_device)
             end 
@@ -908,7 +907,6 @@ function removeAccount()
             press(600, 330) sleep(5) -- btn remove gray
             press(400, 1150) sleep(1) -- btn remove blue confirm
         end
-
     end
 end
 
@@ -990,7 +988,7 @@ function setFirstNameLastName()
             if waitImageVisible(first_name_invalid, 2) or waitImageVisible(red_warning_icon, 2) then goto label_input_name end 
         end
 
-        if waitImageVisible(select_your_name) then 
+        if waitImageVisible(select_your_name, 2) then 
             if waitImageVisible(gender_options, 10) then 
                 findAndClickByImage(gender_options)
                 findAndClickByImage(next)
@@ -1114,17 +1112,16 @@ function rotateShadowRocket()
     shadowrocket_off = {dirPath .. "shadowrocket_off.png"}
 
     if waitImageVisible(shadowrocket_logo) then
-        if waitImageVisible(shadowrocket_on) then 
-            findAndClickByImage(shadowrocket_on) sleep(1)
+        if waitImageVisible(shadowrocket_on, 2) then 
+            findAndClickByImage(shadowrocket_on) sleep(2)
 
             local random = math.random(1, 2)
-            if random == 1 then press(390, 720) sleep(1) else press(390, 640) sleep(1) end
-
+            if random == 1 then press(390, 720) sleep(2) else press(390, 640) sleep(2) end
             findAndClickByImage(shadowrocket_off)
-        elseif waitImageVisible(shadowrocket_off) then
+        elseif waitImageVisible(shadowrocket_off, 2) then
             findAndClickByImage(shadowrocket_off)
         end
-        toastr('OnShadowRocket', 5)
+        toastr('OnShadowRocket', 4)
         sleep(3)
     end
 end
@@ -1185,4 +1182,18 @@ function saveRandomServerAvatar()
     f:close()
 
     saveToSystemAlbum(save_path);
+end
+
+function uploadRandomContact()
+    toast('uploadRandomContact..', 5)
+    function sendAddContact(cmd)
+        local shellCmd = string.format('echo "%s" | socat - UNIX-CONNECT:/private/var/tmp/addcontact.sock', cmd)
+        local handle = io.popen(shellCmd)
+        local result = handle:read("*a")
+        handle:close()
+    end
+
+    local count = math.random(200, 500)
+    sendAddContact(string.format("add %d +849 12", count))
+    sleep(4)
 end
