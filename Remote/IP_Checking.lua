@@ -71,6 +71,7 @@ if ip_address ~= nil then
     end
 end 
 
+sleep(2)
 toastr('Next..', 2)
 sleep(2)
 goto label_continue
