@@ -23,6 +23,7 @@ local ip_address = nil
 function callCheckIP()
     toast('v4 check..', 2)
     local response, error = httpRequest { url = 'https://ipv4.icanhazip.com' }
+    toastr(response, 2)
     if response then
         ip_address = string.gsub(response, "\n", ""),
         sleep(0.5)
@@ -31,6 +32,7 @@ function callCheckIP()
     else 
         toast('v6 check..', 2)
         local response, error = httpRequest { url = 'https://ipv6.icanhazip.com' }
+        toastr(response, 2)
         if response then
             ip_address = string.gsub(response, "\n", ""),
             sleep(0.5)
