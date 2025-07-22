@@ -6,6 +6,7 @@ homeAndUnlockScreen()
 
 ::label_continue::
 onOffAirplaneMode2()
+sleep(3)
 
 local localIP = readFile(localIPFilePath)
 local localName = localIP[#localIP]
