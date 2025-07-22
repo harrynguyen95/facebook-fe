@@ -246,7 +246,7 @@ function main()
         toastr("what_is_mobile_number")
         if DUMMY_PHONE then 
             ::label_randomphone::
-            press(320, 450)
+            press(320, 200)
             press(320, 450)
             findAndClickByImage(x_input_icon)
             typeText(randomPhone())
