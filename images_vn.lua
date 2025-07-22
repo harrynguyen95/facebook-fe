@@ -160,3 +160,6 @@ friend_send_add_friend = {dirPath .. "friend_send_add_friend.png"}
 btn_cai_dat = {dirPath .. "btn_cai_dat.png"}
 contact_wait_confirm = {dirPath .. "contact_wait_confirm.png"}
 contact_search_friend_page = {dirPath .. "contact_search_friend_page.png"}
+profile_add_avatar = {dirPath .. "profile_add_avatar.png"}
+edit_profile_page_edit = {dirPath .. "edit_profile_page_edit.png"}
+allow_access = {dirPath .. "allow_access.png"}

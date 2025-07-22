@@ -1071,6 +1071,29 @@ function main()
         press(60, 1290) sleep(2) -- homepage
     end 
 
+    if waitImageVisible(what_on_your_mind, 2) then
+        openURL("fb://profile")
+        sleep(2)
+        if waitImageVisible(profile_add_avatar) then 
+            findAndClickByImage(edit_profile_page)
+            if waitImageVisible(edit_profile_page_edit) then 
+                press(700, 200) sleep(2) -- them
+                press(280, 1150) sleep(2)
+                if waitImageVisible(allow_access) then 
+                    findAndClickByImage(allow_access) sleep(2)
+                    press(150, 480) sleep(2)
+                    press(700, 90) sleep(5)
+                end
+            end
+            if waitImageVisible(edit_profile_page_edit) then 
+                press(45, 90) sleep(1) -- back
+            end
+        end 
+        if waitImageVisible(edit_profile_page, 3) then 
+            press(60, 1290) sleep(2) -- homepage
+        end 
+    end
+
     ::label_searchtext::
     toastr('wait searchtext..')
     if waitImageVisible(what_on_your_mind) then
