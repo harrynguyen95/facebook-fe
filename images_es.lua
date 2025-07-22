@@ -1,4 +1,4 @@
-local dirPath = currentDir() .. "/images_es/"
+local dirPath = rootDir() .. "/Facebook/images_es/"
 
 what_is_birthday = {dirPath .. "what_is_your_birthday.png"}
 next = {dirPath .. "next.png", dirPath .. "next2.png", dirPath .. "next3.png"}

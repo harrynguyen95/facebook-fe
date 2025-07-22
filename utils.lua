@@ -954,6 +954,7 @@ function hasInternetConnection()
 
     local response, error = httpRequest { url = url }
     if response then
+        reponse = string.gsub(response, "\n", "")
         toastr(response, 2)
         return true
     end
@@ -970,43 +971,15 @@ function waitForInternet(timeout)
     return false
 end
 
-function checkInternetAndPublicIP()
-    local url = "https://api.ipify.org?v=" .. math.random(1, 65535)
-    local resultTable = {}
-
-    local response, error = httpRequest {
-        url = url,
-        method = "GET",
-        headers = {
-            ["Content-Type"] = "application/json"
-        },
-    }
-    -- toastr(response, 4)
-
-    if error then
-        log("No internet connection. Error: " .. tostring(error))
-        toastr("No Internet. Error: " .. tostring(error))
-    else
-        -- local data = json.decode(response)
-        -- if data.ip and data.country then
-        --     log("Connected to the Internet. Public IP: " .. data.ip .. ", Country: " .. data.country)
-        --     toastr(data.country .. " - " .. data.ip, 3)
-        -- else
-        --     log("Connected, but failed to fetch public IP.")
-        --     toastr("Internet OK, but no public IP detected.", 3)
-        -- end
-    end
-end
-
 function onOffAirplaneMode2()
     appRun("com.apple.Preferences")
-    if waitImageVisible(airplane_icon, 2) then 
+    if waitImageVisible(airplane_icon, 3) then 
         local result = findImage(airplane_icon[#airplane_icon], 1, threshold, nil, DEBUG_IMAGE, 1)
         if #result > 0 then 
             local img = result[1]
             local x = img[1]
             local y = img[2]
-            press(x + 540, y) sleep(1) -- on air
+            press(x + 540, y) sleep(2) -- on air
             press(x + 540, y) sleep(3) -- off air
         end 
     end 
@@ -1134,7 +1107,7 @@ function randomVNPhone()
     local function randomMobileNXX()
         return string.format("%07d", math.random(0, 9999999))
     end
-    
+
     local function randomPhone()
         local telcos = {}
         for telco in pairs(area_codes) do table.insert(telcos, telco) end

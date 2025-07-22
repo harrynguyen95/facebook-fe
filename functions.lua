@@ -1039,16 +1039,7 @@ end
 
 function openFacebook()
     toastr('openFacebook')
-
     appActivate("com.facebook.Facebook")
-    -- pressHome()
-    -- if waitImageVisible(fb_logo_2) then
-    --     findAndClickByImage(fb_logo_2)
-    --     waitImageNotVisible(fb_logo_2)
-    -- else
-    --     toastr('Not found Icon facebook', 3)
-    -- end
-    -- sleep(1)
 end
 
 function clearAlert()
