@@ -319,7 +319,7 @@ end
 
 function retrieveMailThueMail()
     local mails = readFile(mailFilePath)
-    if #mails < 10 then
+    if #mails < 4 then
         return
     end
 
