@@ -29,6 +29,17 @@ function callCheckIP()
         sleep(0.5)
         toastr(ip_address, 2)
         return true
+    end 
+
+    sleep(3)
+    local response, error = httpRequest { url = 'https://ipv4.icanhazip.com' }
+    toast('v4 check..' .. response, 2)
+    sleep(2)
+    if response then
+        ip_address = string.gsub(response, "\n", ""),
+        sleep(0.5)
+        toastr(ip_address, 2)
+        return true
     else 
         local response, error = httpRequest { url = 'https://ipv6.icanhazip.com' }
         toast('v6 check..' .. response, 2)
