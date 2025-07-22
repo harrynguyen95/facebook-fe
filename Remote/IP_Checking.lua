@@ -21,18 +21,18 @@ local username = string.gsub(splitted[2], " ", "")
 local ip_address = nil
 
 function callCheckIP()
-    toast('v4 check..', 2)
     local response, error = httpRequest { url = 'https://ipv4.icanhazip.com' }
-    toastr(response, 2)
+    toast('v4 check..' .. response, 2)
+    sleep(2)
     if response then
         ip_address = string.gsub(response, "\n", ""),
         sleep(0.5)
         toastr(ip_address, 2)
         return true
     else 
-        toast('v6 check..', 2)
         local response, error = httpRequest { url = 'https://ipv6.icanhazip.com' }
-        toastr(response, 2)
+        toast('v6 check..' .. response, 2)
+        sleep(2)
         if response then
             ip_address = string.gsub(response, "\n", ""),
             sleep(0.5)
