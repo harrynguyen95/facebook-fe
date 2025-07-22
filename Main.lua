@@ -99,7 +99,7 @@ function main()
     if checkImageIsExists(no_friend) then goto label_nofriend end
     if checkImageIsExists(add_phone_number) then goto label_addphonenumber end
     if checkImageIsExists(agree_facebook_term) then goto label_agree end
-    if checkImageIsExists(what_on_your_mind) then goto label_changeinfo end end
+    if checkImageIsExists(what_on_your_mind) then goto label_changeinfo end
 
     ::label_createnewaccount::
     showIphoneModel()
