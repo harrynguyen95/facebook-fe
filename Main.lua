@@ -99,7 +99,7 @@ function main()
     if checkImageIsExists(no_friend) then goto label_nofriend end
     if checkImageIsExists(add_phone_number) then goto label_addphonenumber end
     if checkImageIsExists(agree_facebook_term) then goto label_agree end
-    if checkImageIsExists(what_on_your_mind) then if info.twoFA == nil or info.twoFA == '' then goto label_get2FA end end
+    if checkImageIsExists(what_on_your_mind) then goto label_changeinfo end end
 
     ::label_createnewaccount::
     showIphoneModel()
@@ -670,59 +670,60 @@ function main()
             press(550, 1260) sleep(2) -- btn thêm ảnh
             press(150, 480) sleep(1) -- chọn ảnh đầu tiên
             press(680, 95) sleep(5) -- btn lưu
+
+            if waitImageVisible(add_coverphoto, 3) then findAndClickByImage(skip) sleep(1) end
+            if waitImageVisible(lock_profile_page, 3) then 
+                waitImageVisible(skip, 10)
+                findAndClickByImage(skip)
+                waitImageNotVisible(lock_profile_page) sleep(2)
+            end
+            if waitImageVisible(current_city, 2) then 
+                findAndClickByImage(select_position)
+                waitImageVisible(bio_search_icon)
+                typeText(getRandomCity()) sleep(2)
+                press(220, 280) -- select lựa chọn đầu tiên
+                waitImageVisible(save) findAndClickByImage(save)
+                waitImageNotVisible(current_city) sleep(2)
+            end
+            if waitImageVisible(add_hometown, 2) then 
+                findAndClickByImage(select_position)
+                waitImageVisible(bio_search_icon)
+                typeText(getRandomCity()) sleep(2)
+                press(220, 280) -- select lựa chọn đầu tiên
+                waitImageVisible(save) findAndClickByImage(save)
+                waitImageNotVisible(current_city) sleep(2)
+            end
+            if waitImageVisible(add_school, 2) then 
+                findAndClickByImage(select_position)
+                waitImageVisible(bio_search_icon)
+                typeText(getRandomHighSchool()) sleep(2)
+                press(220, 280) -- select lựa chọn đầu tiên
+                waitImageVisible(save) findAndClickByImage(save)
+                waitImageNotVisible(add_school) sleep(2)
+            end
+            if waitImageVisible(high_school, 2) then 
+                findAndClickByImage(select_position)
+                waitImageVisible(bio_search_icon)
+                typeText(getRandomHighSchool()) sleep(2)
+                press(220, 280) -- select lựa chọn đầu tiên
+                waitImageVisible(save) findAndClickByImage(save)
+                waitImageNotVisible(high_school) sleep(2)
+            end
+            if waitImageVisible(add_university, 2) then 
+                findAndClickByImage(select_position)
+                waitImageVisible(bio_search_icon)
+                typeText(getRandomUniversity()) sleep(2)
+                press(220, 280) -- select lựa chọn đầu tiên
+                waitImageVisible(save) findAndClickByImage(save)
+                waitImageNotVisible(add_university, 1) sleep(2)
+            end
+            if waitImageVisible(add_company, 3) then findAndClickByImage(skip) sleep(1) end
+            if waitImageVisible(add_relationship, 2) then findAndClickByImage(skip) sleep(1) end
+            if waitImageVisible(add_coverphoto, 2) then findAndClickByImage(skip) sleep(1) end
+            if waitImageVisible(add_moreinformation, 2) then findAndClickByImage(skip) sleep(1) end
+            if waitImageVisible(view_profile_page, 2) then findAndClickByImage(view_profile_page) sleep(1) end
+            if waitImageVisible(edit_profile_page, 2) then press(60, 1290) sleep(2) end
         end
-        if waitImageVisible(add_coverphoto, 3) then findAndClickByImage(skip) sleep(1) end
-        if waitImageVisible(lock_profile_page, 3) then 
-            waitImageVisible(skip, 10)
-            findAndClickByImage(skip)
-            waitImageNotVisible(lock_profile_page) sleep(2)
-        end
-        if waitImageVisible(current_city, 2) then 
-            findAndClickByImage(select_position)
-            waitImageVisible(bio_search_icon)
-            typeText(getRandomCity()) sleep(2)
-            press(220, 280) -- select lựa chọn đầu tiên
-            waitImageVisible(save) findAndClickByImage(save)
-            waitImageNotVisible(current_city) sleep(2)
-        end
-        if waitImageVisible(add_hometown, 2) then 
-            findAndClickByImage(select_position)
-            waitImageVisible(bio_search_icon)
-            typeText(getRandomCity()) sleep(2)
-            press(220, 280) -- select lựa chọn đầu tiên
-            waitImageVisible(save) findAndClickByImage(save)
-            waitImageNotVisible(current_city) sleep(2)
-        end
-        if waitImageVisible(add_school, 2) then 
-            findAndClickByImage(select_position)
-            waitImageVisible(bio_search_icon)
-            typeText(getRandomHighSchool()) sleep(2)
-            press(220, 280) -- select lựa chọn đầu tiên
-            waitImageVisible(save) findAndClickByImage(save)
-            waitImageNotVisible(add_school) sleep(2)
-        end
-        if waitImageVisible(high_school, 2) then 
-            findAndClickByImage(select_position)
-            waitImageVisible(bio_search_icon)
-            typeText(getRandomHighSchool()) sleep(2)
-            press(220, 280) -- select lựa chọn đầu tiên
-            waitImageVisible(save) findAndClickByImage(save)
-            waitImageNotVisible(high_school) sleep(2)
-        end
-        if waitImageVisible(add_university, 2) then 
-            findAndClickByImage(select_position)
-            waitImageVisible(bio_search_icon)
-            typeText(getRandomUniversity()) sleep(2)
-            press(220, 280) -- select lựa chọn đầu tiên
-            waitImageVisible(save) findAndClickByImage(save)
-            waitImageNotVisible(add_university, 1) sleep(2)
-        end
-        if waitImageVisible(add_company, 3) then findAndClickByImage(skip) sleep(1) end
-        if waitImageVisible(add_relationship, 2) then findAndClickByImage(skip) sleep(1) end
-        if waitImageVisible(add_coverphoto, 2) then findAndClickByImage(skip) sleep(1) end
-        if waitImageVisible(add_moreinformation, 2) then findAndClickByImage(skip) sleep(1) end
-        if waitImageVisible(view_profile_page, 2) then findAndClickByImage(view_profile_page) sleep(1) end
-        if waitImageVisible(edit_profile_page, 2) then press(60, 1290) sleep(2) end
     end 
 
     ::label_removemail::
