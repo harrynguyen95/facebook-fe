@@ -273,6 +273,9 @@ function resetInfoObject()
         hotmailPassword = nil,
         checkpoint = nil,
         verifyCode = nil,
+        finishChangeInfo = 0,
+        finishAddMail = 0,
+        finishAddFriend = 0,
     }
     sleep(1)
 end

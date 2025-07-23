@@ -670,8 +670,11 @@ function main()
             if waitImageVisible(allow_access, 2) then 
                 findAndClickByImage(allow_access) sleep(3)
             end
-            press(150, 480) sleep(1) -- chọn ảnh đầu tiên
-            press(680, 95) sleep(5) -- btn lưu
+            if waitImageVisible(thu_vien_anh, 2) then 
+                press(150, 480) sleep(1) -- chọn ảnh đầu tiên
+                press(680, 95) sleep(5) -- btn lưu
+                waitImageNotVisible(xem_truoc_anh_dai_dien, 30)
+            end 
         end
             
         if waitImageVisible(add_coverphoto, 3) then findAndClickByImage(skip) sleep(1) end
