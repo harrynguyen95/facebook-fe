@@ -693,7 +693,8 @@ function main()
                 waitImageNotVisible(xem_truoc_anh_dai_dien, 30)
             end 
         end
-            
+
+        if checkImageIsExists(profile_add_avatar) then goto label_profileaddavatar end 
         if waitImageVisible(add_coverphoto, 3) then findAndClickByImage(skip) sleep(1) end
         if waitImageVisible(lock_profile_page, 3) then 
             waitImageVisible(skip, 10)
@@ -751,6 +752,7 @@ function main()
             archiveCurrentAccount()
         end
 
+        ::label_profileaddavatar::
         if waitImageVisible(profile_add_avatar, 2) then 
             findAndClickByImage(edit_profile_page)
             if waitImageVisible(edit_profile_page_edit) then 
