@@ -998,6 +998,7 @@ function onOffAirplaneMode2()
                 press(x + 250, y) sleep(2) -- off air
             end
         end
+        sleep(5)
     end 
 end
 

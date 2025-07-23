@@ -744,6 +744,27 @@ function main()
             info.finishChangeInfo = 1
             archiveCurrentAccount()
         end
+
+        if waitImageVisible(profile_add_avatar, 2) then 
+            findAndClickByImage(edit_profile_page)
+            if waitImageVisible(edit_profile_page_edit) then 
+                press(700, 200) sleep(2) -- them
+                press(280, 1150) sleep(2)
+                if waitImageVisible(allow_access) then 
+                    findAndClickByImage(allow_access) sleep(2)
+                end
+                if waitImageVisible(thu_vien_anh, 2) then 
+                    press(150, 480) sleep(1) -- chọn ảnh đầu tiên
+                    press(680, 95) sleep(5) -- btn lưu
+                    waitImageNotVisible(xem_truoc_anh_dai_dien, 30)
+                end 
+            end
+            if waitImageVisible(edit_profile_page_edit, 3) then 
+                press(45, 90) sleep(1) -- back
+                info.finishChangeInfo = 1
+                archiveCurrentAccount()
+            end
+        end 
         if waitImageVisible(edit_profile_page, 3) then press(60, 1290) sleep(2) end
     end 
 
@@ -1104,32 +1125,6 @@ function main()
             waitImageNotVisible(lock_profile_page)
         end
     end 
-
-    if waitImageVisible(what_on_your_mind, 2) then
-        openURL("fb://profile")
-        sleep(2)
-        if waitImageVisible(profile_add_avatar, 2) then 
-            findAndClickByImage(edit_profile_page)
-            if waitImageVisible(edit_profile_page_edit) then 
-                press(700, 200) sleep(2) -- them
-                press(280, 1150) sleep(2)
-                if waitImageVisible(allow_access) then 
-                    findAndClickByImage(allow_access) sleep(2)
-                end
-                if waitImageVisible(thu_vien_anh, 2) then 
-                    press(150, 480) sleep(1) -- chọn ảnh đầu tiên
-                    press(680, 95) sleep(5) -- btn lưu
-                    waitImageNotVisible(xem_truoc_anh_dai_dien, 30)
-                end 
-            end
-            if waitImageVisible(edit_profile_page_edit, 3) then 
-                press(45, 90) sleep(1) -- back
-            end
-        end 
-        if waitImageVisible(edit_profile_page, 2) then 
-            press(60, 1290) sleep(2) -- homepage
-        end 
-    end
 
     ::label_searchtext::
     toastr('wait searchtext..')
