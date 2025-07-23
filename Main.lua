@@ -1011,37 +1011,39 @@ function main()
     end
 
     ::label_logout::
-    if info.finishAddMail == 1 and (info.twoFA ~= nil and info.twoFA ~= '') and waitImageVisible(what_on_your_mind) then 
-        toastr('logout what_on_your_mind')
-
-        if modeMenuLeft then 
-            press(40, 90) sleep(1) -- go to menu
-            swipe(500, 600, 500, 350) sleep(1)
-        else 
-            press(690, 1290) -- go to menu
-            swipe(500, 900, 500, 800) sleep(1)
-            swipe(550, 600, 600, 350) sleep(2)
-        end 
-
-        if waitImageVisible(logout_btn) then
-            findAndClickByImage(logout_btn) sleep(1)
-        end
-        if waitImageVisible(not_now, 2) then
-            findAndClickByImage(not_now) sleep(1)
-            waitImageNotVisible(not_now)
-        end
-        if waitImageVisible(logout_btn) then
-            findAndClickByImage(logout_btn) sleep(1)
-            waitImageNotVisible(logout_btn)
-        end
-
-        removeAccount()
-        sleep(1)
-
+    if info.finishAddMail == 1 and (info.twoFA ~= nil and info.twoFA ~= '') then 
         finishCurrentAccount()
         resetInfoObject()
         toastr('+1 nick live', 3)
-        goto label_continue
+        
+        if waitImageVisible(what_on_your_mind) then 
+            toastr('logout what_on_your_mind')
+
+            if modeMenuLeft then 
+                press(40, 90) sleep(1) -- go to menu
+                swipe(500, 600, 500, 350) sleep(1)
+            else 
+                press(690, 1290) -- go to menu
+                swipe(500, 900, 500, 800) sleep(1)
+                swipe(550, 600, 600, 350) sleep(2)
+            end 
+
+            if waitImageVisible(logout_btn) then
+                findAndClickByImage(logout_btn) sleep(1)
+            end
+            if waitImageVisible(not_now, 2) then
+                findAndClickByImage(not_now) sleep(1)
+                waitImageNotVisible(not_now)
+            end
+            if waitImageVisible(logout_btn) then
+                findAndClickByImage(logout_btn) sleep(1)
+                waitImageNotVisible(logout_btn)
+            end
+
+            removeAccount()
+            sleep(1)
+            goto label_continue
+        end
     end
 
     if waitImageVisible(enter_an_email, 1) then goto label_enterconfirmcodedummy end 
