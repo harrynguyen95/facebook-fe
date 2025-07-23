@@ -722,6 +722,7 @@ function main()
 
         if waitImageVisible(add_new_contact_information) then
             toast('add_new_contact_information')
+            sleep(2)
             local mailIcons = findImage(contact_email_icon[#contact_email_icon], 2, 0.99, nil, false, 1)
             if #mailIcons == 2 then 
                 local v = mailIcons[1]
