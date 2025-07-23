@@ -675,7 +675,7 @@ function main()
     if info.finishChangeInfo == 0 and CHANGE_INFO and LANGUAGE == 'VN' and waitImageVisible(what_on_your_mind) then 
         toastr('change_info what_on_your_mind')
         openURL("fb://profile") 
-        if waitImageVisible(mo_trong_facebook, 2) then findAndClickByImage(mo_trong_facebook) end
+        if waitImageVisible(mo_trong_facebook, 2) then press(500, 725) end
         sleep(2) 
 
         ::label_welcometoprofile::
@@ -1088,7 +1088,7 @@ function main()
     if info.finishAddFriend == 0 and LANGUAGE == 'VN' and waitImageVisible(what_on_your_mind) then 
         ::label_reopencontact::
         openURL("fb://friends")
-        if waitImageVisible(mo_trong_facebook, 2) then findAndClickByImage(mo_trong_facebook) end
+        if waitImageVisible(mo_trong_facebook, 2) then press(500, 725) end
         sleep(2)
 
         if waitImageVisible(friend_add_friend) then 
