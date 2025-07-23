@@ -681,8 +681,8 @@ function main()
         ::label_welcometoprofile::
         if waitImageVisible(welcome_to_profile, 20) then 
             saveRandomServerAvatar()
+            sleep(3)
 
-            sleep(2)
             press(550, 1260) sleep(2) -- btn thêm ảnh
             if waitImageVisible(allow_access, 2) then 
                 findAndClickByImage(allow_access) sleep(3)
@@ -756,6 +756,9 @@ function main()
         if waitImageVisible(profile_add_avatar, 2) then 
             findAndClickByImage(edit_profile_page)
             if waitImageVisible(edit_profile_page_edit) then 
+                saveRandomServerAvatar()
+                sleep(3)
+
                 press(700, 200) sleep(2) -- them
                 press(280, 1150) sleep(2)
                 if waitImageVisible(allow_access) then 
