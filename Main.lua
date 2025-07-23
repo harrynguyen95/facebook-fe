@@ -13,7 +13,6 @@ HOTMAIL_SOURCE_FROM_FILE = false  -- true|false
 THUE_LAI_MAIL_THUEMAILS = 0  
 ADD_MAIL_DOMAIN = 0
 IP_ROTATE_MODE = 1
-CHANGE_INFO = false  -- true|false
 PROVIDER_MAIL_THUEMAILS = 1  -- 1|3 gmail|icloud
 TIMES_XOA_INFO = 2  -- 0|1|2|3
 MAIL_THUEMAILS_API_KEY = "94a3a21c-40b5-4c48-a690-f1584c390e3e" -- Hải
@@ -50,9 +49,7 @@ info = {
     hotmailClientId = nil,
     hotmailPassword = nil,
     verifyCode = nil,
-    finishChangeInfo = 0,
     finishAddMail = 0,
-    finishAddFriend = 0,
 }
 
 -- ====== MAIN ======
@@ -615,8 +612,13 @@ function main()
     if waitImageVisible(turn_on_contact) then
         toastr("turn_on_contact")
 
-        if waitImageVisible(turn_on, 1) then findAndClickByImage(turn_on) end
-        if waitImageVisible(turn_on_contact_on, 2) then findAndClickByImage(turn_on_contact_on) end
+        if waitImageVisible(dont_allow, 1) then findAndClickByImage(dont_allow) end
+        if waitImageVisible(not_now, 1) then findAndClickByImage(not_now) end 
+        if waitImageVisible(next, 1) then findAndClickByImage(next) end 
+        if waitImageVisible(skip, 1) then findAndClickByImage(skip) end 
+
+        if waitImageVisible(not_now, 1) then findAndClickByImage(not_now) end 
+        if waitImageVisible(skip, 1) then findAndClickByImage(skip) end 
 
         waitImageNotVisible(turn_on_contact)
         waitImageVisible(no_friend)
@@ -670,111 +672,6 @@ function main()
     if checkSuspended() then goto label_continue end
 
     ::label_whatisonyourmind::
-
-    ::label_changeinfo::
-    if info.finishChangeInfo == 0 and CHANGE_INFO and LANGUAGE == 'VN' and waitImageVisible(what_on_your_mind) then 
-        toastr('change_info what_on_your_mind')
-        openURL("fb://profile") 
-        if waitImageVisible(mo_trong_facebook, 2) then press(500, 725) end
-        sleep(2) 
-
-        ::label_welcometoprofile::
-        if waitImageVisible(welcome_to_profile, 20) then 
-            saveRandomServerAvatar()
-            sleep(3)
-
-            press(550, 1260) sleep(2) -- btn thêm ảnh
-            if waitImageVisible(allow_access, 2) then 
-                findAndClickByImage(allow_access) sleep(3)
-            end
-            if waitImageVisible(thu_vien_anh, 2) then 
-                press(150, 480) sleep(1) -- chọn ảnh đầu tiên
-                press(680, 95) sleep(5) -- btn lưu
-                waitImageNotVisible(xem_truoc_anh_dai_dien, 30)
-            end 
-        end
-
-        if checkImageIsExists(profile_add_avatar) then goto label_profileaddavatar end 
-        if waitImageVisible(add_coverphoto, 3) then findAndClickByImage(skip) sleep(1) end
-        if waitImageVisible(lock_profile_page, 3) then 
-            waitImageVisible(skip, 10)
-            findAndClickByImage(skip)
-            waitImageNotVisible(lock_profile_page)
-        end
-        if waitImageVisible(current_city, 3) then 
-            findAndClickByImage(select_position)
-            waitImageVisible(bio_search_icon)
-            typeText(getRandomCity()) sleep(2)
-            press(220, 280) -- select lựa chọn đầu tiên
-            waitImageVisible(save) findAndClickByImage(save)
-            waitImageNotVisible(current_city)
-        end
-        if checkImageIsExists(welcome_to_profile) then goto label_welcometoprofile end
-        if waitImageVisible(add_hometown, 3) then 
-            findAndClickByImage(select_position)
-            waitImageVisible(bio_search_icon)
-            typeText(getRandomCity()) sleep(2)
-            press(220, 280) -- select lựa chọn đầu tiên
-            waitImageVisible(save) findAndClickByImage(save)
-            waitImageNotVisible(current_city)
-        end
-        if waitImageVisible(add_school, 3) then 
-            findAndClickByImage(select_position)
-            waitImageVisible(bio_search_icon)
-            typeText(getRandomHighSchool()) sleep(2)
-            press(220, 280) -- select lựa chọn đầu tiên
-            waitImageVisible(save) findAndClickByImage(save)
-            waitImageNotVisible(add_school)
-        end
-        if waitImageVisible(high_school, 3) then 
-            findAndClickByImage(select_position)
-            waitImageVisible(bio_search_icon)
-            typeText(getRandomHighSchool()) sleep(2)
-            press(220, 280) -- select lựa chọn đầu tiên
-            waitImageVisible(save) findAndClickByImage(save)
-            waitImageNotVisible(high_school)
-        end
-        if waitImageVisible(add_university, 3) then 
-            findAndClickByImage(select_position)
-            waitImageVisible(bio_search_icon)
-            typeText(getRandomUniversity()) sleep(2)
-            press(220, 280) -- select lựa chọn đầu tiên
-            waitImageVisible(save) findAndClickByImage(save)
-            waitImageNotVisible(add_university)
-        end
-        if waitImageVisible(add_company, 3) then findAndClickByImage(skip) end
-        if waitImageVisible(add_relationship, 3) then findAndClickByImage(skip) end
-        if waitImageVisible(add_coverphoto, 3) then findAndClickByImage(skip) end
-        if waitImageVisible(add_moreinformation, 3) then findAndClickByImage(skip) end
-        if waitImageVisible(view_profile_page, 3) then
-            findAndClickByImage(view_profile_page)
-            info.finishChangeInfo = 1
-            archiveCurrentAccount()
-        end
-
-        ::label_profileaddavatar::
-        if waitImageVisible(profile_add_avatar, 2) then 
-            findAndClickByImage(profile_add_avatar)
-            saveRandomServerAvatar()
-            sleep(3)
-
-            if waitImageVisible(chon_anh_dai_dien) then findAndClickByImage(chon_anh_dai_dien) end
-            if waitImageVisible(allow_access) then 
-                findAndClickByImage(allow_access) sleep(2)
-            end
-            if waitImageVisible(thu_vien_anh, 2) then 
-                press(150, 480) sleep(1) -- chọn ảnh đầu tiên
-                press(680, 95) sleep(5) -- btn lưu
-                waitImageNotVisible(xem_truoc_anh_dai_dien, 30)
-            end 
-            if waitImageVisible(edit_profile_page_edit, 3) then 
-                press(45, 90) sleep(1) -- back
-                info.finishChangeInfo = 1
-                archiveCurrentAccount()
-            end
-        end 
-        if waitImageVisible(edit_profile_page, 3) then press(60, 1290) sleep(2) end
-    end 
 
     ::label_removemail::
     if info.finishAddMail == 0 and ADD_MAIL_DOMAIN > 0 and LANGUAGE == 'VN' and waitImageVisible(what_on_your_mind) then 
@@ -1086,57 +983,6 @@ function main()
         end
     end
 
-    ::label_addcontactfriend::
-    if info.finishAddFriend == 0 and LANGUAGE == 'VN' and waitImageVisible(what_on_your_mind) then 
-        ::label_reopencontact::
-        openURL("fb://friends")
-        if waitImageVisible(mo_trong_facebook, 2) then press(500, 725) end
-        sleep(2)
-
-        if waitImageVisible(friend_add_friend) then 
-            findAndClickByImage(friend_add_friend)
-            if waitImageVisible(friend_upload_contact, 2) then findAndClickByImage(friend_upload_contact) end
-            if waitImageVisible(friend_allow_contact, 2) then 
-                if checkImageIsExists(next) then 
-                    findAndClickByImage(next)
-                else 
-                    press(380, 1320) -- next hidden btn
-                end
-                if waitImageVisible(contact_search_friend_page) then
-                    sleep(10)
-                    goto label_reopencontact
-                end 
-            end 
-        end 
-        if waitImageVisible(friend_send_add_friend) then 
-            local totalAdd = math.random(10, 20)
-            local added = 0
-            while added < totalAdd do
-                local found = findImage(friend_send_add_friend[#friend_send_add_friend], 0, 0.99, nil, false, 1)
-                log(found, 'found')
-                for i, v in pairs(found) do
-                    if v ~= nil then
-                        local x = v[1]
-                        local y = v[2]
-                        press(x, y)
-                        added = added + 1
-                    end
-                    sleep(0,5)
-                end
-                if added < totalAdd then swipe(480, 800, 480, 650) sleep(2) end
-            end
-
-            info.finishAddFriend = 1
-            archiveCurrentAccount()
-        end 
-        press(60, 1290) -- homepage
-        if waitImageVisible(lock_profile_page) then 
-            waitImageVisible(skip, 10)
-            findAndClickByImage(skip)
-            waitImageNotVisible(lock_profile_page)
-        end
-    end 
-
     ::label_searchtext::
     toastr('wait searchtext..')
     if waitImageVisible(what_on_your_mind) then
@@ -1164,7 +1010,7 @@ function main()
     end
 
     ::label_logout::
-    if ((CHANGE_INFO and  info.finishChangeInfo == 1) or not CHANGE_INFO) and info.finishAddFriend == 1 and info.finishAddMail == 1 and (info.twoFA ~= nil and info.twoFA ~= '') and waitImageVisible(what_on_your_mind) then 
+    if info.finishAddMail == 1 and (info.twoFA ~= nil and info.twoFA ~= '') and waitImageVisible(what_on_your_mind) then 
         toastr('logout what_on_your_mind')
 
         if modeMenuLeft then 

@@ -15,7 +15,6 @@ hotmailSourceFilePath = rootDir() .. "/Device/hotmail_source.txt"
 math.randomseed(os.time() + math.random())
 
 -- ====== LOGIC FUNCTION ======
-
 function initCurrentAccountCode()
     local accounts = readFile(accountFilePath)
     local code = readFile(accountCodeFilePath)
@@ -93,25 +92,23 @@ function archiveCurrentAccount()
             info.hotmailClientId     = info.hotmailClientId or splitted[11]
             info.hotmailPassword     = info.hotmailPassword or splitted[12]
             info.verifyCode          = info.verifyCode or splitted[13]
-            info.finishChangeInfo    = info.finishChangeInfo or splitted[14]
-            info.finishAddMail       = info.finishAddMail or splitted[15]
-            info.finishAddFriend     = info.finishAddFriend or splitted[16]
+            info.finishAddMail       = info.finishAddMail or splitted[14]
 
-            local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '') .. "|" .. info.finishChangeInfo .. "|" .. info.finishAddMail .. "|" .. info.finishAddFriend
+            local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '') .. "|" .. info.finishAddMail
             accounts[#accounts] = line
             writeFile(accountFilePath, accounts)
         else
             if splitted[1] and splitted[1] ~= '' then info.uuid = floor(splitted[1] + 1) else info.uuid = 1 end
             info.status = 'INPROGRESS'
             info.password = randomPass
-            local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '') .. "|" .. info.finishChangeInfo .. "|" .. info.finishAddMail .. "|" .. info.finishAddFriend
+            local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '') .. "|" .. info.finishAddMail
             addLineToFile(accountFilePath, line)
         end 
     else 
         info.uuid = 1
         info.status = 'INPROGRESS'
         info.password = randomPass
-        local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '') .. "|" .. info.finishChangeInfo .. "|" .. info.finishAddMail .. "|" .. info.finishAddFriend
+        local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '') .. "|" .. info.finishAddMail
         addLineToFile(accountFilePath, line)
     end
 
@@ -128,7 +125,7 @@ function finishCurrentAccount()
     if not info.profileUid or info.profileUid == '' then info.profileUid = getUIDFBLogin() end 
     if not info.mailLogin or info.mailLogin == '' then return false end 
 
-    local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '') .. "|" .. info.finishChangeInfo .. "|" .. info.finishAddMail .. "|" .. info.finishAddFriend
+    local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '') .. "|" .. info.finishAddMail
     accounts[#accounts] = line
 
     log('finishCurrentAccount ' .. line)
@@ -157,7 +154,7 @@ function failedCurrentAccount(code)
     if code == '282' and info.verifyCode ~= '' and info.verifyCode ~= nil then info.checkpoint = code .. '_has_code' end
     if not info.mailLogin or info.mailLogin == '' then info.mailLogin = info.mailRegister end 
     if not info.profileUid or info.profileUid == '' then info.profileUid = getUIDFBLogin() end 
-    local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '') .. "|" .. info.finishChangeInfo .. "|" .. info.finishAddMail .. "|" .. info.finishAddFriend
+    local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '') .. "|" .. info.finishAddMail
     accounts[#accounts] = line
 
     log(code .. ' - failedCurrentAccount ' .. line)
@@ -270,9 +267,7 @@ function resetInfoObject()
         hotmailPassword = nil,
         checkpoint = nil,
         verifyCode = nil,
-        finishChangeInfo = 0,
         finishAddMail = 0,
-        finishAddFriend = 0,
     }
     sleep(1)
 end
