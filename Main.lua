@@ -402,25 +402,15 @@ function main()
     if waitImageVisible(agree_facebook_term) then
         toastr("agree_facebook_term")
 
-        local times = 1
-        ::label_clickagree::
         if waitImageVisible(dont_allow, 1) then findAndClickByImage(dont_allow) end
         findAndClickByImage(i_agree_btn)
 
         if waitImageVisible(can_not_agree, 15) then 
-            if times < 3 then 
-                times = times + 1
-                onOffAirplaneMode()
-                -- openFacebook()
-                sleep(2)
-                goto label_clickagree
-            else 
-                failedCurrentAccount('can_not_agree')
-                goto label_continue
-            end 
+            failedCurrentAccount('can_not_agree')
+            goto label_continue
         end 
 
-        if not waitImageNotVisible(agree_facebook_term, 60) then 
+        if not waitImageNotVisible(agree_facebook_term, 90) then 
             toastr('Can not next')
             swipeCloseApp()
             goto label_openfacebook
