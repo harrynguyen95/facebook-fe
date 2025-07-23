@@ -100,7 +100,6 @@ function main()
     if checkImageIsExists(enter_an_email, 1) then goto label_enterconfirmcodedummy end 
     if checkImageIsExists(enter_the_confirmation_code) then goto label_enterconfirmcodedummy end 
     if checkImageIsExists(enter_confirm_code_phone) then goto label_enterconfirmcodedummy end 
-    if checkImageIsExists(enter_the_confirmation_code) then goto label_enterconfirmcodedummy end
     if checkImageIsExists(create_a_password) then goto label_createpassword end
     if checkImageIsExists(save_your_login_info) then goto label_saveyourlogin end
     if checkImageIsExists(profile_picture) then goto label_profilepicture end
@@ -312,7 +311,7 @@ function main()
                         archiveCurrentAccount()
 
                         if waitImageVisible(exist_account_in_mail, 3) or waitImageVisible(red_warning_icon, 3) then
-                            toastr('email_has_account')
+                            toastr('exist_account_in_mail')
                             removeMailThueMail(info.mailRegister)
                             goto label_executegetmailrequest
                         end
@@ -320,7 +319,8 @@ function main()
 
                     if waitImageVisible(continue_creating_account, 3) or waitImageVisible(red_warning_icon, 3) then
                         toastr("email_has_account")
-                        goto label_executegetmailrequest
+                        failedCurrentAccount('email_has_account')
+                        goto label_continue
                     end
                 else 
                     toastr("Empty mail. Continue.", 10) sleep(5)
@@ -451,17 +451,19 @@ function main()
         end
 
         ::label_emailafterphone::
-        if waitImageVisible(what_is_your_email, 3) or waitImageVisible(enter_an_email, 3) then
+        if waitImageVisible(what_is_your_email, 3) or waitImageVisible(enter_an_email, 3) or waitImageVisible(enter_the_confirmation_code) then
             toastr("what_is_your_email")
 
             if ADD_MAIL_DOMAIN > 0 then 
-                toast('add_mail_domain')
-                executeDomainMail() sleep(1)
-                info.mailRegister = nil
-                press(310, 420)
-                findAndClickByImage(x_input_icon)
-                typeText(info.mailLogin)
-                findAndClickByImage(next)
+                if waitImageVisible(what_is_your_email, 1) or waitImageVisible(enter_an_email, 1) then 
+                    toast('add_mail_domain')
+                    executeDomainMail() sleep(1)
+                    info.mailRegister = nil
+                    press(310, 420)
+                    findAndClickByImage(x_input_icon)
+                    typeText(info.mailLogin)
+                    findAndClickByImage(next)
+                end 
 
                 if waitImageVisible(enter_the_confirmation_code) then
                     findAndClickByImage(no_receive_code)
@@ -499,6 +501,7 @@ function main()
 
                         if waitImageVisible(exist_account_in_mail, 3) or waitImageVisible(red_warning_icon, 3) then
                             toastr('exist_account_in_mail')
+                            removeMailThueMail(info.mailRegister)
                             goto label_executegetmailrequest
                         end
                     end
@@ -715,8 +718,8 @@ function main()
             sleep(2)
             local mailIcons = findImage(contact_email_icon[#contact_email_icon], 2, 0.99, nil, false, 1)
             if #mailIcons == 2 then 
-                local v = mailIcons[1]
-                press(v[1], v[2])
+                -- local v = mailIcons[1]
+                press(90, 470)
                 if waitImageVisible(contact_confirm_mail) then
                     findAndClickByImage(contact_confirm_mail)
                     if waitImageVisible(contact_checkbox_account) then findAndClickByImage(contact_checkbox_account) end
@@ -739,8 +742,8 @@ function main()
                 end 
 
                 if waitImageVisible(contact_email_icon) then 
-                    local v = mailIcons[2]
-                    press(v[1], v[2])
+                    -- local v = mailIcons[2]
+                    press(90, 580)
                     if waitImageVisible(delete_mail) then
                         findAndClickByImage(delete_mail)
                         sleep(1) press(240, 850)
