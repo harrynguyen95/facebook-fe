@@ -984,7 +984,6 @@ function main()
     toast('Check Done..')
     if info.finishAddMail == 1 and (info.twoFA ~= nil and info.twoFA ~= '') then 
         finishCurrentAccount()
-        resetInfoObject()
         toastr('+1 nick live', 3)
     end 
 
@@ -1040,6 +1039,8 @@ function main()
         end
 
         removeAccount()
+        resetInfoObject()
+
         sleep(1)
         goto label_continue
     end
