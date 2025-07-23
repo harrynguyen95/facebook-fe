@@ -1,146 +1,42 @@
-Đại học Bách khoa Hà Nội
-Đại học Kinh tế Quốc dân
-Đại học Quốc gia Hà Nội
-Đại học Quốc gia Thành phố Hồ Chí Minh
-Đại học Thái Nguyên
-Đại học Huế
-Đại học Đà Nẵng
-Đại học Duy Tân
-Đại học FPT
-Đại học Ngoại thương
-Đại học Kinh tế TP. Hồ Chí Minh
-Đại học Mở Hà Nội
-Đại học Mở TP. Hồ Chí Minh
-Đại học Vinh
-Đại học Nha Trang
-Đại học Đồng Tháp
-Đại học An Giang
-Đại học Cần Thơ
-Đại học Công nghiệp Hà Nội
-Đại học Công nghiệp TP. Hồ Chí Minh
-Đại học Công nghệ Đồng Nai
-Đại học Giao thông Vận tải Hà Nội
-Đại học Giao thông Vận tải TP. Hồ Chí Minh
-Đại học Công nghệ Thực phẩm TP. HCM
-Đại học Công nghệ Giao thông Vận tải
-Đại học Công nghệ – Đại học Đà Nẵng
-Đại học Khoa học Tự nhiên Hà Nội
-Đại học Khoa học Tự nhiên TP. Hồ Chí Minh
-Đại học Khoa học Xã hội và Nhân văn Hà Nội
-Đại học Khoa học Xã hội và Nhân văn TP. Hồ Chí Minh
-Đại học Kinh tế Luật TP. Hồ Chí Minh
-Đại học Khoa học và Công nghệ Hà Nội
-Đại học Mỏ – Địa chất
-Đại học Kiến trúc Hà Nội
-Đại học Kiến trúc TP. Hồ Chí Minh
-Đại học Sư phạm Hà Nội
-Đại học Sư phạm TP. Hồ Chí Minh
-Đại học Luật Hà Nội
-Đại học Luật TP. Hồ Chí Minh
-Đại học Y Hà Nội
-Đại học Y Dược TP. Hồ Chí Minh
-Đại học Y Dược Hải Phòng
-Đại học Y Dược Thái Bình
-Đại học Y Dược Cần Thơ
-Đại học Điều dưỡng Nam Định
-Đại học Khoa học và Công nghệ Huế
-Đại học Lâm nghiệp Việt Nam
-Đại học Nông Lâm TP. Hồ Chí Minh
-Đại học Nông nghiệp Hà Nội (Học viện Nông nghiệp Việt Nam)
-Đại học Giao thông Vận tải Hà Nội
-Đại học Tôn Đức Thắng
-Đại học Hoa Sen
-Đại học Quốc tế TP. Hồ Chí Minh
-Đại học Quốc tế – Đại học Quốc gia Hà Nội
-Đại học Khoa học – Văn Lang
-Đại học Quốc gia giáo dục TP. HCM
-Đại học Kỹ thuật Y tế Hải Dương
-Đại học Công nghiệp Dệt May Hà Nội
-Đại học Công nghiệp Việt Trì
-Đại học Sao Đỏ
-Đại học Sao Đỏ (Sao Do)
-Đại học Ngân hàng TP. Hồ Chí Minh
-Đại học Tài chính – Marketing
-Đại học Tài chính – Kế toán
-Đại học Tài nguyên và Môi trường Hà Nội
-Đại học Tài nguyên và Môi trường TP. Hồ Chí Minh
-Đại học Đồng Nai
-Đại học Đông Á
-Đại học Phương Đông
-Đại học Phương Đông Hà Nội
-Đại học Giáo dục Quốc gia Hà Nội
-Đại học Khoa học Liên ngành và Nghệ thuật - ĐHQG Hà Nội
-Đại học Việt Đức
-Đại học Kinh tế Công nghiệp Việt Nam
-Đại học Transport & Communications
-Đại học Xây dựng Miền Trung
-Đại học Xây dựng Hà Nội
-Đại học Xây dựng Miền Tây
-Đại học Dầu khí Việt Nam
-Đại học Đà Lạt
-Đại học Quy Nhơn
-Đại học Hải Dương
-Đại học Gia Định
-Đại học Tây Bắc
-Đại học Tây Nguyên
-Đại học Buôn Ma Thuột
-Đại học Hồng Đức
-Đại học Đông Đô
-Đại học Công nghệ Sài Gòn
-Đại học Công nghệ Miền Đông
-Đại học Công nghệ Thực phẩm TP. HCM
-Đại học Giáo dục Hoàng gia (HUCE)
-Đại học Giao thông Vận tải ( Hà Nội )
-Đại học Yersin Đà Lạt
-Đại học Thành Đông
-Đại học Yersin
-Đại học Thành Đông (VuCEA)
-Học viện Báo chí và Tuyên truyền
-Học viện Công nghệ Bưu chính Viễn thông
-Học viện Ngân hàng
-Học viện Ngoại giao Việt Nam
-Học viện Chính trị - Hành chính Quốc gia
-Học viện Khoa học và Công nghệ GUST
-Học viện Chính sách Phát triển
-Học viện Quân y
-Học viện Hành chính Quốc gia
-Học viện Công nghệ Thông tin – Truyền thông Việt Hàn
-Trường Cao đẳng Kỹ thuật Công nghệ Nam Định
-Trường Cao đẳng Y tế Ninh Bình
-Trường Cao đẳng nghề Cơ điện Xây dựng Việt Xô
-Trường Cao đẳng nghề LILAMA‑1
-Trường Cao đẳng nghề số 13 – Bộ Quốc phòng
-Trường Cao đẳng Công nghiệp Thực phẩm Phú Thọ
-Trường Cao đẳng Kinh tế Kỹ thuật Phú Thọ
-Trường Cao đẳng Y tế Phú Thọ
-Trường Cao đẳng Y Dược Phú Thọ
-Trường Cao đẳng Cơ điện Phú Thọ
-Trường Cao đẳng TP. HCM
-Trường Cao đẳng Cao Thắng
-Trường Cao đẳng Kỹ thuật Đông Du
-Trường Cao đẳng Kỹ thuật Công nghệ Quy Nhơn
-Trường Cao đẳng Lý Thái Tổ
-Trường Cao đẳng Mỹ thuật Trang trí Đồng Nai
-Trường Cao đẳng Nghề Thái Bình
-Trường Cao đẳng Ngô Gia Tự
-Trường Cao đẳng Nông nghiệp Thanh Hóa
-Trường Cao đẳng Phạm Ngọc Thạch Cần Thơ
-Trường Cao đẳng Quốc tế TP. HCM
-Trường Cao đẳng Quốc tế Hà Nội
-Trường Cao đẳng Sư phạm Bắc Ninh
-Trường Cao đẳng Sư phạm Bà Rịa–Vũng Tàu
-Trường Cao đẳng Sư phạm Nghệ thuật Trung ương
-Trường Cao đẳng Sài Gòn Gia Định
-Trường Cao đẳng Phương Đông Đà Nẵng
-Trường Cao đẳng Quảng Ngãi
-Trường Cao đẳng Hội viên AVU&C
-Trường Cao đẳng Kinh tế Đối ngoại
-Trường Cao đẳng Kinh tế Kỹ thuật Quảng Nam
-Trường Cao đẳng Kinh tế – Kỹ thuật Phú Thọ
-Trường Cao đẳng Nghề Việt Nhật
-Trường Cao đẳng Công nghệ Hà Nội
-Trường Cao đẳng Công nghệ TP. HCM
-Trường Cao đẳng Cảnh sát Nhân dân
-Trường Cao đẳng Du lịch Huế
-Trường Cao đẳng Sư phạm Trung ương
-Trường Cao đẳng Kinh tế Nông nghiệp Bắc Giang
+Đại học Q
+Đại học R
+Đại học T
+Đại học Y
+Đại học U
+Đại học I
+Đại học O
+Đại học P
+Đại học A
+Đại học S
+Đại học D
+Đại học G
+Đại học H
+Đại học K
+Đại học L
+Đại học X
+Đại học C
+Đại học V
+Đại học B
+Đại học N
+Đại học M
+Cao đẳng Q
+Cao đẳng R
+Cao đẳng T
+Cao đẳng Y
+Cao đẳng U
+Cao đẳng I
+Cao đẳng O
+Cao đẳng P
+Cao đẳng A
+Cao đẳng S
+Cao đẳng D
+Cao đẳng G
+Cao đẳng H
+Cao đẳng K
+Cao đẳng L
+Cao đẳng X
+Cao đẳng C
+Cao đẳng V
+Cao đẳng B
+Cao đẳng N
+Cao đẳng M
