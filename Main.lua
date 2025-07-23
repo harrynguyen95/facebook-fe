@@ -981,12 +981,6 @@ function main()
         end
     end
 
-    toast('Check Done..')
-    if info.finishAddMail == 1 and (info.twoFA ~= nil and info.twoFA ~= '') then 
-        finishCurrentAccount()
-        toastr('+1 nick live', 3)
-    end 
-
     ::label_searchtext::
     toastr('wait searchtext..')
     if waitImageVisible(what_on_your_mind) then
@@ -1017,6 +1011,9 @@ function main()
     if info.finishAddMail == 1 and (info.twoFA ~= nil and info.twoFA ~= '') and waitImageVisible(what_on_your_mind) then 
         toastr('logout what_on_your_mind')
 
+        finishCurrentAccount()
+        toastr('+1 nick live', 3)
+
         if modeMenuLeft then 
             press(40, 90) sleep(1) -- go to menu
             swipe(500, 600, 500, 350) sleep(1)
@@ -1039,7 +1036,6 @@ function main()
         end
 
         removeAccount()
-        resetInfoObject()
 
         sleep(1)
         goto label_continue
