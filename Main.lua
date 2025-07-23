@@ -1164,7 +1164,7 @@ function main()
     end
 
     ::label_logout::
-    if info.finishAddFriend == 1 and info.finishAddMail == 1 and info.finishChangeInfo == 1 and (info.twoFA ~= nil and info.twoFA ~= '') and waitImageVisible(what_on_your_mind) then 
+    if ((CHANGE_INFO and  info.finishChangeInfo == 1) or not CHANGE_INFO) and info.finishAddFriend == 1 and info.finishAddMail == 1 and (info.twoFA ~= nil and info.twoFA ~= '') and waitImageVisible(what_on_your_mind) then 
         toastr('logout what_on_your_mind')
 
         if modeMenuLeft then 
