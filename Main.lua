@@ -814,7 +814,7 @@ function main()
                         if waitImageVisible(deleted_previous_mail, 10) then
                             press(380, 1260) sleep(2) -- btn đóng
 
-                            info.finishAddMail
+                            info.finishAddMail = 1
                             archiveCurrentAccount()
                         end
                     end
@@ -1079,7 +1079,7 @@ function main()
                 if added < totalAdd then swipe(480, 800, 480, 650) sleep(2) end
             end
 
-            info.finishAddFriend
+            info.finishAddFriend = 1
             archiveCurrentAccount()
         end 
         press(60, 1290) -- homepage
