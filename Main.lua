@@ -754,22 +754,19 @@ function main()
 
         ::label_profileaddavatar::
         if waitImageVisible(profile_add_avatar, 2) then 
-            findAndClickByImage(edit_profile_page)
-            if waitImageVisible(edit_profile_page_edit) then 
-                saveRandomServerAvatar()
-                sleep(3)
+            findAndClickByImage(profile_add_avatar)
+            saveRandomServerAvatar()
+            sleep(3)
 
-                press(700, 200) sleep(2) -- them
-                press(280, 1150) sleep(2)
-                if waitImageVisible(allow_access) then 
-                    findAndClickByImage(allow_access) sleep(2)
-                end
-                if waitImageVisible(thu_vien_anh, 2) then 
-                    press(150, 480) sleep(1) -- chọn ảnh đầu tiên
-                    press(680, 95) sleep(5) -- btn lưu
-                    waitImageNotVisible(xem_truoc_anh_dai_dien, 30)
-                end 
+            if waitImageVisible(chon_anh_dai_dien) then findAndClickByImage(chon_anh_dai_dien) end
+            if waitImageVisible(allow_access) then 
+                findAndClickByImage(allow_access) sleep(2)
             end
+            if waitImageVisible(thu_vien_anh, 2) then 
+                press(150, 480) sleep(1) -- chọn ảnh đầu tiên
+                press(680, 95) sleep(5) -- btn lưu
+                waitImageNotVisible(xem_truoc_anh_dai_dien, 30)
+            end 
             if waitImageVisible(edit_profile_page_edit, 3) then 
                 press(45, 90) sleep(1) -- back
                 info.finishChangeInfo = 1
