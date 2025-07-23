@@ -850,19 +850,19 @@ function getConfigServer()
                     MAIL_SUPLY               = tonumber(config.mail_suply)
                     PROVIDER_MAIL_THUEMAILS  = tonumber(config.provider_mail_thuemails)
                     TIMES_XOA_INFO           = tonumber(config.times_xoa_info)
-                    ENTER_VERIFY_CODE        = config.enter_verify_code ~= 0
-                    HOTMAIL_SOURCE_FROM_FILE = config.hot_mail_source_from_file ~= 0
-                    THUE_LAI_MAIL_THUEMAILS  = config.thue_lai_mail_thuemails
-                    ADD_MAIL_DOMAIN          = config.add_mail_domain
-                    CHANGE_INFO              = config.change_info ~= 0
+                    ENTER_VERIFY_CODE        = tonumber(config.enter_verify_code) ~= 0
+                    HOTMAIL_SOURCE_FROM_FILE = tonumber(config.hot_mail_source_from_file) ~= 0
+                    THUE_LAI_MAIL_THUEMAILS  = tonumber(config.thue_lai_mail_thuemails)
+                    ADD_MAIL_DOMAIN          = tonumber(config.add_mail_domain)
+                    CHANGE_INFO              = tonumber(config.change_info) ~= 0
                     PROXY                    = config.proxy
-                    IP_ROTATE_MODE           = config.ip_rotate_mode
+                    IP_ROTATE_MODE           = tonumber(config.ip_rotate_mode)
                     MAIL_DONGVANFB_API_KEY   = config.api_key_dongvanfb
                     MAIL_THUEMAILS_API_KEY   = config.api_key_thuemails
                     LOCAL_SERVER             = config.local_server
                     DESTINATION_FILENAME     = config.destination_filename
-                    LOGIN_WITH_CODE          = config.login_with_code ~= 0
-                    DUMMY_MODE               = config.reg_phone_first
+                    LOGIN_WITH_CODE          = tonumber(config.login_with_code) ~= 0
+                    DUMMY_MODE               = tonumber(config.reg_phone_first)
 
                     return true
                 else
