@@ -433,7 +433,7 @@ function randomMailDomain()
         part3 = "@supermoney9x.com"
     elseif ADD_MAIL_DOMAIN == 3 then 
         local arr = { "@yagisongs.com", "@supermoney9x.com" }
-        part3 = arr[math.random(#arr)]
+        part3 = arr[math.random(1, #arr)]
     end
     return part1 .. part2 .. part3
 end

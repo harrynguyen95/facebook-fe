@@ -867,6 +867,7 @@ function getConfigServer()
                     ADD_MAIL_DOMAIN          = config.add_mail_domain
                     CHANGE_INFO              = config.change_info ~= 0
                     PROXY                    = config.proxy
+                    IP_ROTATE_MODE           = config.ip_rotate_mode
                     MAIL_DONGVANFB_API_KEY   = config.api_key_dongvanfb
                     MAIL_THUEMAILS_API_KEY   = config.api_key_thuemails
                     LOCAL_SERVER             = config.local_server

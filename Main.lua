@@ -12,6 +12,7 @@ HOTMAIL_SERVICE_IDS = {1, 3, 2, 6, 5}
 HOTMAIL_SOURCE_FROM_FILE = false  -- true|false
 THUE_LAI_MAIL_THUEMAILS = 0  
 ADD_MAIL_DOMAIN = 0
+IP_ROTATE_MODE = 1
 CHANGE_INFO = false  -- true|false
 PROVIDER_MAIL_THUEMAILS = 1  -- 1|3 gmail|icloud
 TIMES_XOA_INFO = 2  -- 0|1|2|3
@@ -67,12 +68,20 @@ function main()
     if not waitForInternet(2) then toast("No Internet!", 5) end
     if info.mailRegister == nil or info.mailRegister == '' then 
         homeAndUnlockScreen()
-        rotateShadowRocket()
+        if IP_ROTATE_MODE == 1 then 
+            rotateShadowRocket()
+        elseif IP_ROTATE_MODE == 2 then 
+            onOffAirplaneMode2()
+        end 
         executeXoaInfo()
         fakeRandomContact()
     else 
         swipeCloseApp()
-        checkOnShadowRocket()
+        if IP_ROTATE_MODE == 1 then 
+            checkOnShadowRocket()
+        elseif IP_ROTATE_MODE == 2 then 
+            onOffAirplaneMode2()
+        end 
     end
     if LOGIN_WITH_CODE then initCurrentAccountCode() end 
 
@@ -661,7 +670,9 @@ function main()
     if info.finishChangeInfo == 0 and CHANGE_INFO and LANGUAGE == 'VN' and waitImageVisible(what_on_your_mind) then 
         toastr('change_info what_on_your_mind')
 
-        if waitImageVisible(what_on_your_mind) then openURL("fb://profile") sleep(5) end
+        if waitImageVisible(what_on_your_mind) then openURL("fb://profile") sleep(3) end
+
+        ::label_welcometoprofile::
         if waitImageVisible(welcome_to_profile) then 
             saveRandomServerAvatar()
 
@@ -691,6 +702,7 @@ function main()
             waitImageVisible(save) findAndClickByImage(save)
             waitImageNotVisible(current_city)
         end
+        if checkImageIsExists(welcome_to_profile) then goto label_welcometoprofile end
         if waitImageVisible(add_hometown, 3) then 
             findAndClickByImage(select_position)
             waitImageVisible(bio_search_icon)
@@ -956,7 +968,6 @@ function main()
                     goto label_getownercodeagain
                 end 
             else 
-                finishCurrentAccount()
                 press(55, 160) -- X
 
                 if waitImageVisible(protect_your_account) then
@@ -1104,11 +1115,14 @@ function main()
                 press(280, 1150) sleep(2)
                 if waitImageVisible(allow_access) then 
                     findAndClickByImage(allow_access) sleep(2)
-                    press(150, 480) sleep(2)
-                    press(700, 90) sleep(5)
                 end
+                if waitImageVisible(thu_vien_anh, 2) then 
+                    press(150, 480) sleep(1) -- chọn ảnh đầu tiên
+                    press(680, 95) sleep(5) -- btn lưu
+                    waitImageNotVisible(xem_truoc_anh_dai_dien, 30)
+                end 
             end
-            if waitImageVisible(edit_profile_page_edit) then 
+            if waitImageVisible(edit_profile_page_edit, 3) then 
                 press(45, 90) sleep(1) -- back
             end
         end 
@@ -1144,7 +1158,7 @@ function main()
     end
 
     ::label_logout::
-    if waitImageVisible(what_on_your_mind) then 
+    if info.finishAddFriend == 1 and info.finishAddMail == 1 and info.finishChangeInfo == 1 and (info.twoFA ~= nil and info.twoFA ~= '') and waitImageVisible(what_on_your_mind) then 
         toastr('logout what_on_your_mind')
 
         if modeMenuLeft then 
