@@ -1170,6 +1170,7 @@ function saveRandomServerAvatar()
     f:close()
 
     saveToSystemAlbum(save_path);
+    sleep(5)
 end
 
 function fakeRandomContact()
