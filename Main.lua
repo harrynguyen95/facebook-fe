@@ -756,9 +756,6 @@ function main()
                         sleep(1) press(240, 850)
                         if waitImageVisible(deleted_previous_mail, 10) then
                             press(380, 1260) sleep(2) -- btn đóng
-
-                            info.finishAddMail = 1
-                            archiveCurrentAccount()
                         end
                     end
                 end
@@ -771,6 +768,13 @@ function main()
                     press(380, 1260) -- btn đóng
                 end
             end
+
+            local mailIcons = findImage(contact_email_icon[#contact_email_icon], 2, 0.99, nil, false, 1)
+            if #mailIcons == 1 then 
+                info.finishAddMail = 1
+                archiveCurrentAccount()
+            end
+
             if waitImageVisible(add_new_contact_information) then
                 toast('add_new_contact_information')
                 press(50, 155) -- back
@@ -1015,7 +1019,7 @@ function main()
         finishCurrentAccount()
         resetInfoObject()
         toastr('+1 nick live', 3)
-        
+
         if waitImageVisible(what_on_your_mind) then 
             toastr('logout what_on_your_mind')
 
