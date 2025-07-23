@@ -1082,6 +1082,7 @@ function executeXoaInfo()
                 
                 if waitImageVisible(xoainfo_info_fake, 30) then
                     if i == TIMES_XOA_INFO then
+                        sleep(1)
                         pressHome()
                     end
                 end
@@ -1175,8 +1176,8 @@ function saveRandomServerAvatar()
     saveToSystemAlbum(save_path);
 end
 
-function uploadRandomContact()
-    toast('uploadRandomContact..', 5)
+function fakeRandomContact()
+    toast('fakeRandomContact..', 5)
     function sendAddContact(cmd)
         local shellCmd = string.format('echo "%s" | socat - UNIX-CONNECT:/private/var/tmp/addcontact.sock', cmd)
         local handle = io.popen(shellCmd)
