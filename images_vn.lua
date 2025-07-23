@@ -166,3 +166,4 @@ profile_add_avatar = {dirPath .. "profile_add_avatar.png"}
 edit_profile_page_edit = {dirPath .. "edit_profile_page_edit.png"}
 allow_access = {dirPath .. "allow_access.png"}
 turn_on_contact_on = {dirPath .. "turn_on_contact_on.png"}
+turn_on = {dirPath .. "turn_on.png"}
