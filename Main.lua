@@ -100,6 +100,8 @@ function main()
     if checkPageNotAvailable() then goto label_continue end
     if checkImageIsExists(what_is_birthday) then goto label_birthday end
     if checkImageIsExists(what_is_mobile_number) then goto label_whatisyourmobile end
+    if checkImageIsExists(enter_an_email, 1) then goto label_enterconfirmcodedummy end 
+    if checkImageIsExists(enter_the_confirmation_code) then goto label_enterconfirmcodedummy end 
     if checkImageIsExists(enter_confirm_code_phone) then goto label_enterconfirmcodedummy end 
     if checkImageIsExists(enter_the_confirmation_code) then goto label_enterconfirmcodedummy end
     if checkImageIsExists(create_a_password) then goto label_createpassword end
@@ -159,6 +161,7 @@ function main()
 
     if checkImageIsExists(what_is_birthday) then goto label_birthday end
     if checkImageIsExists(what_is_mobile_number) then goto label_whatisyourmobile end
+    if checkImageIsExists(enter_an_email) then goto label_enterconfirmcodedummy end 
     if checkImageIsExists(enter_confirm_code_phone) then goto label_enterconfirmcodedummy end 
     if checkImageIsExists(enter_the_confirmation_code) then goto label_enterconfirmcodedummy end
     if checkImageIsExists(create_a_password) then goto label_createpassword end
@@ -654,6 +657,7 @@ function main()
     end
 
     if checkImageIsExists(create_a_password) then goto label_createpassword end 
+    if checkImageIsExists(enter_an_email) then goto label_enterconfirmcodedummy end 
     if checkImageIsExists(enter_confirm_code_phone) then goto label_enterconfirmcodedummy end 
     if checkImageIsExists(enter_the_confirmation_code) then goto label_confirmationcode end 
     if checkImageIsExists(profile_picture) then goto label_profilepicture end
@@ -674,7 +678,7 @@ function main()
         if waitImageVisible(what_on_your_mind) then openURL("fb://profile") sleep(3) end
 
         ::label_welcometoprofile::
-        if waitImageVisible(welcome_to_profile) then 
+        if waitImageVisible(welcome_to_profile, 20) then 
             saveRandomServerAvatar()
 
             sleep(2)
@@ -1187,6 +1191,7 @@ function main()
         goto label_continue
     end
 
+    if waitImageVisible(enter_an_email, 1) then goto label_enterconfirmcodedummy end 
     if waitImageVisible(enter_confirm_code_phone, 1) then goto label_enterconfirmcodedummy end 
     if waitImageVisible(enter_the_confirmation_code, 1) then goto label_confirmationcode end 
     if waitImageVisible(profile_picture, 1) then goto label_profilepicture end
