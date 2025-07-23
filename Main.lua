@@ -57,6 +57,7 @@ info = {
 
 -- ====== MAIN ======
 function main()
+
     ::label_continue::
     log('------------ Main running ------------')
     archiveCurrentAccount()
