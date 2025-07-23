@@ -169,3 +169,4 @@ turn_on_contact_on = {dirPath .. "turn_on_contact_on.png"}
 turn_on = {dirPath .. "turn_on.png"}
 thu_vien_anh = {dirPath .. "thu_vien_anh.png"}
 xem_truoc_anh_dai_dien = {dirPath .. "xem_truoc_anh_dai_dien.png"}
+mo_trong_facebook = {dirPath .. "mo_trong_facebook.png"}
