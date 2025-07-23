@@ -302,7 +302,8 @@ function main()
                         archiveCurrentAccount()
 
                         if waitImageVisible(exist_account_in_mail, 3) or waitImageVisible(red_warning_icon, 3) then
-                            toastr('exist_account_in_mail')
+                            toastr('email_has_account')
+                            removeMailThueMail(info.mailRegister)
                             goto label_executegetmailrequest
                         end
                     end

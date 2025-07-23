@@ -1180,7 +1180,7 @@ function saveRandomServerAvatar()
 end
 
 function fakeRandomContact()
-    toast('fakeRandomContact..', 5)
+    toast('fakeRandomContact..', 4)
     function sendAddContact(cmd)
         local shellCmd = string.format('echo "%s" | socat - UNIX-CONNECT:/private/var/tmp/addcontact.sock', cmd)
         local handle = io.popen(shellCmd)
