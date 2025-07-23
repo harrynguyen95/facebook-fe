@@ -91,7 +91,7 @@ function main()
     if checkImageIsExists(what_is_birthday) then goto label_birthday end
     if checkImageIsExists(what_is_mobile_number) then goto label_whatisyourmobile end
     if checkImageIsExists(enter_confirm_code_phone) then goto label_enterconfirmcodedummy end 
-    if checkImageIsExists(enter_the_confirmation_code) then goto label_confirmationcode end
+    if checkImageIsExists(enter_the_confirmation_code) then goto label_enterconfirmcodedummy end
     if checkImageIsExists(create_a_password) then goto label_createpassword end
     if checkImageIsExists(save_your_login_info) then goto label_saveyourlogin end
     if checkImageIsExists(profile_picture) then goto label_profilepicture end
@@ -150,7 +150,7 @@ function main()
     if checkImageIsExists(what_is_birthday) then goto label_birthday end
     if checkImageIsExists(what_is_mobile_number) then goto label_whatisyourmobile end
     if checkImageIsExists(enter_confirm_code_phone) then goto label_enterconfirmcodedummy end 
-    if checkImageIsExists(enter_the_confirmation_code) then goto label_confirmationcode end
+    if checkImageIsExists(enter_the_confirmation_code) then goto label_enterconfirmcodedummy end
     if checkImageIsExists(create_a_password) then goto label_createpassword end
     if checkImageIsExists(save_your_login_info) then goto label_saveyourlogin end
     if checkImageIsExists(profile_picture) then goto label_profilepicture end

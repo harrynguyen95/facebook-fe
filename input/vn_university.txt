@@ -1,5 +1,4 @@
 Đại học Q
-Đại học R
 Đại học T
 Đại học Y
 Đại học U
@@ -20,7 +19,6 @@
 Đại học N
 Đại học M
 Cao đẳng Q
-Cao đẳng R
 Cao đẳng T
 Cao đẳng Y
 Cao đẳng U
