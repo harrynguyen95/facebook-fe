@@ -661,7 +661,7 @@ function main()
     if info.finishChangeInfo == 0 and CHANGE_INFO and LANGUAGE == 'VN' and waitImageVisible(what_on_your_mind) then 
         toastr('change_info what_on_your_mind')
 
-        if waitImageVisible(what_on_your_mind) then openURL("fb://profile") sleep(3) end
+        if waitImageVisible(what_on_your_mind) then openURL("fb://profile") sleep(5) end
         if waitImageVisible(welcome_to_profile) then 
             saveRandomServerAvatar()
 
@@ -1097,7 +1097,7 @@ function main()
     if waitImageVisible(what_on_your_mind, 2) then
         openURL("fb://profile")
         sleep(2)
-        if waitImageVisible(profile_add_avatar) then 
+        if waitImageVisible(profile_add_avatar, 2) then 
             findAndClickByImage(edit_profile_page)
             if waitImageVisible(edit_profile_page_edit) then 
                 press(700, 200) sleep(2) -- them
@@ -1112,7 +1112,7 @@ function main()
                 press(45, 90) sleep(1) -- back
             end
         end 
-        if waitImageVisible(edit_profile_page, 3) then 
+        if waitImageVisible(edit_profile_page, 2) then 
             press(60, 1290) sleep(2) -- homepage
         end 
     end
