@@ -257,8 +257,7 @@ function main()
 
             if waitImageVisible(continue_creating_account, 3) then
                 toast('phone_has_account')
-                failedCurrentAccount('phone_has_account')
-                goto label_continue
+                findAndClickByImage(continue_creating_account)
             end
         else
             findAndClickByImage(sign_up_with_email)
@@ -598,12 +597,8 @@ function main()
     toastr('wait contact..')
     if waitImageVisible(turn_on_contact) then
         toastr("turn_on_contact")
-        if waitImageVisible(dont_allow, 1) then findAndClickByImage(dont_allow) end
-        if waitImageVisible(not_now, 1) then findAndClickByImage(not_now) end 
-        if waitImageVisible(next, 1) then findAndClickByImage(next) end 
-        if waitImageVisible(skip, 1) then findAndClickByImage(skip) end 
 
-        if waitImageVisible(not_now, 1) then findAndClickByImage(not_now) end 
+        if waitImageVisible(turn_on_contact_on, 3) then findAndClickByImage(turn_on_contact_on) end
         if waitImageVisible(skip, 1) then findAndClickByImage(skip) end 
 
         waitImageNotVisible(turn_on_contact)
@@ -666,8 +661,12 @@ function main()
 
             sleep(2)
             press(550, 1260) sleep(2) -- btn thêm ảnh
+            if waitImageVisible(allow_access) then 
+                findAndClickByImage(allow_access) sleep(2)
+            end
             press(150, 480) sleep(1) -- chọn ảnh đầu tiên
             press(680, 95) sleep(5) -- btn lưu
+            
 
             if waitImageVisible(add_coverphoto, 3) then findAndClickByImage(skip) sleep(1) end
             if waitImageVisible(lock_profile_page) then 
@@ -1012,9 +1011,7 @@ function main()
                 findAndClickByImage(next)
                 waitImageNotVisible(enter_code_2fa, 10)
             else 
-                info.twoFA = nil
-                finishCurrentAccount()
-                
+                info.twoFA = nil                
                 if waitImageVisible(reenter_password, 10) then
                     press(55, 155) -- X on re-enter password
                 end
@@ -1035,7 +1032,6 @@ function main()
             press(380, 1160) -- btn done
 
             archiveCurrentAccount()
-            finishCurrentAccount()
 
             waitImageNotVisible(two_factor_is_on)
             if waitImageVisible(reenter_password) then
@@ -1135,16 +1131,13 @@ function main()
                 end
             else
                 press(60, 1290) -- back to homepage
-
                 sleep(1)
-                resetInfoObject()
-                toastr('+1 nick live', 3)
             end
         end
     end
 
     ::label_logout::
-    if info.status == 'SUCCESS' and waitImageVisible(what_on_your_mind) then 
+    if waitImageVisible(what_on_your_mind) then 
         toastr('logout what_on_your_mind')
 
         if modeMenuLeft then 
@@ -1170,6 +1163,10 @@ function main()
 
         removeAccount()
         sleep(1)
+
+        finishCurrentAccount()
+        resetInfoObject()
+        toastr('+1 nick live', 3)
         goto label_continue
     end
 
