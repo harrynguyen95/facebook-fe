@@ -61,6 +61,8 @@ function main()
     log('------------ Main running ------------')
     archiveCurrentAccount()
 
+    if not waitForInternet(2) then toast('label_continue no internet..', 4) sleep(5) end
+
     goto debug
     ::debug::
 
