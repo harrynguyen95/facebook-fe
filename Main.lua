@@ -76,7 +76,10 @@ function main()
         elseif IP_ROTATE_MODE == 3 then 
             ::label_reloadTsproxy::
             reloadTsproxy()
-            if not waitforTsproxyReady(5) then goto label_reloadTsproxy end
+            if not waitforTsproxyReady(5) then 
+                reloadTsproxy()
+                waitforTsproxyReady(5)
+            end
         end 
         executeXoaInfo()
     else 
