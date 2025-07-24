@@ -884,7 +884,7 @@ end
 
 function reloadTsproxy()
     if (not TSPROXY_ID or TSPROXY_ID == '') then alert('Empty TSPROXY_ID') exit() end 
-    toast('reloadTsproxy', 10)
+    toast('reloadTsproxy', 20)
 
     local tries = 2
     for i = 1, tries do 
@@ -894,7 +894,7 @@ function reloadTsproxy()
                 ["Content-Type"] = "application/json",
                 ["x-api-key"] = TSPROXY_API_KEY,
             },
-            timeout = 10
+            timeout = 20
         }
         -- log(response, 'reloadTsproxy')
         sleep(1)
@@ -965,7 +965,6 @@ function checkActiveTsproxy()
             toastr('Times ' .. i .. " - " .. tostring(error), 2)
             log("Failed request reloadTsproxy. Times ".. i ..  " - " .. tostring(error))
         end
-        toast('Not ready')
         sleep(1)
     end
     return false
@@ -975,7 +974,7 @@ function waitforTsproxyReady(timeout)
     toast('waitforTsproxyReady')
     for i = 1, timeout, 1 do
         if checkActiveTsproxy() then
-            sleep(1)
+            sleep(3)
             return true
         end
         sleep(1)

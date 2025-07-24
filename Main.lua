@@ -74,11 +74,13 @@ function main()
         elseif IP_ROTATE_MODE == 2 then 
             onOffAirplaneMode2()
         elseif IP_ROTATE_MODE == 3 then 
-            ::label_reloadTsproxy::
             reloadTsproxy()
             if not waitforTsproxyReady(5) then 
                 reloadTsproxy()
-                waitforTsproxyReady(5)
+                if not waitforTsproxyReady(5) then 
+                    reloadTsproxy()
+                    waitforTsproxyReady(5)
+                end
             end
         end 
         executeXoaInfo()
