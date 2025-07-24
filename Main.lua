@@ -75,12 +75,9 @@ function main()
             onOffAirplaneMode2()
         elseif IP_ROTATE_MODE == 3 then 
             reloadTsproxy()
-            if not waitforTsproxyReady(5) then 
+            if not waitforTsproxyReady(2) then 
                 reloadTsproxy()
-                if not waitforTsproxyReady(5) then 
-                    reloadTsproxy()
-                    waitforTsproxyReady(5)
-                end
+                waitforTsproxyReady(2)
             end
         end 
         executeXoaInfo()
