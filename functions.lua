@@ -884,17 +884,17 @@ end
 
 function reloadTsproxy()
     if (not TSPROXY_ID or TSPROXY_ID == '') then alert('Empty TSPROXY_ID') exit() end 
-    toast('reloadTsproxy', 20)
+    toast('reloadTsproxy', 10)
 
-    local tries = 1
+    local tries = 2
     for i = 1, tries do 
         local response, error = httpRequest {
             url = TSPROXY_URL .. "public/reload/".. TSPROXY_DEVICE_ID .."/" .. TSPROXY_ID,
             headers = {
                 ["Content-Type"] = "application/json",
-                ["x-api-key"] = "yB2y6yitJ0",
+                ["x-api-key"] = TSPROXY_API_KEY,
             },
-            timeout = 20
+            timeout = 10
         }
         -- log(response, 'reloadTsproxy')
         sleep(1)
@@ -926,13 +926,13 @@ end
 function checkActiveTsproxy()
     if (not TSPROXY_ID or TSPROXY_ID == '') then alert('Empty TSPROXY_ID') exit() end 
 
-    local tries = 1
+    local tries = 2
     for i = 1, tries do 
         local response, error = httpRequest {
             url = TSPROXY_URL .. "public/proxy-list/".. TSPROXY_DEVICE_ID,
             headers = {
                 ["Content-Type"] = "application/json",
-                ["x-api-key"] = "yB2y6yitJ0",
+                ["x-api-key"] = TSPROXY_API_KEY,
             },
             timeout = 30
         }
@@ -1185,8 +1185,6 @@ function executeXoaInfo()
                 end
             end
         end
-    else
-        onOffAirplaneMode()
     end
     sleep(1)
 end
