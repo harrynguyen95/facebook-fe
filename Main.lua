@@ -660,6 +660,8 @@ function main()
     if checkSuspended() then goto label_continue end
 
     ::label_whatisonyourmind::
+    swipe(600, 750, 610, 800) 
+    modeMenuLeft = checkModeMenuLeft()
 
     ::label_removemail::
     if info.finishAddMail == 0 and ADD_MAIL_DOMAIN > 0 and LANGUAGE == 'VN' and waitImageVisible(what_on_your_mind) then 
@@ -774,8 +776,6 @@ function main()
     end 
 
     ::label_get2FA::
-    swipe(600, 750, 610, 800) 
-    modeMenuLeft = false
     if (info.twoFA == nil or info.twoFA == '') and waitImageVisible(what_on_your_mind) then 
         toastr('2FA what_on_your_mind')
 
