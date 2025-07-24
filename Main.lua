@@ -3,36 +3,6 @@ require('utils')
 require('functions')
 clearAlert()
 
--- ====== CONFIG ======
-LANGUAGE = 'VN'  -- EN|ES|VN English|Spanish|Vietnamese
-ACCOUNT_REGION = 'VN'  
-MAIL_SUPLY = 1  -- 1|2|3 hotmail_dongvanfb|thuemails.com|yagisongs
-ENTER_VERIFY_CODE = true  -- true|false
-HOTMAIL_SERVICE_IDS = {1, 3, 2, 6, 5}
-HOTMAIL_SOURCE_FROM_FILE = false  -- true|false
-THUE_LAI_MAIL_THUEMAILS = 0  
-ADD_MAIL_DOMAIN = 0
-IP_ROTATE_MODE = 1
-PROVIDER_MAIL_THUEMAILS = 1  -- 1|3 gmail|icloud
-TIMES_XOA_INFO = 2  -- 0|1|2|3
-MAIL_THUEMAILS_API_KEY = "94a3a21c-40b5-4c48-a690-f1584c390e3e" -- Hải
-MAIL_DONGVANFB_API_KEY = "iFI7ppA8JNDJ52yVedbPlMpSh" -- Hải
-LOGIN_WITH_CODE = false
-DUMMY_MODE = 0
-
-if not waitForInternet(2) then toast("No Internet!", 5) end
-if not getConfigServer() then alert("No config from server!") exit() end
-
--- ====== VARIABLE REQUIRED ======
-if LANGUAGE == 'ES' then require(currentDir() .. "/images_es") end
-if LANGUAGE == 'EN' then require(currentDir() .. "/images_en") end
-if LANGUAGE == 'VN' then require(currentDir() .. "/images_vn") end
-if ACCOUNT_REGION == 'VN' then enter_confirm_code_phone = enter_confirm_code_phone_vn end
-SHOULD_DUMMY = DUMMY_MODE ~= 0
-DUMMY_PHONE = DUMMY_MODE == 1
-DUMMY_GMAIL = DUMMY_MODE == 2
-DUMMY_ICLOUD = DUMMY_MODE == 3
-
 -- ====== INFO ======
 info = {
     checkpoint = nil,
@@ -50,11 +20,43 @@ info = {
     hotmailPassword = nil,
     verifyCode = nil,
     finishAddMail = 0,
+    ipRegister = nil,
 }
+
+-- ====== CONFIG ======
+LANGUAGE = 'VN'  -- EN|ES|VN English|Spanish|Vietnamese
+ACCOUNT_REGION = 'VN'  
+MAIL_SUPLY = 1  -- 1|2|3 hotmail_dongvanfb|thuemails.com|yagisongs
+ENTER_VERIFY_CODE = true  -- true|false
+HOTMAIL_SERVICE_IDS = {1, 3, 2, 6, 5}
+HOTMAIL_SOURCE_FROM_FILE = false  -- true|false
+THUE_LAI_MAIL_THUEMAILS = 0  
+ADD_MAIL_DOMAIN = 0
+IP_ROTATE_MODE = 1
+TSPROXY_ID = nil
+PROVIDER_MAIL_THUEMAILS = 1  -- 1|3 gmail|icloud
+TIMES_XOA_INFO = 2  -- 0|1|2|3
+MAIL_THUEMAILS_API_KEY = "94a3a21c-40b5-4c48-a690-f1584c390e3e" -- Hải
+MAIL_DONGVANFB_API_KEY = "iFI7ppA8JNDJ52yVedbPlMpSh" -- Hải
+LOGIN_WITH_CODE = false
+DUMMY_MODE = 0
+
+if not waitForInternet(1) then toast("No Internet! 1", 5) end
+if not getConfigServer() then alert("No config from server!") exit() end
+
+-- ====== VARIABLE REQUIRED ======
+if LANGUAGE == 'ES' then require(currentDir() .. "/images_es") end
+if LANGUAGE == 'EN' then require(currentDir() .. "/images_en") end
+if LANGUAGE == 'VN' then require(currentDir() .. "/images_vn") end
+if ACCOUNT_REGION == 'VN' then enter_confirm_code_phone = enter_confirm_code_phone_vn end
+SHOULD_DUMMY = DUMMY_MODE ~= 0
+DUMMY_PHONE = DUMMY_MODE == 1
+DUMMY_GMAIL = DUMMY_MODE == 2
+DUMMY_ICLOUD = DUMMY_MODE == 3
 
 -- ====== MAIN ======
 function main()
-    
+
     ::label_continue::
     log('------------ Main running ------------')
     archiveCurrentAccount()
@@ -63,25 +65,25 @@ function main()
     ::debug::
 
     log(info, 'Main')
-    if not waitForInternet(2) then toast("No Internet!", 5) end
     if info.mailRegister == nil or info.mailRegister == '' then 
         homeAndUnlockScreen()
         if IP_ROTATE_MODE == 1 then 
             rotateShadowRocket()
         elseif IP_ROTATE_MODE == 2 then 
             onOffAirplaneMode2()
+        elseif IP_ROTATE_MODE == 3 then 
+            ::label_reloadTsproxy::
+            reloadTsproxy()
+            if not waitforTsproxyReady(5) then goto label_reloadTsproxy end
         end 
         executeXoaInfo()
-        fakeRandomContact()
     else 
         swipeCloseApp()
-        if IP_ROTATE_MODE == 1 then 
-            checkOnShadowRocket()
-        elseif IP_ROTATE_MODE == 2 then 
-            onOffAirplaneMode2()
-        end 
+        if IP_ROTATE_MODE == 1 then checkOnShadowRocket() end
     end
     if LOGIN_WITH_CODE then initCurrentAccountCode() end 
+    if not waitForInternet(2) then toast("No Internet! 3", 5) end
+    archiveCurrentAccount()
 
     ::label_openfacebook::
     openFacebook()
@@ -212,9 +214,6 @@ function main()
 
     setFirstNameLastName()
 
-    sleep(10)
-    goto label_continue
-
     ::label_birthday::
     toastr('wait birthday..')
     if waitImageVisible(what_is_birthday) then
@@ -269,7 +268,6 @@ function main()
                 toast('phone_invalid')
                 goto label_randomphone
             end
-
             if waitImageVisible(continue_creating_account, 3) then
                 toast('phone_has_account')
                 findAndClickByImage(continue_creating_account)
@@ -412,13 +410,11 @@ function main()
             failedCurrentAccount('can_not_agree')
             goto label_continue
         end 
-
         if not waitImageNotVisible(agree_facebook_term, 90) then 
             toastr('Can not next')
             swipeCloseApp()
             goto label_openfacebook
         end 
-
         if waitImageVisible(already_have_account, 2) then
             press(380, 600)
             waitImageNotVisible(already_have_account)
@@ -445,7 +441,6 @@ function main()
             if waitImageVisible(enter_confirm_code_phone, 10) then
                 toastr("enter_confirm_code_phone")
                 findAndClickByImage(no_receive_code)
-
                 if waitImageVisible(confirm_via_email, 10) then 
                     findAndClickByImage(confirm_via_email)
                     sleep(2)
@@ -467,7 +462,6 @@ function main()
                     typeText(info.mailLogin)
                     findAndClickByImage(next)
                 end 
-
                 if waitImageVisible(enter_the_confirmation_code) then
                     findAndClickByImage(no_receive_code)
                     if waitImageVisible(confirm_via_change_email, 10) then 
@@ -477,7 +471,6 @@ function main()
                     end
                 end
             end
-
             if info.mailRegister ~= nil and info.mailRegister ~= '' then 
                 press(310, 420)
                 findAndClickByImage(x_input_icon)
@@ -510,12 +503,10 @@ function main()
                     end
                 else 
                     toastr("Empty mail. Continue.", 10) sleep(5)
-                    log("Empty mail. Continue.")
                     failedCurrentAccount('empty_email')
                     goto label_continue
                 end
             end
-
             if not waitImageNotVisible(what_is_your_email, 20) then 
                 if checkImageIsExists(what_is_your_email) then findAndClickByImage(next) end
                 if not waitImageNotVisible(what_is_your_email, 20) then 
@@ -557,7 +548,6 @@ function main()
                     failedCurrentAccount('code_invalid')
                     goto label_continue
                 end 
-
                 sleep(2)
             else 
                 finishCurrentAccount()
@@ -686,7 +676,6 @@ function main()
                 waitImageNotVisible(setting_menu)
             end
         end 
-
         if waitImageVisible(setting_privacy, 20) then
             toastr('setting_privacy')
             if waitImageVisible(see_more_account_center, 20) then
@@ -694,8 +683,7 @@ function main()
                 waitImageNotVisible(see_more_account_center)
             end
         end
-
-        if waitImageVisible(account_center, 20) then
+        if waitImageVisible(account_center, 10) then
             toastr('account_center')
             sleep(1)
             swipe(600, 800, 610, 720) sleep(2)
@@ -708,14 +696,12 @@ function main()
                 end
             end
         end
-
         if waitImageVisible(personal_details_page, 15) or waitImageVisible(your_information_and_per_btn, 15) then
             toastr('personal_details_page')
             if waitImageVisible(contact_information_btn) then
                 findAndClickByImage(contact_information_btn)
             end
         end
-
         if waitImageVisible(add_new_contact_information) then
             toast('add_new_contact_information')
             sleep(2)
@@ -804,7 +790,6 @@ function main()
                 waitImageNotVisible(setting_menu)
             end
         end 
-
         if waitImageVisible(setting_privacy, 20) then
             toastr('setting_privacy')
             if waitImageVisible(see_more_account_center, 20) then
@@ -812,8 +797,7 @@ function main()
                 waitImageNotVisible(see_more_account_center)
             end
         end
-
-        if waitImageVisible(account_center, 20) then
+        if waitImageVisible(account_center, 10) then
             toastr('account_center')
             sleep(1)
             swipe(600, 800, 610, 720) sleep(2)
@@ -834,14 +818,12 @@ function main()
             findAndClickByImage(identify_confirmation_btn)
             waitImageNotVisible(identify_confirmation_btn)
         end
-
         if waitImageVisible(confirm_your_identity, 15) then
             toastr('confirm_your_identity')
             findAndClickByImage(confirm_your_identity)
             press(130, 1290) -- protect your account
             waitImageNotVisible(confirm_your_identity)
         end
-
         if waitImageVisible(reenter_password, 10) then
             toastr('reenter_password')
             sleep(1)
@@ -937,7 +919,6 @@ function main()
                 waitImageNotVisible(instructions_for_setup) sleep(2)
             end
         end
-
         if waitImageVisible(enter_code_2fa, 10) or waitImageVisible(two_FA_code, 10) then
             toastr('two_FA_code')
             local otp = get2FACode()
@@ -997,7 +978,6 @@ function main()
             sleep(2)
             if i < #searchTexts then
                 press(300, 90); -- click back into search box
-
                 if waitImageVisible(x_icon_search, 2) then
                     findAndClickByImage(x_icon_search)
                 else 
@@ -1025,7 +1005,6 @@ function main()
             swipe(500, 900, 500, 800) sleep(1)
             swipe(550, 600, 600, 350) sleep(2)
         end 
-
         if waitImageVisible(logout_btn) then
             findAndClickByImage(logout_btn) sleep(1)
         end
@@ -1039,7 +1018,6 @@ function main()
         end
 
         removeAccount()
-
         sleep(1)
         goto label_continue
     end

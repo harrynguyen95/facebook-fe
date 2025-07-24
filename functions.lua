@@ -4,6 +4,9 @@ PHP_SERVER = "https://tuongtacthongminh.com/reg_clone/"
 MAIL_THUEMAILS_DOMAIN = "https://api.thuemails.com/api/"
 URL_2FA_FACEBOOK = "https://2fa.live/tok/"
 MAIL_FREE_DOMAIN = "https://api.temp-mailfree.com/"
+TSPROXY_URL = "https://api.tsproxy.com/api/v1/"
+TSPROXY_DEVICE_ID = "67ed584a8d2d4cf26e49d5c5"
+TSPROXY_API_KEY = "yB2y6yitJ0"
 
 defaultPasswordFilePath = currentPath() .. "/input/password.txt"
 accountFilePath = rootDir() .. "/Device/accounts.txt"
@@ -93,22 +96,23 @@ function archiveCurrentAccount()
             info.hotmailPassword     = info.hotmailPassword or splitted[12]
             info.verifyCode          = info.verifyCode or splitted[13]
             info.finishAddMail       = info.finishAddMail or splitted[14]
+            info.ipRegister          = info.ipRegister or splitted[15]
 
-            local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '') .. "|" .. info.finishAddMail
+            local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '') .. "|" .. info.finishAddMail .. "|" .. (info.ipRegister or '')
             accounts[#accounts] = line
             writeFile(accountFilePath, accounts)
         else
             if splitted[1] and splitted[1] ~= '' then info.uuid = floor(splitted[1] + 1) else info.uuid = 1 end
             info.status = 'INPROGRESS'
             info.password = randomPass
-            local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '') .. "|" .. info.finishAddMail
+            local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '') .. "|" .. info.finishAddMail .. "|" .. (info.ipRegister or '')
             addLineToFile(accountFilePath, line)
         end 
     else 
         info.uuid = 1
         info.status = 'INPROGRESS'
         info.password = randomPass
-        local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '') .. "|" .. info.finishAddMail
+        local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '') .. "|" .. info.finishAddMail .. "|" .. (info.ipRegister or '')
         addLineToFile(accountFilePath, line)
     end
 
@@ -125,7 +129,7 @@ function finishCurrentAccount()
     if not info.profileUid or info.profileUid == '' then info.profileUid = getUIDFBLogin() end 
     if not info.mailLogin or info.mailLogin == '' then return false end 
 
-    local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '') .. "|" .. info.finishAddMail
+    local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '') .. "|" .. info.finishAddMail .. "|" .. (info.ipRegister or '')
     accounts[#accounts] = line
 
     log('finishCurrentAccount ' .. line)
@@ -154,7 +158,7 @@ function failedCurrentAccount(code)
     if code == '282' and info.verifyCode ~= '' and info.verifyCode ~= nil then info.checkpoint = code .. '_has_code' end
     if not info.mailLogin or info.mailLogin == '' then info.mailLogin = info.mailRegister end 
     if not info.profileUid or info.profileUid == '' then info.profileUid = getUIDFBLogin() end 
-    local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '') .. "|" .. info.finishAddMail
+    local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '') .. "|" .. info.finishAddMail .. "|" .. (info.ipRegister or '')
     accounts[#accounts] = line
 
     log(code .. ' - failedCurrentAccount ' .. line)
@@ -172,7 +176,7 @@ function failedCurrentAccount(code)
 end
 
 function saveAccToGoogleForm()
-    if (info.checkpoint == 282 or info.checkpoint == '282') and (info.mailLogin == '' or info.mailLogin == nil) then return nil end
+    -- if (info.checkpoint == 282 or info.checkpoint == '282') and (info.mailLogin == '' or info.mailLogin == nil) then return nil end
 
     local localIP = readFile(localIPFilePath)
     info.localIP = localIP[#localIP] .. " | " .. ACCOUNT_REGION .. " | " .. LANGUAGE .. " | " .. (LOGIN_WITH_CODE and 'otp' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-'))))
@@ -858,6 +862,7 @@ function getConfigServer()
                     DESTINATION_FILENAME     = config.destination_filename
                     LOGIN_WITH_CODE          = tonumber(config.login_with_code) ~= 0
                     DUMMY_MODE               = tonumber(config.reg_phone_first)
+                    TSPROXY_ID               = tonumber(config.tsproxy_id)
 
                     return true
                 else
@@ -873,6 +878,107 @@ function getConfigServer()
             log("Failed request device_config. Times ".. i ..  " - " .. tostring(error))
         end
         sleep(3)
+    end
+    return false
+end
+
+function reloadTsproxy()
+    if (not TSPROXY_ID or TSPROXY_ID == '') then alert('Empty TSPROXY_ID') exit() end 
+    toast('reloadTsproxy', 20)
+
+    local tries = 1
+    for i = 1, tries do 
+        local response, error = httpRequest {
+            url = TSPROXY_URL .. "public/reload/".. TSPROXY_DEVICE_ID .."/" .. TSPROXY_ID,
+            headers = {
+                ["Content-Type"] = "application/json",
+                ["x-api-key"] = "yB2y6yitJ0",
+            },
+            timeout = 20
+        }
+        -- log(response, 'reloadTsproxy')
+        sleep(1)
+        if 1 then return true end
+
+        if response then
+            local ok, response, err = safeJsonDecode(response)
+            if ok then 
+                if response.statusCode and response.statusCode == 200 then
+                    toastr(response.data, 2)
+                    return true
+                else
+                    toastr(response.message)
+                    log(response.message)
+                end
+            else 
+                toastr("Failed decode response.");
+                log("Failed decode response.");
+            end  
+        else
+            toastr('Times ' .. i .. " - " .. tostring(error), 2)
+            log("Failed request reloadTsproxy. Times ".. i ..  " - " .. tostring(error))
+        end
+        sleep(3)
+    end
+    return false
+end 
+
+function checkActiveTsproxy()
+    if (not TSPROXY_ID or TSPROXY_ID == '') then alert('Empty TSPROXY_ID') exit() end 
+
+    local tries = 1
+    for i = 1, tries do 
+        local response, error = httpRequest {
+            url = TSPROXY_URL .. "public/proxy-list/".. TSPROXY_DEVICE_ID,
+            headers = {
+                ["Content-Type"] = "application/json",
+                ["x-api-key"] = "yB2y6yitJ0",
+            },
+            timeout = 30
+        }
+        -- log(response, 'checkActiveTsproxy')
+
+        if response then
+            local ok, response, err = safeJsonDecode(response)
+            if ok then 
+                if response.statusCode and response.statusCode == 200 then
+                    local currentIP = {}
+                    for _, item in ipairs(response.data) do
+                        if item.id == tostring(TSPROXY_ID) then
+                            currentIP = item
+                        end
+                    end
+
+                    if currentIP.status == 'running' then 
+                        toastr("Ready: " .. currentIP.ipPublic, 2)
+                        return true
+                    end
+                else
+                    toastr(response.message)
+                    log(response.message)
+                end
+            else 
+                toastr("Failed decode response.");
+                log("Failed decode response.");
+            end  
+        else
+            toastr('Times ' .. i .. " - " .. tostring(error), 2)
+            log("Failed request reloadTsproxy. Times ".. i ..  " - " .. tostring(error))
+        end
+        toast('Not ready')
+        sleep(1)
+    end
+    return false
+end
+
+function waitforTsproxyReady(timeout)
+    toast('waitforTsproxyReady')
+    for i = 1, timeout, 1 do
+        if checkActiveTsproxy() then
+            sleep(1)
+            return true
+        end
+        sleep(1)
     end
     return false
 end

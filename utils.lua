@@ -621,6 +621,7 @@ function httpRequest(params)
     local headers = params.headers or {}
     local data = params.data or nil
     local file = params.file or nil
+    local timeout = params.timeout or 60
     local isForm = params.isForm or false
     local isEncodedParam = params.isEncodedParam or false
     local response = "" -- Khởi tạo biến chuỗi để lưu phản hồi
@@ -632,7 +633,7 @@ function httpRequest(params)
         ssl_verifyhost = params.ssl_verifyhost or false,
         customrequest = method,
         followlocation = true,
-        timeout = 60,
+        timeout = timeout,
         writefunction = function(chunk)
             response = response .. tostring(chunk) -- Đảm bảo `chunk` là chuỗi
             return #chunk
@@ -961,9 +962,36 @@ function hasInternetConnection()
     return false
 end
 
+
+function checkIP()
+    local response, error = httpRequest { url = 'https://ipv4.icanhazip.com' }
+    response = (response and string.gsub(response, "\n", "")) or nil
+    toast('v4 check: ' .. (response or '-'), 2)
+    sleep(2)
+    if response then
+        ip_address = response
+        info.ipRegister = ip_address
+        return true
+    else 
+        sleep(1)
+        local response, error = httpRequest { url = 'https://ipv6.icanhazip.com' }
+        response = (response and string.gsub(response, "\n", "")) or nil
+        toast('v6 check: ' .. (response or '-'), 2)
+        sleep(2)
+        if response then
+            ip_address = response
+            info.ipRegister = ip_address
+            return true
+        end 
+    end
+    return false
+end
+
 function waitForInternet(timeout)
+    sleep(1)
     for i = 1, timeout, 1 do
-        if hasInternetConnection() then
+        if checkIP() then
+            sleep(1)
             return true
         end
         sleep(1)
