@@ -1001,15 +1001,15 @@ end
 
 function onOffAirplaneMode2()
     appRun("com.apple.Preferences")
-    if waitImageVisible(airplane_icon, 5) then 
-        if waitImageVisible(airplane_off, 2) then
+    if waitImageVisible(airplane_icon) then 
+        if waitImageVisible(airplane_off) then
             local off = findImage(airplane_off[#airplane_off], 1, threshold, nil, DEBUG_IMAGE, 1)
             if #off > 0 then 
                 local img = off[1]
                 local x = img[1] local y = img[2] -- 375, 689 -> 625, 689
                 press(x + 250, y) sleep(2) -- on air
 
-                if waitImageVisible(airplane_on, 2) then
+                if waitImageVisible(airplane_on) then
                     local off = findImage(airplane_on[#airplane_on], 1, threshold, nil, DEBUG_IMAGE, 1)
                     if #off > 0 then 
                         local img = off[1]
@@ -1018,7 +1018,7 @@ function onOffAirplaneMode2()
                     end
                 end
             end 
-        elseif waitImageVisible(airplane_on, 2) then
+        elseif waitImageVisible(airplane_on) then
             local off = findImage(airplane_on[#airplane_on], 1, threshold, nil, DEBUG_IMAGE, 1)
             if #off > 0 then 
                 local img = off[1]
