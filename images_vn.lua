@@ -11,7 +11,8 @@ continue_creating_account = {dirPath .. "continue_create_account3.png"}
 save = {dirPath .. "save.png", dirPath .. "save7.png", dirPath .. "save6.png"}
 save_your_login_info = {dirPath .. "save_your_login_info2.png"}
 enter_the_confirmation_code = {dirPath .. "enter_the_confirmation_code.png", dirPath .. "enter_the_confirmation_code2.png"}
-profile_picture = {dirPath .. "profile_picture.png", dirPath .. "add_picture.png", dirPath .. "profile_picture5.png", dirPath .. "profile_picture6.png"}
+profile_picture = {dirPath .. "profile_picture.png", dirPath .. "add_picture.png", dirPath .. "profile_picture5.png", 
+    dirPath .. "profile_picture6.png", dirPath .. "profile_picture7.png"}
 turn_on_contact = {dirPath .. "turn_on_contact7.png", dirPath .. "turn_on_contact8.png", dirPath .. "turn_on_contact9.png"}
 skip = {dirPath .. "skip.png", dirPath .. "skip2.png", dirPath .. "skip3.png", 
     dirPath .. "skip4.png", dirPath .. "skip5.png", dirPath .. "skip6.png"}
