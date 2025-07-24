@@ -884,7 +884,7 @@ end
 
 function reloadTsproxy()
     if (not TSPROXY_ID or TSPROXY_ID == '') then alert('Empty TSPROXY_ID') exit() end 
-    toast('reloadTsproxy', 20)
+    toast('reloadTsproxy', 10)
 
     local tries = 2
     for i = 1, tries do 
@@ -894,7 +894,7 @@ function reloadTsproxy()
                 ["Content-Type"] = "application/json",
                 ["x-api-key"] = TSPROXY_API_KEY,
             },
-            timeout = 20
+            timeout = 10
         }
         -- log(response, 'reloadTsproxy')
         sleep(1)
@@ -923,18 +923,20 @@ function reloadTsproxy()
     return false
 end 
 
-function checkActiveTsproxy()
+function waitforTsproxyReady(timeout)
     if (not TSPROXY_ID or TSPROXY_ID == '') then alert('Empty TSPROXY_ID') exit() end 
 
-    local tries = 2
-    for i = 1, tries do 
+    toast('waitforTsproxyReady', 10)
+    sleep(5)
+
+    for i = 1, timeout, 1 do
         local response, error = httpRequest {
             url = TSPROXY_URL .. "public/proxy-list/".. TSPROXY_DEVICE_ID,
             headers = {
                 ["Content-Type"] = "application/json",
                 ["x-api-key"] = TSPROXY_API_KEY,
             },
-            timeout = 30
+            timeout = 10
         }
         -- log(response, 'checkActiveTsproxy')
 
@@ -951,33 +953,20 @@ function checkActiveTsproxy()
 
                     if currentIP.status == 'running' then 
                         toastr("Ready: " .. currentIP.ipPublic, 2)
+                        sleep(1)
                         return true
                     end
                 else
                     toastr(response.message)
-                    log(response.message)
                 end
             else 
                 toastr("Failed decode response.");
-                log("Failed decode response.");
             end  
         else
-            toastr('Times ' .. i .. " - " .. tostring(error), 2)
-            log("Failed request reloadTsproxy. Times ".. i ..  " - " .. tostring(error))
+            toastr('Times ' .. i .. " - " .. tostring(error))
         end
-        sleep(1)
-    end
-    return false
-end
-
-function waitforTsproxyReady(timeout)
-    toast('waitforTsproxyReady')
-    for i = 1, timeout, 1 do
-        if checkActiveTsproxy() then
-            sleep(3)
-            return true
-        end
-        sleep(1)
+       
+        sleep(3)
     end
     return false
 end

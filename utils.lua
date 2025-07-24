@@ -641,9 +641,12 @@ function httpRequest(params)
     }
 
     -- Thêm headers
+    local headerList = {}
     for key, value in pairs(headers) do
-        c:setopt(curl.OPT_HTTPHEADER, {key .. ": " .. value})
+        table.insert(headerList, key .. ": " .. value)
     end
+
+    c:setopt(curl.OPT_HTTPHEADER, headerList)
 
     -- Xử lý file nếu có
     if file then

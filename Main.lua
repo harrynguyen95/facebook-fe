@@ -41,7 +41,7 @@ MAIL_DONGVANFB_API_KEY = "iFI7ppA8JNDJ52yVedbPlMpSh" -- Hải
 LOGIN_WITH_CODE = false
 DUMMY_MODE = 0
 
-if not waitForInternet(1) then toast("No Internet! 1", 5) end
+if not waitForInternet(3) then alert("No Internet 1") exit() end
 if not getConfigServer() then alert("No config from server!") exit() end
 
 -- ====== VARIABLE REQUIRED ======
@@ -61,7 +61,7 @@ function main()
     log('------------ Main running ------------')
     archiveCurrentAccount()
 
-    if not waitForInternet(2) then toast('label_continue no internet..', 4) sleep(5) end
+    if not waitForInternet(2) then toast('No Internet 2. wait..', 4) sleep(5) end
 
     goto debug
     ::debug::
@@ -75,10 +75,7 @@ function main()
             onOffAirplaneMode2()
         elseif IP_ROTATE_MODE == 3 then 
             reloadTsproxy()
-            if not waitforTsproxyReady(2) then 
-                reloadTsproxy()
-                waitforTsproxyReady(2)
-            end
+            waitforTsproxyReady(60) 
         end 
         executeXoaInfo()
     else 
@@ -86,8 +83,10 @@ function main()
         if IP_ROTATE_MODE == 1 then checkOnShadowRocket() end
     end
     if LOGIN_WITH_CODE then initCurrentAccountCode() end 
-    if not waitForInternet(2) then toast("No Internet! 3", 5) end
-    archiveCurrentAccount()
+    if not waitForInternet(3) then 
+        toast("No Internet 3", 5)
+        if IP_ROTATE_MODE == 2 then onOffAirplaneMode2() end
+    end
 
     ::label_openfacebook::
     openFacebook()
@@ -160,6 +159,10 @@ function main()
     else         
         if checkSuspended() then goto label_continue end
     end
+
+    if not waitForInternet(2) then toast("No Internet 4", 1) end
+    archiveCurrentAccount()
+    sleep(2)
 
     if checkImageIsExists(what_is_birthday) then goto label_birthday end
     if checkImageIsExists(what_is_mobile_number) then goto label_whatisyourmobile end
