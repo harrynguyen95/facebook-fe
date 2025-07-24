@@ -212,6 +212,9 @@ function main()
 
     setFirstNameLastName()
 
+    sleep(10)
+    goto label_continue
+
     ::label_birthday::
     toastr('wait birthday..')
     if waitImageVisible(what_is_birthday) then

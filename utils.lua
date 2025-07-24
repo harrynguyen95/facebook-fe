@@ -973,7 +973,7 @@ end
 
 function onOffAirplaneMode2()
     appRun("com.apple.Preferences")
-    if waitImageVisible(airplane_icon, 2) then 
+    if waitImageVisible(airplane_icon, 5) then 
         if waitImageVisible(airplane_off, 2) then
             local off = findImage(airplane_off[#airplane_off], 1, threshold, nil, DEBUG_IMAGE, 1)
             if #off > 0 then 
