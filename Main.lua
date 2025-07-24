@@ -775,7 +775,7 @@ function main()
 
     ::label_get2FA::
     swipe(600, 750, 610, 800) 
-    modeMenuLeft = checkModeMenuLeft()
+    modeMenuLeft = false
     if (info.twoFA == nil or info.twoFA == '') and waitImageVisible(what_on_your_mind) then 
         toastr('2FA what_on_your_mind')
 
