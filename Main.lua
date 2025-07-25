@@ -19,7 +19,7 @@ info = {
     hotmailClientId = nil,
     hotmailPassword = nil,
     verifyCode = nil,
-    finishAddMail = 0,
+    finishSettingMail = 0,
     ipRegister = nil,
 }
 
@@ -666,8 +666,8 @@ function main()
     swipe(600, 750, 610, 800) 
     modeMenuLeft = checkModeMenuLeft()
 
-    ::label_removemail::
-    if info.finishAddMail == 0 and ADD_MAIL_DOMAIN > 0 and LANGUAGE == 'VN' and waitImageVisible(what_on_your_mind) then 
+    ::label_settingmail::
+    if waitImageVisible(what_on_your_mind) and ADD_MAIL_DOMAIN > 0 and info.finishSettingMail == 0 and LANGUAGE == 'VN' then 
         toastr('remove_mail what_on_your_mind')
 
         if modeMenuLeft then 
@@ -762,13 +762,86 @@ function main()
 
                 local mailIcons = findImage(contact_email_icon[#contact_email_icon], 2, 0.99, nil, false, 1)
                 if #mailIcons == 1 then 
-                    info.finishAddMail = 1
+                    info.finishSettingMail = 1
                     archiveCurrentAccount()
                 end
             end
 
             if ADD_MAIL_DOMAIN == 2 then 
-                toast('ADD_MAIL_DOMAIN == 2', 10)
+                findAndClickByImage(add_new_contact_information)
+
+                if waitImageVisible(add_mail) then
+                    toastr('add_mail')
+                    sleep(1)
+                    findAndClickByImage(add_mail)
+                else 
+                    press(130, 730) sleep(2) -- add mail options
+                end
+                if waitImageVisible(add_a_phone_number, 2) then press(380, 1260) end -- add email instead
+                if waitImageVisible(add_email_address) then
+                    toastr('add_email_address')
+
+                    executeDomainMail() sleep(1)
+                    press(310, 640)
+                    findAndClickByImage(x_input_icon)
+                    typeText(info.mailLogin)
+                    press(680, 1290) -- btn enter
+
+                    if waitImageVisible(contact_checkbox_account, 2) then findAndClickByImage(contact_checkbox_account) end
+                    if waitImageVisible(next, 2) then findAndClickByImage(next) end
+                    if waitImageVisible(enter_confirm_code) then 
+                        toastr('enter_confirm_code')
+                        local code = getMailDomainOwnerConfirmCode()
+                        toastr('CODE: ' .. (code or '-'), 2)
+                        if code and code ~= '' then
+                            press(200, 480)
+                            findAndClickByImage(x_input_icon)
+                            typeText(code) sleep(1)
+                            press(360, 580)
+                            findAndClickByImage(next)
+                        end 
+                    end
+                    if waitImageVisible(added_email, 8) then 
+                        archiveCurrentAccount()
+                        press(380, 1260) sleep(2) -- close btn
+                    end
+                end
+
+                -- remove gmail
+                if waitImageVisible(add_new_contact_information, 2) and THUE_LAI_MAIL_THUEMAILS > 0 then
+                    press(650, 600) -- mail register
+                    if waitImageVisible(delete_mail) then
+                        findAndClickByImage(delete_mail)
+                        sleep(1)
+                        press(240, 850)
+
+                        if waitImageVisible(check_your_email, 3) then
+                            toastr('check_your_email')
+                            local code = getMailDomainOwnerConfirmCode()
+                            toastr('CODE: ' .. (code or '-'), 2)
+
+                            if code and code ~= '' then
+                                press(100, 850) -- code input
+                                typeText(code) sleep(1)
+                                if waitImageVisible(continue_code_mail) then
+                                    findAndClickByImage(continue_code_mail)
+
+                                    waitImageNotVisible(check_your_email)
+                                end
+                            end
+                        end
+
+                        if waitImageVisible(deleted_previous_mail, 8) then
+                            press(380, 1260) -- close btn
+                        end
+                    end
+                end
+
+                local mailIcons = findImage(contact_email_icon[#contact_email_icon], 2, 0.99, nil, false, 1)
+                if (THUE_LAI_MAIL_THUEMAILS > 0 and #mailIcons == 1) or (THUE_LAI_MAIL_THUEMAILS == 0 and #mailIcons == 2) then 
+                    info.finishSettingMail = 1
+                    archiveCurrentAccount()
+                end
             end
 
             if waitImageVisible(add_new_contact_information) then
@@ -786,7 +859,7 @@ function main()
     end 
 
     ::label_get2FA::
-    if (info.twoFA == nil or info.twoFA == '') and waitImageVisible(what_on_your_mind) then 
+    if waitImageVisible(what_on_your_mind) and (info.twoFA == nil or info.twoFA == '') then 
         toastr('2FA what_on_your_mind')
 
         if modeMenuLeft then 
@@ -1003,7 +1076,7 @@ function main()
     end
 
     ::label_logout::
-    if info.finishAddMail == 1 and (info.twoFA ~= nil and info.twoFA ~= '') and waitImageVisible(what_on_your_mind) then 
+    if waitImageVisible(what_on_your_mind) and ((ADD_MAIL_DOMAIN > 0 and info.finishSettingMail == 1) or ADD_MAIL_DOMAIN == 0) and (info.twoFA ~= nil and info.twoFA ~= '') then 
         toastr('logout what_on_your_mind')
 
         finishCurrentAccount()

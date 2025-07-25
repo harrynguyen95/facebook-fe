@@ -61,7 +61,7 @@ agree_facebook_term = {dirPath .. "agree_facebook_term.png", dirPath .. "agree_f
 contact_information = {dirPath .. "contact_information.png"}
 contact_information_btn = {dirPath .. "contact_information_btn.png"}
 add_new_contact_information = {dirPath .. "add_new_contact_information.png"}
-add_mail = {dirPath .. "add_mail2.png"} 
+add_mail = {dirPath .. "add_mail3.png"} 
 add_email_address = {dirPath .. "add_email_address2.png", dirPath .. "enter_email_address.png"}
 enter_confirm_code = {dirPath .. "enter_confirm_code.png"}
 delete_mail = {dirPath .. "delete_mail.png"}
@@ -77,7 +77,7 @@ contact_checkbox_account = {dirPath .. "contact_checkbox_account.png"}
 contact_email_added = {dirPath .. "contact_email_added.png"}
 contact_delete_phone = {dirPath .. "contact_delete_phone.png"}
 
-add_a_phone_number = {dirPath .. "add_a_phone_number.png"}
+add_a_phone_number = {dirPath .. "add_a_phone_number2.png"}
 email_used_added = {dirPath .. "email_used_added.png"}
 add_phone_number = {dirPath .. "add_phone_number2.png"}
 add_phone_number_home = {dirPath .. "add_phone_number_home.png"}
