@@ -75,6 +75,7 @@ function main()
         elseif IP_ROTATE_MODE == 3 then 
             reloadTsproxy()
             waitforTsproxyReady(60) 
+            sleep(2)
         end 
         executeXoaInfo()
     else 
@@ -82,15 +83,14 @@ function main()
         if IP_ROTATE_MODE == 1 then checkOnShadowRocket() end
     end
     if LOGIN_WITH_CODE then initCurrentAccountCode() end 
-   
-    ::label_openfacebook::
-    openFacebook()
-
     if not waitForInternet(1) then 
         toast("No Internet 3", 5)
         if IP_ROTATE_MODE == 2 then onOffAirplaneMode2() sleep(2) waitForInternet(1) end
     end 
     archiveCurrentAccount()
+   
+    ::label_openfacebook::
+    openFacebook()
 
     if waitImageVisible(logo_fb_modern, 1) then
         toastr('not_support_this_FB_mode')
