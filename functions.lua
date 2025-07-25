@@ -885,7 +885,7 @@ end
 
 function reloadTsproxy()
     if (not TSPROXY_ID or TSPROXY_ID == '') then alert('Empty TSPROXY_ID') exit() end 
-    toast('reloadTsproxy', 20)
+    toast('reloadTsproxy', 10)
 
     local tries = 1
     for i = 1, tries do 
@@ -927,7 +927,7 @@ end
 function waitforTsproxyReady(timeout)
     if (not TSPROXY_ID or TSPROXY_ID == '') then alert('Empty TSPROXY_ID') exit() end 
 
-    toast('waitforTsproxyReady', 10)
+    toast('waitforTsproxyReady', 6)
     for i = 1, timeout, 1 do
         local response, error = httpRequest {
             url = TSPROXY_URL .. "public/proxy-list/".. TSPROXY_DEVICE_ID,
