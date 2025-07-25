@@ -438,14 +438,14 @@ function executeGmailFromThueMail()
                     if response.status == 'success' then
                         local res = response.data[1]
 
-                        if not hasUppercase(res.email) then 
-                            info.thuemailId = res.id
-                            info.mailPrice = res.price
-                            info.mailRegister = res.email
+                        -- if not hasUppercase(res.email) then -- end 
+                        info.thuemailId = res.id
+                        info.mailPrice = res.price
+                        info.mailRegister = res.email
 
-                            if THUE_LAI_MAIL_THUEMAILS > 0 then saveMailThueMail() end
-                            return true
-                        end 
+                        if THUE_LAI_MAIL_THUEMAILS > 0 then saveMailThueMail() end
+                        return true
+                        
                     else
                         toastr(response.message)
                         log(response.message)
@@ -853,6 +853,7 @@ function getConfigServer()
                     HOTMAIL_SOURCE_FROM_FILE = tonumber(config.hot_mail_source_from_file) ~= 0
                     THUE_LAI_MAIL_THUEMAILS  = tonumber(config.thue_lai_mail_thuemails)
                     ADD_MAIL_DOMAIN          = tonumber(config.add_mail_domain)
+                    MAIL_DOMAIN_TYPE         = tonumber(config.mail_domain_type)
                     CHANGE_INFO              = tonumber(config.change_info) ~= 0
                     PROXY                    = config.proxy
                     IP_ROTATE_MODE           = tonumber(config.ip_rotate_mode)
@@ -884,9 +885,9 @@ end
 
 function reloadTsproxy()
     if (not TSPROXY_ID or TSPROXY_ID == '') then alert('Empty TSPROXY_ID') exit() end 
-    toast('reloadTsproxy', 10)
+    toast('reloadTsproxy', 20)
 
-    local tries = 2
+    local tries = 1
     for i = 1, tries do 
         local response, error = httpRequest {
             url = TSPROXY_URL .. "public/reload/".. TSPROXY_DEVICE_ID .."/" .. TSPROXY_ID,
@@ -894,7 +895,7 @@ function reloadTsproxy()
                 ["Content-Type"] = "application/json",
                 ["x-api-key"] = TSPROXY_API_KEY,
             },
-            timeout = 10
+            timeout = 20
         }
         -- log(response, 'reloadTsproxy')
         sleep(1)
@@ -927,8 +928,6 @@ function waitforTsproxyReady(timeout)
     if (not TSPROXY_ID or TSPROXY_ID == '') then alert('Empty TSPROXY_ID') exit() end 
 
     toast('waitforTsproxyReady', 10)
-    sleep(5)
-
     for i = 1, timeout, 1 do
         local response, error = httpRequest {
             url = TSPROXY_URL .. "public/proxy-list/".. TSPROXY_DEVICE_ID,
@@ -963,10 +962,10 @@ function waitforTsproxyReady(timeout)
                 toastr("Failed decode response.");
             end  
         else
-            toastr('Times ' .. i .. " - " .. tostring(error))
+            toastr('Times ' .. i .. "... ")
         end
        
-        sleep(3)
+        sleep(5)
     end
     return false
 end

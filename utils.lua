@@ -427,11 +427,11 @@ function randomMailDomain()
     end
 
     local part3 = ""
-    if ADD_MAIL_DOMAIN == 1 then 
+    if MAIL_DOMAIN_TYPE == 1 then 
         part3 = "@yagisongs.com"
-    elseif ADD_MAIL_DOMAIN == 2 then 
+    elseif MAIL_DOMAIN_TYPE == 2 then 
         part3 = "@supermoney9x.com"
-    elseif ADD_MAIL_DOMAIN == 3 then 
+    elseif MAIL_DOMAIN_TYPE == 3 then 
         local arr = { "@yagisongs.com", "@supermoney9x.com" }
         part3 = arr[math.random(1, #arr)]
     end
@@ -1192,7 +1192,7 @@ end
 
 -- function changeMailDomain()
 --     ::label_addmail::
---     if ADD_MAIL_DOMAIN then
+--     if ADD_MAIL_DOMAIN == 2 then
 --         if waitImageVisible(what_on_your_mind) then 
 --             toastr('Add mail what_on_your_mind')
 

@@ -32,6 +32,7 @@ HOTMAIL_SERVICE_IDS = {1, 3, 2, 6, 5}
 HOTMAIL_SOURCE_FROM_FILE = false  -- true|false
 THUE_LAI_MAIL_THUEMAILS = 0  
 ADD_MAIL_DOMAIN = 0
+MAIL_DOMAIN_TYPE = 0
 IP_ROTATE_MODE = 1
 TSPROXY_ID = nil
 PROVIDER_MAIL_THUEMAILS = 1  -- 1|3 gmail|icloud
@@ -41,7 +42,7 @@ MAIL_DONGVANFB_API_KEY = "iFI7ppA8JNDJ52yVedbPlMpSh" -- Hải
 LOGIN_WITH_CODE = false
 DUMMY_MODE = 0
 
-if not waitForInternet(3) then alert("No Internet 1") exit() end
+if not waitForInternet(2) then toast("No Internet 1") end
 if not getConfigServer() then alert("No config from server!") exit() end
 
 -- ====== VARIABLE REQUIRED ======
@@ -61,13 +62,11 @@ function main()
     log('------------ Main running ------------')
     archiveCurrentAccount()
 
-    if not waitForInternet(2) then toast('No Internet 2. wait..', 4) sleep(5) end
-
     goto debug
     ::debug::
 
     log(info, 'Main')
-    if info.mailRegister == nil or info.mailRegister == '' then 
+    if info.mailRegister == nil or info.mailRegister == '' or 1 then 
         homeAndUnlockScreen()
         if IP_ROTATE_MODE == 1 then 
             rotateShadowRocket()
@@ -83,13 +82,15 @@ function main()
         if IP_ROTATE_MODE == 1 then checkOnShadowRocket() end
     end
     if LOGIN_WITH_CODE then initCurrentAccountCode() end 
-    if not waitForInternet(3) then 
-        toast("No Internet 3", 5)
-        if IP_ROTATE_MODE == 2 then onOffAirplaneMode2() end
-    end
-
+   
     ::label_openfacebook::
     openFacebook()
+
+    if not waitForInternet(1) then 
+        toast("No Internet 3", 5)
+        if IP_ROTATE_MODE == 2 then onOffAirplaneMode2() sleep(2) waitForInternet(1) end
+    end 
+    archiveCurrentAccount()
 
     if waitImageVisible(logo_fb_modern, 1) then
         toastr('not_support_this_FB_mode')
@@ -103,8 +104,8 @@ function main()
     if checkImageIsExists(what_is_birthday) then goto label_birthday end
     if checkImageIsExists(what_is_mobile_number) then goto label_whatisyourmobile end
     if checkImageIsExists(enter_an_email, 1) then goto label_enterconfirmcodedummy end 
-    if checkImageIsExists(enter_the_confirmation_code) then goto label_enterconfirmcodedummy end 
     if checkImageIsExists(enter_confirm_code_phone) then goto label_enterconfirmcodedummy end 
+    if checkImageIsExists(enter_the_confirmation_code) then goto label_enterconfirmcodedummy end 
     if checkImageIsExists(create_a_password) then goto label_createpassword end
     if checkImageIsExists(save_your_login_info) then goto label_saveyourlogin end
     if checkImageIsExists(profile_picture) then goto label_profilepicture end
@@ -159,10 +160,6 @@ function main()
     else         
         if checkSuspended() then goto label_continue end
     end
-
-    if not waitForInternet(2) then toast("No Internet 4", 1) end
-    archiveCurrentAccount()
-    sleep(2)
 
     if checkImageIsExists(what_is_birthday) then goto label_birthday end
     if checkImageIsExists(what_is_mobile_number) then goto label_whatisyourmobile end
@@ -459,7 +456,7 @@ function main()
         if waitImageVisible(what_is_your_email, 3) or waitImageVisible(enter_an_email, 3) or waitImageVisible(enter_the_confirmation_code) then
             toastr("what_is_your_email")
 
-            if ADD_MAIL_DOMAIN > 0 then 
+            if ADD_MAIL_DOMAIN == 1 then -- mail domain in dummy reg
                 if waitImageVisible(what_is_your_email, 1) or waitImageVisible(enter_an_email, 1) then 
                     toast('add_mail_domain')
                     executeDomainMail() sleep(1)
@@ -529,6 +526,7 @@ function main()
     if waitImageVisible(enter_the_confirmation_code, 10) then
         toastr("enter_the_confirmation_code")
         if DUMMY_PHONE and checkImageIsExists(enter_confirm_code_phone) then goto label_enterconfirmcodedummy end
+        if not LOGIN_WITH_CODE then info.verifyCode = nil end
 
         if waitImageVisible(dont_allow, 1) then findAndClickByImage(dont_allow) end
         info.profileUid = getUIDFBLogin()
@@ -714,56 +712,63 @@ function main()
         if waitImageVisible(add_new_contact_information) then
             toast('add_new_contact_information')
             sleep(2)
-            local mailIcons = findImage(contact_email_icon[#contact_email_icon], 2, 0.99, nil, false, 1)
-            if #mailIcons == 2 then 
-                -- local v = mailIcons[1]
-                press(90, 470)
-                if waitImageVisible(contact_confirm_mail) then
-                    findAndClickByImage(contact_confirm_mail)
-                    if waitImageVisible(contact_checkbox_account) then findAndClickByImage(contact_checkbox_account) end
-                    if waitImageVisible(next) then findAndClickByImage(next) end
-                    if waitImageVisible(enter_confirm_code) then 
-                        local code = getMailDomainOwnerConfirmCode()
-                        if code and code ~= '' then
-                            press(200, 480)
-                            findAndClickByImage(x_input_icon)
-                            typeText(code) sleep(1)
-                            press(360, 580)
-                            findAndClickByImage(next)
-                        end 
-                    end
-                    if waitImageVisible(contact_email_added, 10) then 
-                        press(380, 1260) sleep(2) -- btn đóng
-                    end 
-                else 
-                    press(50, 155) sleep(1)
-                end 
 
-                if waitImageVisible(contact_email_icon) then 
-                    -- local v = mailIcons[2]
-                    press(90, 580)
-                    if waitImageVisible(delete_mail) then
-                        findAndClickByImage(delete_mail)
-                        sleep(1) press(240, 850)
-                        if waitImageVisible(deleted_previous_mail, 10) then
+            if ADD_MAIL_DOMAIN == 1 then 
+                local mailIcons = findImage(contact_email_icon[#contact_email_icon], 2, 0.99, nil, false, 1)
+                if #mailIcons == 2 then 
+                    -- local v = mailIcons[1]
+                    press(90, 470)
+                    if waitImageVisible(contact_confirm_mail) then
+                        findAndClickByImage(contact_confirm_mail)
+                        if waitImageVisible(contact_checkbox_account) then findAndClickByImage(contact_checkbox_account) end
+                        if waitImageVisible(next) then findAndClickByImage(next) end
+                        if waitImageVisible(enter_confirm_code) then 
+                            local code = getMailDomainOwnerConfirmCode()
+                            if code and code ~= '' then
+                                press(200, 480)
+                                findAndClickByImage(x_input_icon)
+                                typeText(code) sleep(1)
+                                press(360, 580)
+                                findAndClickByImage(next)
+                            end 
+                        end
+                        if waitImageVisible(contact_email_added, 10) then 
                             press(380, 1260) sleep(2) -- btn đóng
+                        end 
+                    else 
+                        press(50, 155) sleep(1)
+                    end 
+
+                    if waitImageVisible(contact_email_icon) then 
+                        -- local v = mailIcons[2]
+                        press(90, 580)
+                        if waitImageVisible(delete_mail) then
+                            findAndClickByImage(delete_mail)
+                            sleep(1) press(240, 850)
+                            if waitImageVisible(deleted_previous_mail, 10) then
+                                press(380, 1260) sleep(2) -- btn đóng
+                            end
                         end
                     end
+                end 
+                if waitImageVisible(contact_phone) then 
+                    findAndClickByImage(contact_phone) 
+                    if waitImageVisible(contact_delete_phone) then findAndClickByImage(contact_delete_phone) end
+                    sleep(1) press(240, 850)
+                    if waitImageVisible(deleted_previous_phone, 10) then
+                        press(380, 1260) -- btn đóng
+                    end
                 end
-            end 
-            if waitImageVisible(contact_phone) then 
-                findAndClickByImage(contact_phone) 
-                if waitImageVisible(contact_delete_phone) then findAndClickByImage(contact_delete_phone) end
-                sleep(1) press(240, 850)
-                if waitImageVisible(deleted_previous_phone, 10) then
-                    press(380, 1260) -- btn đóng
+
+                local mailIcons = findImage(contact_email_icon[#contact_email_icon], 2, 0.99, nil, false, 1)
+                if #mailIcons == 1 then 
+                    info.finishAddMail = 1
+                    archiveCurrentAccount()
                 end
             end
 
-            local mailIcons = findImage(contact_email_icon[#contact_email_icon], 2, 0.99, nil, false, 1)
-            if #mailIcons == 1 then 
-                info.finishAddMail = 1
-                archiveCurrentAccount()
+            if ADD_MAIL_DOMAIN == 2 then 
+                toast('ADD_MAIL_DOMAIN == 2', 10)
             end
 
             if waitImageVisible(add_new_contact_information) then
