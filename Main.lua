@@ -75,7 +75,6 @@ function main()
         elseif IP_ROTATE_MODE == 3 then 
             reloadTsproxy()
             waitforTsproxyReady(60) 
-            sleep(2)
         end 
         executeXoaInfo()
     else 

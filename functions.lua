@@ -895,7 +895,7 @@ function reloadTsproxy()
                 ["Content-Type"] = "application/json",
                 ["x-api-key"] = TSPROXY_API_KEY,
             },
-            timeout = 20
+            timeout = 10
         }
         -- log(response, 'reloadTsproxy')
         sleep(1)
@@ -952,7 +952,7 @@ function waitforTsproxyReady(timeout)
 
                     if currentIP.status == 'running' then 
                         toastr("Ready: " .. currentIP.ipPublic, 2)
-                        sleep(1)
+                        sleep(3)
                         return true
                     end
                 else
