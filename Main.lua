@@ -675,7 +675,7 @@ function main()
 
     ::label_settingmail::
     if waitImageVisible(what_on_your_mind) and ADD_MAIL_DOMAIN > 0 and info.finishSettingMail == 0 and LANGUAGE == 'VN' then 
-        toastr('remove_mail what_on_your_mind')
+        toastr('setting_mail what_on_your_mind')
 
         if modeMenuLeft then 
             toast('modeMenuLeft')
@@ -788,7 +788,7 @@ function main()
                 if waitImageVisible(add_email_address) then
                     toastr('add_email_address')
 
-                    executeDomainMail() sleep(1)
+                    getDomainMail() sleep(1)
                     press(310, 640)
                     findAndClickByImage(x_input_icon)
                     typeText(info.mailLogin)

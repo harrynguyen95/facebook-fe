@@ -538,6 +538,12 @@ function executeDomainMail()
     return true
 end 
 
+function getDomainMail()
+    local mail = randomMailDomain() 
+    info.mailLogin = mail
+    return true
+end 
+
 function executeGetMailRequest()
     if MAIL_SUPLY == 1 then 
         return executeHotmailFromDongVanFb()
