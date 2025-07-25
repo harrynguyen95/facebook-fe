@@ -66,7 +66,7 @@ function main()
     ::debug::
 
     log(info, 'Main')
-    if info.mailRegister == nil or info.mailRegister == '' or 1 then 
+    if info.mailRegister == nil or info.mailRegister == '' then 
         homeAndUnlockScreen()
         if IP_ROTATE_MODE == 1 then 
             rotateShadowRocket()
