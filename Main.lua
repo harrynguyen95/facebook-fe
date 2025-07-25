@@ -313,15 +313,15 @@ function main()
 
                         findAndClickByImage(next)
                         archiveCurrentAccount()
-
-                        if waitImageVisible(exist_account_in_mail, 3) or waitImageVisible(red_warning_icon, 3) then
-                            toastr('exist_account_in_mail')
-                            removeMailThueMail(info.mailRegister)
-                            goto label_executegetmailrequest
-                        end
                     end
 
-                    if waitImageVisible(continue_creating_account, 3) or waitImageVisible(red_warning_icon, 3) then
+                    if waitImageVisible(red_warning_icon, 3) then
+                        toastr('email_invalid')
+                        removeMailThueMail(info.mailRegister)
+                        goto label_executegetmailrequest
+                    end
+
+                    if waitImageVisible(continue_creating_account, 3) then
                         toastr("email_has_account")
                         failedCurrentAccount('email_has_account')
                         goto label_continue
@@ -497,12 +497,18 @@ function main()
 
                         findAndClickByImage(next)
                         archiveCurrentAccount()
+                    end
 
-                        if waitImageVisible(exist_account_in_mail, 3) or waitImageVisible(red_warning_icon, 3) then
-                            toastr('exist_account_in_mail')
-                            removeMailThueMail(info.mailRegister)
-                            goto label_executegetmailrequest
-                        end
+                    if waitImageVisible(red_warning_icon, 3) then
+                        toastr('email_invalid')
+                        removeMailThueMail(info.mailRegister)
+                        goto label_executegetmailrequest
+                    end
+
+                    if waitImageVisible(continue_creating_account, 3) then
+                        toastr("email_has_account")
+                        failedCurrentAccount('email_has_account')
+                        goto label_continue
                     end
                 else 
                     toastr("Empty mail. Continue.", 10) sleep(5)
