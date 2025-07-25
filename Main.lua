@@ -86,7 +86,6 @@ function main()
         toast("No Internet 3", 5)
         if IP_ROTATE_MODE == 2 then onOffAirplaneMode2() sleep(2) waitForInternet(1) end
     end 
-    archiveCurrentAccount()
    
     ::label_openfacebook::
     openFacebook()
@@ -198,6 +197,9 @@ function main()
         swipeCloseApp()
         goto label_continue
     end
+
+    waitForInternet(1)
+    archiveCurrentAccount()
 
     ::label_createnewaccountblue::
     if waitImageVisible(create_new_account_blue) then
