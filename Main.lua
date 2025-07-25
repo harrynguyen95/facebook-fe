@@ -866,6 +866,7 @@ function main()
     end 
 
     ::label_get2FA::
+    swipe(600, 750, 610, 800) 
     if waitImageVisible(what_on_your_mind) and (info.twoFA == nil or info.twoFA == '') then 
         toastr('2FA what_on_your_mind')
 
@@ -1058,6 +1059,7 @@ function main()
     end
 
     ::label_searchtext::
+    swipe(600, 750, 610, 800) 
     toastr('wait searchtext..')
     if waitImageVisible(what_on_your_mind) then
         toastr('Search what_on_your_mind')
@@ -1083,6 +1085,7 @@ function main()
     end
 
     ::label_logout::
+    swipe(600, 750, 610, 800) 
     if waitImageVisible(what_on_your_mind) and ((ADD_MAIL_DOMAIN > 0 and info.finishSettingMail == 1) or ADD_MAIL_DOMAIN == 0) and (info.twoFA ~= nil and info.twoFA ~= '') then 
         toastr('logout what_on_your_mind')
 
