@@ -763,7 +763,7 @@ function main()
                     if waitImageVisible(contact_delete_phone) then findAndClickByImage(contact_delete_phone) end
                     sleep(1) press(240, 850)
                     if waitImageVisible(deleted_previous_phone, 10) then
-                        press(380, 1260) -- btn đóng
+                        press(380, 1260) sleep(2) -- btn đóng
                     end
                 end
 
@@ -810,7 +810,7 @@ function main()
                     end
                     if waitImageVisible(added_email, 8) then 
                         archiveCurrentAccount()
-                        press(380, 1260) sleep(2) -- close btn
+                        press(380, 1260) sleep(2)  -- close btn
                     end
                 end
 
@@ -839,7 +839,7 @@ function main()
                         end
 
                         if waitImageVisible(deleted_previous_mail, 8) then
-                            press(380, 1260) -- close btn
+                            press(380, 1260) sleep(2) -- close btn
                         end
                     end
                 end
