@@ -1271,7 +1271,7 @@ function saveRandomServerAvatar()
     local ok = false
     local f = io.open(save_path, "wb")
     if not f then
-        print("❌ Không thể mở file để ghi: " .. save_path)
+        toast("❌ Không thể mở file để ghi: " .. save_path)
         return
     end
 
@@ -1287,7 +1287,7 @@ function saveRandomServerAvatar()
         end,
         ssl_verifyhost = 0,
         ssl_verifypeer = 0,
-        timeout = 15,
+        timeout = 30,
     }
 
     local ok, err = pcall(function()
@@ -1297,7 +1297,7 @@ function saveRandomServerAvatar()
     f:close()
 
     if not ok then
-        print("❌ Tải ảnh lỗi: " .. tostring(err))
+        toast("❌ Tải ảnh lỗi: " .. tostring(err))
         return
     end
 
@@ -1309,7 +1309,7 @@ function saveRandomServerAvatar()
         sleep(2)
         return true
     else
-        print("❌ File không tồn tại sau khi tải")
+        toast("❌ File không tồn tại sau khi tải")
     end
     return
 end

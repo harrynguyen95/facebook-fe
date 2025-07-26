@@ -882,26 +882,26 @@ function main()
             press(510, 830) sleep(1) -- dừng icon
         end 
 
-        if waitImageVisible(add_coverphoto, 2) then findAndClickByImage(skip) sleep(1) end
         if waitImageVisible(profile_add_avatar, 2) then 
-            findAndClickByImage(profile_add_avatar)
-            saveRandomServerAvatar()
-            sleep(3)
-            if waitImageVisible(chon_anh_dai_dien) then findAndClickByImage(chon_anh_dai_dien) end
-            if waitImageVisible(allow_access) then 
-                findAndClickByImage(allow_access) sleep(2)
-            end
-            if waitImageVisible(thu_vien_anh) then 
-                press(150, 480) sleep(1) -- chọn ảnh đầu tiên
-                press(680, 95) sleep(5) -- btn lưu
-                if waitImageNotVisible(xem_truoc_anh_dai_dien, 30) then 
-                    info.finishChangeInfo = 'true'
-                    archiveCurrentAccount()
+            if saveRandomServerAvatar() then
+                findAndClickByImage(profile_add_avatar)
+                sleep(3)
+                if waitImageVisible(chon_anh_dai_dien) then findAndClickByImage(chon_anh_dai_dien) end
+                if waitImageVisible(allow_access) then 
+                    findAndClickByImage(allow_access) sleep(2)
+                end
+                if waitImageVisible(thu_vien_anh) then 
+                    press(150, 480) sleep(1) -- chọn ảnh đầu tiên
+                    press(680, 95) sleep(5) -- btn lưu
+                    if waitImageNotVisible(xem_truoc_anh_dai_dien, 30) then 
+                        info.finishChangeInfo = 'true'
+                        archiveCurrentAccount()
+                    end 
                 end 
+                if waitImageVisible(edit_profile_page_edit, 2) then 
+                    press(45, 90) sleep(1) -- back
+                end
             end 
-            if waitImageVisible(edit_profile_page_edit, 2) then 
-                press(45, 90) sleep(1) -- back
-            end
         else 
             info.finishChangeInfo = 'true'
             archiveCurrentAccount()
@@ -958,6 +958,8 @@ function main()
 
         openURL("fb://friends") sleep(2)
         press(690, 90) sleep(1)
+        swipe(600, 600, 610, 800) sleep(2)
+        swipe(600, 700, 610, 600) sleep(1)
         if waitImageVisible(friend_send_add_friend) then 
             local totalAdd = math.random(5, 8)
             local added = 0
