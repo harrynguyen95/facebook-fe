@@ -22,7 +22,7 @@ find_friend = {dirPath .. "find_friend3.png"}
 what_on_your_mind = {dirPath .. "what_on_your_mind.png"}
 
 create_new_account = {dirPath .. "create_new_acc.png", dirPath .. "create_new_acc2.png", 
-    dirPath .. "create_new_acc3.png", dirPath .. "create_new_acc5.png"}
+    dirPath .. "create_new_acc3.png", dirPath .. "create_new_acc5.png", dirPath .. "create_new_acc6.png"}
 create_new_account_blue = {dirPath .. "create_new_acc_blue.png"}
 get_started = {dirPath .. "get_started2.png"}
 what_name = {dirPath .. "what_name.png"}
@@ -173,3 +173,4 @@ xem_truoc_anh_dai_dien = {dirPath .. "xem_truoc_anh_dai_dien.png"}
 mo_trong_facebook = {dirPath .. "mo_trong_facebook.png"}
 chon_anh_dai_dien = {dirPath .. "chon_anh_dai_dien.png"}
 gio_ban_chua_dung_tinh_nang_nay = {dirPath .. "gio_ban_chua_dung_tinh_nang_nay.png"}
+tiep_tuc_thiet_lap_profile = {dirPath .. "tiep_tuc_thiet_lap_profile.png"}

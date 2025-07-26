@@ -877,88 +877,17 @@ function main()
         toastr('change_info what_on_your_mind')
         openURL("fb://profile") 
         if waitImageVisible(mo_trong_facebook, 2) then press(500, 725) end
-        sleep(2) 
+        if waitImageVisible(welcome_to_profile) or waitImageVisible(tiep_tuc_thiet_lap_profile) or waitImageVisible(lock_profile_page) then 
+            press(50, 90) sleep(1) -- x icon
+            press(510, 830) sleep(1) -- dừng icon
+        end 
 
-        ::label_welcometoprofile::
-        if waitImageVisible(welcome_to_profile, 10) then 
-            saveRandomServerAvatar() sleep(2)
-            press(550, 1260) sleep(2) -- btn thêm ảnh
-            if waitImageVisible(allow_access, 2) then 
-                findAndClickByImage(allow_access) sleep(3)
-            end
-            if waitImageVisible(thu_vien_anh, 2) then 
-                press(150, 480) sleep(1) -- chọn ảnh đầu tiên
-                press(680, 95) sleep(5) -- btn lưu
-                waitImageNotVisible(xem_truoc_anh_dai_dien, 30)
-            end 
-        end
-
-        if checkImageIsExists(profile_add_avatar) then goto label_profileaddavatar end 
-        if waitImageVisible(add_coverphoto, 3) then findAndClickByImage(skip) sleep(1) end
-        if waitImageVisible(lock_profile_page, 3) then 
-            waitImageVisible(skip, 10)
-            findAndClickByImage(skip)
-            waitImageNotVisible(lock_profile_page)
-        end
-        if waitImageVisible(current_city, 3) then 
-            findAndClickByImage(select_position)
-            waitImageVisible(bio_search_icon)
-            typeText(getRandomCity()) sleep(2)
-            press(220, 280) -- select lựa chọn đầu tiên
-            waitImageVisible(save) findAndClickByImage(save)
-            waitImageNotVisible(current_city)
-        end
-        if checkImageIsExists(welcome_to_profile) then goto label_welcometoprofile end
-        if waitImageVisible(add_hometown, 3) then 
-            findAndClickByImage(select_position)
-            waitImageVisible(bio_search_icon)
-            typeText(getRandomCity()) sleep(2)
-            press(220, 280) -- select lựa chọn đầu tiên
-            waitImageVisible(save) findAndClickByImage(save)
-            waitImageNotVisible(current_city)
-        end
-        if waitImageVisible(add_school, 3) then 
-            findAndClickByImage(select_position)
-            waitImageVisible(bio_search_icon)
-            typeText(getRandomHighSchool()) sleep(2)
-            press(220, 280) -- select lựa chọn đầu tiên
-            waitImageVisible(save) findAndClickByImage(save)
-            waitImageNotVisible(add_school)
-        end
-        if waitImageVisible(high_school, 3) then 
-            findAndClickByImage(select_position)
-            waitImageVisible(bio_search_icon)
-            typeText(getRandomHighSchool()) sleep(2)
-            press(220, 280) -- select lựa chọn đầu tiên
-            waitImageVisible(save) findAndClickByImage(save)
-            waitImageNotVisible(high_school)
-        end
-        if waitImageVisible(add_university, 3) then 
-            findAndClickByImage(select_position)
-            waitImageVisible(bio_search_icon)
-            typeText(getRandomUniversity()) sleep(2)
-            press(220, 280) -- select lựa chọn đầu tiên
-            waitImageVisible(save) findAndClickByImage(save)
-            waitImageNotVisible(add_university)
-        end
-        if waitImageVisible(add_company, 3) then findAndClickByImage(skip) end
-        if waitImageVisible(add_relationship, 3) then findAndClickByImage(skip) end
-        if waitImageVisible(add_coverphoto, 3) then findAndClickByImage(skip) end
-        if waitImageVisible(add_moreinformation, 3) then findAndClickByImage(skip) end
-        if waitImageVisible(view_profile_page, 3) then
-            findAndClickByImage(view_profile_page)
-            info.finishChangeInfo = 'true'
-            archiveCurrentAccount()
-        end
-
-        ::label_profileaddavatar::
+        if waitImageVisible(add_coverphoto, 2) then findAndClickByImage(skip) sleep(1) end
         if waitImageVisible(profile_add_avatar, 2) then 
             findAndClickByImage(profile_add_avatar)
-            if waitImageVisible(chon_anh_dai_dien) then 
-                findAndClickByImage(chon_anh_dai_dien)
-                saveRandomServerAvatar()
-                sleep(3)
-            end
+            saveRandomServerAvatar()
+            sleep(3)
+            if waitImageVisible(chon_anh_dai_dien) then findAndClickByImage(chon_anh_dai_dien) end
             if waitImageVisible(allow_access) then 
                 findAndClickByImage(allow_access) sleep(2)
             end
