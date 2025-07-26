@@ -759,9 +759,10 @@ end
 
 function getGmail66ConfirmCode()
     if info.mailOrderId == nil then return nil end
-    
-    sleep(3)
-    local tries = 10
+    toastr('getGmail66ConfirmCode..', 5)
+
+    sleep(10)
+    local tries = 20
     for i = 1, tries do 
         toastr('Call times ' .. i)
 

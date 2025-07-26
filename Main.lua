@@ -61,7 +61,7 @@ DUMMY_ICLOUD = DUMMY_MODE == 3
 
 -- ====== MAIN ======
 function main()
-
+    
     ::label_continue::
     log('------------ Main running ------------')
     archiveCurrentAccount()
