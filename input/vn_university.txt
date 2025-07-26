@@ -3,7 +3,6 @@
 Đại học Y
 Đại học U
 Đại học I
-Đại học O
 Đại học P
 Đại học A
 Đại học S
@@ -23,7 +22,6 @@ Cao đẳng T
 Cao đẳng Y
 Cao đẳng U
 Cao đẳng I
-Cao đẳng O
 Cao đẳng P
 Cao đẳng A
 Cao đẳng S
