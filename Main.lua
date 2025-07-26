@@ -902,7 +902,10 @@ function main()
             if waitImageVisible(edit_profile_page_edit, 2) then 
                 press(45, 90) sleep(1) -- back
             end
-        end 
+        else 
+            info.finishChangeInfo = 'true'
+            archiveCurrentAccount()
+        end
         if waitImageVisible(edit_profile_page, 3) then press(60, 1290) sleep(2) end
     end 
 
