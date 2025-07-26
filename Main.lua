@@ -431,6 +431,7 @@ function main()
     end
 
     if checkImageIsExists(create_a_password) then goto label_createpassword end 
+    if checkSuspended() then goto label_continue end
 
     ::label_enterconfirmcodedummy::
     if SHOULD_DUMMY then 

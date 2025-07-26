@@ -584,7 +584,7 @@ function executeGmailFromGmail66()
             if response then
                 local ok, response, err = safeJsonDecode(response)
                 if ok then 
-                    if response.status == true or response.status == 'true' then
+                    if response.success == true or response.success == 'true' then
                         local res = response
 
                         info.mailOrderId = res.order_id
@@ -761,12 +761,12 @@ function getGmail66ConfirmCode()
     if info.mailOrderId == nil then return nil end
     
     sleep(3)
-    local tries = 20
+    local tries = 10
     for i = 1, tries do 
         toastr('Call times ' .. i)
 
         local response, error = httpRequest {
-            url = MAIL_GMAIL66_API_KEY .. "check-otp/" .. info.mailOrderId .. "?api_key=" .. MAIL_THUEMAILS_API_KEY,
+            url = MAIL_GMAIL66_DOMAIN .. "check-otp/" .. info.mailOrderId .. "?api_key=" .. MAIL_THUEMAILS_API_KEY,
             headers = {
                 ["Content-Type"] = "application/json",
             },
