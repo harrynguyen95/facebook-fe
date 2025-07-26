@@ -21,7 +21,7 @@ no_friend = {dirPath .. "no_friend.png", dirPath .. "no_friend4.png", dirPath ..
 find_friend = {dirPath .. "find_friend3.png"}
 what_on_your_mind = {dirPath .. "what_on_your_mind.png"}
 
-create_new_account = {dirPath .. "create_new_acc.png", dirPath .. "create_new_acc2.png", 
+create_new_account = {dirPath .. "create_new_acc7.png", dirPath .. "create_new_acc.png", dirPath .. "create_new_acc2.png", 
     dirPath .. "create_new_acc3.png", dirPath .. "create_new_acc5.png", dirPath .. "create_new_acc6.png"}
 create_new_account_blue = {dirPath .. "create_new_acc_blue.png"}
 get_started = {dirPath .. "get_started2.png"}
