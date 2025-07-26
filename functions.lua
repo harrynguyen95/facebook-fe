@@ -2,6 +2,7 @@
 -- ====== CONFIG ======
 PHP_SERVER = "https://tuongtacthongminh.com/reg_clone/"
 MAIL_THUEMAILS_DOMAIN = "https://api.thuemails.com/api/"
+MAIL_GMAIL66_DOMAIN = "http://gmail66.shop/api/v1/"
 URL_2FA_FACEBOOK = "https://2fa.live/tok/"
 MAIL_FREE_DOMAIN = "https://api.temp-mailfree.com/"
 TSPROXY_URL = "https://api.tsproxy.com/api/v1/"
@@ -11,7 +12,8 @@ TSPROXY_API_KEY = "yB2y6yitJ0"
 defaultPasswordFilePath = currentPath() .. "/input/password.txt"
 accountFilePath = rootDir() .. "/Device/accounts.txt"
 accountCodeFilePath = rootDir() .. "/Device/accounts_code.txt"
-mailFilePath = rootDir() .. "/Device/thuemails.txt"
+thuemailsFilePath = rootDir() .. "/Device/thuemails.txt"
+gmail66FilePath = rootDir() .. "/Device/thuemails.txt"
 localIPFilePath = rootDir() .. "/Device/local_ip.txt"
 hotmailSourceFilePath = rootDir() .. "/Device/hotmail_source.txt"
 
@@ -46,7 +48,7 @@ function initCurrentAccountCode()
             info.hotmailClientId = splittedCode[6]
             info.verifyCode = splittedCode[7]
 
-            local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '')
+            local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.mailOrderId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '')
             accounts[#accounts] = line
             writeFile(accountFilePath, accounts)
         end 
@@ -68,7 +70,7 @@ function initCurrentAccountCode()
         info.hotmailClientId = splittedCode[6]
         info.verifyCode = splittedCode[7]
 
-        local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '')
+        local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.mailOrderId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '')
         addLineToFile(accountFilePath, line)
     end
     return
@@ -89,7 +91,7 @@ function archiveCurrentAccount()
             info.profileUid   = info.profileUid or splitted[5]
             info.twoFA        = info.twoFA or splitted[6]
             info.mailRegister        = info.mailRegister or splitted[7]
-            info.thuemailId          = info.thuemailId or splitted[8]
+            info.mailOrderId          = info.mailOrderId or splitted[8]
             info.mailPrice           = info.mailPrice or splitted[9]
             info.hotmailRefreshToken = info.hotmailRefreshToken or splitted[10]
             info.hotmailClientId     = info.hotmailClientId or splitted[11]
@@ -100,21 +102,21 @@ function archiveCurrentAccount()
             info.finishAddFriend     = info.finishAddFriend or splitted[16]
             info.ipRegister          = info.ipRegister or splitted[17]
 
-            local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '') .. "|" .. (info.finishSettingMail or 'false') .. "|" .. (info.finishChangeInfo or 'false') .. "|" .. (info.finishAddFriend or 'false') .. "|" .. (info.ipRegister or '')
+            local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.mailOrderId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '') .. "|" .. (info.finishSettingMail or 'false') .. "|" .. (info.finishChangeInfo or 'false') .. "|" .. (info.finishAddFriend or 'false') .. "|" .. (info.ipRegister or '')
             accounts[#accounts] = line
             writeFile(accountFilePath, accounts)
         else
             if splitted[1] and splitted[1] ~= '' then info.uuid = floor(splitted[1] + 1) else info.uuid = 1 end
             info.status = 'INPROGRESS'
             info.password = randomPass
-            local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '') .. "|" .. (info.finishSettingMail or 'false') .. "|" .. (info.finishChangeInfo or 'false') .. "|" .. (info.finishAddFriend or 'false') .. "|" .. (info.ipRegister or '')
+            local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.mailOrderId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '') .. "|" .. (info.finishSettingMail or 'false') .. "|" .. (info.finishChangeInfo or 'false') .. "|" .. (info.finishAddFriend or 'false') .. "|" .. (info.ipRegister or '')
             addLineToFile(accountFilePath, line)
         end 
     else 
         info.uuid = 1
         info.status = 'INPROGRESS'
         info.password = randomPass
-        local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '') .. "|" .. (info.finishSettingMail or 'false') .. "|" .. (info.finishChangeInfo or 'false') .. "|" .. (info.finishAddFriend or 'false') .. "|" .. (info.ipRegister or '')
+        local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.mailOrderId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '') .. "|" .. (info.finishSettingMail or 'false') .. "|" .. (info.finishChangeInfo or 'false') .. "|" .. (info.finishAddFriend or 'false') .. "|" .. (info.ipRegister or '')
         addLineToFile(accountFilePath, line)
     end
 
@@ -131,7 +133,7 @@ function finishCurrentAccount()
     if not info.profileUid or info.profileUid == '' then info.profileUid = getUIDFBLogin() end 
     if not info.mailLogin or info.mailLogin == '' then return false end 
 
-    local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '') .. "|" .. (info.finishSettingMail or 'false') .. "|" .. (info.finishChangeInfo or 'false') .. "|" .. (info.finishAddFriend or 'false') .. "|" .. (info.ipRegister or '')
+    local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.mailOrderId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '') .. "|" .. (info.finishSettingMail or 'false') .. "|" .. (info.finishChangeInfo or 'false') .. "|" .. (info.finishAddFriend or 'false') .. "|" .. (info.ipRegister or '')
     accounts[#accounts] = line
 
     log('finishCurrentAccount ' .. line)
@@ -158,7 +160,7 @@ function failedCurrentAccount(code)
     if code == '282' and info.verifyCode ~= '' and info.verifyCode ~= nil then info.checkpoint = code .. '_has_code' end
     if not info.mailLogin or info.mailLogin == '' then info.mailLogin = info.mailRegister end 
     if not info.profileUid or info.profileUid == '' then info.profileUid = getUIDFBLogin() end 
-    local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.thuemailId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '') .. "|" .. (info.finishSettingMail or 'false') .. "|" .. (info.finishChangeInfo or 'false') .. "|" .. (info.finishAddFriend or 'false') .. "|" .. (info.ipRegister or '')
+    local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.mailOrderId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '') .. "|" .. (info.finishSettingMail or 'false') .. "|" .. (info.finishChangeInfo or 'false') .. "|" .. (info.finishAddFriend or 'false') .. "|" .. (info.ipRegister or '')
     accounts[#accounts] = line
 
     log(code .. ' - failedCurrentAccount ' .. line)
@@ -259,7 +261,7 @@ function resetInfoObject()
     info = {
         uuid = nil,
         status = nil,
-        thuemailId = nil,
+        mailOrderId = nil,
         mailRegister = nil,
         twoFA = nil,
         profileUid = nil,
@@ -291,39 +293,15 @@ function retrieveHotmailFromSource()
         info.hotmailRefreshToken = splitted[3]
         info.hotmailClientId     = splitted[4]
         info.mailPrice           = 're-use'
-        info.thuemailId          = 2000000
+        info.mailOrderId          = 2000000
 
         return true
     end 
     return false
 end
 
-function saveMailThueMail()
-    local mails = readFile(mailFilePath)
-
-    if #mails > 0 then
-        local isNew = true
-        for i, v in ipairs(mails) do
-            local splitted = split(v, "|")
-            if splitted[1] == info.mailRegister then 
-                isNew = false
-                mails[i] = splitted[1] .. "|" .. floor(splitted[2] + 1)
-            end
-        end
-
-        if isNew then
-            table.insert(mails, info.mailRegister .. "|1")
-        end
-
-        writeFile(mailFilePath, mails)
-    else 
-        local line = info.mailRegister  .. "|1"
-        addLineToFile(mailFilePath, line)
-    end
-end
-
 function retrieveMailThueMail()
-    local mails = readFile(mailFilePath)
+    local mails = readFile(thuemailsFilePath)
     if #mails < 4 then
         return
     end
@@ -331,14 +309,14 @@ function retrieveMailThueMail()
     shuffle(mails)
     for i, v in ipairs(mails) do
         local splitted = split(v, "|")
-        if floor(splitted[2]) <= THUE_LAI_MAIL_THUEMAILS then 
+        if floor(splitted[2]) <= THUE_LAI_MAIL then 
             return splitted[1]
         end
     end
 end
 
 function removeMailThueMail(invalidMail)
-    local mails = readFile(mailFilePath) 
+    local mails = readFile(thuemailsFilePath) 
     for i = #mails, 1, -1 do
         local email = mails[i]:match("^[^|]+")   
         if email == invalidMail then
@@ -347,7 +325,59 @@ function removeMailThueMail(invalidMail)
         end
     end
 
-    writeFile(mailFilePath, mails)
+    writeFile(thuemailsFilePath, mails)
+end
+
+function saveMailGmail66()
+    local mails = readFile(gmail66FilePath)
+
+    if #mails > 0 then
+        local isNew = true
+        for i, v in ipairs(mails) do
+            local splitted = split(v, "|")
+            if splitted[1] == info.mailRegister then 
+                isNew = false
+                mails[i] = splitted[1] .. "|" .. floor(splitted[2] + 1) .. "|" .. info.mailOrderId
+            end
+        end
+
+        if isNew then
+            table.insert(mails, info.mailRegister .. "|1|" .. info.mailOrderId)
+        end
+
+        writeFile(gmail66FilePath, mails)
+    else 
+        local line = info.mailRegister  .. "|1|" .. info.mailOrderId
+        addLineToFile(gmail66FilePath, line)
+    end
+end
+
+function retrieveMailGmail66()
+    local mails = readFile(gmail66FilePath)
+    if #mails < 4 then
+        return
+    end
+
+    shuffle(mails)
+    for i, v in ipairs(mails) do
+        local splitted = split(v, "|")
+        if floor(splitted[2]) <= THUE_LAI_MAIL then 
+            return splitted
+        end
+    end
+end
+
+function removeMailGmail66(invalidMail)
+    local mails = readFile(gmail66FilePath) 
+    for i = #mails, 1, -1 do
+        local email = mails[i]:match("^[^|]+")   
+        if email == invalidMail then
+            table.remove(mails, i)             
+            break                             
+        end
+    end
+
+    writeFile(gmail66FilePath, mails)
 end
 
 function executeGmailFromThueMail()
@@ -359,7 +389,7 @@ function executeGmailFromThueMail()
     local rerentSuccess = false
     local mailRerent = retrieveMailThueMail()
 
-    if THUE_LAI_MAIL_THUEMAILS > 0 and mailRerent then
+    if THUE_LAI_MAIL > 0 and mailRerent then
         rerentTime = floor(rerentTime + 1)
         -- log('Times mail rerent: ' .. rerentTime .. ' - ' .. mailRerent)
 
@@ -388,7 +418,7 @@ function executeGmailFromThueMail()
                         rerentSuccess = true
 
                         local res = response.data
-                        info.thuemailId = res.id
+                        info.mailOrderId = res.id
                         info.mailPrice = res.price
                         info.mailRegister = res.email
 
@@ -442,11 +472,11 @@ function executeGmailFromThueMail()
                         local res = response.data[1]
 
                         -- if not hasUppercase(res.email) then -- end 
-                        info.thuemailId = res.id
+                        info.mailOrderId = res.id
                         info.mailPrice = res.price
                         info.mailRegister = res.email
 
-                        if THUE_LAI_MAIL_THUEMAILS > 0 then saveMailThueMail() end
+                        if THUE_LAI_MAIL > 0 then saveMailThueMail() end
                         return true
                         
                     else
@@ -489,7 +519,7 @@ function callRegisterHotmailFromDongVanFb()
 
                         info.mailRegister = splitted[1]
                         info.mailPrice = response.data.price
-                        info.thuemailId = 2000000
+                        info.mailOrderId = 2000000
                         info.hotmailPassword = splitted[2]
                         info.hotmailRefreshToken = splitted[3]
                         info.hotmailClientId = splitted[4]
@@ -533,6 +563,56 @@ function executeHotmailFromDongVanFb()
     return false
 end
 
+function executeGmailFromGmail66()
+    if THUE_LAI_MAIL > 0 then
+        local mailRerent = retrieveMailGmail66()
+        info.mailRegister = mailRerent[1]
+        info.mailOrderId = mailRerent[3]
+        info.mailPrice = 100
+    else
+        local tries = 30
+        for i = 1, tries do 
+            toastr('Call times ' .. i)
+            
+            local response, error = httpRequest {
+                url = MAIL_GMAIL66_DOMAIN .. "rent-mail?api_key=" .. MAIL_GMAIL66_API_KEY,
+                headers = {
+                    ["Content-Type"] = "application/json",
+                },
+            }
+
+            if response then
+                local ok, response, err = safeJsonDecode(response)
+                if ok then 
+                    if response.status == true or response.status == 'true' then
+                        local res = response
+
+                        info.mailOrderId = res.order_id
+                        info.mailPrice = string.match(res.message, "trừ%s+(%d+)%s+xu")
+                        info.mailRegister = res.mail
+
+                        if THUE_LAI_MAIL > 0 then saveMailGmail66() end
+                        return true
+                        
+                    else
+                        toastr(response.message)
+                        log(response.message)
+                    end
+                else 
+                    toastr("Failed decode response.");
+                    log("Failed decode response.");
+                end
+            else
+                toastr('Times ' .. i .. " - " .. tostring(error), 2)
+                log("Failed request rent-mail. Times ".. i ..  " - " .. tostring(error))
+            end
+
+            sleep(10)
+        end
+    end
+    return false
+end
+
 function executeDomainMail()
     local mail = randomMailDomain() 
     info.mailLogin = mail
@@ -554,6 +634,8 @@ function executeGetMailRequest()
         return executeGmailFromThueMail()
     elseif MAIL_SUPLY == 3 then
         return executeDomainMail()
+    elseif MAIL_SUPLY == 4 then
+        return executeGmailFromGmail66()
     else 
         toastr('MAIL_SUPLY invalid.', 5)
         return false
@@ -561,7 +643,7 @@ function executeGetMailRequest()
 end
 
 function getThuemailConfirmCode()
-    if info.thuemailId == nil then return nil end
+    if info.mailOrderId == nil then return nil end
     
     sleep(3)
     local tries = 20
@@ -569,7 +651,7 @@ function getThuemailConfirmCode()
         toastr('Call times ' .. i)
 
         local response, error = httpRequest {
-            url = MAIL_THUEMAILS_DOMAIN .. "rentals/" .. info.thuemailId .. "?api_key=" .. MAIL_THUEMAILS_API_KEY,
+            url = MAIL_THUEMAILS_DOMAIN .. "rentals/" .. info.mailOrderId .. "?api_key=" .. MAIL_THUEMAILS_API_KEY,
             headers = {
                 ["Content-Type"] = "application/json",
             },
@@ -675,6 +757,44 @@ function getMailDomainRegisterConfirmCode()
     return nil
 end
 
+function getGmail66ConfirmCode()
+    if info.mailOrderId == nil then return nil end
+    
+    sleep(3)
+    local tries = 20
+    for i = 1, tries do 
+        toastr('Call times ' .. i)
+
+        local response, error = httpRequest {
+            url = MAIL_GMAIL66_API_KEY .. "check-otp/" .. info.mailOrderId .. "?api_key=" .. MAIL_THUEMAILS_API_KEY,
+            headers = {
+                ["Content-Type"] = "application/json",
+            },
+        }
+
+        if response then
+            local ok, response, err = safeJsonDecode(response)
+            if ok then 
+                if response.success == true or response.success == 'true' then
+                    saveMailToGoogleForm()
+                    return response.otp
+                else
+                    toastr('Empty code. Times ' .. i)
+                end
+            else 
+                toastr("Failed decode response.");
+                log("Failed decode response.");
+            end
+        else
+            toastr('Times ' .. i .. " - " .. tostring(error), 2)
+            log("Failed request check-otp. Times ".. i ..  " - " .. tostring(error))
+        end
+
+        sleep(10)
+    end
+    return nil
+end
+
 function getCodeMailRegister()
     if MAIL_SUPLY == 1 then 
         return getDongvanfbConfirmCode()
@@ -682,6 +802,8 @@ function getCodeMailRegister()
         return getThuemailConfirmCode()
     elseif MAIL_SUPLY == 3 then
         return getMailDomainRegisterConfirmCode()
+    elseif MAIL_SUPLY == 4 then
+        return getGmail66ConfirmCode()
     else 
         toastr('MAIL_SUPLY invalid.', 5)
     end
@@ -880,7 +1002,7 @@ function getConfigServer()
                     TIMES_XOA_INFO           = tonumber(config.times_xoa_info)
                     ENTER_VERIFY_CODE        = tonumber(config.enter_verify_code) ~= 0
                     HOTMAIL_SOURCE_FROM_FILE = tonumber(config.hot_mail_source_from_file) ~= 0
-                    THUE_LAI_MAIL_THUEMAILS  = tonumber(config.thue_lai_mail_thuemails)
+                    THUE_LAI_MAIL            = tonumber(config.thue_lai_mail_thuemails)
                     ADD_MAIL_DOMAIN          = tonumber(config.add_mail_domain)
                     MAIL_DOMAIN_TYPE         = tonumber(config.mail_domain_type)
                     CHANGE_INFO              = tonumber(config.change_info) ~= 0
@@ -888,6 +1010,7 @@ function getConfigServer()
                     IP_ROTATE_MODE           = tonumber(config.ip_rotate_mode)
                     MAIL_DONGVANFB_API_KEY   = config.api_key_dongvanfb
                     MAIL_THUEMAILS_API_KEY   = config.api_key_thuemails
+                    MAIL_GMAIL66_API_KEY     = config.api_key_gmail66
                     LOCAL_SERVER             = config.local_server
                     DESTINATION_FILENAME     = config.destination_filename
                     LOGIN_WITH_CODE          = tonumber(config.login_with_code) ~= 0
@@ -1287,7 +1410,7 @@ function saveRandomServerAvatar()
         end,
         ssl_verifyhost = 0,
         ssl_verifypeer = 0,
-        timeout = 30,
+        timeout = 60,
     }
 
     local ok, err = pcall(function()

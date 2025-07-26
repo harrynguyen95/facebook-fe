@@ -8,7 +8,7 @@ info = {
     checkpoint = nil,
     uuid = nil,
     status = nil,
-    thuemailId = nil,
+    mailOrderId = nil,
     twoFA = nil,
     profileUid = nil,
     mailLogin = nil,
@@ -32,7 +32,7 @@ MAIL_SUPLY = 1  -- 1|2|3 hotmail_dongvanfb|thuemails.com|yagisongs
 ENTER_VERIFY_CODE = true  -- true|false
 HOTMAIL_SERVICE_IDS = {1, 3, 2, 6, 5}
 HOTMAIL_SOURCE_FROM_FILE = false  -- true|false
-THUE_LAI_MAIL_THUEMAILS = 0  
+THUE_LAI_MAIL = 0  
 ADD_MAIL_DOMAIN = 0
 MAIL_DOMAIN_TYPE = 0
 CHANGE_INFO = false
@@ -42,6 +42,7 @@ PROVIDER_MAIL_THUEMAILS = 1  -- 1|3 gmail|icloud
 TIMES_XOA_INFO = 2  -- 0|1|2|3
 MAIL_THUEMAILS_API_KEY = "94a3a21c-40b5-4c48-a690-f1584c390e3e" -- Hải
 MAIL_DONGVANFB_API_KEY = "iFI7ppA8JNDJ52yVedbPlMpSh" -- Hải
+MAIL_GMAIL66_API_KEY = "odjYxf6OURH6O7L4Fg57uJzDDwl9PcZT" -- Nam
 LOGIN_WITH_CODE = false
 DUMMY_MODE = 0
 
@@ -822,7 +823,7 @@ function main()
                     end
 
                     -- remove gmail
-                    if waitImageVisible(add_new_contact_information, 2) and THUE_LAI_MAIL_THUEMAILS > 0 then
+                    if waitImageVisible(add_new_contact_information, 2) and THUE_LAI_MAIL > 0 then
                         press(650, 600) -- mail register
                         if waitImageVisible(delete_mail) then
                             findAndClickByImage(delete_mail)
@@ -852,7 +853,7 @@ function main()
                     end
 
                     local mailIcons = findImage(contact_email_icon[#contact_email_icon], 2, 0.99, nil, false, 1)
-                    if (THUE_LAI_MAIL_THUEMAILS > 0 and #mailIcons == 1) or (THUE_LAI_MAIL_THUEMAILS == 0 and #mailIcons == 2) then 
+                    if (THUE_LAI_MAIL > 0 and #mailIcons == 1) or (THUE_LAI_MAIL == 0 and #mailIcons == 2) then 
                         info.finishSettingMail = 'true'
                         archiveCurrentAccount()
                     end
@@ -964,8 +965,9 @@ function main()
 
             openURL("fb://friends") sleep(2)
             press(690, 90) sleep(1)
+            swipe(600, 600, 610, 900) sleep(2)
             if waitImageVisible(friend_send_add_friend) then 
-                local totalAdd = math.random(5, 8)
+                local totalAdd = math.random(10, 15)
                 local swiped = 0
                 local added = 0
                 while added < totalAdd and swiped < 3 do
@@ -982,12 +984,11 @@ function main()
                     if added < totalAdd then swipe(480, 800, 480, 500) sleep(2) swiped = swiped + 1 end
                     if waitImageVisible(gio_ban_chua_dung_tinh_nang_nay, 2) then press(375, 865) end 
                 end
-
-                info.finishAddFriend = 'true'
-                archiveCurrentAccount()
-                press(60, 1290) -- back to homepage
-                sleep(1)
-            end 
+            end
+            info.finishAddFriend = 'true'
+            archiveCurrentAccount()
+            press(60, 1290) -- back to homepage
+            sleep(1)
         end
     end 
 
@@ -1188,6 +1189,7 @@ function main()
 
     if info.finishAddFriend == 'true' and ((CHANGE_INFO and info.finishChangeInfo == 'true') or not CHANGE_INFO) and ((ADD_MAIL_DOMAIN > 0 and info.finishSettingMail == 'true') or ADD_MAIL_DOMAIN == 0) and (info.twoFA ~= nil and info.twoFA ~= '') then 
         finishCurrentAccount()
+        toastr('+1 nick live', 3)
     end
 
     ::label_searchtext::
@@ -1223,7 +1225,6 @@ function main()
             toastr('logout what_on_your_mind')
 
             resetInfoObject()
-            toastr('+1 nick live', 3)
 
             if modeMenuLeft then 
                 press(40, 90) sleep(1) -- go to menu
