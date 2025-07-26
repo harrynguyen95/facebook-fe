@@ -679,64 +679,134 @@ function main()
     modeMenuLeft = checkModeMenuLeft()
 
     ::label_settingmail::
-    swipe(600, 600, 610, 900) 
-    if waitImageVisible(what_on_your_mind) and ADD_MAIL_DOMAIN > 0 and info.finishSettingMail == 'false' and LANGUAGE == 'VN' then 
-        toastr('setting_mail what_on_your_mind')
+    if ADD_MAIL_DOMAIN > 0 and info.finishSettingMail == 'false' and LANGUAGE == 'VN' then 
+        swipe(600, 600, 610, 900) 
+        if waitImageVisible(what_on_your_mind) then 
+            toastr('setting_mail what_on_your_mind')
 
-        if modeMenuLeft then 
-            toast('modeMenuLeft')
-            press(40, 90) sleep(2) -- go to menu
-            press(560, 1100) sleep(2) -- go to configuration
-            press(110, 210) -- go to privacy
-        else 
-            press(690, 1290) -- go to menu
-            if waitImageVisible(setting_menu, 10) then
-                toastr('setting_menu')
-                press(600, 90) -- setting cog icon
-                waitImageNotVisible(setting_menu)
-            end
-        end 
-        if waitImageVisible(setting_privacy, 20) then
-            toastr('setting_privacy')
-            if waitImageVisible(see_more_account_center, 20) then
-                findAndClickByImage(see_more_account_center)
-                waitImageNotVisible(see_more_account_center)
-            end
-        end
-        if waitImageVisible(account_center, 10) then
-            toastr('account_center')
-            sleep(1)
-            swipe(600, 800, 610, 650) sleep(2)
-
-            if waitImageVisible(personal_details_btn) then
-                findAndClickByImage(personal_details_btn)
-            else
-                if waitImageVisible(your_information_and_permission) then
-                    findAndClickByImage(your_information_and_permission)
+            if modeMenuLeft then 
+                toast('modeMenuLeft')
+                press(40, 90) sleep(2) -- go to menu
+                press(560, 1100) sleep(2) -- go to configuration
+                press(110, 210) -- go to privacy
+            else 
+                press(690, 1290) -- go to menu
+                if waitImageVisible(setting_menu, 10) then
+                    toastr('setting_menu')
+                    press(600, 90) -- setting cog icon
+                    waitImageNotVisible(setting_menu)
+                end
+            end 
+            if waitImageVisible(setting_privacy, 20) then
+                toastr('setting_privacy')
+                if waitImageVisible(see_more_account_center, 20) then
+                    findAndClickByImage(see_more_account_center)
+                    waitImageNotVisible(see_more_account_center)
                 end
             end
-        end
-        if waitImageVisible(personal_details_page, 15) or waitImageVisible(your_information_and_per_btn, 15) then
-            toastr('personal_details_page')
-            if waitImageVisible(contact_information_btn) then
-                findAndClickByImage(contact_information_btn)
-            end
-        end
-        if waitImageVisible(add_new_contact_information) then
-            toast('add_new_contact_information')
-            sleep(2)
+            if waitImageVisible(account_center, 10) then
+                toastr('account_center')
+                sleep(1)
+                swipe(600, 800, 610, 650) sleep(2)
 
-            if ADD_MAIL_DOMAIN == 1 then 
-                local mailIcons = findImage(contact_email_icon[#contact_email_icon], 2, 0.99, nil, false, 1)
-                if #mailIcons == 2 then 
-                    -- local v = mailIcons[1]
-                    press(90, 470)
-                    if waitImageVisible(contact_confirm_mail) then
-                        findAndClickByImage(contact_confirm_mail)
-                        if waitImageVisible(contact_checkbox_account) then findAndClickByImage(contact_checkbox_account) end
-                        if waitImageVisible(next) then findAndClickByImage(next) end
+                if waitImageVisible(personal_details_btn) then
+                    findAndClickByImage(personal_details_btn)
+                else
+                    if waitImageVisible(your_information_and_permission) then
+                        findAndClickByImage(your_information_and_permission)
+                    end
+                end
+            end
+            if waitImageVisible(personal_details_page, 15) or waitImageVisible(your_information_and_per_btn, 15) then
+                toastr('personal_details_page')
+                if waitImageVisible(contact_information_btn) then
+                    findAndClickByImage(contact_information_btn)
+                end
+            end
+            if waitImageVisible(add_new_contact_information) then
+                toast('add_new_contact_information')
+                sleep(2)
+
+                if ADD_MAIL_DOMAIN == 1 then 
+                    local mailIcons = findImage(contact_email_icon[#contact_email_icon], 2, 0.99, nil, false, 1)
+                    if #mailIcons == 2 then 
+                        -- local v = mailIcons[1]
+                        press(90, 470)
+                        if waitImageVisible(contact_confirm_mail) then
+                            findAndClickByImage(contact_confirm_mail)
+                            if waitImageVisible(contact_checkbox_account) then findAndClickByImage(contact_checkbox_account) end
+                            if waitImageVisible(next) then findAndClickByImage(next) end
+                            if waitImageVisible(enter_confirm_code) then 
+                                local code = getMailDomainOwnerConfirmCode()
+                                if code and code ~= '' then
+                                    press(200, 480)
+                                    findAndClickByImage(x_input_icon)
+                                    typeText(code) sleep(1)
+                                    press(360, 580)
+                                    findAndClickByImage(next)
+                                end 
+                            end
+                            if waitImageVisible(contact_email_added, 10) then 
+                                press(380, 1260) sleep(2) -- btn đóng
+                            end 
+                        else 
+                            press(50, 155) sleep(1)
+                        end 
+
+                        if waitImageVisible(contact_email_icon) then 
+                            -- local v = mailIcons[2]
+                            press(90, 580)
+                            if waitImageVisible(delete_mail) then
+                                findAndClickByImage(delete_mail)
+                                sleep(1) press(240, 850)
+                                if waitImageVisible(deleted_previous_mail, 10) then
+                                    press(380, 1260) sleep(2) -- btn đóng
+                                end
+                            end
+                        end
+                    end 
+                    if waitImageVisible(contact_phone) then 
+                        findAndClickByImage(contact_phone) 
+                        if waitImageVisible(contact_delete_phone) then findAndClickByImage(contact_delete_phone) end
+                        sleep(1) press(240, 850)
+                        if waitImageVisible(deleted_previous_phone, 10) then
+                            press(380, 1260) sleep(2) -- btn đóng
+                        end
+                    end
+
+                    local mailIcons = findImage(contact_email_icon[#contact_email_icon], 2, 0.99, nil, false, 1)
+                    if #mailIcons == 1 then 
+                        info.finishSettingMail = 'true'
+                        archiveCurrentAccount()
+                    end
+                end
+
+                if ADD_MAIL_DOMAIN == 2 then 
+                    findAndClickByImage(add_new_contact_information)
+
+                    if waitImageVisible(add_mail) then
+                        toastr('add_mail')
+                        sleep(1)
+                        findAndClickByImage(add_mail)
+                    else 
+                        press(130, 730) sleep(2) -- add mail options
+                    end
+                    if waitImageVisible(add_a_phone_number, 2) then press(380, 1260) end -- add email instead
+                    if waitImageVisible(add_email_address) then
+                        toastr('add_email_address')
+
+                        getDomainMail() sleep(1)
+                        press(310, 640)
+                        findAndClickByImage(x_input_icon)
+                        typeText(info.mailLogin)
+                        press(680, 1290) -- btn enter
+
+                        if waitImageVisible(contact_checkbox_account, 2) then findAndClickByImage(contact_checkbox_account) end
+                        if waitImageVisible(next, 2) then findAndClickByImage(next) end
                         if waitImageVisible(enter_confirm_code) then 
+                            toastr('enter_confirm_code')
                             local code = getMailDomainOwnerConfirmCode()
+                            toastr('CODE: ' .. (code or '-'), 2)
                             if code and code ~= '' then
                                 press(200, 480)
                                 findAndClickByImage(x_input_icon)
@@ -745,146 +815,80 @@ function main()
                                 findAndClickByImage(next)
                             end 
                         end
-                        if waitImageVisible(contact_email_added, 10) then 
-                            press(380, 1260) sleep(2) -- btn đóng
-                        end 
-                    else 
-                        press(50, 155) sleep(1)
-                    end 
+                        if waitImageVisible(added_email, 8) then 
+                            archiveCurrentAccount()
+                            press(380, 1260) sleep(2)  -- close btn
+                        end
+                    end
 
-                    if waitImageVisible(contact_email_icon) then 
-                        -- local v = mailIcons[2]
-                        press(90, 580)
+                    -- remove gmail
+                    if waitImageVisible(add_new_contact_information, 2) and THUE_LAI_MAIL_THUEMAILS > 0 then
+                        press(650, 600) -- mail register
                         if waitImageVisible(delete_mail) then
                             findAndClickByImage(delete_mail)
-                            sleep(1) press(240, 850)
-                            if waitImageVisible(deleted_previous_mail, 10) then
-                                press(380, 1260) sleep(2) -- btn đóng
-                            end
-                        end
-                    end
-                end 
-                if waitImageVisible(contact_phone) then 
-                    findAndClickByImage(contact_phone) 
-                    if waitImageVisible(contact_delete_phone) then findAndClickByImage(contact_delete_phone) end
-                    sleep(1) press(240, 850)
-                    if waitImageVisible(deleted_previous_phone, 10) then
-                        press(380, 1260) sleep(2) -- btn đóng
-                    end
-                end
+                            sleep(1)
+                            press(240, 850)
 
-                local mailIcons = findImage(contact_email_icon[#contact_email_icon], 2, 0.99, nil, false, 1)
-                if #mailIcons == 1 then 
-                    info.finishSettingMail = 'true'
-                    archiveCurrentAccount()
-                end
-            end
+                            if waitImageVisible(check_your_email, 3) then
+                                toastr('check_your_email')
+                                local code = getMailDomainOwnerConfirmCode()
+                                toastr('CODE: ' .. (code or '-'), 2)
 
-            if ADD_MAIL_DOMAIN == 2 then 
-                findAndClickByImage(add_new_contact_information)
+                                if code and code ~= '' then
+                                    press(100, 850) -- code input
+                                    typeText(code) sleep(1)
+                                    if waitImageVisible(continue_code_mail) then
+                                        findAndClickByImage(continue_code_mail)
 
-                if waitImageVisible(add_mail) then
-                    toastr('add_mail')
-                    sleep(1)
-                    findAndClickByImage(add_mail)
-                else 
-                    press(130, 730) sleep(2) -- add mail options
-                end
-                if waitImageVisible(add_a_phone_number, 2) then press(380, 1260) end -- add email instead
-                if waitImageVisible(add_email_address) then
-                    toastr('add_email_address')
-
-                    getDomainMail() sleep(1)
-                    press(310, 640)
-                    findAndClickByImage(x_input_icon)
-                    typeText(info.mailLogin)
-                    press(680, 1290) -- btn enter
-
-                    if waitImageVisible(contact_checkbox_account, 2) then findAndClickByImage(contact_checkbox_account) end
-                    if waitImageVisible(next, 2) then findAndClickByImage(next) end
-                    if waitImageVisible(enter_confirm_code) then 
-                        toastr('enter_confirm_code')
-                        local code = getMailDomainOwnerConfirmCode()
-                        toastr('CODE: ' .. (code or '-'), 2)
-                        if code and code ~= '' then
-                            press(200, 480)
-                            findAndClickByImage(x_input_icon)
-                            typeText(code) sleep(1)
-                            press(360, 580)
-                            findAndClickByImage(next)
-                        end 
-                    end
-                    if waitImageVisible(added_email, 8) then 
-                        archiveCurrentAccount()
-                        press(380, 1260) sleep(2)  -- close btn
-                    end
-                end
-
-                -- remove gmail
-                if waitImageVisible(add_new_contact_information, 2) and THUE_LAI_MAIL_THUEMAILS > 0 then
-                    press(650, 600) -- mail register
-                    if waitImageVisible(delete_mail) then
-                        findAndClickByImage(delete_mail)
-                        sleep(1)
-                        press(240, 850)
-
-                        if waitImageVisible(check_your_email, 3) then
-                            toastr('check_your_email')
-                            local code = getMailDomainOwnerConfirmCode()
-                            toastr('CODE: ' .. (code or '-'), 2)
-
-                            if code and code ~= '' then
-                                press(100, 850) -- code input
-                                typeText(code) sleep(1)
-                                if waitImageVisible(continue_code_mail) then
-                                    findAndClickByImage(continue_code_mail)
-
-                                    waitImageNotVisible(check_your_email)
+                                        waitImageNotVisible(check_your_email)
+                                    end
                                 end
                             end
-                        end
 
-                        if waitImageVisible(deleted_previous_mail, 8) then
-                            press(380, 1260) sleep(2) -- close btn
+                            if waitImageVisible(deleted_previous_mail, 8) then
+                                press(380, 1260) sleep(2) -- close btn
+                            end
                         end
+                    end
+
+                    local mailIcons = findImage(contact_email_icon[#contact_email_icon], 2, 0.99, nil, false, 1)
+                    if (THUE_LAI_MAIL_THUEMAILS > 0 and #mailIcons == 1) or (THUE_LAI_MAIL_THUEMAILS == 0 and #mailIcons == 2) then 
+                        info.finishSettingMail = 'true'
+                        archiveCurrentAccount()
                     end
                 end
 
-                local mailIcons = findImage(contact_email_icon[#contact_email_icon], 2, 0.99, nil, false, 1)
-                if (THUE_LAI_MAIL_THUEMAILS > 0 and #mailIcons == 1) or (THUE_LAI_MAIL_THUEMAILS == 0 and #mailIcons == 2) then 
-                    info.finishSettingMail = 'true'
-                    archiveCurrentAccount()
-                end
-            end
-
-            if waitImageVisible(add_new_contact_information) then
-                toast('add_new_contact_information')
-                press(50, 155) -- back
-                if waitImageVisible(personal_details_page) then
+                if waitImageVisible(add_new_contact_information) then
+                    toast('add_new_contact_information')
                     press(50, 155) -- back
-                    press(55, 155) -- back
-                    press(45, 90) -- back to setting menu
-                    if not modeMenuLeft then press(45, 90) end -- back to main menu
-                    press(60, 1290) sleep(2) -- back to homepage
+                    if waitImageVisible(personal_details_page) then
+                        press(50, 155) -- back
+                        press(55, 155) -- back
+                        press(45, 90) -- back to setting menu
+                        if not modeMenuLeft then press(45, 90) end -- back to main menu
+                        press(60, 1290) sleep(2) -- back to homepage
+                    end
                 end
             end
-        end
+        end 
     end 
 
     ::label_changeinfo::
-    swipe(600, 600, 610, 900) 
-    if waitImageVisible(what_on_your_mind) and CHANGE_INFO and info.finishChangeInfo == 'false' and LANGUAGE == 'VN' then 
-        toastr('change_info what_on_your_mind')
-        openURL("fb://profile") 
-        if waitImageVisible(mo_trong_facebook, 2) then press(500, 725) end
-        if waitImageVisible(welcome_to_profile) or waitImageVisible(tiep_tuc_thiet_lap_profile) or waitImageVisible(lock_profile_page) then 
-            press(50, 90) sleep(1) -- x icon
-            press(510, 830) sleep(1) -- dừng icon
-        end 
+    if CHANGE_INFO and info.finishChangeInfo == 'false' and LANGUAGE == 'VN' then 
+        swipe(600, 600, 610, 900) 
+        if waitImageVisible(what_on_your_mind) then 
+            toastr('change_info what_on_your_mind')
+            openURL("fb://profile") 
+            if waitImageVisible(mo_trong_facebook, 2) then press(500, 725) end
+            if waitImageVisible(welcome_to_profile) or waitImageVisible(tiep_tuc_thiet_lap_profile) or waitImageVisible(lock_profile_page) then 
+                press(50, 90) sleep(1) -- x icon
+                press(510, 830) sleep(1) -- dừng icon
+            end 
 
-        if waitImageVisible(profile_add_avatar, 2) then 
-            if saveRandomServerAvatar() then
+            if waitImageVisible(add_coverphoto, 2) then findAndClickByImage(skip) sleep(1) end
+            if waitImageVisible(profile_add_avatar, 2) then 
                 findAndClickByImage(profile_add_avatar)
+                saveRandomServerAvatar()
                 sleep(3)
                 if waitImageVisible(chon_anh_dai_dien) then findAndClickByImage(chon_anh_dai_dien) end
                 if waitImageVisible(allow_access) then 
@@ -901,249 +905,272 @@ function main()
                 if waitImageVisible(edit_profile_page_edit, 2) then 
                     press(45, 90) sleep(1) -- back
                 end
-            end 
-        else 
-            info.finishChangeInfo = 'true'
-            archiveCurrentAccount()
-        end
-        if waitImageVisible(edit_profile_page, 3) then press(60, 1290) sleep(2) end
-    end 
-
-    ::label_searchfriend::
-    swipe(600, 600, 610, 900) 
-    toastr('wait searchfriend..')
-    if waitImageVisible(what_on_your_mind) and info.finishAddFriend == 'false' then
-        toastr('searchfriend what_on_your_mind')
-        openURL("fb://friends")
-        if waitImageVisible(contact_icon) or 1 then
-            press(690, 90) sleep(1)
-            press(690, 90) sleep(1)
-
-            local searchUsername = getSearchUsername(math.random(3, 4))
-            for i, line in ipairs(searchUsername) do
-                typeText(line)
-                press(700, 1300) -- btn search blue
-                sleep(4)
-                if waitImageVisible(friend_send_add_friend) then 
-                    local totalAdd = math.random(4, 5)
-                    local added = 0
-                    while added < totalAdd do
-                        local found = findImage(friend_send_add_friend[1], 0, 0.99, nil, false, 1)
-                        for i, v in pairs(found) do
-                            if v ~= nil then
-                                local x = v[1]
-                                local y = v[2]
-                                press(x, y)
-                                added = added + 1
-                            end
-                            sleep(0,5)
-                        end
-                        if added < totalAdd then swipe(480, 800, 480, 500) sleep(2) end
-                    end
-                end 
-
-                if i < #searchUsername then
-                    press(300, 90); -- click back into search box
-                    if waitImageVisible(x_icon_search, 2) then
-                        findAndClickByImage(x_icon_search)
-                    else 
-                        press(600, 90);
-                    end
-                else
-                    press(60, 1290) -- back to homepage
-                    sleep(1)
-                end
+            else 
+                info.finishChangeInfo = 'true'
+                archiveCurrentAccount()
             end
-        end
-
-        openURL("fb://friends") sleep(2)
-        press(690, 90) sleep(1)
-        swipe(600, 600, 610, 900) sleep(2)
-        swipe(600, 700, 610, 600) sleep(1)
-        if waitImageVisible(friend_send_add_friend) then 
-            local totalAdd = math.random(5, 8)
-            local added = 0
-            while added < totalAdd do
-                local found = findImage(friend_send_add_friend[2], 0, 0.99, nil, false, 1)
-                for i, v in pairs(found) do
-                    if v ~= nil then
-                        local x = v[1]
-                        local y = v[2]
-                        press(x, y)
-                        added = added + 1
-                    end
-                    sleep(0,5)
-                end
-                if added < totalAdd then swipe(480, 800, 480, 500) sleep(2) end
-                if waitImageVisible(gio_ban_chua_dung_tinh_nang_nay, 2) then press(375, 865) end 
-            end
-
-            info.finishAddFriend = 'true'
-            archiveCurrentAccount()
-            press(60, 1290) -- back to homepage
-            sleep(1)
+            if waitImageVisible(edit_profile_page, 3) then press(60, 1290) sleep(2) end
         end 
     end
 
-    ::label_get2FA::
-    swipe(600, 600, 610, 900) 
-    if waitImageVisible(what_on_your_mind) and (info.twoFA == nil or info.twoFA == '') then 
-        toastr('2FA what_on_your_mind')
+    ::label_searchfriend::
+    if info.finishAddFriend == 'false' then 
+        swipe(600, 600, 610, 900) 
+        toastr('wait searchfriend..')
+        if waitImageVisible(what_on_your_mind) then
+            toastr('searchfriend what_on_your_mind')
+            openURL("fb://friends")
+            if waitImageVisible(contact_icon) or 1 then
+                press(690, 90) sleep(1)
+                press(690, 90) sleep(1)
 
-        if modeMenuLeft then 
-            toast('modeMenuLeft')
-            press(40, 90) sleep(2) -- go to menu
-            press(560, 1100) sleep(2) -- go to configuration
-            press(110, 210) -- go to privacy
-        else 
-            press(690, 1290) -- go to menu
-            if waitImageVisible(setting_menu, 10) then
-                toastr('setting_menu')
-                press(600, 90) -- setting cog icon
-                waitImageNotVisible(setting_menu)
-            end
-        end 
-        if waitImageVisible(setting_privacy, 20) then
-            toastr('setting_privacy')
-            if waitImageVisible(see_more_account_center, 20) then
-                findAndClickByImage(see_more_account_center)
-                waitImageNotVisible(see_more_account_center)
-            end
-        end
-        if waitImageVisible(account_center, 10) then
-            toastr('account_center')
-            sleep(1)
-            swipe(600, 800, 610, 650) sleep(2)
+                local searchUsername = getSearchUsername(math.random(3, 4))
+                for i, line in ipairs(searchUsername) do
+                    typeText(line)
+                    press(700, 1300) -- btn search blue
+                    sleep(4)
+                    if waitImageVisible(friend_send_add_friend) then 
+                        local totalAdd = math.random(4, 5)
+                        local added = 0
+                        while added < totalAdd do
+                            local found = findImage(friend_send_add_friend[1], 0, 0.99, nil, false, 1)
+                            for i, v in pairs(found) do
+                                if v ~= nil then
+                                    local x = v[1]
+                                    local y = v[2]
+                                    press(x, y)
+                                    added = added + 1
+                                end
+                                sleep(0,5)
+                            end
+                            if added < totalAdd then swipe(480, 800, 480, 500) sleep(2) end
+                        end
+                    end 
 
-            if waitImageVisible(personal_details_btn) then
-                findAndClickByImage(personal_details_btn)
-            else
-                if waitImageVisible(your_information_and_permission) then
-                    findAndClickByImage(your_information_and_permission)
+                    if i < #searchUsername then
+                        press(300, 90); -- click back into search box
+                        if waitImageVisible(x_icon_search, 2) then
+                            findAndClickByImage(x_icon_search)
+                        else 
+                            press(600, 90);
+                        end
+                    else
+                        press(60, 1290) -- back to homepage
+                        sleep(1)
+                    end
                 end
             end
-        end
 
-        if waitImageVisible(personal_details_page, 15) or waitImageVisible(your_information_and_per_btn, 15) then
-            toastr('personal_details_page')
-            
-            waitImageVisible(identify_confirmation_btn)
-            findAndClickByImage(identify_confirmation_btn)
-            waitImageNotVisible(identify_confirmation_btn)
-        end
-        if waitImageVisible(confirm_your_identity, 15) then
-            toastr('confirm_your_identity')
-            findAndClickByImage(confirm_your_identity)
-            press(130, 1290) -- protect your account
-            waitImageNotVisible(confirm_your_identity)
-        end
-        if waitImageVisible(reenter_password, 10) then
-            toastr('reenter_password')
-            sleep(1)
-            findAndClickByImage(input_password)
-            findAndClickByImage(password_eye)
-            typeText(info.password)
-            findAndClickByImage(next)
-            findAndClickByImage(continue)
-            waitImageNotVisible(reenter_password)
-        end
-
-        if LOGIN_WITH_CODE then 
-            if waitImageVisible(continue_code_mail) then
-                toast('continue_code_mail')
-                findAndClickByImage(continue_code_mail)
-                waitImageVisible(check_your_email, 10)
-            end
-        end 
-
-        if waitImageVisible(check_your_email, 3) then
-            toastr('check_your_email')
-            local again = 1
-
-            ::label_getownercodeagain::
-            sleep(5)
-
-            local code = ''
-            if ADD_MAIL_DOMAIN > 0 then 
-                code = getMailDomainOwnerConfirmCode()
-            else 
-                code = getCodeMailOwner()
-            end
-            toastr('CODE: ' .. (code or '-'), 2)
-            again = again + 1
-
-            if code and code ~= '' and (#code == 8 or #code == 6) then 
-                press(100, 850) 
-                swipe(600, 330, 600, 500)
-                sleep(1)
-                findAndClickByImage(x_input_icon)
-                typeText(code) sleep(1)
-                if waitImageVisible(continue_code_mail) then
-                    findAndClickByImage(continue_code_mail)
-                    waitImageNotVisible(check_your_email)
-                else 
-                    findAndClickByImage(next)
-                    waitImageNotVisible(check_your_email)
-                end 
-
-                if checkImageIsExists(red_warning_icon) and again < 3 then 
-                    goto label_getownercodeagain
-                end 
-            else 
-                press(55, 160) -- X
-
-                if waitImageVisible(protect_your_account) then
-                    press(40, 90) sleep(1) -- back on protect your account
-                    press(40, 90) sleep(1) -- back on confirm identity
-                    press(45, 90) sleep(1) -- back to setting menu
-                    if not modeMenuLeft then press(45, 90) end -- back to main menu
+            openURL("fb://friends") sleep(2)
+            press(690, 90) sleep(1)
+            if waitImageVisible(friend_send_add_friend) then 
+                local totalAdd = math.random(5, 8)
+                local added = 0
+                while added < totalAdd do
+                    local found = findImage(friend_send_add_friend[2], 0, 0.99, nil, false, 1)
+                    for i, v in pairs(found) do
+                        if v ~= nil then
+                            local x = v[1]
+                            local y = v[2]
+                            press(x, y)
+                            added = added + 1
+                        end
+                        sleep(0,5)
+                    end
+                    if added < totalAdd then swipe(480, 800, 480, 500) sleep(2) end
+                    if waitImageVisible(gio_ban_chua_dung_tinh_nang_nay, 2) then press(375, 865) end 
                 end
+
+                info.finishAddFriend = 'true'
+                archiveCurrentAccount()
                 press(60, 1290) -- back to homepage
-
-                goto label_searchtext
+                sleep(1)
             end 
         end
+    end 
 
-        if waitImageVisible(help_protect_account, 10) then
-            toastr('help_protect_account')
-            findAndClickByImage(next)
-            waitImageNotVisible(help_protect_account)
-        end
+    ::label_get2FA::
+    if (info.twoFA == nil or info.twoFA == '') then
+        swipe(600, 600, 610, 900) 
+        if waitImageVisible(what_on_your_mind) then 
+            toastr('2FA what_on_your_mind')
 
-        if LOGIN_WITH_CODE then 
-            if waitImageVisible(what_app, 2) then
-                failedCurrentAccount('other_device')
-                goto label_continue
-            end
-
-            if waitImageVisible(check_notification_device, 1) then
-                failedCurrentAccount('other_device')
-                goto label_continue
-            end
-        end 
-
-        if waitImageVisible(instructions_for_setup, 10) and waitImageVisible(copy_key, 10) then
-            toastr('instructions_for_setup')
-            findAndClickByImage(copy_key) sleep(4)
-            local secret = clipText()
-            if secret then
-                info.twoFA = string.gsub(secret, " ", "")
-                findAndClickByImage(next)
-                waitImageNotVisible(instructions_for_setup) sleep(2)
-            end
-        end
-        if waitImageVisible(enter_code_2fa, 10) or waitImageVisible(two_FA_code, 10) then
-            toastr('two_FA_code')
-            local otp = get2FACode()
-            if otp then
-                press(660, 525) -- input otp code
-                typeText(otp)
-
-                findAndClickByImage(next)
-                waitImageNotVisible(enter_code_2fa, 10)
+            if modeMenuLeft then 
+                toast('modeMenuLeft')
+                press(40, 90) sleep(2) -- go to menu
+                press(560, 1100) sleep(2) -- go to configuration
+                press(110, 210) -- go to privacy
             else 
-                info.twoFA = nil                
-                if waitImageVisible(reenter_password, 10) then
+                press(690, 1290) -- go to menu
+                if waitImageVisible(setting_menu, 10) then
+                    toastr('setting_menu')
+                    press(600, 90) -- setting cog icon
+                    waitImageNotVisible(setting_menu)
+                end
+            end 
+            if waitImageVisible(setting_privacy, 20) then
+                toastr('setting_privacy')
+                if waitImageVisible(see_more_account_center, 20) then
+                    findAndClickByImage(see_more_account_center)
+                    waitImageNotVisible(see_more_account_center)
+                end
+            end
+            if waitImageVisible(account_center, 10) then
+                toastr('account_center')
+                sleep(1)
+                swipe(600, 800, 610, 650) sleep(2)
+
+                if waitImageVisible(personal_details_btn) then
+                    findAndClickByImage(personal_details_btn)
+                else
+                    if waitImageVisible(your_information_and_permission) then
+                        findAndClickByImage(your_information_and_permission)
+                    end
+                end
+            end
+
+            if waitImageVisible(personal_details_page, 15) or waitImageVisible(your_information_and_per_btn, 15) then
+                toastr('personal_details_page')
+                
+                waitImageVisible(identify_confirmation_btn)
+                findAndClickByImage(identify_confirmation_btn)
+                waitImageNotVisible(identify_confirmation_btn)
+            end
+            if waitImageVisible(confirm_your_identity, 15) then
+                toastr('confirm_your_identity')
+                findAndClickByImage(confirm_your_identity)
+                press(130, 1290) -- protect your account
+                waitImageNotVisible(confirm_your_identity)
+            end
+            if waitImageVisible(reenter_password, 10) then
+                toastr('reenter_password')
+                sleep(1)
+                findAndClickByImage(input_password)
+                findAndClickByImage(password_eye)
+                typeText(info.password)
+                findAndClickByImage(next)
+                findAndClickByImage(continue)
+                waitImageNotVisible(reenter_password)
+            end
+
+            if LOGIN_WITH_CODE then 
+                if waitImageVisible(continue_code_mail) then
+                    toast('continue_code_mail')
+                    findAndClickByImage(continue_code_mail)
+                    waitImageVisible(check_your_email, 10)
+                end
+            end 
+
+            if waitImageVisible(check_your_email, 3) then
+                toastr('check_your_email')
+                local again = 1
+
+                ::label_getownercodeagain::
+                sleep(5)
+
+                local code = ''
+                if ADD_MAIL_DOMAIN > 0 then 
+                    code = getMailDomainOwnerConfirmCode()
+                else 
+                    code = getCodeMailOwner()
+                end
+                toastr('CODE: ' .. (code or '-'), 2)
+                again = again + 1
+
+                if code and code ~= '' and (#code == 8 or #code == 6) then 
+                    press(100, 850) 
+                    swipe(600, 330, 600, 500)
+                    sleep(1)
+                    findAndClickByImage(x_input_icon)
+                    typeText(code) sleep(1)
+                    if waitImageVisible(continue_code_mail) then
+                        findAndClickByImage(continue_code_mail)
+                        waitImageNotVisible(check_your_email)
+                    else 
+                        findAndClickByImage(next)
+                        waitImageNotVisible(check_your_email)
+                    end 
+
+                    if checkImageIsExists(red_warning_icon) and again < 3 then 
+                        goto label_getownercodeagain
+                    end 
+                else 
+                    press(55, 160) -- X
+
+                    if waitImageVisible(protect_your_account) then
+                        press(40, 90) sleep(1) -- back on protect your account
+                        press(40, 90) sleep(1) -- back on confirm identity
+                        press(45, 90) sleep(1) -- back to setting menu
+                        if not modeMenuLeft then press(45, 90) end -- back to main menu
+                    end
+                    press(60, 1290) -- back to homepage
+
+                    goto label_searchtext
+                end 
+            end
+
+            if waitImageVisible(help_protect_account, 10) then
+                toastr('help_protect_account')
+                findAndClickByImage(next)
+                waitImageNotVisible(help_protect_account)
+            end
+
+            if LOGIN_WITH_CODE then 
+                if waitImageVisible(what_app, 2) then
+                    failedCurrentAccount('other_device')
+                    goto label_continue
+                end
+
+                if waitImageVisible(check_notification_device, 1) then
+                    failedCurrentAccount('other_device')
+                    goto label_continue
+                end
+            end 
+
+            if waitImageVisible(instructions_for_setup, 10) and waitImageVisible(copy_key, 10) then
+                toastr('instructions_for_setup')
+                findAndClickByImage(copy_key) sleep(4)
+                local secret = clipText()
+                if secret then
+                    info.twoFA = string.gsub(secret, " ", "")
+                    findAndClickByImage(next)
+                    waitImageNotVisible(instructions_for_setup) sleep(2)
+                end
+            end
+            if waitImageVisible(enter_code_2fa, 10) or waitImageVisible(two_FA_code, 10) then
+                toastr('two_FA_code')
+                local otp = get2FACode()
+                if otp then
+                    press(660, 525) -- input otp code
+                    typeText(otp)
+
+                    findAndClickByImage(next)
+                    waitImageNotVisible(enter_code_2fa, 10)
+                else 
+                    info.twoFA = nil                
+                    if waitImageVisible(reenter_password, 10) then
+                        press(55, 155) -- X on re-enter password
+                    end
+                    if waitImageVisible(protect_your_account) then
+                        press(40, 90) sleep(1) -- back on protect your account
+                        press(40, 90) sleep(1) -- back on confirm identity
+                        press(45, 90) sleep(1) -- back to setting menu
+                        if not modeMenuLeft then press(45, 90) end -- back to main menu
+                    end
+                    press(60, 1290) -- back to homepage
+                    
+                    goto label_searchtext
+                end 
+            end
+
+            if waitImageVisible(two_factor_is_on, 10) then
+                toastr('two_factor_is_on')
+                press(380, 1160) -- btn done
+
+                archiveCurrentAccount()
+
+                waitImageNotVisible(two_factor_is_on)
+                if waitImageVisible(reenter_password) then
                     press(55, 155) -- X on re-enter password
                 end
                 if waitImageVisible(protect_your_account) then
@@ -1153,28 +1180,7 @@ function main()
                     if not modeMenuLeft then press(45, 90) end -- back to main menu
                 end
                 press(60, 1290) -- back to homepage
-                
-                goto label_searchtext
-            end 
-        end
-
-        if waitImageVisible(two_factor_is_on, 10) then
-            toastr('two_factor_is_on')
-            press(380, 1160) -- btn done
-
-            archiveCurrentAccount()
-
-            waitImageNotVisible(two_factor_is_on)
-            if waitImageVisible(reenter_password) then
-                press(55, 155) -- X on re-enter password
             end
-            if waitImageVisible(protect_your_account) then
-                press(40, 90) sleep(1) -- back on protect your account
-                press(40, 90) sleep(1) -- back on confirm identity
-                press(45, 90) sleep(1) -- back to setting menu
-                if not modeMenuLeft then press(45, 90) end -- back to main menu
-            end
-            press(60, 1290) -- back to homepage
         end
     end
 
@@ -1209,36 +1215,38 @@ function main()
     end
 
     ::label_logout::
-    swipe(600, 600, 610, 900) 
-    if waitImageVisible(what_on_your_mind) and info.finishAddFriend == 'true' and ((CHANGE_INFO and info.finishChangeInfo == 'true') or not CHANGE_INFO) and ((ADD_MAIL_DOMAIN > 0 and info.finishSettingMail == 'true') or ADD_MAIL_DOMAIN == 0) and (info.twoFA ~= nil and info.twoFA ~= '') then 
-        toastr('logout what_on_your_mind')
+    if info.finishAddFriend == 'true' and ((CHANGE_INFO and info.finishChangeInfo == 'true') or not CHANGE_INFO) and ((ADD_MAIL_DOMAIN > 0 and info.finishSettingMail == 'true') or ADD_MAIL_DOMAIN == 0) and (info.twoFA ~= nil and info.twoFA ~= '') then 
+        swipe(600, 600, 610, 900) 
+        if waitImageVisible(what_on_your_mind) then 
+            toastr('logout what_on_your_mind')
 
-        resetInfoObject()
-        toastr('+1 nick live', 3)
+            resetInfoObject()
+            toastr('+1 nick live', 3)
 
-        if modeMenuLeft then 
-            press(40, 90) sleep(1) -- go to menu
-            swipe(500, 600, 500, 350) sleep(1)
-        else 
-            press(690, 1290) -- go to menu
-            swipe(500, 900, 500, 800) sleep(1)
-            swipe(550, 600, 600, 350) sleep(2)
-        end 
-        if waitImageVisible(logout_btn) then
-            findAndClickByImage(logout_btn) sleep(1)
-        end
-        if waitImageVisible(not_now, 2) then
-            findAndClickByImage(not_now) sleep(1)
-            waitImageNotVisible(not_now)
-        end
-        if waitImageVisible(logout_btn) then
-            findAndClickByImage(logout_btn) sleep(1)
-            waitImageNotVisible(logout_btn)
-        end
+            if modeMenuLeft then 
+                press(40, 90) sleep(1) -- go to menu
+                swipe(500, 600, 500, 350) sleep(1)
+            else 
+                press(690, 1290) -- go to menu
+                swipe(500, 900, 500, 800) sleep(1)
+                swipe(550, 600, 600, 350) sleep(2)
+            end 
+            if waitImageVisible(logout_btn) then
+                findAndClickByImage(logout_btn) sleep(1)
+            end
+            if waitImageVisible(not_now, 2) then
+                findAndClickByImage(not_now) sleep(1)
+                waitImageNotVisible(not_now)
+            end
+            if waitImageVisible(logout_btn) then
+                findAndClickByImage(logout_btn) sleep(1)
+                waitImageNotVisible(logout_btn)
+            end
 
-        removeAccount()
-        sleep(1)
-        goto label_continue
+            removeAccount()
+            sleep(1)
+            goto label_continue
+        end
     end
 
     if waitImageVisible(enter_an_email, 1) then goto label_enterconfirmcodedummy end 
