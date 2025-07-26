@@ -102,7 +102,7 @@ end
 function press(x, y, duration)
     duration = duration or 0.3
     local randOffset = function()
-        return math.random(-5, 5)
+        return math.random(-10, 10)
     end
     local randX = x + randOffset()
     local randY = y + randOffset()
@@ -483,7 +483,7 @@ function swipeForce(x1, y1, x2, y2, duration)
     touchUp(1, x2, y2)
 end
 
-function swipe(x1, y1, x2, y2, duration)
+function swipeOld(x1, y1, x2, y2, duration)
     duration = duration or 200
     touchDown(0, x1, y1)
     usleep(50000)
@@ -491,6 +491,30 @@ function swipe(x1, y1, x2, y2, duration)
     usleep(duration * 1000)
     touchUp(0, x2, y2)
     usleep(100000)
+end
+
+function wipe(x1, y1, x2, y2, duration)
+    duration = duration or 300
+    local steps = math.random(12, 20)
+    local sleepPerStep = math.floor(duration * 1000 / steps)
+
+    touchDown(0, x1, y1)
+    usleep( math.random(40000, 60000) )
+
+    for i = 1, steps do
+        local t = i / steps
+        local x = x1 + (x2 - x1) * t
+        local y = y1 + (y2 - y1) * t
+
+        local jitterX = math.random(-1, 1)
+        local jitterY = math.random(-1, 1)
+
+        touchMove(0, x + jitterX, y + jitterY)
+        usleep(sleepPerStep + math.random(-1000, 1000))
+    end
+
+    touchUp(0, x2, y2)
+    usleep( math.random(80000, 120000) )
 end
 
 function swipeVertically(n)
@@ -972,8 +996,7 @@ function checkIP()
     toast('v4 check: ' .. (response or '-'), 2)
     sleep(2)
     if response then
-        ip_address = response
-        info.ipRegister = ip_address
+        info.ipRegister = response
         return true
     else 
         sleep(1)
@@ -982,8 +1005,7 @@ function checkIP()
         toast('v6 check: ' .. (response or '-'), 2)
         sleep(2)
         if response then
-            ip_address = response
-            info.ipRegister = ip_address
+            info.ipRegister = response
             return true
         end 
     end
@@ -1188,159 +1210,3 @@ function hasUppercase(email)
     end
     return false
 end
-
-
--- function changeMailDomain()
---     ::label_addmail::
---     if ADD_MAIL_DOMAIN == 2 then
---         if waitImageVisible(what_on_your_mind) then 
---             toastr('Add mail what_on_your_mind')
-
---             press(690, 1290) -- go to menu
-
---             press(690, 1290) -- go to menu
-
---             if waitImageVisible(setting_menu, 8) then
---                 toastr('setting_menu')
---                 press(600, 90) -- setting cog icon
---                 waitImageNotVisible(setting_menu)
---             end
-
---             if waitImageVisible(setting_privacy, 12) then
---                 toastr('setting_privacy')
---                 if waitImageVisible(see_more_account_center, 10) then
---                     findAndClickByImage(see_more_account_center)
---                     waitImageNotVisible(see_more_account_center)
---                 end
---             end
-
---             if waitImageVisible(account_center, 12) then
---                 toastr('account_center')
---                 sleep(1)
---                 swipe(600, 800, 610, 650) sleep(1)
-
---                 if waitImageVisible(personal_details_btn) then
---                     findAndClickByImage(personal_details_btn)
---                 else
---                     if waitImageVisible(your_information_and_permission) then
---                         findAndClickByImage(your_information_and_permission)
---                     end
---                 end
---             end
-
---             if waitImageVisible(personal_details_page, 12) or waitImageVisible(your_information_and_per_btn, 12) then
---                 toastr('personal_details_page')
---                 press(630, 550) -- Contact info btn
-
---                 if waitImageVisible(contact_information) then
---                     press(370, 1260) -- Add new contact btn
---                 end
-                
---                 if waitImageVisible(add_mail) then
---                     toastr('add_mail')
---                     sleep(1)
---                     findAndClickByImage(add_mail)
---                 else 
---                     toastr('add_mail else')
---                     press(130, 730) sleep(2) -- add mail options
---                 end
-
---                 if waitImageVisible(add_a_phone_number, 2) then
---                     toastr('add_a_phone_number')
---                     press(380, 1260) -- add email instead
---                 end
---             end
-
---             if waitImageVisible(add_email_address) then
---                 toastr('add_email_address')
-
---                 press(110, 560) -- Input new mail address
---                 typeText(info.mailLogin) sleep(0.5)
---                 press(700, 1280) -- enter done typing
---                 findAndClickByImage(next)
-
---                 if waitImageVisible(email_used_added) then
---                     press(55, 155) -- X icon
---                     press(45, 155) -- back
---                     press(45, 155) -- back
---                     press(55, 155) -- X icon
---                     press(45, 90) -- back
---                     press(60, 1290) -- back to homepage
---                 else 
---                     if waitImageVisible(enter_confirm_code, 10) then
---                         toastr('enter_confirm_code')
---                         local code = getMailDomainAddConfirmCode()
---                         toastr('CODE: ' .. (code or '-'), 2)
---                         if code then
---                             press(130, 500) -- input code
---                             press(660, 475) -- X icon
---                             typeText(code) sleep(0.5)
---                             press(530, 630) -- click to outside
-
---                             press(380, 1260) -- next btn
---                             waitImageNotVisible(enter_confirm_code)
-
---                             if waitImageVisible(added_email, 8) then 
---                                 press(380, 1260) -- close btn
---                             end
-
---                             if waitImageVisible(contact_information) then
---                                 if REMOVE_REGISTER_MAIL then
---                                     press(650, 600) -- mail register
---                                     if waitImageVisible(delete_mail) then
---                                         findAndClickByImage(delete_mail)
---                                         sleep(1)
---                                         press(240, 850)
-
---                                         if waitImageVisible(check_your_email, 3) then
---                                             toastr('check_your_email')
---                                             local code = getMailDomainOwnerConfirmCode()
---                                             toastr('CODE: ' .. (code or '-'), 2)
-
---                                             if code and code ~= '' then
---                                                 press(100, 850) -- code input
---                                                 typeText(code) sleep(1)
---                                                 if waitImageVisible(continue_code_mail) then
---                                                     findAndClickByImage(continue_code_mail)
-
---                                                     waitImageNotVisible(check_your_email)
---                                                 end
---                                             else 
---                                                 goto get2FA
---                                             end
---                                         end
-
---                                         if waitImageVisible(deleted_previous_mail, 8) then
---                                             press(380, 1260) -- close btn
---                                             if waitImageVisible(contact_information) then
---                                                 press(50, 155) -- back
---                                                 if waitImageVisible(personal_details_page) then
---                                                     press(50, 155) -- back
---                                                     press(55, 155) -- back
-
---                                                     press(45, 90) -- back to setting menu
---                                                     press(60, 1290) -- back to homepage
---                                                 end
---                                             end
---                                         end
---                                     end
---                                 else 
---                                     press(50, 155) -- back
---                                     if waitImageVisible(personal_details_page) then
---                                         press(50, 155) -- back
---                                         press(55, 155) -- back
-
---                                         press(45, 90) -- back to setting menu
---                                         press(60, 1290) -- back to homepage
---                                     end
---                                 end
---                             end
---                         else 
---                             info.mailLogin = info.mailRegister -- set mail register is mail login
---                         end
---                     end
---                 end
---             end
---         end
---     end
--- end
