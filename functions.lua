@@ -301,7 +301,7 @@ function retrieveHotmailFromSource()
 end
 
 function saveMailThueMail()
-    local mails = readFile(mailFilePath)
+    local mails = readFile(thuemailsFilePath)
 
     if #mails > 0 then
         local isNew = true
@@ -317,10 +317,10 @@ function saveMailThueMail()
             table.insert(mails, info.mailRegister .. "|1")
         end
 
-        writeFile(mailFilePath, mails)
+        writeFile(thuemailsFilePath, mails)
     else 
         local line = info.mailRegister  .. "|1"
-        addLineToFile(mailFilePath, line)
+        addLineToFile(thuemailsFilePath, line)
     end
 end
 
