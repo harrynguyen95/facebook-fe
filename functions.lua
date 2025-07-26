@@ -822,20 +822,28 @@ function getSearchUsername(no)
         no = 3
     end
 
-    local searchTextFilePath = currentPath() .. "/input/lastname_us.txt"
+    local lastnamePath = currentPath() .. "/input/lastname_us.txt"
+    local firstnamePath = currentPath() .. "/input/firstname_us.txt"
+
     if ACCOUNT_REGION == 'VN' then
-        searchTextFilePath = currentPath() .. "/input/lastname.txt"
+        lastnamePath = currentPath() .. "/input/lastname.txt"
+        firstnamePath = currentPath() .. "/input/firstname.txt"
     end
 
-    local lines = readFile(searchTextFilePath)
+    local lastnames = readFile(lastnamePath)
+    local firstnames = readFile(firstnamePath)
+
     local result = {}
 
-    for _ = 1, math.min(no, #lines) do
-        local i = math.random(#lines)
-        table.insert(result, table.remove(lines, i))
+    for _ = 1, no do
+        local lname = lastnames[math.random(#lastnames)]
+        local fname = firstnames[math.random(#firstnames)]
+        table.insert(result, fname .. " " .. lname)
     end
+
     return result
 end
+
 
 function getConfigServer()
     -- Máy 3 | Hiến | 192.168.1.63
