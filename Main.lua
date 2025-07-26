@@ -899,7 +899,9 @@ function main()
                 if waitImageVisible(thu_vien_anh) then 
                     press(150, 480) sleep(1) -- chọn ảnh đầu tiên
                     press(680, 95) sleep(5) -- btn lưu
-                    if waitImageNotVisible(xem_truoc_anh_dai_dien, 30) then 
+
+                    if waitImageVisible(khong_the_thay_doi_avt) then press(375, 790) end 
+                    if waitImageNotVisible(xem_truoc_anh_dai_dien, 20) then 
                         info.finishChangeInfo = 'true'
                         archiveCurrentAccount()
                     end 

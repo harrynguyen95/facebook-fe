@@ -174,3 +174,4 @@ mo_trong_facebook = {dirPath .. "mo_trong_facebook.png"}
 chon_anh_dai_dien = {dirPath .. "chon_anh_dai_dien.png"}
 gio_ban_chua_dung_tinh_nang_nay = {dirPath .. "gio_ban_chua_dung_tinh_nang_nay.png"}
 tiep_tuc_thiet_lap_profile = {dirPath .. "tiep_tuc_thiet_lap_profile.png"}
+khong_the_thay_doi_avt = {dirPath .. "khong_the_thay_doi_avt.png"}
