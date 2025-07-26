@@ -493,8 +493,8 @@ function swipeOld(x1, y1, x2, y2, duration)
     usleep(100000)
 end
 
-function wipe(x1, y1, x2, y2, duration)
-    duration = duration or 300
+function swipe(x1, y1, x2, y2, duration)
+    duration = duration or 100
     local steps = math.random(12, 20)
     local sleepPerStep = math.floor(duration * 1000 / steps)
 
