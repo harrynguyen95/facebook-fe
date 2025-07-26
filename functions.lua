@@ -13,7 +13,7 @@ defaultPasswordFilePath = currentPath() .. "/input/password.txt"
 accountFilePath = rootDir() .. "/Device/accounts.txt"
 accountCodeFilePath = rootDir() .. "/Device/accounts_code.txt"
 thuemailsFilePath = rootDir() .. "/Device/thuemails.txt"
-gmail66FilePath = rootDir() .. "/Device/thuemails.txt"
+gmail66FilePath = rootDir() .. "/Device/gmail66.txt"
 localIPFilePath = rootDir() .. "/Device/local_ip.txt"
 hotmailSourceFilePath = rootDir() .. "/Device/hotmail_source.txt"
 
