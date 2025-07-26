@@ -675,11 +675,11 @@ function main()
     if ADD_MAIL_DOMAIN == 0 then info.finishSettingMail = 'true' end
 
     ::label_whatisonyourmind::
-    swipe(600, 600, 610, 800) 
+    swipe(600, 600, 610, 900) 
     modeMenuLeft = checkModeMenuLeft()
 
     ::label_settingmail::
-    swipe(600, 600, 610, 800) 
+    swipe(600, 600, 610, 900) 
     if waitImageVisible(what_on_your_mind) and ADD_MAIL_DOMAIN > 0 and info.finishSettingMail == 'false' and LANGUAGE == 'VN' then 
         toastr('setting_mail what_on_your_mind')
 
@@ -872,7 +872,7 @@ function main()
     end 
 
     ::label_changeinfo::
-    swipe(600, 600, 610, 800) 
+    swipe(600, 600, 610, 900) 
     if waitImageVisible(what_on_your_mind) and CHANGE_INFO and info.finishChangeInfo == 'false' and LANGUAGE == 'VN' then 
         toastr('change_info what_on_your_mind')
         openURL("fb://profile") 
@@ -910,7 +910,7 @@ function main()
     end 
 
     ::label_searchfriend::
-    swipe(600, 600, 610, 800) 
+    swipe(600, 600, 610, 900) 
     toastr('wait searchfriend..')
     if waitImageVisible(what_on_your_mind) and info.finishAddFriend == 'false' then
         toastr('searchfriend what_on_your_mind')
@@ -958,7 +958,7 @@ function main()
 
         openURL("fb://friends") sleep(2)
         press(690, 90) sleep(1)
-        swipe(600, 600, 610, 800) sleep(2)
+        swipe(600, 600, 610, 900) sleep(2)
         swipe(600, 700, 610, 600) sleep(1)
         if waitImageVisible(friend_send_add_friend) then 
             local totalAdd = math.random(5, 8)
@@ -986,7 +986,7 @@ function main()
     end
 
     ::label_get2FA::
-    swipe(600, 600, 610, 800) 
+    swipe(600, 600, 610, 900) 
     if waitImageVisible(what_on_your_mind) and (info.twoFA == nil or info.twoFA == '') then 
         toastr('2FA what_on_your_mind')
 
@@ -1183,7 +1183,7 @@ function main()
     end
 
     ::label_searchtext::
-    swipe(600, 600, 610, 800) 
+    swipe(600, 600, 610, 900) 
     toastr('wait searchtext..')
     if waitImageVisible(what_on_your_mind) then
         toastr('searchtext what_on_your_mind')
@@ -1209,7 +1209,7 @@ function main()
     end
 
     ::label_logout::
-    swipe(600, 600, 610, 800) 
+    swipe(600, 600, 610, 900) 
     if waitImageVisible(what_on_your_mind) and info.finishAddFriend == 'true' and ((CHANGE_INFO and info.finishChangeInfo == 'true') or not CHANGE_INFO) and ((ADD_MAIL_DOMAIN > 0 and info.finishSettingMail == 'true') or ADD_MAIL_DOMAIN == 0) and (info.twoFA ~= nil and info.twoFA ~= '') then 
         toastr('logout what_on_your_mind')
 
