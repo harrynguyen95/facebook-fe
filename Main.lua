@@ -931,8 +931,9 @@ function main()
                     sleep(4)
                     if waitImageVisible(friend_send_add_friend) then 
                         local totalAdd = math.random(4, 5)
+                        local swiped = 0
                         local added = 0
-                        while added < totalAdd do
+                        while added < totalAdd and swiped < 3 do
                             local found = findImage(friend_send_add_friend[1], 0, 0.99, nil, false, 1)
                             for i, v in pairs(found) do
                                 if v ~= nil then
@@ -943,7 +944,7 @@ function main()
                                 end
                                 sleep(0,5)
                             end
-                            if added < totalAdd then swipe(480, 800, 480, 500) sleep(2) end
+                            if added < totalAdd then swipe(480, 800, 480, 500) sleep(2) swiped = swiped + 1 end
                         end
                     end 
 
@@ -965,8 +966,9 @@ function main()
             press(690, 90) sleep(1)
             if waitImageVisible(friend_send_add_friend) then 
                 local totalAdd = math.random(5, 8)
+                local swiped = 0
                 local added = 0
-                while added < totalAdd do
+                while added < totalAdd and swiped < 3 do
                     local found = findImage(friend_send_add_friend[2], 0, 0.99, nil, false, 1)
                     for i, v in pairs(found) do
                         if v ~= nil then
@@ -977,7 +979,7 @@ function main()
                         end
                         sleep(0,5)
                     end
-                    if added < totalAdd then swipe(480, 800, 480, 500) sleep(2) end
+                    if added < totalAdd then swipe(480, 800, 480, 500) sleep(2) swiped = swiped + 1 end
                     if waitImageVisible(gio_ban_chua_dung_tinh_nang_nay, 2) then press(375, 865) end 
                 end
 
