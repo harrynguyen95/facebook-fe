@@ -324,7 +324,6 @@ function main()
                     if waitImageVisible(red_warning_icon, 3) then
                         toastr('email_invalid')
                         removeMailThueMail(info.mailRegister)
-                        removeMailGmail66(info.mailRegister)
                         goto label_executegetmailrequest
                     end
 
@@ -341,9 +340,9 @@ function main()
                 end
             end
             
-            if not waitImageNotVisible(what_is_your_email, 20) then 
-                if checkImageIsExists(what_is_your_email) then findAndClickByImage(next) end
-                if not waitImageNotVisible(what_is_your_email, 20) then 
+            if not waitImageNotVisible(what_is_your_email, 10) or not waitImageNotVisible(enter_an_email, 10) then 
+                if checkImageIsExists(what_is_your_email) or checkImageIsExists(enter_an_email) then findAndClickByImage(next) end
+                if not waitImageNotVisible(what_is_your_email, 10) or not waitImageNotVisible(enter_an_email, 10) then 
                     toastr('Can not next')
                     swipeCloseApp()
                     goto label_openfacebook
@@ -510,7 +509,6 @@ function main()
                     if waitImageVisible(red_warning_icon, 3) then
                         toastr('email_invalid')
                         removeMailThueMail(info.mailRegister)
-                        removeMailGmail66(info.mailRegister)
                         goto label_executegetmailrequest
                     end
 
@@ -525,9 +523,9 @@ function main()
                     goto label_continue
                 end
             end
-            if not waitImageNotVisible(what_is_your_email, 20) then 
-                if checkImageIsExists(what_is_your_email) then findAndClickByImage(next) end
-                if not waitImageNotVisible(what_is_your_email, 20) then 
+            if not waitImageNotVisible(what_is_your_email, 10) or not waitImageNotVisible(enter_an_email, 10) then 
+                if checkImageIsExists(what_is_your_email) or checkImageIsExists(enter_an_email) then findAndClickByImage(next) end
+                if not waitImageNotVisible(what_is_your_email, 10) or not waitImageNotVisible(enter_an_email, 10) then 
                     toastr('Can not next')
                     swipeCloseApp()
                     goto label_openfacebook
