@@ -300,6 +300,30 @@ function retrieveHotmailFromSource()
     return false
 end
 
+function saveMailThueMail()
+    local mails = readFile(mailFilePath)
+
+    if #mails > 0 then
+        local isNew = true
+        for i, v in ipairs(mails) do
+            local splitted = split(v, "|")
+            if splitted[1] == info.mailRegister then 
+                isNew = false
+                mails[i] = splitted[1] .. "|" .. floor(splitted[2] + 1)
+            end
+        end
+
+        if isNew then
+            table.insert(mails, info.mailRegister .. "|1")
+        end
+
+        writeFile(mailFilePath, mails)
+    else 
+        local line = info.mailRegister  .. "|1"
+        addLineToFile(mailFilePath, line)
+    end
+end
+
 function retrieveMailThueMail()
     local mails = readFile(thuemailsFilePath)
     if #mails < 4 then
@@ -564,12 +588,20 @@ function executeHotmailFromDongVanFb()
 end
 
 function executeGmailFromGmail66()
-    if THUE_LAI_MAIL > 0 then
-        local mailRerent = retrieveMailGmail66()
+    local rerentSuccess = false
+    local mailRerent = retrieveMailGmail66()
+
+    if THUE_LAI_MAIL > 0 and mailRerent then
         info.mailRegister = mailRerent[1]
         info.mailOrderId = mailRerent[3]
         info.mailPrice = 100
-    else
+        rerentSuccess = true
+
+        saveMailGmail66()
+        return true
+    end 
+
+    if (not mailRerent) or (not rerentSuccess) then
         local tries = 30
         for i = 1, tries do 
             toastr('Call times ' .. i)
@@ -1392,51 +1424,58 @@ function saveRandomServerAvatar()
     local filename = "avatar_" .. os.time() .. ".jpg"
     local save_path = "/var/mobile/Media/DCIM/100APPLE/" .. filename
 
-    local ok = false
-    local f = io.open(save_path, "wb")
-    if not f then
-        toast("❌ Không thể mở file để ghi: " .. save_path)
-        return
-    end
+    local MAX_RETRIES = 2
+    local attempt = 0
+    local success = false
 
-    local c = curl.easy{
-        url = url,
-        writefunction = function(buffer)
-            if buffer then
-                f:write(buffer)
-                return #buffer
+    while attempt <= MAX_RETRIES do
+        attempt = attempt + 1
+
+        local f = io.open(save_path, "wb")
+        if not f then
+            toast("❌ Không thể mở file để ghi: " .. save_path)
+            return
+        end
+
+        local c = curl.easy{
+            url = url,
+            writefunction = function(buffer)
+                if buffer then
+                    f:write(buffer)
+                    return #buffer
+                else
+                    return false
+                end
+            end,
+            ssl_verifyhost = 0,
+            ssl_verifypeer = 0,
+            timeout = 60,
+        }
+
+        local ok, err = pcall(function()
+            c:perform()
+        end)
+
+        f:close()
+
+        if ok and fileExists(save_path) then
+            saveToSystemAlbum(save_path)
+            toast("✅ Lưu avatar thành công!", 2)
+            sleep(2)
+            return true
+        else
+            if attempt <= MAX_RETRIES then
+                toast("⚠️ Thử lại lần " .. (attempt + 1), 2)
+                usleep(500000) -- chờ 0.5s trước khi retry
             else
-                return false
+                toast("❌ Lỗi tải ảnh sau " .. attempt .. " lần thử: " .. tostring(err), 3)
             end
-        end,
-        ssl_verifyhost = 0,
-        ssl_verifypeer = 0,
-        timeout = 60,
-    }
-
-    local ok, err = pcall(function()
-        c:perform()
-    end)
-
-    f:close()
-
-    if not ok then
-        toast("❌ Tải ảnh lỗi: " .. tostring(err))
-        return
+        end
     end
 
-    usleep(500000) -- 0.5s
-
-    if fileExists(save_path) then
-        saveToSystemAlbum(save_path)
-        toast("✅ Lưu avatar thành công!", 2)
-        sleep(2)
-        return true
-    else
-        toast("❌ File không tồn tại sau khi tải")
-    end
-    return
+    return false
 end
+
 
 function fakeRandomContact()
     toast('fakeRandomContact..', 4)

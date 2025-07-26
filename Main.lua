@@ -324,6 +324,7 @@ function main()
                     if waitImageVisible(red_warning_icon, 3) then
                         toastr('email_invalid')
                         removeMailThueMail(info.mailRegister)
+                        removeMailGmail66(info.mailRegister)
                         goto label_executegetmailrequest
                     end
 
@@ -509,6 +510,7 @@ function main()
                     if waitImageVisible(red_warning_icon, 3) then
                         toastr('email_invalid')
                         removeMailThueMail(info.mailRegister)
+                        removeMailGmail66(info.mailRegister)
                         goto label_executegetmailrequest
                     end
 
