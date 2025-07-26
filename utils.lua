@@ -318,6 +318,15 @@ function waitImageNotVisible(paths, timeout)
     return false
 end
 
+function fileExists(path)
+    local f = io.open(path, "rb")
+    if f then
+        f:close()
+        return true
+    end
+    return false
+end
+
 function randomBetween(min, max)
     return math.random() * (max - min) + min
 end

@@ -1268,24 +1268,50 @@ function saveRandomServerAvatar()
     local filename = "avatar_" .. os.time() .. ".jpg"
     local save_path = "/var/mobile/Media/DCIM/100APPLE/" .. filename
 
+    local ok = false
     local f = io.open(save_path, "wb")
     if not f then
         print("❌ Không thể mở file để ghi: " .. save_path)
         return
     end
 
-    curl.easy{
+    local c = curl.easy{
         url = url,
         writefunction = function(buffer)
-            f:write(buffer)
-            return #buffer
-        end
-    }:perform()
+            if buffer then
+                f:write(buffer)
+                return #buffer
+            else
+                return false
+            end
+        end,
+        ssl_verifyhost = 0,
+        ssl_verifypeer = 0,
+        timeout = 15,
+    }
+
+    local ok, err = pcall(function()
+        c:perform()
+    end)
 
     f:close()
 
-    saveToSystemAlbum(save_path);
-    sleep(5)
+    if not ok then
+        print("❌ Tải ảnh lỗi: " .. tostring(err))
+        return
+    end
+
+    usleep(500000) -- 0.5s
+
+    if fileExists(save_path) then
+        saveToSystemAlbum(save_path)
+        toast("✅ Lưu avatar thành công!", 2)
+        sleep(2)
+        return true
+    else
+        print("❌ File không tồn tại sau khi tải")
+    end
+    return
 end
 
 function fakeRandomContact()

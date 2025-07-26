@@ -880,14 +880,19 @@ function main()
 
         ::label_welcometoprofile::
         if waitImageVisible(welcome_to_profile, 10) then 
-            press(550, 1260) sleep(2) -- btn thêm ảnh
-            if waitImageVisible(allow_access, 2) then 
-                findAndClickByImage(allow_access) sleep(3)
-            end
-            if waitImageVisible(thu_vien_anh, 2) then 
-                press(150, 480) sleep(1) -- chọn ảnh đầu tiên
-                press(680, 95) sleep(5) -- btn lưu
-                waitImageNotVisible(xem_truoc_anh_dai_dien, 30)
+            if saveRandomServerAvatar() then 
+                press(550, 1260) sleep(2) -- btn thêm ảnh
+                if waitImageVisible(allow_access, 2) then 
+                    findAndClickByImage(allow_access) sleep(3)
+                end
+                if waitImageVisible(thu_vien_anh, 2) then 
+                    press(150, 480) sleep(1) -- chọn ảnh đầu tiên
+                    press(680, 95) sleep(5) -- btn lưu
+                    waitImageNotVisible(xem_truoc_anh_dai_dien, 30)
+                end 
+            else 
+                findAndClickByImage(skip)
+                findAndClickByImage(not_now)
             end 
         end
 
@@ -951,22 +956,23 @@ function main()
 
         ::label_profileaddavatar::
         if waitImageVisible(profile_add_avatar, 2) then 
-            findAndClickByImage(profile_add_avatar)
-
-            if waitImageVisible(chon_anh_dai_dien) then findAndClickByImage(chon_anh_dai_dien) end
-            if waitImageVisible(allow_access) then 
-                findAndClickByImage(allow_access) sleep(2)
-            end
-            if waitImageVisible(thu_vien_anh) then 
-                press(150, 480) sleep(1) -- chọn ảnh đầu tiên
-                press(680, 95) sleep(5) -- btn lưu
-                if waitImageNotVisible(xem_truoc_anh_dai_dien, 30) then 
-                    info.finishChangeInfo = 'true'
-                    archiveCurrentAccount()
+            if saveRandomServerAvatar() then 
+                findAndClickByImage(profile_add_avatar)
+                if waitImageVisible(chon_anh_dai_dien) then findAndClickByImage(chon_anh_dai_dien) end
+                if waitImageVisible(allow_access) then 
+                    findAndClickByImage(allow_access) sleep(2)
+                end
+                if waitImageVisible(thu_vien_anh) then 
+                    press(150, 480) sleep(1) -- chọn ảnh đầu tiên
+                    press(680, 95) sleep(5) -- btn lưu
+                    if waitImageNotVisible(xem_truoc_anh_dai_dien, 30) then 
+                        info.finishChangeInfo = 'true'
+                        archiveCurrentAccount()
+                    end 
                 end 
-            end 
-            if waitImageVisible(edit_profile_page_edit, 2) then 
-                press(45, 90) sleep(1) -- back
+                if waitImageVisible(edit_profile_page_edit, 2) then 
+                    press(45, 90) sleep(1) -- back
+                end
             end
         end 
         if waitImageVisible(edit_profile_page, 3) then press(60, 1290) sleep(2) end
