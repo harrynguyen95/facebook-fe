@@ -767,7 +767,7 @@ function getGmail66ConfirmCode()
         toastr('Call times ' .. i)
 
         local response, error = httpRequest {
-            url = MAIL_GMAIL66_DOMAIN .. "check-otp/" .. info.mailOrderId .. "?api_key=" .. MAIL_THUEMAILS_API_KEY,
+            url = MAIL_GMAIL66_DOMAIN .. "check-otp/" .. info.mailOrderId .. "?api_key=" .. MAIL_GMAIL66_API_KEY,
             headers = {
                 ["Content-Type"] = "application/json",
             },
