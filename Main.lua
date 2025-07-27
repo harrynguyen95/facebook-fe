@@ -343,9 +343,8 @@ function main()
             if not waitImageNotVisible(what_is_your_email, 10) or not waitImageNotVisible(enter_an_email, 10) then 
                 if checkImageIsExists(what_is_your_email) or checkImageIsExists(enter_an_email) then findAndClickByImage(next) end
                 if not waitImageNotVisible(what_is_your_email, 10) or not waitImageNotVisible(enter_an_email, 10) then 
-                    toastr('Can not next')
-                    swipeCloseApp()
-                    goto label_openfacebook
+                    failedCurrentAccount('cant_next_mail')
+                    goto label_continue
                 end
             end
         end
@@ -526,9 +525,8 @@ function main()
             if not waitImageNotVisible(what_is_your_email, 10) or not waitImageNotVisible(enter_an_email, 10) then 
                 if checkImageIsExists(what_is_your_email) or checkImageIsExists(enter_an_email) then findAndClickByImage(next) end
                 if not waitImageNotVisible(what_is_your_email, 10) or not waitImageNotVisible(enter_an_email, 10) then 
-                    toastr('Can not next')
-                    swipeCloseApp()
-                    goto label_openfacebook
+                    failedCurrentAccount('cant_next_mail')
+                    goto label_continue
                 end
             end
         end
