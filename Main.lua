@@ -46,14 +46,13 @@ MAIL_GMAIL66_API_KEY = "odjYxf6OURH6O7L4Fg57uJzDDwl9PcZT" -- Nam
 LOGIN_WITH_CODE = false
 DUMMY_MODE = 0
 
-if not waitForInternet(2) then toast("No Internet 1") end
+if not waitForInternet(2) then alert("No Internet 1. RESPRING NOW!!") exit() end
 if not getConfigServer() then alert("No config from server!") exit() end
 
 -- ====== VARIABLE REQUIRED ======
 if LANGUAGE == 'ES' then require(currentDir() .. "/images_es") end
 if LANGUAGE == 'EN' then require(currentDir() .. "/images_en") end
 if LANGUAGE == 'VN' then require(currentDir() .. "/images_vn") end
-if ACCOUNT_REGION == 'VN' then enter_confirm_code_phone = enter_confirm_code_phone_vn end
 SHOULD_DUMMY = DUMMY_MODE ~= 0
 DUMMY_PHONE = DUMMY_MODE == 1
 DUMMY_GMAIL = DUMMY_MODE == 2
@@ -61,7 +60,7 @@ DUMMY_ICLOUD = DUMMY_MODE == 3
 
 -- ====== MAIN ======
 function main()
-    
+
     ::label_continue::
     log('------------ Main running ------------')
     archiveCurrentAccount()
@@ -77,6 +76,7 @@ function main()
         elseif IP_ROTATE_MODE == 2 then 
             onOffAirplaneMode2()
         elseif IP_ROTATE_MODE == 3 then 
+            checkOnShadowRocket()
             reloadTsproxy()
             waitforTsproxyReady(60) 
         end 
@@ -94,7 +94,7 @@ function main()
     ::label_openfacebook::
     openFacebook()
 
-    if waitImageVisible(logo_fb_modern, 1) then
+    if waitImageVisible(logo_fb_modern) then
         toastr('not_support_this_FB_mode')
         swipeCloseApp()
         goto label_continue
@@ -120,13 +120,7 @@ function main()
 
     ::label_createnewaccount::
     showIphoneModel()
-    if waitImageVisible(create_new_account, 10) then
-        if waitImageVisible(logo_fb_modern, 1) then
-            toastr('not_support_this_FB_mode')
-            swipeCloseApp()
-            goto label_continue
-        end
-
+    if waitImageVisible(create_new_account) then
         toastr('create_new_account')
 
         if LOGIN_WITH_CODE then 
@@ -136,6 +130,7 @@ function main()
             findAndClickByImage(password_eye)
             typeText(info.password)
             findAndClickByImage(login_button)
+
             if waitImageNotVisible(logo_facebook_login, 30) then 
                 if waitImageVisible(accept) then 
                     findAndClickByImage(accept) sleep(0.5)
@@ -146,18 +141,11 @@ function main()
                     goto label_continue
                 end 
             else 
-                toastr('Can not next')
-                swipeCloseApp()
-                goto label_continue
+                press(380, 1160) 
             end
         else 
             findAndClickByImage(create_new_account) sleep(2)
-            if waitImageNotVisible(logo_facebook_login, 30) then 
-            else 
-                toastr('Can not next')
-                swipeCloseApp()
-                goto label_continue
-            end
+            if not waitImageNotVisible(logo_facebook_login, 30) then press(380, 1160) end
         end 
     else         
         if checkSuspended() then goto label_continue end
@@ -202,8 +190,7 @@ function main()
         goto label_continue
     end
 
-    waitForInternet(1)
-    archiveCurrentAccount()
+    if waitForInternet(1) then archiveCurrentAccount() else alert("No Internet 4. RESPRING NOW!!") exit() end 
 
     ::label_createnewaccountblue::
     if waitImageVisible(create_new_account_blue) then
@@ -434,6 +421,16 @@ function main()
 
     ::label_enterconfirmcodedummy::
     if SHOULD_DUMMY then 
+        if DUMMY_PHONE then
+            if waitImageVisible(enter_confirm_code_phone, 10) then
+                toastr("enter_confirm_code_phone")
+                findAndClickByImage(no_receive_code)
+                if waitImageVisible(confirm_via_email, 10) then 
+                    findAndClickByImage(confirm_via_email)
+                    sleep(2)
+                end
+            end
+        end
         if DUMMY_GMAIL or DUMMY_ICLOUD then
             if waitImageVisible(enter_the_confirmation_code, 10) then
                 toastr("enter_the_confirmation_code gmail|iloud")
@@ -446,19 +443,8 @@ function main()
             end
         end
 
-        if DUMMY_PHONE then
-            if waitImageVisible(enter_confirm_code_phone, 10) then
-                toastr("enter_confirm_code_phone")
-                findAndClickByImage(no_receive_code)
-                if waitImageVisible(confirm_via_email, 10) then 
-                    findAndClickByImage(confirm_via_email)
-                    sleep(2)
-                end
-            end
-        end
-
         ::label_emailafterphone::
-        if waitImageVisible(what_is_your_email, 3) or waitImageVisible(enter_an_email, 3) or waitImageVisible(enter_the_confirmation_code) then
+        if waitImageVisible(what_is_your_email, 3) or waitImageVisible(enter_an_email, 3) or (ADD_MAIL_DOMAIN == 1 and waitImageVisible(enter_the_confirmation_code)) then
             toastr("what_is_your_email")
 
             if ADD_MAIL_DOMAIN == 1 then -- mail domain in dummy reg
@@ -888,7 +874,7 @@ function main()
             if waitImageVisible(add_coverphoto, 2) then findAndClickByImage(skip) sleep(1) end
             if waitImageVisible(profile_add_avatar, 2) then 
                 findAndClickByImage(profile_add_avatar)
-                saveRandomServerAvatar()
+                if not saveRandomServerAvatar() then alert('RESPRING NOW!!') exit() end
                 sleep(3)
                 if waitImageVisible(chon_anh_dai_dien) then findAndClickByImage(chon_anh_dai_dien) end
                 if waitImageVisible(allow_access) then 
@@ -1188,6 +1174,7 @@ function main()
         end
     end
 
+    toastr('Check nick live..')
     if info.finishAddFriend == 'true' and ((CHANGE_INFO and info.finishChangeInfo == 'true') or not CHANGE_INFO) and ((ADD_MAIL_DOMAIN > 0 and info.finishSettingMail == 'true') or ADD_MAIL_DOMAIN == 0) and (info.twoFA ~= nil and info.twoFA ~= '') then 
         finishCurrentAccount()
         toastr('+1 nick live', 3)
@@ -1195,7 +1182,7 @@ function main()
 
     ::label_searchtext::
     swipe(600, 600, 610, 900) 
-    toastr('wait searchtext..')
+    
     if waitImageVisible(what_on_your_mind) then
         toastr('searchtext what_on_your_mind')
         press(600, 90) -- go to search screen
@@ -1263,7 +1250,7 @@ function main()
     if waitImageVisible(add_phone_number, 1) then goto label_addphonenumber end
     if checkSuspended() then goto label_continue end
 
-    toastr('last check..')
+    toastr('Last check..')
     sleep(2)
     if info.status == 'INPROGRESS' then 
         if info.mailRegister ~= nil and info.mailRegister ~= '' then 

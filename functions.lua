@@ -120,7 +120,6 @@ function archiveCurrentAccount()
         addLineToFile(accountFilePath, line)
     end
 
-    -- log(info, 'Archive')
 end
 
 function finishCurrentAccount()
@@ -179,9 +178,13 @@ end
 
 function saveAccToGoogleForm()
     -- if (info.checkpoint == 282 or info.checkpoint == '282') and (info.mailLogin == '' or info.mailLogin == nil) then return nil end
+    -- info.localIP = localIP[#localIP] .. " | " .. ACCOUNT_REGION .. " | " .. LANGUAGE .. " | " .. (LOGIN_WITH_CODE and 'otp' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-'))))
 
+    local typeReg = '-'
+    if TSPROXY_ID > 35 then typeReg = 'FPT' else typeReg = 'Viettel' end
+    if IP_ROTATE_MODE == 2 then typeReg = 'Sim' end 
     local localIP = readFile(localIPFilePath)
-    info.localIP = localIP[#localIP] .. " | " .. ACCOUNT_REGION .. " | " .. LANGUAGE .. " | " .. (LOGIN_WITH_CODE and 'otp' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-'))))
+    info.localIP = localIP[#localIP] .. " | " .. typeReg .. " | " .. (LOGIN_WITH_CODE and 'otp' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-'))))
 
     local tries = 3
     for i = 1, tries do 
@@ -195,8 +198,7 @@ function saveAccToGoogleForm()
         }
 
         if response then
-            -- log(info, "Sent request to Google Form" )
-            return
+            return true
         else
             toastr('Times ' .. i .. " - " .. tostring(error), 2)
             log("Failed request acc_google_form. Times ".. i ..  " - " .. tostring(error))
@@ -206,8 +208,11 @@ function saveAccToGoogleForm()
 end
 
 function saveNoVerifyToGoogleForm()
+    local typeReg = '-'
+    if TSPROXY_ID > 35 then typeReg = 'FPT' else typeReg = 'Viettel' end
+    if IP_ROTATE_MODE == 2 then typeReg = 'Sim' end 
     local localIP = readFile(localIPFilePath)
-    info.localIP = localIP[#localIP] .. " | " .. ACCOUNT_REGION .. " | " .. LANGUAGE .. " | " .. (LOGIN_WITH_CODE and 'otp' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-'))))
+    info.localIP = localIP[#localIP] .. " | " .. typeReg .. " | " .. (LOGIN_WITH_CODE and 'otp' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-'))))
 
     local tries = 3
     for i = 1, tries do 
@@ -221,7 +226,6 @@ function saveNoVerifyToGoogleForm()
         }
 
         if response then
-            -- log(info, "Sent request to Google Form" )
             return
         else
             toastr('Times ' .. i .. " - " .. tostring(error), 2)
@@ -232,8 +236,11 @@ function saveNoVerifyToGoogleForm()
 end
 
 function saveMailToGoogleForm()
+    local typeReg = '-'
+    if TSPROXY_ID > 35 then typeReg = 'FPT' else typeReg = 'Viettel' end
+    if IP_ROTATE_MODE == 2 then typeReg = 'Sim' end 
     local localIP = readFile(localIPFilePath)
-    info.localIP = localIP[#localIP] .. " | " .. ACCOUNT_REGION .. " | " .. LANGUAGE .. " | " .. (LOGIN_WITH_CODE and 'otp' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-'))))
+    info.localIP = localIP[#localIP] .. " | " .. typeReg .. " | " .. (LOGIN_WITH_CODE and 'otp' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-'))))
 
     local tries = 3
     for i = 1, tries do 
@@ -247,7 +254,6 @@ function saveMailToGoogleForm()
         }
 
         if response then
-            -- log(info, "Sent request to Google Form" )
             return
         else
             toastr('Times ' .. i .. " - " .. tostring(error), 2)
@@ -415,7 +421,6 @@ function executeGmailFromThueMail()
 
     if THUE_LAI_MAIL > 0 and mailRerent then
         rerentTime = floor(rerentTime + 1)
-        -- log('Times mail rerent: ' .. rerentTime .. ' - ' .. mailRerent)
 
         local tries = 5
         for i = 1, tries do 
@@ -450,7 +455,6 @@ function executeGmailFromThueMail()
                         return true
                     else
                         toastr(response.message)
-                        log(response.message)
                         if rerentTime <= rerentMaxTries then 
                             removeMailThueMail(mailRerent)
                             goto start_rerent_mail
@@ -458,7 +462,6 @@ function executeGmailFromThueMail()
                     end
                 else 
                     toastr("Failed decode response.");
-                    log("Failed decode response.");
                 end
             else
                 toastr('Times ' .. i .. " - " .. tostring(error), 2)
@@ -505,11 +508,9 @@ function executeGmailFromThueMail()
                         
                     else
                         toastr(response.message)
-                        log(response.message)
                     end
                 else 
                     toastr("Failed decode response.");
-                    log("Failed decode response.");
                 end
             else
                 toastr('Times ' .. i .. " - " .. tostring(error), 2)
@@ -532,7 +533,6 @@ function callRegisterHotmailFromDongVanFb()
             local response, error = httpRequest {
                 url = "https://api.dongvanfb.net/user/buy?apikey=" .. MAIL_DONGVANFB_API_KEY .. "&account_type=" .. service_id .. "&quality=1&type=full",
             }
-            -- log(response, 'executeHotmailFromDongVanFb')
 
             if response then
                 local ok, response, err = safeJsonDecode(response)
@@ -552,11 +552,9 @@ function callRegisterHotmailFromDongVanFb()
                         return true
                     else
                         toastr(response.message)
-                        log(response.message)
                     end
                 else 
                     toastr("Failed decode response.");
-                    log("Failed decode response.");
                 end
             else
                 toastr('Times ' .. i .. " - " .. tostring(error), 2)
@@ -628,11 +626,9 @@ function executeGmailFromGmail66()
                         
                     else
                         toastr(response.message)
-                        log(response.message)
                     end
                 else 
                     toastr("Failed decode response.");
-                    log("Failed decode response.");
                 end
             else
                 toastr('Times ' .. i .. " - " .. tostring(error), 2)
@@ -700,7 +696,6 @@ function getThuemailConfirmCode()
                 end
             else 
                 toastr("Failed decode response.");
-                log("Failed decode response.");
             end
         else
             toastr('Times ' .. i .. " - " .. tostring(error), 2)
@@ -734,8 +729,6 @@ function getDongvanfbConfirmCode()
             data = postData
         }
 
-        -- log(response, 'getDongvanfbConfirmCode')
-
         if response then
             local ok, response, err = safeJsonDecode(response)
             if ok then 
@@ -746,7 +739,6 @@ function getDongvanfbConfirmCode()
                 end
             else 
                 toastr("Failed decode response.");
-                log("Failed decode response.");
             end
         else
             toastr('Times ' .. i .. " - " .. tostring(error), 2)
@@ -766,7 +758,7 @@ function getMailDomainRegisterConfirmCode()
         local response, error = httpRequest {
             url = PHP_SERVER .. "/mail_domain_register_confirm.php?email=" .. info.mailLogin,
         }
-        -- log(response, 'getMailDomainRegisterConfirmCode')
+
         if response then
             local ok, response, err = safeJsonDecode(response)
             if ok then 
@@ -777,7 +769,6 @@ function getMailDomainRegisterConfirmCode()
                 end
             else 
                 toastr("Failed decode response.");
-                log("Failed decode response.");
             end
         else
             toastr('Times ' .. i .. " - " .. tostring(error), 2)
@@ -816,7 +807,6 @@ function getGmail66ConfirmCode()
                 end
             else 
                 toastr("Failed decode response.");
-                log("Failed decode response.");
             end
         else
             toastr('Times ' .. i .. " - " .. tostring(error), 2)
@@ -850,7 +840,7 @@ function getMailDomainOwnerConfirmCode()
         local response, error = httpRequest {
             url = PHP_SERVER .. "/mail_domain_owner_confirm.php?email=" .. info.mailLogin,
         }
-        -- log(response, 'getMailDomainOwnerConfirmCode')
+
         if response then
             local ok, response, err = safeJsonDecode(response)
             if ok then 
@@ -861,7 +851,6 @@ function getMailDomainOwnerConfirmCode()
                 end
             else 
                 toastr("Failed decode response.");
-                log("Failed decode response.");
             end
         else
             toastr('Times ' .. i .. " - " .. tostring(error), 2)
@@ -893,7 +882,6 @@ function getMailDomainAddConfirmCode()
         local response, error = httpRequest {
             url = PHP_SERVER .. "/mail_domain_add_confirm.php?email=" .. info.mailLogin,
         }
-        -- log(response, 'getMailDomainAddConfirmCode')
 
         if response then
             local ok, response, err = safeJsonDecode(response)
@@ -905,7 +893,6 @@ function getMailDomainAddConfirmCode()
                 end
             else 
                 toastr("Failed decode response.");
-                log("Failed decode response.");
             end
         else
             toastr('Times ' .. i .. " - " .. tostring(error), 2)
@@ -936,11 +923,9 @@ function get2FACode()
                     return response.token
                 else
                     toastr("Empty response get 2FA OTP.");
-                    log("Empty response get 2FA OTP.");
                 end
             else 
                 toastr("Failed decode response.");
-                log("Failed decode response.");
             end  
         else
             toastr('Times ' .. i .. " - " .. tostring(error), 2)
@@ -1053,11 +1038,9 @@ function getConfigServer()
                     return true
                 else
                     toastr(response.info)
-                    log(response.info)
                 end
             else 
                 toastr("Failed decode response.");
-                log("Failed decode response.");
             end  
         else
             toastr('Times ' .. i .. " - " .. tostring(error), 2)
@@ -1070,7 +1053,7 @@ end
 
 function reloadTsproxy()
     if (not TSPROXY_ID or TSPROXY_ID == '') then alert('Empty TSPROXY_ID') exit() end 
-    toast('reloadTsproxy', 5)
+    toast('reloadTsproxy', 8)
 
     local tries = 1
     for i = 1, tries do 
@@ -1082,7 +1065,7 @@ function reloadTsproxy()
             },
             timeout = 10
         }
-        -- log(response, 'reloadTsproxy')
+
         sleep(1)
         if 1 then return true end
 
@@ -1094,11 +1077,9 @@ function reloadTsproxy()
                     return true
                 else
                     toastr(response.message)
-                    log(response.message)
                 end
             else 
                 toastr("Failed decode response.");
-                log("Failed decode response.");
             end  
         else
             toastr('Times ' .. i .. " - " .. tostring(error), 2)
@@ -1122,7 +1103,6 @@ function waitforTsproxyReady(timeout)
             },
             timeout = 10
         }
-        -- log(response, 'checkActiveTsproxy')
 
         if response then
             local ok, response, err = safeJsonDecode(response)

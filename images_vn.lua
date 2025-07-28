@@ -96,7 +96,7 @@ fb_logo_2 = {dirPath .. "fb_logo_2.png"}
 xoainfo_logo = {dirPath .. "xoainfo_logo.png"}
 xoainfo_reset_data = {dirPath .. "xoainfo_reset_data.png"}
 xoainfo_info_fake = {dirPath .. "xoainfo_info_fake.png"}
-logo_facebook_login = {dirPath .. "logo_facebook_login.png"}
+logo_facebook_login = {dirPath .. "logo_facebook_login2.png", dirPath .. "logo_facebook_login.png"}
 logo_fb_modern = {dirPath .. "logo_fb_modern.png"}
 page_not_available_now = {dirPath .. "page_not_available_now.png", dirPath .. "page_not_available_now2.png", 
     dirPath .. "page_not_available_now3.png", dirPath .. "page_not_available_now4.png",
@@ -117,8 +117,7 @@ fb_logo_menu_left = {dirPath .. "fb_logo_menu_left.png"}
 
 do_you_already_have_account = {dirPath .. "do_you_already_have_account2.png"}
 register_by_phone = {dirPath .. "register_by_phone.png"}
-enter_confirm_code_phone = {dirPath .. "enter_confirm_code_phone2.png"}
-enter_confirm_code_phone_vn = {dirPath .. "enter_confirm_code_phone4.png", dirPath .. "enter_confirm_code_phone5.png"}
+enter_confirm_code_phone = {dirPath .. "gui_den_so.png", dirPath .. "enter_confirm_code_phone4.png", dirPath .. "enter_confirm_code_phone5.png"}
 no_receive_code = {dirPath .. "did_not_get_code.png"}
 confirm_via_email = {dirPath .. "confirm_via_email3.png"}
 enter_an_email = {dirPath .. "enter_an_email3.png"}
