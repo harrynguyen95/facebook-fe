@@ -976,14 +976,30 @@ end
 
 function getUIDFBLogin()
     local plist = require("plist")
-    local result = appInfo("com.facebook.Facebook")
-    local path = string.gsub(result["dataContainerPath"] .. "Library/Preferences/com.facebook.Facebook.plist",
-        "file://", "")
+    local success, result = pcall(function()
+        local app = appInfo("com.facebook.Facebook")
+        if not app or not app["dataContainerPath"] then
+            toastr("App info not found or dataContainerPath is nil")
+        end
 
-    local luaTable = plist.read(path);
+        local path = string.gsub(app["dataContainerPath"] .. "Library/Preferences/com.facebook.Facebook.plist", "file://", "")
+        local luaTable = plist.read(path)
 
-    return luaTable["kFBQPLLoggingPolicyLastKnownOwnerFbID"] or nil
+        if not luaTable then
+            toastr("Failed to read plist")
+        end
+
+        return luaTable["kFBQPLLoggingPolicyLastKnownOwnerFbID"]
+    end)
+
+    if success then
+        return result
+    else
+        -- toastr(result)
+        return nil
+    end
 end
+
 
 function hasInternetConnection()
     -- local url = "https://api.ipify.org?v=" .. math.random(1, 65535)
@@ -1018,6 +1034,7 @@ function checkIP()
             return true
         end 
     end
+    info.ipRegister = nil
     return false
 end
 

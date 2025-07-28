@@ -129,7 +129,7 @@ function finishCurrentAccount()
     info.status = "SUCCESS"
     info.checkpoint = 'OK'
     if not info.mailLogin or info.mailLogin == '' then info.mailLogin = info.mailRegister end 
-    if not info.profileUid or info.profileUid == '' then info.profileUid = getUIDFBLogin() end 
+    if not info.profileUid or info.profileUid == '' then info.profileUid = (getUIDFBLogin() or '') end 
     if not info.mailLogin or info.mailLogin == '' then return false end 
 
     local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.mailOrderId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '') .. "|" .. (info.finishSettingMail or 'false') .. "|" .. (info.finishChangeInfo or 'false') .. "|" .. (info.finishAddFriend or 'false') .. "|" .. (info.ipRegister or '')
@@ -158,7 +158,7 @@ function failedCurrentAccount(code)
     info.checkpoint = code
     if code == '282' and info.verifyCode ~= '' and info.verifyCode ~= nil then info.checkpoint = code .. '_has_code' end
     if not info.mailLogin or info.mailLogin == '' then info.mailLogin = info.mailRegister end 
-    if not info.profileUid or info.profileUid == '' then info.profileUid = getUIDFBLogin() end 
+    if not info.profileUid or info.profileUid == '' then info.profileUid = (getUIDFBLogin() or '') end 
     local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.mailOrderId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '') .. "|" .. (info.finishSettingMail or 'false') .. "|" .. (info.finishChangeInfo or 'false') .. "|" .. (info.finishAddFriend or 'false') .. "|" .. (info.ipRegister or '')
     accounts[#accounts] = line
 
@@ -1051,6 +1051,60 @@ function getConfigServer()
     return false
 end
 
+function checkProxyAvailable()
+    toast('checkProxyAvailable')
+    sleep(1)
+
+    -- Máy 38 | Hiến | 192.168.31.160
+    local localIP = readFile(localIPFilePath)
+    local localName = localIP[#localIP]
+
+    if localName == nil then 
+        toastr('No local device name.', 2)
+        return false
+    end 
+    local splitted = split(localName, "|")
+
+    local postData = {
+        ['ip_address']  = info.ipRegister,
+        ['username'] = string.gsub(splitted[2], " ", ""),
+        ['device_name'] = string.gsub(splitted[1], " ", ""),
+        ['device_ip']   = string.gsub(splitted[3], " ", ""),
+    }
+
+    local tries = 3
+    for i = 1, tries do 
+        local response, error = httpRequest {
+            url = PHP_SERVER .. "ip_upsert.php",
+            method = "POST",
+            headers = {
+                ["Content-Type"] = "application/json",
+            },
+            data = postData
+        }
+
+        if response then
+            local ok, response, err = safeJsonDecode(response)
+            if ok then 
+                toastr(response.message, 2)
+                sleep(2)
+                if response.status or response.status == 'true' then
+                    return true
+                elseif not response.status or response.status == 'false' then
+                    return false
+                end
+            else 
+                toastr("Failed decode response.");
+            end  
+        else
+            toastr('Times ' .. i .. " - " .. tostring(error), 2)
+            log("Failed request ip_upsert. Times ".. i ..  " - " .. tostring(error))
+        end
+        sleep(3)
+    end
+    return false
+end
+
 function reloadTsproxy()
     if (not TSPROXY_ID or TSPROXY_ID == '') then alert('Empty TSPROXY_ID') exit() end 
     toast('reloadTsproxy', 8)
@@ -1117,6 +1171,7 @@ function waitforTsproxyReady(timeout)
 
                     if currentIP.status == 'running' then 
                         toastr("Ready: " .. currentIP.ipPublic, 2)
+                        info.ipRegister = currentIP.ipPublic
                         sleep(3)
                         return true
                     end
@@ -1127,11 +1182,12 @@ function waitforTsproxyReady(timeout)
                 toastr("Failed decode response.");
             end  
         else
-            toastr('Times ' .. i .. "... ")
+            toastr('Times waitforTsproxyReady: ' .. i .. "... ")
         end
        
         sleep(5)
     end
+    info.ipRegister = nil
     return false
 end
 

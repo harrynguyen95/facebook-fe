@@ -60,10 +60,12 @@ DUMMY_ICLOUD = DUMMY_MODE == 3
 
 -- ====== MAIN ======
 function main()
+    if IP_ROTATE_MODE == 3 then checkOnShadowRocket() end
 
     ::label_continue::
     log('------------ Main running ------------')
     archiveCurrentAccount()
+    if LOGIN_WITH_CODE then initCurrentAccountCode() end 
     log(info, 'Main')
 
     goto debug
@@ -76,21 +78,29 @@ function main()
         elseif IP_ROTATE_MODE == 2 then 
             onOffAirplaneMode2()
         elseif IP_ROTATE_MODE == 3 then 
-            checkOnShadowRocket()
+            local i = 1
+            ::label_resetIP::
             reloadTsproxy()
-            waitforTsproxyReady(60) 
+            if waitforTsproxyReady(30) then 
+                if not checkProxyAvailable() then
+                    if i > 5 then failedCurrentAccount('ip_invalid') goto label_continue end
+                    toast('Times reloadTsproxy: ' .. i) i = i + 1 sleep(2) goto label_resetIP 
+                end
+            else 
+                sleep(1) goto label_resetIP
+            end 
         end 
         executeXoaInfo()
     else 
         swipeCloseApp()
         if IP_ROTATE_MODE == 1 then checkOnShadowRocket() end
     end
-    if LOGIN_WITH_CODE then initCurrentAccountCode() end 
     if not waitForInternet(1) then 
         toast("No Internet 3", 5)
         if IP_ROTATE_MODE == 2 then onOffAirplaneMode2() sleep(2) waitForInternet(1) end
     end 
    
+    dd('end')
     ::label_openfacebook::
     openFacebook()
 
