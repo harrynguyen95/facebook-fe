@@ -100,7 +100,6 @@ function main()
         if IP_ROTATE_MODE == 2 then onOffAirplaneMode2() sleep(2) waitForInternet(1) end
     end 
    
-    dd('end')
     ::label_openfacebook::
     openFacebook()
 
