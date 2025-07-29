@@ -9,7 +9,7 @@ TSPROXY_URL = "https://api.tsproxy.com/api/v1/"
 TSPROXY_DEVICE_ID = "67ed584a8d2d4cf26e49d5c5"
 TSPROXY_API_KEY = "yB2y6yitJ0"
 
-defaultPasswordFilePath = currentPath() .. "/input/password.txt"
+defaultPasswordFilePath = rootDir() .. "/Facebook/input/password.txt"
 accountFilePath = rootDir() .. "/Device/accounts.txt"
 accountCodeFilePath = rootDir() .. "/Device/accounts_code.txt"
 thuemailsFilePath = rootDir() .. "/Device/thuemails.txt"
@@ -942,9 +942,9 @@ function getSearchText(no)
         no = 3
     end
 
-    local searchTextFilePath = currentPath() .. "/input/searchtext_us.txt"
+    local searchTextFilePath = rootDir() .. "/Facebook/input/searchtext_us.txt"
     if ACCOUNT_REGION == 'VN' then
-        searchTextFilePath = currentPath() .. "/input/searchtext.txt"
+        searchTextFilePath = rootDir() .. "/Facebook/input/searchtext.txt"
     end
 
     local lines = readFile(searchTextFilePath)
@@ -962,9 +962,9 @@ function getSearchUsername(no)
         no = 3
     end
 
-    local searchTextFilePath = currentPath() .. "/input/lastname_us.txt"
+    local searchTextFilePath = rootDir() .. "/Facebook/input/lastname_us.txt"
     if ACCOUNT_REGION == 'VN' then
-        searchTextFilePath = currentPath() .. "/input/lastname.txt"
+        searchTextFilePath = rootDir() .. "/Facebook/input/lastname.txt"
     end
 
     local lines = readFile(searchTextFilePath)
@@ -1251,28 +1251,28 @@ end
 
 function getRandomName()
     if ACCOUNT_REGION == 'VN' then 
-        local firstname = getRandomLineInFile(currentPath() .. "/input/firstname.txt")
-        local lastname = getRandomLineInFile(currentPath() .. "/input/lastname.txt")
+        local firstname = getRandomLineInFile(rootDir() .. "/Facebook/input/firstname.txt")
+        local lastname = getRandomLineInFile(rootDir() .. "/Facebook/input/lastname.txt")
         return { firstname, lastname }
 
     end
     if ACCOUNT_REGION == 'US' then 
-        local firstname = getRandomLineInFile(currentPath() .. "/input/firstname_us.txt")
-        local lastname = getRandomLineInFile(currentPath() .. "/input/lastname_us.txt")
+        local firstname = getRandomLineInFile(rootDir() .. "/Facebook/input/firstname_us.txt")
+        local lastname = getRandomLineInFile(rootDir() .. "/Facebook/input/lastname_us.txt")
         return { firstname, lastname }
     end
 end
 
 function getRandomCity()
-    return getRandomLineInFile(currentPath() .. "/input/vn_city.txt")
+    return getRandomLineInFile(rootDir() .. "/Facebook/input/vn_city.txt")
 end
 
 function getRandomHighSchool()
-    return getRandomLineInFile(currentPath() .. "/input/vn_highschool.txt")
+    return getRandomLineInFile(rootDir() .. "/Facebook/input/vn_highschool.txt")
 end
 
 function getRandomUniversity()
-    return getRandomLineInFile(currentPath() .. "/input/vn_university.txt")
+    return getRandomLineInFile(rootDir() .. "/Facebook/input/vn_university.txt")
 end
 
 function setFirstNameLastName()

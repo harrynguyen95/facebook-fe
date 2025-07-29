@@ -1,4 +1,3 @@
-
 local dirPath = rootDir() .. "/Facebook/images_vn/"
 
 what_is_birthday = {dirPath .. "what_is_your_birthday2.png"}

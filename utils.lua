@@ -422,8 +422,8 @@ function removeVietnameseTones(str)
 end
 
 function randomMailDomain()
-    local firstname = getRandomLineInFile(currentPath() .. "/input/firstname.txt")
-    local lastname = getRandomLineInFile(currentPath() .. "/input/lastname.txt")
+    local firstname = getRandomLineInFile(rootDir() .. "/Facebook/input/firstname.txt")
+    local lastname = getRandomLineInFile(rootDir() .. "/Facebook/input/lastname.txt")
     local fullname = lastname .. firstname
     local part1 = removeVietnameseTones(string.lower(fullname):gsub("%s+", ""))
 

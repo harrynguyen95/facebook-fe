@@ -79,6 +79,7 @@ function main()
         elseif IP_ROTATE_MODE == 2 then 
             onOffAirplane()
             offWifi()
+            swipeCloseApp()
         elseif IP_ROTATE_MODE == 3 then 
             local i = 1
             ::label_resetIP::
