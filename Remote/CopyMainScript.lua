@@ -1,5 +1,5 @@
-require(rootDir() .. '/Facebook/src/utils')
-require(rootDir() .. '/Facebook/src/functions')
+require(rootDir() .. '/Facebook/utils')
+require(rootDir() .. '/Facebook/functions')
 
 homeAndUnlockScreen()
 swipeCloseApp()
@@ -61,8 +61,8 @@ end
 local filePath = rootDir() .. "/OnWifi.lua" 
 
 local content = [[
-require(rootDir() .. '/Facebook/src/utils')
-require(rootDir() .. '/Facebook/src/functions')
+require(rootDir() .. '/Facebook/utils')
+require(rootDir() .. '/Facebook/functions')
 
 local dirPath = rootDir() .. "/Facebook/Remote/images/"
 wifi_icon = {dirPath .. "wifi_icon.png"}
