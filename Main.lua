@@ -1075,10 +1075,15 @@ function main()
                 sleep(5)
 
                 local code = ''
-                if ADD_MAIL_DOMAIN > 0 then 
+                if ADD_MAIL_DOMAIN > 0 then
                     code = getMailDomainOwnerConfirmCode()
-                else 
-                    if MAIL_SUPLY == 1 then code = getCodeMailOwner() else code = '-' end
+                else
+                    if MAIL_SUPLY == 1 then
+                        code = getCodeMailOwner()
+                    else 
+                        failedCurrentAccount('cant_get_2fa')
+                        goto label_continue
+                    end
                 end
                 toastr('CODE: ' .. (code or '-'), 2)
                 again = again + 1
