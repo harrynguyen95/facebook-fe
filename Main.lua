@@ -1078,12 +1078,8 @@ function main()
                 if ADD_MAIL_DOMAIN > 0 then
                     code = getMailDomainOwnerConfirmCode()
                 else
-                    if MAIL_SUPLY == 1 then
-                        code = getCodeMailOwner()
-                    else 
-                        failedCurrentAccount('cant_get_2fa')
-                        goto label_continue
-                    end
+                    failedCurrentAccount('cant_get_2fa')
+                    goto label_continue
                 end
                 toastr('CODE: ' .. (code or '-'), 2)
                 again = again + 1
