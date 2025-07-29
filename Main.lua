@@ -132,6 +132,12 @@ function main()
     if waitImageVisible(create_new_account) then
         toastr('create_new_account')
 
+        if waitImageVisible(logo_fb_modern, 4) then
+            toastr('not_support_this_FB_mode')
+            swipeCloseApp()
+            goto label_continue
+        end
+
         if LOGIN_WITH_CODE then 
             findAndClickByImage(mobile_or_email)
             typeNumberLongSpace(info.profileUid)
@@ -160,6 +166,7 @@ function main()
         if checkSuspended() then goto label_continue end
     end
 
+    if checkImageIsExists(logo_fb_modern) then toastr('not_support_this_FB_mode') swipeCloseApp() goto label_continue end
     if checkImageIsExists(what_is_birthday) then goto label_birthday end
     if checkImageIsExists(what_is_mobile_number) then goto label_whatisyourmobile end
     if checkImageIsExists(enter_an_email) then goto label_enterconfirmcodedummy end 
@@ -1062,8 +1069,8 @@ function main()
 
             if waitImageVisible(check_your_email, 3) then
                 toastr('check_your_email')
-                local again = 1
 
+                local again = 1
                 ::label_getownercodeagain::
                 sleep(5)
 
@@ -1071,7 +1078,7 @@ function main()
                 if ADD_MAIL_DOMAIN > 0 then 
                     code = getMailDomainOwnerConfirmCode()
                 else 
-                    code = getCodeMailOwner()
+                    if MAIL_SUPLY == 1 then code = getCodeMailOwner() else code = '' end
                 end
                 toastr('CODE: ' .. (code or '-'), 2)
                 again = again + 1
@@ -1094,6 +1101,7 @@ function main()
                         goto label_getownercodeagain
                     end 
                 else 
+                    info.twoFA = '-'  
                     press(55, 160) -- X
 
                     if waitImageVisible(protect_your_account) then
@@ -1146,7 +1154,7 @@ function main()
                     findAndClickByImage(next)
                     waitImageNotVisible(enter_code_2fa, 10)
                 else 
-                    info.twoFA = nil                
+                    info.twoFA = '-'                
                     if waitImageVisible(reenter_password, 10) then
                         press(55, 155) -- X on re-enter password
                     end
