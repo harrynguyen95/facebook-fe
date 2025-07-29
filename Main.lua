@@ -1,6 +1,6 @@
 -- ====== LIB REQUIRED ======
-require('src/utils')
-require('src/functions')
+require(currentDir() ..  "/src/utils")
+require(currentDir() .. "/src/functions")
 clearAlert()
 
 -- ====== INFO ======
@@ -50,9 +50,9 @@ if not waitForInternet(2) then alert("No Internet 1. RESPRING NOW!!") exit() end
 if not getConfigServer() then alert("No config from server!") exit() end
 
 -- ====== VARIABLE REQUIRED ======
-if LANGUAGE == 'ES' then require(currentDir() .. "/images_es") end
-if LANGUAGE == 'EN' then require(currentDir() .. "/images_en") end
-if LANGUAGE == 'VN' then require(currentDir() .. "/images_vn") end
+if LANGUAGE == 'ES' then require(currentDir() .. "/src/images_es") end
+if LANGUAGE == 'EN' then require(currentDir() .. "/src/images_en") end
+if LANGUAGE == 'VN' then require(currentDir() .. "/src/images_vn") end
 SHOULD_DUMMY = DUMMY_MODE ~= 0
 DUMMY_PHONE = DUMMY_MODE == 1
 DUMMY_GMAIL = DUMMY_MODE == 2

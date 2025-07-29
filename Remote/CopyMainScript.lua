@@ -20,7 +20,6 @@ else
     toastr("❌ Không thể tạo hoặc ghi vào file.")
 end
 
-
 --------------------------------------------------
 function removeFolderIfExists(path)
     io.popen("cd " .. rootDir() .. " && rm -rf " .. path)
