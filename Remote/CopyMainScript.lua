@@ -20,6 +20,7 @@ else
     toastr("❌ Không thể tạo hoặc ghi vào file.")
 end
 
+
 --------------------------------------------------
 function removeFolderIfExists(path)
     io.popen("cd " .. rootDir() .. " && rm -rf " .. path)
@@ -68,17 +69,17 @@ local dirPath = rootDir() .. "/Facebook/Remote/images/"
 wifi_icon = {dirPath .. "wifi_icon.png"}
 wifi_off = {dirPath .. "wifi_off.png"}
 
-toast('onWifi')
+toast('onWifi', 2)
 appRun("com.apple.Preferences")
 if waitImageVisible(wifi_icon, 2) then 
-    toast('wifi_icon')
     findAndClickByImage(wifi_icon)
     sleep(1)
 end 
 if waitImageVisible(wifi_off, 3) then 
-    press(630, 250) sleep(2) -- on
-    swipeCloseApp()
+    findAndClickByImage(wifi_off)
+    sleep(1)
 end
+swipeCloseApp()
 ]]
 
 local file = io.open(filePath, "w")
