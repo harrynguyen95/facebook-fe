@@ -1,5 +1,5 @@
-require(rootDir() .. '/Facebook/utils')
-require(rootDir() .. '/Facebook/functions')
+require(rootDir() .. '/Facebook/src/utils')
+require(rootDir() .. '/Facebook/src/functions')
 
 local dirPath = currentDir() .. "/images/"
 shadowrocket_logo = {dirPath .. "shadowrocket_logo.png"}

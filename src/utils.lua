@@ -1050,7 +1050,7 @@ function waitForInternet(timeout)
     return false
 end
 
-function onOffAirplaneMode2()
+function onOffAirplane()
     appRun("com.apple.Preferences")
     if waitImageVisible(airplane_icon) then 
         if waitImageVisible(airplane_off) then
@@ -1081,7 +1081,8 @@ function onOffAirplaneMode2()
     end 
 end
 
-function onOffAirplaneMode()
+function onOffWifi()
+    toast('onOffWifi')
     appRun("com.apple.Preferences")
     if waitImageVisible(wifi_icon, 2) then 
         toast('wifi_icon')
@@ -1096,7 +1097,33 @@ function onOffAirplaneMode()
     end
 end
 
-function onOffAirplaneMode3()
+function offWifi()
+    toast('offWifi')
+    appRun("com.apple.Preferences")
+    if waitImageVisible(wifi_icon, 2) then 
+        toast('wifi_icon')
+        findAndClickByImage(wifi_icon)
+        sleep(1)
+    end 
+    if waitImageVisible(wifi_on, 3) then 
+        press(630, 250) sleep(2) -- off
+    end
+end
+
+function onWifi()
+    toast('onWifi')
+    appRun("com.apple.Preferences")
+    if waitImageVisible(wifi_icon, 2) then 
+        toast('wifi_icon')
+        findAndClickByImage(wifi_icon)
+        sleep(1)
+    end 
+    if waitImageVisible(wifi_off, 3) then 
+        press(630, 250) sleep(2) -- on
+    end
+end
+
+function onOffAirplaneModeBuiluc()
     toastr('onOffAirplaneMode', 3)
     io.popen("activator send switch-off.com.a3tweaks.switch.vpn")
     sleep(0.5)

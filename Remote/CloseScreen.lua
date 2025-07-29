@@ -1,4 +1,4 @@
-require(rootDir() .. '/Facebook/utils')
-require(rootDir() .. '/Facebook/functions')
+require(rootDir() .. '/Facebook/src/utils')
+require(rootDir() .. '/Facebook/src/functions')
 
 lockScreen()

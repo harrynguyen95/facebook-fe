@@ -1,6 +1,6 @@
 -- ====== LIB REQUIRED ======
-require('utils')
-require('functions')
+require('src/utils')
+require('src/functions')
 clearAlert()
 
 -- ====== INFO ======
@@ -73,10 +73,12 @@ function main()
 
     if info.mailRegister == nil or info.mailRegister == '' then 
         homeAndUnlockScreen()
+        swipeCloseApp()
         if IP_ROTATE_MODE == 1 then 
             rotateShadowRocket()
         elseif IP_ROTATE_MODE == 2 then 
-            onOffAirplaneMode2()
+            onOffAirplane()
+            offWifi()
         elseif IP_ROTATE_MODE == 3 then 
             local i = 1
             ::label_resetIP::
@@ -97,7 +99,7 @@ function main()
     end
     if not waitForInternet(1) then 
         toast("No Internet 3", 5)
-        if IP_ROTATE_MODE == 2 then onOffAirplaneMode2() sleep(2) waitForInternet(1) end
+        if IP_ROTATE_MODE == 2 then onOffAirplane() sleep(2) waitForInternet(1) end
     end 
    
     ::label_openfacebook::

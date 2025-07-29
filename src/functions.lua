@@ -1182,7 +1182,7 @@ function waitforTsproxyReady(timeout)
                 toastr("Failed decode response.");
             end  
         else
-            toastr('Times waitforTsproxyReady: ' .. i .. "... ")
+            toastr('Times wait tsproxy: ' .. i .. "... ")
         end
        
         sleep(5)

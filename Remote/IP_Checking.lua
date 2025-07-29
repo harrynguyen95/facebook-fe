@@ -1,11 +1,11 @@
-require(rootDir() .. '/Facebook/utils')
-require(rootDir() .. '/Facebook/functions')
+require(rootDir() .. '/Facebook/src/utils')
+require(rootDir() .. '/Facebook/src/functions')
 require(rootDir() .. "/Facebook/images_vn")
 
 homeAndUnlockScreen()
 
 ::label_continue::
-onOffAirplaneMode2()
+onOffAirplane()
 sleep(3)
 
 local localIP = readFile(localIPFilePath)
