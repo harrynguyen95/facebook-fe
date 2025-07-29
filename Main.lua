@@ -1078,7 +1078,7 @@ function main()
                 if ADD_MAIL_DOMAIN > 0 then 
                     code = getMailDomainOwnerConfirmCode()
                 else 
-                    if MAIL_SUPLY == 1 then code = getCodeMailOwner() else code = '' end
+                    if MAIL_SUPLY == 1 then code = getCodeMailOwner() else code = '-' end
                 end
                 toastr('CODE: ' .. (code or '-'), 2)
                 again = again + 1
