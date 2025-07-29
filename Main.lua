@@ -1,6 +1,6 @@
 -- ====== LIB REQUIRED ======
-require(currentDir() ..  "/src/utils")
-require(currentDir() .. "/src/functions")
+require(rootDir() ..  "/Facebook/src/utils")
+require(rootDir() .. "/Facebook/src/functions")
 clearAlert()
 
 -- ====== INFO ======
@@ -50,9 +50,9 @@ if not waitForInternet(2) then alert("No Internet 1. RESPRING NOW!!") exit() end
 if not getConfigServer() then alert("No config from server!") exit() end
 
 -- ====== VARIABLE REQUIRED ======
-if LANGUAGE == 'ES' then require(currentDir() .. "/src/images_es") end
-if LANGUAGE == 'EN' then require(currentDir() .. "/src/images_en") end
-if LANGUAGE == 'VN' then require(currentDir() .. "/src/images_vn") end
+if LANGUAGE == 'ES' then require(rootDir() .. "/Facebook/src/images_es") end
+if LANGUAGE == 'EN' then require(rootDir() .. "/Facebook/src/images_en") end
+if LANGUAGE == 'VN' then require(rootDir() .. "/Facebook/src/images_vn") end
 SHOULD_DUMMY = DUMMY_MODE ~= 0
 DUMMY_PHONE = DUMMY_MODE == 1
 DUMMY_GMAIL = DUMMY_MODE == 2
