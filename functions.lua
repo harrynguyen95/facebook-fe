@@ -78,7 +78,6 @@ end
 
 function archiveCurrentAccount()
     local accounts = readFile(accountFilePath)
-    local randomPass = getRandomLineInFile(defaultPasswordFilePath)
 
     if #accounts > 0 then
         local current = accounts[#accounts]
@@ -101,6 +100,7 @@ function archiveCurrentAccount()
             info.finishChangeInfo    = info.finishChangeInfo or splitted[15]
             info.finishAddFriend     = info.finishAddFriend or splitted[16]
             info.ipRegister          = info.ipRegister or splitted[17]
+            if info.password == nil or info.password == '' then info.password = getRandomLineInFile(defaultPasswordFilePath) end
 
             local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.mailOrderId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '') .. "|" .. (info.finishSettingMail or 'false') .. "|" .. (info.finishChangeInfo or 'false') .. "|" .. (info.finishAddFriend or 'false') .. "|" .. (info.ipRegister or '')
             accounts[#accounts] = line
@@ -108,14 +108,14 @@ function archiveCurrentAccount()
         else
             if splitted[1] and splitted[1] ~= '' then info.uuid = floor(splitted[1] + 1) else info.uuid = 1 end
             info.status = 'INPROGRESS'
-            info.password = randomPass
+            info.password = getRandomLineInFile(defaultPasswordFilePath)
             local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.mailOrderId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '') .. "|" .. (info.finishSettingMail or 'false') .. "|" .. (info.finishChangeInfo or 'false') .. "|" .. (info.finishAddFriend or 'false') .. "|" .. (info.ipRegister or '')
             addLineToFile(accountFilePath, line)
         end 
     else 
         info.uuid = 1
         info.status = 'INPROGRESS'
-        info.password = randomPass
+        info.password = getRandomLineInFile(defaultPasswordFilePath)
         local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.mailOrderId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '') .. "|" .. (info.finishSettingMail or 'false') .. "|" .. (info.finishChangeInfo or 'false') .. "|" .. (info.finishAddFriend or 'false') .. "|" .. (info.ipRegister or '')
         addLineToFile(accountFilePath, line)
     end
