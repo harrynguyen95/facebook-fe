@@ -1107,7 +1107,7 @@ end
 
 function reloadTsproxy()
     if (not TSPROXY_ID or TSPROXY_ID == '') then alert('Empty TSPROXY_ID') exit() end 
-    toast('reloadTsproxy', 8)
+    toast('reloadTsproxy', 9)
 
     local tries = 1
     for i = 1, tries do 
@@ -1182,7 +1182,7 @@ function waitforTsproxyReady(timeout)
                 toastr("Failed decode response.");
             end  
         else
-            toastr('Times wait tsproxy: ' .. i .. "... ")
+            toastr('waitforTsproxyReady times ' .. i)
         end
        
         sleep(5)
