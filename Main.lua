@@ -1201,8 +1201,7 @@ function main()
     end
 
     ::label_searchtext::
-    swipe(600, 600, 610, 900) 
-    
+    if waitImageVisible(fb_logo_home, 1) or checkModeMenuLeft() then swipe(600, 600, 610, 900) else goto label_lastcheck end
     if waitImageVisible(what_on_your_mind) then
         toastr('searchtext what_on_your_mind')
         press(600, 90) -- go to search screen
