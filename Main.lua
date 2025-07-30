@@ -60,6 +60,7 @@ DUMMY_ICLOUD = DUMMY_MODE == 3
 
 -- ====== MAIN ======
 function main()
+    if IP_ROTATE_MODE == 2 then offWifi() swipeCloseApp() end
     if IP_ROTATE_MODE == 3 then checkOnShadowRocket() end
 
     ::label_continue::
@@ -78,8 +79,6 @@ function main()
             rotateShadowRocket()
         elseif IP_ROTATE_MODE == 2 then 
             onOffAirplane()
-            offWifi()
-            swipeCloseApp()
         elseif IP_ROTATE_MODE == 3 then 
             local i = 1
             ::label_resetIP::
