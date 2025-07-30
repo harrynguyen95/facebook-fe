@@ -386,7 +386,7 @@ function main()
     toastr('wait password..')
     if waitImageVisible(create_a_password) then
         toastr("create_a_password")
-        press(135, 450)
+        press(135, 430)
         findAndClickByImage(password_eye)
         typeText(info.password)
         findAndClickByImage(next)
@@ -403,6 +403,7 @@ function main()
 
     if checkImageIsExists(continue_creating_account) then failedCurrentAccount('phone_has_account') goto label_continue end
     if checkImageIsExists(what_is_your_email) and not DUMMY_PHONE then goto label_whatisyouremail end 
+    if checkImageIsExists(create_a_password, 1) then goto label_createpassword end 
 
     ::label_saveyourlogin::
     if waitImageVisible(save_your_login_info, 3) then
