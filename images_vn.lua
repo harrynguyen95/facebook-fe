@@ -85,7 +85,8 @@ exist_account_in_mail = {dirPath .. "exist_account_in_mail2.png", dirPath .. "em
 red_warning_icon = {dirPath .. "red_warning_icon.png"}
 you_are_logged_in = {dirPath .. "you_are_logged_in.png"}
 check_your_email = {dirPath .. "check_your_email6.png"}
-confirm_human = {dirPath .. "icon_suspended.png", dirPath .. "giup_chung_toi_xac_nhan.png", dirPath .. "confirm_human2.png", dirPath .. "human_confirm2.png"} 
+confirm_human = {dirPath .. "icon_suspended.png", dirPath .. "giup_chung_toi_xac_nhan.png", 
+    dirPath .. "confirm_human2.png", dirPath .. "human_confirm2.png", dirPath .. "dinh_chi_tai_khoan.png"} 
 continue_code_mail = {dirPath .. "continue_code_mail3.png", dirPath .. "continue_code_mail.png", dirPath .. "next4.png"}
 enter_code_2fa = {dirPath .. "enter_code_2fa2.png"}
 
