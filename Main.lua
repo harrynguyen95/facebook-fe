@@ -680,8 +680,7 @@ function main()
     if ADD_MAIL_DOMAIN == 0 then info.finishSettingMail = 'true' end
 
     ::label_whatisonyourmind::
-    swipe(600, 600, 610, 900) 
-    modeMenuLeft = checkModeMenuLeft()
+    if waitImageVisible(fb_logo_home, 1) or checkModeMenuLeft() then swipe(600, 600, 610, 900) modeMenuLeft = checkModeMenuLeft() else goto label_lastcheck end
 
     ::label_settingmail::
     if ADD_MAIL_DOMAIN > 0 and info.finishSettingMail == 'false' and LANGUAGE == 'VN' then 
@@ -1271,6 +1270,7 @@ function main()
     if waitImageVisible(add_phone_number, 1) then goto label_addphonenumber end
     if checkSuspended() then goto label_continue end
 
+    ::label_lastcheck::
     toastr('Last check..')
     sleep(2)
     if info.status == 'INPROGRESS' then 
