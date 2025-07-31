@@ -62,7 +62,6 @@ VERIFY_PHONE = MAIL_SUPLY == 5
 
 -- ====== MAIN ======
 function main()
-    IP_ROTATE_MODE = 4
     if IP_ROTATE_MODE == 2 then offWifi() swipeCloseApp() end
     if IP_ROTATE_MODE == 3 or IP_ROTATE_MODE == 1 then checkOnShadowRocket() end
 
