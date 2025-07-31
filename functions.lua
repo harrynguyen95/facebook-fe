@@ -3,6 +3,7 @@
 PHP_SERVER = "https://tuongtacthongminh.com/reg_clone/"
 MAIL_THUEMAILS_DOMAIN = "https://api.thuemails.com/api/"
 MAIL_GMAIL66_DOMAIN = "http://gmail66.shop/api/v1/"
+PHONE_IRONSIM_DOMAIN = "https://ironsim.com/api/"
 URL_2FA_FACEBOOK = "https://2fa.live/tok/"
 MAIL_FREE_DOMAIN = "https://api.temp-mailfree.com/"
 TSPROXY_URL = "https://api.tsproxy.com/api/v1/"
@@ -641,6 +642,46 @@ function executeGmailFromGmail66()
     return false
 end
 
+
+function executePhoneFromIronSim()
+    local tries = 1
+    for i = 1, tries do 
+        toastr('Call times ' .. i)
+
+        local response, error = httpRequest {
+            url = PHONE_IRONSIM_DOMAIN .. "phone/new-session?service=1&token=" .. PHONE_IRONSIM_API_KEY,
+            headers = {
+                ["Content-Type"] = "application/json",
+            },
+        }
+
+        if response then
+            local ok, response, err = safeJsonDecode(response)
+            if ok then 
+                if response.status_code == 200 or response.status_code == '200' then
+                    local res = response.data
+
+                    info.mailOrderId = res.session
+                    info.mailPrice = '950'
+                    info.mailRegister = res.phone_number
+
+                    return true
+                else
+                    toastr(response.message)
+                end
+            else 
+                toastr("Failed decode response.");
+            end
+        else
+            toastr('Times ' .. i .. " - " .. tostring(error), 2)
+            log("Failed request phone/new-session. Times ".. i ..  " - " .. tostring(error))
+        end
+
+        sleep(10)
+    end
+    return false
+end
+
 function executeDomainMail()
     local mail = randomMailDomain() 
     info.mailLogin = mail
@@ -664,6 +705,8 @@ function executeGetMailRequest()
         return executeDomainMail()
     elseif MAIL_SUPLY == 4 then
         return executeGmailFromGmail66()
+    elseif MAIL_SUPLY == 5 then
+        return executePhoneFromIronSim()
     else 
         toastr('MAIL_SUPLY invalid.', 5)
         return false
@@ -674,7 +717,7 @@ function getThuemailConfirmCode()
     if info.mailOrderId == nil then return nil end
     
     sleep(3)
-    local tries = 20
+    local tries = 10
     for i = 1, tries do 
         toastr('Call times ' .. i)
 
@@ -785,7 +828,7 @@ function getGmail66ConfirmCode()
     toastr('getGmail66ConfirmCode..', 5)
 
     sleep(10)
-    local tries = 20
+    local tries = 10
     for i = 1, tries do 
         toastr('Call times ' .. i)
 
@@ -818,6 +861,44 @@ function getGmail66ConfirmCode()
     return nil
 end
 
+function getIronSimConfirmCode()
+    if info.mailOrderId == nil then return nil end
+    toastr('getIronSimConfirmCode..', 5)
+
+    sleep(10)
+    local tries = 10
+    for i = 1, tries do 
+        toastr('Call times ' .. i)
+
+        local response, error = httpRequest {
+            url = PHONE_IRONSIM_DOMAIN .. "session/" .. info.mailOrderId .. "/get-otp?token=" .. PHONE_IRONSIM_API_KEY,
+            headers = {
+                ["Content-Type"] = "application/json",
+            },
+        }
+
+        if response then
+            local ok, response, err = safeJsonDecode(response)
+            if ok then 
+                if response.status_code == 200 or response.status_code == '200' and #response.data.messages > 0 then
+                    saveMailToGoogleForm()
+                    return response.data.messages[1].otp
+                else
+                    toastr('Empty code. Times ' .. i)
+                end
+            else 
+                toastr("Failed decode response.");
+            end
+        else
+            toastr('Times ' .. i .. " - " .. tostring(error), 2)
+            log("Failed request session/get-otp. Times ".. i ..  " - " .. tostring(error))
+        end
+
+        sleep(10)
+    end
+    return nil
+end
+
 function getCodeMailRegister()
     if MAIL_SUPLY == 1 then 
         return getDongvanfbConfirmCode()
@@ -827,6 +908,8 @@ function getCodeMailRegister()
         return getMailDomainRegisterConfirmCode()
     elseif MAIL_SUPLY == 4 then
         return getGmail66ConfirmCode()
+    elseif MAIL_SUPLY == 5 then
+        return getIronSimConfirmCode()
     else 
         toastr('MAIL_SUPLY invalid.', 5)
     end
@@ -1029,6 +1112,7 @@ function getConfigServer()
                     MAIL_DONGVANFB_API_KEY   = config.api_key_dongvanfb
                     MAIL_THUEMAILS_API_KEY   = config.api_key_thuemails
                     MAIL_GMAIL66_API_KEY     = config.api_key_gmail66
+                    PHONE_IRONSIM_API_KEY    = config.api_key_ironsim
                     LOCAL_SERVER             = config.local_server
                     DESTINATION_FILENAME     = config.destination_filename
                     LOGIN_WITH_CODE          = tonumber(config.login_with_code) ~= 0

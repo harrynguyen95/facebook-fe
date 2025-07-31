@@ -43,6 +43,7 @@ TIMES_XOA_INFO = 2  -- 0|1|2|3
 MAIL_THUEMAILS_API_KEY = "94a3a21c-40b5-4c48-a690-f1584c390e3e" -- Hải
 MAIL_DONGVANFB_API_KEY = "iFI7ppA8JNDJ52yVedbPlMpSh" -- Hải
 MAIL_GMAIL66_API_KEY = "odjYxf6OURH6O7L4Fg57uJzDDwl9PcZT" -- Nam
+PHONE_IRONSIM_API_KEY = "5ebn3408jldmw7ajk86or521o10pz316" -- Hải
 LOGIN_WITH_CODE = false
 DUMMY_MODE = 0
 
@@ -57,11 +58,12 @@ SHOULD_DUMMY = DUMMY_MODE ~= 0
 DUMMY_PHONE = DUMMY_MODE == 1
 DUMMY_GMAIL = DUMMY_MODE == 2
 DUMMY_ICLOUD = DUMMY_MODE == 3
+VERIFY_PHONE = MAIL_SUPLY == 5
 
 -- ====== MAIN ======
 function main()
     if IP_ROTATE_MODE == 2 then offWifi() swipeCloseApp() end
-    if IP_ROTATE_MODE == 3 then checkOnShadowRocket() end
+    if IP_ROTATE_MODE == 3 or IP_ROTATE_MODE == 1 then checkOnShadowRocket() end
 
     ::label_continue::
     log('------------ Main running ------------')
@@ -83,7 +85,7 @@ function main()
             local i = 1
             ::label_resetIP::
             reloadTsproxy()
-            if waitforTsproxyReady(30) then 
+            if waitforTsproxyReady(20) then 
                 if not checkProxyAvailable() then
                     if i > 5 then failedCurrentAccount('ip_invalid') goto label_continue end
                     toast('Times reloadTsproxy: ' .. i) i = i + 1 sleep(2) goto label_resetIP 
@@ -95,7 +97,6 @@ function main()
         executeXoaInfo()
     else 
         swipeCloseApp()
-        if IP_ROTATE_MODE == 1 then checkOnShadowRocket() end
     end
     if not waitForInternet(1) then 
         toast("No Internet 3", 5)
@@ -105,7 +106,7 @@ function main()
     ::label_openfacebook::
     openFacebook()
 
-    if waitImageVisible(logo_fb_modern) then
+    if waitImageVisible(logo_fb_modern, 3) then
         toastr('not_support_this_FB_mode')
         swipeCloseApp()
         goto label_continue
@@ -134,7 +135,7 @@ function main()
     if waitImageVisible(create_new_account) then
         toastr('create_new_account')
 
-        if waitImageVisible(logo_fb_modern, 4) then
+        if waitImageVisible(logo_fb_modern, 3) then
             toastr('not_support_this_FB_mode')
             swipeCloseApp()
             goto label_continue
@@ -287,9 +288,42 @@ function main()
                 findAndClickByImage(continue_creating_account)
             end
         else
-            findAndClickByImage(sign_up_with_email)
-            waitImageNotVisible(what_is_mobile_number)
-            sleep(2)
+            if not VERIFY_PHONE then 
+                findAndClickByImage(sign_up_with_email)
+                waitImageNotVisible(what_is_mobile_number) sleep(2)
+            else 
+                local max = 10
+                local try = 1
+                ::label_executegetmailrequest::
+                if executeGetMailRequest() then 
+                    if info.mailRegister ~= nil and info.mailRegister ~= '' then 
+                        press(320, 200)
+                        press(320, 450)
+                        findAndClickByImage(x_input_icon)
+                        typeText(info.mailRegister)
+                        findAndClickByImage(next)
+
+                        archiveCurrentAccount()
+                    end
+
+                    if waitImageVisible(red_warning_icon, 3) or waitImageVisible(continue_creating_account, 3) then
+                        if checkImageIsExists(continue_creating_account) then press(55, 415) sleep(1) press(45, 90) sleep(1) end
+                        toastr('cant_get_phone')
+                        if try < max then
+                            try = try + 1
+                            toast('Try ' .. try, 2)
+                            goto label_executegetmailrequest 
+                        else
+                            failedCurrentAccount('cant_get_phone')
+                            goto label_continue
+                        end
+                    end
+                else 
+                    toastr("Empty phone. Continue.", 10) sleep(5)
+                    failedCurrentAccount('empty_phone')
+                    goto label_continue
+                end
+            end 
         end
     end
 
@@ -339,7 +373,6 @@ function main()
                     end
                 else 
                     toastr("Empty mail. Continue.", 10) sleep(5)
-                    log("Empty mail. Continue.")
                     failedCurrentAccount('empty_email')
                     goto label_continue
                 end
@@ -540,7 +573,7 @@ function main()
     ::label_confirmationcode::
     if waitImageVisible(enter_the_confirmation_code, 10) then
         toastr("enter_the_confirmation_code")
-        if DUMMY_PHONE and checkImageIsExists(enter_confirm_code_phone) then goto label_enterconfirmcodedummy end
+        if not VERIFY_PHONE and DUMMY_PHONE and checkImageIsExists(enter_confirm_code_phone) then goto label_enterconfirmcodedummy end
         if not LOGIN_WITH_CODE then info.verifyCode = nil end
 
         if waitImageVisible(dont_allow, 1) then findAndClickByImage(dont_allow) end
