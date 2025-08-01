@@ -96,12 +96,10 @@ function main()
         elseif IP_ROTATE_MODE == 4 then
             local i = 1
             ::label_resetproxytext::
-            rotateProxyText()
-            waitForInternet(1)
-            if not checkProxyAvailable() then
-                if i > 5 then failedCurrentAccount('ip_invalid') goto label_continue end
+            if not rotateProxyText() then
+                if i > 5 then failedCurrentAccount('proxy_invalid') goto label_continue end
                 swipeCloseApp()
-                toast('Times rotateProxyText: ' .. i) i = i + 1 sleep(2) goto label_resetproxytext 
+                toast('Times rotateProxyText: ' .. i, 5) i = i + 1 sleep(10) goto label_resetproxytext 
             end
         end
         executeXoaInfo()

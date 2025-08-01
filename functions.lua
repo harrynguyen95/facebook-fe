@@ -185,6 +185,7 @@ function saveAccToGoogleForm()
     local typeReg = '-'
     if TSPROXY_ID > 35 then typeReg = 'FPT' elseif (TSPROXY_ID > 0 and TSPROXY_ID < 36) then typeReg = 'Viettel' else typeReg = '-' end
     if IP_ROTATE_MODE == 2 then typeReg = 'Sim' end 
+    if IP_ROTATE_MODE == 4 then typeReg = 'Text' end 
     local localIP = readFile(localIPFilePath)
     info.localIP = localIP[#localIP] .. " | " .. typeReg .. " | " .. (LOGIN_WITH_CODE and 'otp' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-'))))
 
@@ -213,6 +214,7 @@ function saveNoVerifyToGoogleForm()
     local typeReg = '-'
     if TSPROXY_ID > 35 then typeReg = 'FPT' elseif (TSPROXY_ID > 0 and TSPROXY_ID < 36) then typeReg = 'Viettel' else typeReg = '-' end
     if IP_ROTATE_MODE == 2 then typeReg = 'Sim' end 
+    if IP_ROTATE_MODE == 4 then typeReg = 'Text' end 
     local localIP = readFile(localIPFilePath)
     info.localIP = localIP[#localIP] .. " | " .. typeReg .. " | " .. (LOGIN_WITH_CODE and 'otp' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-'))))
 
@@ -241,6 +243,7 @@ function saveMailToGoogleForm()
     local typeReg = '-'
     if TSPROXY_ID > 35 then typeReg = 'FPT' else typeReg = 'Viettel' end
     if IP_ROTATE_MODE == 2 then typeReg = 'Sim' end 
+    if IP_ROTATE_MODE == 4 then typeReg = 'Text' end 
     local localIP = readFile(localIPFilePath)
     info.localIP = localIP[#localIP] .. " | " .. typeReg .. " | " .. (LOGIN_WITH_CODE and 'otp' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-'))))
 
@@ -1598,7 +1601,6 @@ function saveRandomServerAvatar()
     return false
 end
 
-
 function fakeRandomContact()
     toast('fakeRandomContact..', 4)
     function sendAddContact(cmd)
@@ -1611,4 +1613,89 @@ function fakeRandomContact()
     local count = math.random(200, 500)
     sendAddContact(string.format("add %d +849 12", count))
     sleep(4)
+end
+
+function getNextProxyInText()
+    local now = os.time()
+    local path = rootDir() .. "/Device/proxy.txt"
+    local proxies = readFile(path)
+
+    if #proxies > 0 then
+        for i, v in ipairs(proxies) do
+            local splitted = split(v, "|")
+            if not splitted[2] then 
+                proxies[i] = splitted[1] .. "|" .. now
+                writeFile(path, proxies)
+                return splitted[1]
+            else 
+                if now - splitted[2] > 60 * 60 then 
+                    proxies[i] = splitted[1] .. "|" .. now
+                    writeFile(path, proxies)
+                    return splitted[1]
+                end 
+            end 
+        end
+
+    end
+    return nil
+end 
+
+function rotateProxyText(proxyString)
+    if not proxyString then 
+        proxyString = getNextProxyInText() 
+    end 
+
+    local dirPath = rootDir() .. "/Facebook/Remote/images/"
+    local shadowrocket_logo = {dirPath .. "shadowrocket_logo.png"}
+    local shadowrocket_on = {dirPath .. "shadowrocket_on.png"}
+    local shadowrocket_off = {dirPath .. "shadowrocket_off.png"}
+    local shadowrocket_add = {dirPath .. "shadowrocket_add.png"}
+    local shadowrocket_xoa = {dirPath .. "shadowrocket_xoa.png"}
+    local shadowrocket_xoa_confirm = {dirPath .. "shadowrocket_xoa_confirm.png"}
+    
+    local socks5 = ""
+    if proxyString and proxyString ~= "" then
+        local ip, port, user, pass = proxyString:match("([^:]+):([^:]+):([^:]+):([^:]+)")
+        if user and pass and ip and port then
+            socks5 = user .. ":" .. pass .. "@" .. ip .. ":" .. port
+        else
+            socks5 = proxyString
+        end
+    else
+        return false
+    end
+
+    local mime = require("mime")
+    local b64 = mime.b64(socks5)
+    copyText("http://" .. b64)
+
+    sleep(1)
+    openURL("shadowrocket://route/proxy")
+    sleep(3)
+
+    if appState("com.liguangming.Shadowrocket") == "ACTIVATED" then
+        if waitImageVisible(shadowrocket_add) then
+            findAndClickByImage(shadowrocket_add) sleep(2)
+            press(250, 640) sleep(1) -- first proxy
+
+            ::label_onshadowrocket::
+            if waitImageVisible(shadowrocket_on) then 
+                findAndClickByImage(shadowrocket_on) sleep(1)
+                findAndClickByImage(shadowrocket_off) sleep(2)
+            elseif waitImageVisible(shadowrocket_off, 2) then
+                findAndClickByImage(shadowrocket_off) sleep(2)
+            end
+
+            if checkImageIsExists(shadowrocket_on) then 
+                swipe(520, 720, 350, 720)
+                if waitImageVisible(shadowrocket_xoa) then 
+                    findAndClickByImage(shadowrocket_xoa) sleep(1)
+                    findAndClickByImage(shadowrocket_xoa_confirm) sleep(1)
+                end 
+                return true
+            else 
+                goto label_onshadowrocket
+            end 
+        end
+    end
 end
