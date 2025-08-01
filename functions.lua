@@ -650,7 +650,7 @@ function executePhoneFromIronSim()
         toastr('Call times ' .. i)
 
         local response, error = httpRequest {
-            url = PHONE_IRONSIM_DOMAIN .. "phone/new-session?service=1&token=" .. PHONE_IRONSIM_API_KEY,
+            url = PHONE_IRONSIM_DOMAIN .. "phone/new-session?service=7&token=" .. PHONE_IRONSIM_API_KEY,
             headers = {
                 ["Content-Type"] = "application/json",
             },
@@ -663,7 +663,7 @@ function executePhoneFromIronSim()
                     local res = response.data
 
                     info.mailOrderId = res.session
-                    info.mailPrice = '950'
+                    info.mailPrice = res.price
                     info.mailRegister = res.phone_number
 
                     return true
@@ -864,10 +864,10 @@ end
 
 function getIronSimConfirmCode()
     if info.mailOrderId == nil then return nil end
-    toastr('getIronSimConfirmCode..', 5)
+    toastr('getIronSimConfirmCode', 5)
 
     sleep(10)
-    local tries = 10
+    local tries = 20
     for i = 1, tries do 
         toastr('Call times ' .. i)
 
@@ -881,9 +881,10 @@ function getIronSimConfirmCode()
         if response then
             local ok, response, err = safeJsonDecode(response)
             if ok then 
-                if response.status_code == 200 or response.status_code == '200' and #response.data.messages > 0 then
+                local data = response.data
+                if response.status_code == 200 and data.status == 0 and data.messages then
                     saveMailToGoogleForm()
-                    return response.data.messages[1].otp
+                    return data.messages[1].otp
                 else
                     toastr('Empty code. Times ' .. i)
                 end

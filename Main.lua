@@ -64,7 +64,6 @@ VERIFY_PHONE = MAIL_SUPLY == 5
 function main()
     if IP_ROTATE_MODE == 2 then offWifi() swipeCloseApp() end
     if IP_ROTATE_MODE == 3 or IP_ROTATE_MODE == 1 then checkOnShadowRocket() end
-    if IP_ROTATE_MODE == 4 then swipeCloseApp() end
 
     ::label_continue::
     log('------------ Main running ------------')
@@ -83,27 +82,17 @@ function main()
             onOffAirplane()
         elseif IP_ROTATE_MODE == 3 then 
             local i = 1
-            ::label_resetproxylan::
+            ::label_resetIP::
             reloadTsproxy()
             if waitforTsproxyReady(20) then 
                 if not checkProxyAvailable() then
                     if i > 5 then failedCurrentAccount('ip_invalid') goto label_continue end
-                    toast('Times reloadTsproxy: ' .. i) i = i + 1 sleep(2) goto label_resetproxylan
+                    toast('Times reloadTsproxy: ' .. i) i = i + 1 sleep(2) goto label_resetIP 
                 end
             else 
-                sleep(1) goto label_resetproxylan
+                sleep(1) goto label_resetIP
             end 
-        elseif IP_ROTATE_MODE == 4 then
-            local i = 1
-            ::label_resetproxytext::
-            rotateProxyText()
-            waitForInternet(1)
-            if not checkProxyAvailable() then
-                if i > 5 then failedCurrentAccount('ip_invalid') goto label_continue end
-                swipeCloseApp()
-                toast('Times rotateProxyText: ' .. i) i = i + 1 sleep(2) goto label_resetproxytext 
-            end
-        end
+        end 
         executeXoaInfo()
     else 
         swipeCloseApp()
