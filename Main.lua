@@ -26,20 +26,20 @@ info = {
 }
 
 -- ====== CONFIG ======
-LANGUAGE = 'VN'  -- EN|ES|VN English|Spanish|Vietnamese
+LANGUAGE = 'VN'
 ACCOUNT_REGION = 'VN'  
-MAIL_SUPLY = 1  -- 1|2|3 hotmail_dongvanfb|thuemails.com|yagisongs
-ENTER_VERIFY_CODE = true  -- true|false
+MAIL_SUPLY = 1
+ENTER_VERIFY_CODE = true
 HOTMAIL_SERVICE_IDS = {1, 3, 2, 6, 5}
-HOTMAIL_SOURCE_FROM_FILE = false  -- true|false
+HOTMAIL_SOURCE_FROM_FILE = false 
 THUE_LAI_MAIL = 0  
 ADD_MAIL_DOMAIN = 0
 MAIL_DOMAIN_TYPE = 0
 CHANGE_INFO = false
 IP_ROTATE_MODE = 1
 TSPROXY_ID = nil
-PROVIDER_MAIL_THUEMAILS = 1  -- 1|3 gmail|icloud
-TIMES_XOA_INFO = 2  -- 0|1|2|3
+PROVIDER_MAIL_THUEMAILS = 1 
+TIMES_XOA_INFO = 2 
 MAIL_THUEMAILS_API_KEY = "94a3a21c-40b5-4c48-a690-f1584c390e3e" -- Hải
 MAIL_DONGVANFB_API_KEY = "iFI7ppA8JNDJ52yVedbPlMpSh" -- Hải
 MAIL_GMAIL66_API_KEY = "odjYxf6OURH6O7L4Fg57uJzDDwl9PcZT" -- Nam

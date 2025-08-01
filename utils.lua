@@ -100,7 +100,7 @@ function log(value, prefix)
 end
 
 function press(x, y, duration)
-    duration = duration or 0.3
+    duration = duration or math.random(0.22, 0.32)
     local randOffset = function()
         return math.random(-10, 10)
     end
@@ -506,8 +506,15 @@ function swipe(x1, y1, x2, y2, duration)
     duration = duration or 100
     local steps = math.random(12, 20)
     local sleepPerStep = math.floor(duration * 1000 / steps)
+    local fingerID = math.random(1, 20)
 
-    touchDown(0, x1, y1)
+    local randOffset = function() return math.random(-10, 10) end
+    local x1 = x1 + randOffset()
+    local y1 = y1 + randOffset()
+    local x2 = x2 + randOffset()
+    local y2 = y2 + randOffset()
+
+    touchDown(fingerID, x1, y1)
     usleep( math.random(40000, 60000) )
 
     for i = 1, steps do
@@ -518,11 +525,11 @@ function swipe(x1, y1, x2, y2, duration)
         local jitterX = math.random(-1, 1)
         local jitterY = math.random(-1, 1)
 
-        touchMove(0, x + jitterX, y + jitterY)
+        touchMove(fingerID, x + jitterX, y + jitterY)
         usleep(sleepPerStep + math.random(-1000, 1000))
     end
 
-    touchUp(0, x2, y2)
+    touchUp(fingerID, x2, y2)
     usleep( math.random(80000, 120000) )
 end
 
@@ -594,13 +601,13 @@ function unlockScreen()
 
     local x = 10;
     local gap = 120;
-    touchDown(0, x, 200);
+    touchDown(1, x, 200);
     while x < w do
         x = x + gap;
         usleep(16000);
-        touchMove(0, x, 200);
+        touchMove(1, x, 200);
     end
-    touchUp(0, x, 200);
+    touchUp(1, x, 200);
 end
 
 function lockAndUnlockScreen()
