@@ -183,7 +183,7 @@ function saveAccToGoogleForm()
     -- info.localIP = localIP[#localIP] .. " | " .. ACCOUNT_REGION .. " | " .. LANGUAGE .. " | " .. (LOGIN_WITH_CODE and 'otp' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-'))))
 
     local typeReg = '-'
-    if TSPROXY_ID > 35 then typeReg = 'FPT' elseif (TSPROXY_ID > 0 and TSPROXY_ID < 36) typeReg = 'Viettel' else typeReg = '-' end
+    if TSPROXY_ID > 35 then typeReg = 'FPT' elseif then (TSPROXY_ID > 0 and TSPROXY_ID < 36) typeReg = 'Viettel' else typeReg = '-' end
     if IP_ROTATE_MODE == 2 then typeReg = 'Sim' end 
     local localIP = readFile(localIPFilePath)
     info.localIP = localIP[#localIP] .. " | " .. typeReg .. " | " .. (LOGIN_WITH_CODE and 'otp' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-'))))
@@ -211,7 +211,7 @@ end
 
 function saveNoVerifyToGoogleForm()
     local typeReg = '-'
-    if TSPROXY_ID > 35 then typeReg = 'FPT' elseif (TSPROXY_ID > 0 and TSPROXY_ID < 36) typeReg = 'Viettel' else typeReg = '-' end
+    if TSPROXY_ID > 35 then typeReg = 'FPT' elseif then (TSPROXY_ID > 0 and TSPROXY_ID < 36) typeReg = 'Viettel' else typeReg = '-' end
     if IP_ROTATE_MODE == 2 then typeReg = 'Sim' end 
     local localIP = readFile(localIPFilePath)
     info.localIP = localIP[#localIP] .. " | " .. typeReg .. " | " .. (LOGIN_WITH_CODE and 'otp' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-'))))

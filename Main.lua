@@ -100,6 +100,7 @@ function main()
             waitForInternet(1)
             if not checkProxyAvailable() then
                 if i > 5 then failedCurrentAccount('ip_invalid') goto label_continue end
+                swipeCloseApp()
                 toast('Times rotateProxyText: ' .. i) i = i + 1 sleep(2) goto label_resetproxytext 
             end
         end
