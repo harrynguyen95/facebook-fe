@@ -241,7 +241,7 @@ end
 
 function saveMailToGoogleForm()
     local typeReg = '-'
-    if TSPROXY_ID > 35 then typeReg = 'FPT' else typeReg = 'Viettel' end
+    if TSPROXY_ID > 35 then typeReg = 'FPT' elseif (TSPROXY_ID > 0 and TSPROXY_ID < 36) then typeReg = 'Viettel' else typeReg = '-' end
     if IP_ROTATE_MODE == 2 then typeReg = 'Sim' end 
     if IP_ROTATE_MODE == 4 then typeReg = 'Text' end 
     local localIP = readFile(localIPFilePath)
