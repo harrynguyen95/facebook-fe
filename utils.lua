@@ -100,14 +100,14 @@ function log(value, prefix)
 end
 
 function press(x, y, duration)
-    duration = duration or math.random(0.22, 0.32)
+    duration = duration or math.random(250000, 320000)
     local randOffset = function()
         return math.random(-10, 10)
     end
     local randX = x + randOffset()
     local randY = y + randOffset()
     tap(randX, randY)
-    usleep(duration * 1000000)
+    usleep(duration)
 end
 
 function split(str, delimiter)
