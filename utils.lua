@@ -1227,34 +1227,35 @@ function randomUSPhone()
 end
 
 function randomVNPhone()
-    local area_codes = {
-        ["Viettel"] = {"32", "33", "34", "35", "36", "37", "38", "39"},
-        ["MobiFone"] = {"70", "76", "77", "78", "79"},
-        ["VinaPhone"] = {"81", "82", "83", "84", "85"},
-        ["Vietnamobile"] = {"56", "58"},
-        ["Gmobile"] = {"59"},
-        ["Khac"] = {"86", "88", "89"}
-    }
+    return randomUSPhone()
+    -- local area_codes = {
+    --     ["Viettel"] = {"32", "33", "34", "35", "36", "37", "38", "39"},
+    --     ["MobiFone"] = {"70", "76", "77", "78", "79"},
+    --     ["VinaPhone"] = {"81", "82", "83", "84", "85"},
+    --     ["Vietnamobile"] = {"56", "58"},
+    --     ["Gmobile"] = {"59"},
+    --     ["Khac"] = {"86", "88", "89"}
+    -- }
 
-    local function randomMobileNXX()
-        return string.format("%07d", math.random(0, 9999999))
-    end
+    -- local function randomMobileNXX()
+    --     return string.format("%07d", math.random(0, 9999999))
+    -- end
 
-    local function randomPhone()
-        local telcos = {}
-        for telco in pairs(area_codes) do table.insert(telcos, telco) end
-        local randomTelco = telcos[math.random(#telcos)]
-        local codes = area_codes[randomTelco]
-        local areaCode = codes[math.random(#codes)]
+    -- local function randomPhone()
+    --     local telcos = {}
+    --     for telco in pairs(area_codes) do table.insert(telcos, telco) end
+    --     local randomTelco = telcos[math.random(#telcos)]
+    --     local codes = area_codes[randomTelco]
+    --     local areaCode = codes[math.random(#codes)]
 
-        local prefixes = {"+84", "0"}
-        local prefix = prefixes[math.random(#prefixes)]
+    --     local prefixes = {"+84", "0"}
+    --     local prefix = prefixes[math.random(#prefixes)]
 
-        local phone = prefix .. areaCode .. randomMobileNXX()
-        return phone
-    end
+    --     local phone = prefix .. areaCode .. randomMobileNXX()
+    --     return phone
+    -- end
 
-    return randomPhone()
+    -- return randomPhone()
 end
 
 function hasUppercase(email)
