@@ -584,6 +584,14 @@ function main()
     if waitImageVisible(enter_the_confirmation_code, 10) then
         toastr("enter_the_confirmation_code")
         if not VERIFY_PHONE and DUMMY_PHONE and checkImageIsExists(enter_confirm_code_phone) then goto label_enterconfirmcodedummy end
+        if VERIFY_PHONE and checkImageIsExists(enter_confirm_code_whatsapp) then 
+            findAndClickByImage(no_receive_code)
+            if waitImageVisible(confirm_via_sms, 10) then 
+                findAndClickByImage(confirm_via_sms)
+                waitImageVisible(enter_confirm_code_phone)
+                toast('confirm_via_sms')
+            end
+        end
         if not LOGIN_WITH_CODE then info.verifyCode = nil end
 
         if waitImageVisible(dont_allow, 1) then findAndClickByImage(dont_allow) end

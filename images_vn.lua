@@ -176,3 +176,5 @@ tiep_tuc_thiet_lap_profile = {dirPath .. "tiep_tuc_thiet_lap_profile.png"}
 khong_the_thay_doi_avt = {dirPath .. "khong_the_thay_doi_avt.png"}
 fb_logo_home = {dirPath .. "fb_logo_home.png"}
 add_your_email_address = {dirPath .. "add_your_email_address.png"}
+enter_confirm_code_whatsapp = {dirPath .. "enter_confirm_code_whatsapp.png"}
+confirm_via_sms = {dirPath .. "confirm_via_sms.png"}
