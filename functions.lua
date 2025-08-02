@@ -187,7 +187,7 @@ function saveAccToGoogleForm()
     if IP_ROTATE_MODE == 2 then typeReg = 'Sim' end 
     if IP_ROTATE_MODE == 4 then typeReg = 'Text' end 
 
-    local dummy = VERIFY_PHONE and 'verify_phone' or (LOGIN_WITH_CODE and 'otp' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-'))))
+    local dummy = LOGIN_WITH_CODE and 'otp' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-')))
     local localIP = readFile(localIPFilePath)
     info.localIP = localIP[#localIP] .. " | " .. typeReg .. " | " .. dummy
 
@@ -218,7 +218,7 @@ function saveNoVerifyToGoogleForm()
     if IP_ROTATE_MODE == 2 then typeReg = 'Sim' end 
     if IP_ROTATE_MODE == 4 then typeReg = 'Text' end 
 
-    local dummy = VERIFY_PHONE and 'verify_phone' or (LOGIN_WITH_CODE and 'otp' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-'))))
+    local dummy = LOGIN_WITH_CODE and 'otp' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-')))
     local localIP = readFile(localIPFilePath)
     info.localIP = localIP[#localIP] .. " | " .. typeReg .. " | " .. dummy
 
@@ -249,7 +249,7 @@ function saveMailToGoogleForm()
     if IP_ROTATE_MODE == 2 then typeReg = 'Sim' end 
     if IP_ROTATE_MODE == 4 then typeReg = 'Text' end 
 
-    local dummy = VERIFY_PHONE and 'verify_phone' or (LOGIN_WITH_CODE and 'otp' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-'))))
+    local dummy = LOGIN_WITH_CODE and 'otp' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-')))
     local localIP = readFile(localIPFilePath)
     info.localIP = localIP[#localIP] .. " | " .. typeReg .. " | " .. dummy
     
