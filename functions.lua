@@ -186,8 +186,10 @@ function saveAccToGoogleForm()
     if TSPROXY_ID > 35 then typeReg = 'FPT' elseif (TSPROXY_ID > 0 and TSPROXY_ID < 36) then typeReg = 'Viettel' else typeReg = '-' end
     if IP_ROTATE_MODE == 2 then typeReg = 'Sim' end 
     if IP_ROTATE_MODE == 4 then typeReg = 'Text' end 
+
+    local dummy = VERIFY_PHONE and 'verify_phone' or (LOGIN_WITH_CODE and 'otp' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-'))))
     local localIP = readFile(localIPFilePath)
-    info.localIP = localIP[#localIP] .. " | " .. typeReg .. " | " .. (LOGIN_WITH_CODE and 'otp' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-'))))
+    info.localIP = localIP[#localIP] .. " | " .. typeReg .. " | " .. dummy
 
     local tries = 3
     for i = 1, tries do 
@@ -215,8 +217,10 @@ function saveNoVerifyToGoogleForm()
     if TSPROXY_ID > 35 then typeReg = 'FPT' elseif (TSPROXY_ID > 0 and TSPROXY_ID < 36) then typeReg = 'Viettel' else typeReg = '-' end
     if IP_ROTATE_MODE == 2 then typeReg = 'Sim' end 
     if IP_ROTATE_MODE == 4 then typeReg = 'Text' end 
+
+    local dummy = VERIFY_PHONE and 'verify_phone' or (LOGIN_WITH_CODE and 'otp' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-'))))
     local localIP = readFile(localIPFilePath)
-    info.localIP = localIP[#localIP] .. " | " .. typeReg .. " | " .. (LOGIN_WITH_CODE and 'otp' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-'))))
+    info.localIP = localIP[#localIP] .. " | " .. typeReg .. " | " .. dummy
 
     local tries = 3
     for i = 1, tries do 
@@ -244,9 +248,11 @@ function saveMailToGoogleForm()
     if TSPROXY_ID > 35 then typeReg = 'FPT' elseif (TSPROXY_ID > 0 and TSPROXY_ID < 36) then typeReg = 'Viettel' else typeReg = '-' end
     if IP_ROTATE_MODE == 2 then typeReg = 'Sim' end 
     if IP_ROTATE_MODE == 4 then typeReg = 'Text' end 
-    local localIP = readFile(localIPFilePath)
-    info.localIP = localIP[#localIP] .. " | " .. typeReg .. " | " .. (LOGIN_WITH_CODE and 'otp' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-'))))
 
+    local dummy = VERIFY_PHONE and 'verify_phone' or (LOGIN_WITH_CODE and 'otp' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-'))))
+    local localIP = readFile(localIPFilePath)
+    info.localIP = localIP[#localIP] .. " | " .. typeReg .. " | " .. dummy
+    
     local tries = 3
     for i = 1, tries do 
         local response, error = httpRequest {
@@ -645,7 +651,6 @@ function executeGmailFromGmail66()
     end
     return false
 end
-
 
 function executePhoneFromIronSim()
     local tries = 1
