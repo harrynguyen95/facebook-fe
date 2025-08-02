@@ -302,7 +302,7 @@ function main()
                 findAndClickByImage(sign_up_with_email)
                 waitImageNotVisible(what_is_mobile_number) sleep(2)
             else 
-                local max = 10
+                local max = 20
                 local try = 1
                 ::label_executegetmailrequest::
                 if executeGetMailRequest() then 
