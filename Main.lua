@@ -135,6 +135,7 @@ function main()
     if checkImageIsExists(find_friend) then goto label_findfriend_swipe end
     if checkImageIsExists(no_friend) then goto label_nofriend end
     if checkImageIsExists(add_phone_number) then goto label_addphonenumber end
+    if checkImageIsExists(add_your_email_address) then goto label_addyouremailaddress end
     if checkImageIsExists(agree_facebook_term) then goto label_agree end
     if checkImageIsExists(what_on_your_mind) then goto label_whatisonyourmind end
 
@@ -190,6 +191,7 @@ function main()
     if checkImageIsExists(find_friend) then goto label_findfriend_swipe end
     if checkImageIsExists(no_friend) then goto label_nofriend end
     if checkImageIsExists(add_phone_number) then goto label_addphonenumber end
+    if checkImageIsExists(add_your_email_address) then goto label_addyouremailaddress end
     if checkImageIsExists(agree_facebook_term) then goto label_agree end
     if checkImageIsExists(what_on_your_mind) then goto label_whatisonyourmind end
 
@@ -706,6 +708,13 @@ function main()
         waitImageVisible(add_phone_number)
     end
 
+    ::label_addyouremailaddress::
+    if waitImageVisible(add_your_email_address, 1) then
+        toastr("add_your_email_address")
+        press(380, 1220) -- skip
+        waitImageVisible(add_your_email_address)
+    end
+
     if checkImageIsExists(create_a_password) then goto label_createpassword end 
     if checkImageIsExists(enter_an_email) then goto label_enterconfirmcodedummy end 
     if checkImageIsExists(enter_confirm_code_phone) then goto label_enterconfirmcodedummy end 
@@ -715,6 +724,7 @@ function main()
     if checkImageIsExists(no_friend) then goto label_nofriend end
     if checkImageIsExists(find_friend) then goto label_findfriend_kill end
     if checkImageIsExists(add_phone_number) then goto label_addphonenumber end
+    if checkImageIsExists(add_your_email_address) then goto label_addyouremailaddress end
 
     if checkPageNotAvailable() then goto label_continue end
     if checkSuspended() then goto label_continue end
@@ -1308,6 +1318,7 @@ function main()
     if waitImageVisible(no_friend, 1) then goto label_nofriend end
     if waitImageVisible(find_friend, 1) then goto label_findfriend_kill end
     if waitImageVisible(add_phone_number, 1) then goto label_addphonenumber end
+    if checkImageIsExists(add_your_email_address) then goto label_addyouremailaddress end
     if checkSuspended() then goto label_continue end
 
     ::label_lastcheck::
