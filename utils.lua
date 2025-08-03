@@ -541,20 +541,20 @@ function swipeVertically(n)
     local y1 = math.random(90, 115)
     local timecholuot = math.random(5000, 10000)
     for i = 1, n, 1 do
-        touchDown(x, x1, y);
-        usleep(timecholuot);
+        touchDown(x, x1, y)
+        usleep(timecholuot)
         for i = y, y1 + 20, -30 do
-            usleep(timecholuot);
-            touchMove(x, x1, i);
+            usleep(timecholuot)
+            touchMove(x, x1, i)
         end
         for i = y1 + 20, y1, -2 do
-            usleep(timecholuot);
-            touchMove(x, x1, i);
+            usleep(timecholuot)
+            touchMove(x, x1, i)
         end
-        usleep(timecholuot);
-        touchUp(x, x1, y1);
+        usleep(timecholuot)
+        touchUp(x, x1, y1)
 
-        usleep(1500000, 2000000);
+        usleep(1500000, 2000000)
     end
 end
 
@@ -585,29 +585,29 @@ function pressHome()
 end
 
 function lockScreen()
-    keyDown(KEY_TYPE.POWER_BUTTON);
+    keyDown(KEY_TYPE.POWER_BUTTON)
     sleep(0.3)
-    keyUp(KEY_TYPE.POWER_BUTTON);
+    keyUp(KEY_TYPE.POWER_BUTTON)
 end
 
 function unlockScreen()
-    keyDown(KEY_TYPE.POWER_BUTTON);
+    keyDown(KEY_TYPE.POWER_BUTTON)
     sleep(0.3)
-    keyUp(KEY_TYPE.POWER_BUTTON);
+    keyUp(KEY_TYPE.POWER_BUTTON)
 
-    usleep(1000000);
+    usleep(1000000)
 
-    local w, h = getScreenResolution();
+    local w, h = getScreenResolution()
 
     local x = 10;
     local gap = 120;
-    touchDown(1, x, 200);
+    touchDown(1, x, 200)
     while x < w do
         x = x + gap;
-        usleep(16000);
-        touchMove(1, x, 200);
+        usleep(16000)
+        touchMove(1, x, 200)
     end
-    touchUp(1, x, 200);
+    touchUp(1, x, 200)
 end
 
 function lockAndUnlockScreen()
@@ -904,44 +904,44 @@ end
 function typeNumber(so)
     stringSo = " " .. so;
     for i = 1, #stringSo do
-        dayso = string.sub(stringSo, i, i);
+        dayso = string.sub(stringSo, i, i)
         local x = math.random(-5, 5)
         local y = math.random(-5, 5)
         local timecho = math.random(300000, 500000)
         if string.sub(stringSo, i, i) == "0" then
-            tap(356 + x, 1265 + y);
+            tap(356 + x, 1265 + y)
             usleep(timecho)
         elseif string.sub(stringSo, i, i) == "1" then
-            tap(107 + x, 946 + y);
+            tap(107 + x, 946 + y)
             usleep(timecho)
         elseif string.sub(stringSo, i, i) == "2" then
-            tap(359 + x, 945 + y);
+            tap(359 + x, 945 + y)
             usleep(timecho)
         elseif string.sub(stringSo, i, i) == "3" then
-            tap(613 + x, 941 + y);
+            tap(613 + x, 941 + y)
             usleep(timecho)
         elseif string.sub(stringSo, i, i) == "4" then
-            tap(116 + x, 1051 + y);
+            tap(116 + x, 1051 + y)
             usleep(timecho)
         elseif string.sub(stringSo, i, i) == "5" then
-            tap(359 + x, 1046 + y);
+            tap(359 + x, 1046 + y)
             usleep(timecho)
         elseif string.sub(stringSo, i, i) == "6" then
-            tap(599 + x, 1048 + y);
+            tap(599 + x, 1048 + y)
             usleep(timecho)
         elseif string.sub(stringSo, i, i) == "7" then
-            tap(126 + x, 1159 + y);
+            tap(126 + x, 1159 + y)
             usleep(timecho)
         elseif string.sub(stringSo, i, i) == "8" then
-            tap(358 + x, 1157 + y);
+            tap(358 + x, 1157 + y)
             usleep(timecho)
         elseif string.sub(stringSo, i, i) == "9" then
-            tap(610 + x, 1152 + y);
+            tap(610 + x, 1152 + y)
             usleep(timecho)
         elseif string.sub(stringSo, i, i) == "+" then
-            tap(126 + x, 1273 + y); -- phim doi
+            tap(126 + x, 1273 + y) -- phim doi
             usleep(timecho)
-            tap(372 + x, 1282 + y); -- phim +
+            tap(372 + x, 1282 + y) -- phim +
             usleep(timecho)
         end
     end
@@ -1134,49 +1134,48 @@ function onOffAirplaneModeBuiluc()
     toastr('onOffAirplaneMode', 3)
     io.popen("activator send switch-off.com.a3tweaks.switch.vpn")
     sleep(0.5)
-    io.popen('activator send switch-on.com.a3tweaks.switch.airplane-mode');
+    io.popen('activator send switch-on.com.a3tweaks.switch.airplane-mode')
     sleep(0.5)
-    io.popen('activator send switch-on.com.a3tweaks.switch.airplane-mode');
+    io.popen('activator send switch-on.com.a3tweaks.switch.airplane-mode')
     sleep(0.5)
-    io.popen('activator send switch-off.com.a3tweaks.switch.airplane-mode');
+    io.popen('activator send switch-off.com.a3tweaks.switch.airplane-mode')
     sleep(0.5)
-    io.popen('activator send switch-off.com.a3tweaks.switch.airplane-mode');
+    io.popen('activator send switch-off.com.a3tweaks.switch.airplane-mode')
     sleep(0.5)
-    io.popen('activator send switch-off.com.a3tweaks.switch.wifi');
+    io.popen('activator send switch-off.com.a3tweaks.switch.wifi')
     sleep(0.5)
-    io.popen('activator send switch-off.com.a3tweaks.switch.wifi');
+    io.popen('activator send switch-off.com.a3tweaks.switch.wifi')
     sleep(0.5)
-    io.popen('activator send switch-on.com.a3tweaks.switch.cellular-data');
+    io.popen('activator send switch-on.com.a3tweaks.switch.cellular-data')
     sleep(0.5)
     sleep(3)
 end
 
 function respring()
-    sleep(1);
-    io.popen('killall -9 SpringBoard');
-    sleep(5);
+    sleep(1)
+    io.popen("killall SpringBoard")
 end
 
 function swipeCloseApp()
-    keyPress(KEY_TYPE.HOME_BUTTON);
+    keyPress(KEY_TYPE.HOME_BUTTON)
     sleep(0.1)
-    keyPress(KEY_TYPE.HOME_BUTTON);
+    keyPress(KEY_TYPE.HOME_BUTTON)
     sleep(2)
     for i = 1, 20, 1 do
-        touchDown(1, 200, 800);
+        touchDown(1, 200, 800)
         for i = 800, 200, -30 do
-            usleep(300);
-            touchMove(1, 200, i);
+            usleep(300)
+            touchMove(1, 200, i)
         end
-        touchUp(1, 200, 200);
-        usleep(500000);
-        checkmau = getColor(711, 17); -- 16777215, 0xFFFFFF
+        touchUp(1, 200, 200)
+        usleep(500000)
+        checkmau = getColor(711, 17) -- 16777215, 0xFFFFFF
         if checkmau == 16777215 then
             break
         end
     end
-    keyPress(KEY_TYPE.HOME_BUTTON);
-    sleep(math.random(1, 2));
+    keyPress(KEY_TYPE.HOME_BUTTON)
+    sleep(math.random(1, 2))
 end
 
 function randomUSPhone()
