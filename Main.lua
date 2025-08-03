@@ -38,6 +38,7 @@ MAIL_DOMAIN_TYPE = 0
 CHANGE_INFO = false
 IP_ROTATE_MODE = 1
 TSPROXY_ID = nil
+TSPROXY_PORT = nil
 PROVIDER_MAIL_THUEMAILS = 1 
 TIMES_XOA_INFO = 2 
 MAIL_THUEMAILS_API_KEY = "94a3a21c-40b5-4c48-a690-f1584c390e3e" -- Hải
@@ -47,7 +48,7 @@ PHONE_IRONSIM_API_KEY = "5ebn3408jldmw7ajk86or521o10pz316" -- Hải
 LOGIN_WITH_CODE = false
 DUMMY_MODE = 0
 
-if not waitForInternet(2) then alert("No Internet 1. RESPRING NOW!!") exit() end
+if not waitForInternet(2) then alert("No Internet. RESPRING NOW!") exit() end
 if not getConfigServer() then alert("No config from server!") exit() end
 
 -- ====== VARIABLE REQUIRED ======
@@ -63,7 +64,7 @@ VERIFY_PHONE = MAIL_SUPLY == 5
 -- ====== MAIN ======
 function main()
     if IP_ROTATE_MODE == 2 then offWifi() swipeCloseApp() end
-    if IP_ROTATE_MODE == 3 or IP_ROTATE_MODE == 1 then checkOnShadowRocket() end
+    if IP_ROTATE_MODE == 3 or IP_ROTATE_MODE == 1 then checkOnShadowRocket() swipeCloseApp() end
     if IP_ROTATE_MODE == 4 then swipeCloseApp() end
 
     ::label_continue::
@@ -77,11 +78,14 @@ function main()
 
     if info.mailRegister == nil or info.mailRegister == '' then 
         homeAndUnlockScreen()
+        wipeapp()
+
         if IP_ROTATE_MODE == 1 then 
-            rotateShadowRocket()
+            alert('Mode not support now.') exit()
         elseif IP_ROTATE_MODE == 2 then 
             onOffAirplane()
         elseif IP_ROTATE_MODE == 3 then 
+            -- addProxyShadowRocket()
             local i = 1
             ::label_resetproxylan::
             reloadTsproxy()
@@ -102,7 +106,6 @@ function main()
                 toast('Times rotateProxyText: ' .. i, 5) i = i + 1 sleep(10) goto label_resetproxytext 
             end
         end
-        executeXoaInfo()
     else 
         swipeCloseApp()
     end
@@ -114,7 +117,7 @@ function main()
     ::label_openfacebook::
     openFacebook()
 
-    if waitImageVisible(logo_fb_modern, 3) then
+    if waitImageVisible(logo_fb_modern) then
         toastr('not_support_this_FB_mode')
         swipeCloseApp()
         goto label_continue
@@ -177,7 +180,6 @@ function main()
     else         
         if checkSuspended() then goto label_continue end
     end
-
     if checkImageIsExists(logo_fb_modern) then toastr('not_support_this_FB_mode') swipeCloseApp() goto label_continue end
     if checkImageIsExists(what_is_birthday) then goto label_birthday end
     if checkImageIsExists(what_is_mobile_number) then goto label_whatisyourmobile end
@@ -302,7 +304,7 @@ function main()
                 findAndClickByImage(sign_up_with_email)
                 waitImageNotVisible(what_is_mobile_number) sleep(2)
             else 
-                local max = 20
+                local max = 10
                 local try = 1
                 ::label_executegetmailrequest::
                 if executeGetMailRequest() then 

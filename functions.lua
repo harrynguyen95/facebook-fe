@@ -178,8 +178,8 @@ function failedCurrentAccount(code)
 end
 
 function saveAccToGoogleForm()
-    if (info.checkpoint == 282 or info.checkpoint == '282') and (info.mailLogin == '' or info.mailLogin == nil) then return nil end
-    if (info.checkpoint == 282 or info.checkpoint == '282') and (info.profileUid == '' or info.profileUid == nil) then return nil end
+    -- if (info.checkpoint == 282 or info.checkpoint == '282') and (info.mailLogin == '' or info.mailLogin == nil) then return nil end
+    -- if (info.checkpoint == 282 or info.checkpoint == '282') and (info.profileUid == '' or info.profileUid == nil) then return nil end
     -- info.localIP = localIP[#localIP] .. " | " .. ACCOUNT_REGION .. " | " .. LANGUAGE .. " | " .. (LOGIN_WITH_CODE and 'otp' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-'))))
 
     local typeReg = '-'
@@ -472,7 +472,7 @@ function executeGmailFromThueMail()
                         end
                     end
                 else 
-                    toastr("Failed decode response.");
+                    toastr("Failed decode response.")
                 end
             else
                 toastr('Times ' .. i .. " - " .. tostring(error), 2)
@@ -521,7 +521,7 @@ function executeGmailFromThueMail()
                         toastr(response.message)
                     end
                 else 
-                    toastr("Failed decode response.");
+                    toastr("Failed decode response.")
                 end
             else
                 toastr('Times ' .. i .. " - " .. tostring(error), 2)
@@ -565,7 +565,7 @@ function callRegisterHotmailFromDongVanFb()
                         toastr(response.message)
                     end
                 else 
-                    toastr("Failed decode response.");
+                    toastr("Failed decode response.")
                 end
             else
                 toastr('Times ' .. i .. " - " .. tostring(error), 2)
@@ -639,7 +639,7 @@ function executeGmailFromGmail66()
                         toastr(response.message)
                     end
                 else 
-                    toastr("Failed decode response.");
+                    toastr("Failed decode response.")
                 end
             else
                 toastr('Times ' .. i .. " - " .. tostring(error), 2)
@@ -679,7 +679,7 @@ function executePhoneFromIronSim()
                     toastr(response.message)
                 end
             else 
-                toastr("Failed decode response.");
+                toastr("Failed decode response.")
             end
         else
             toastr('Times ' .. i .. " - " .. tostring(error), 2)
@@ -747,7 +747,7 @@ function getThuemailConfirmCode()
                     toastr('Empty code. Times ' .. i)
                 end
             else 
-                toastr("Failed decode response.");
+                toastr("Failed decode response.")
             end
         else
             toastr('Times ' .. i .. " - " .. tostring(error), 2)
@@ -790,7 +790,7 @@ function getDongvanfbConfirmCode()
                     toastr('Empty code. Times ' .. i)
                 end
             else 
-                toastr("Failed decode response.");
+                toastr("Failed decode response.")
             end
         else
             toastr('Times ' .. i .. " - " .. tostring(error), 2)
@@ -817,10 +817,10 @@ function getMailDomainRegisterConfirmCode()
                 if response.code ~= '' then
                     return response.code
                 else
-                    toastr("Empty response code.");
+                    toastr("Empty response code.")
                 end
             else 
-                toastr("Failed decode response.");
+                toastr("Failed decode response.")
             end
         else
             toastr('Times ' .. i .. " - " .. tostring(error), 2)
@@ -858,7 +858,7 @@ function getGmail66ConfirmCode()
                     toastr('Empty code. Times ' .. i)
                 end
             else 
-                toastr("Failed decode response.");
+                toastr("Failed decode response.")
             end
         else
             toastr('Times ' .. i .. " - " .. tostring(error), 2)
@@ -897,7 +897,7 @@ function getIronSimConfirmCode()
                     toastr('Empty code. Times ' .. i)
                 end
             else 
-                toastr("Failed decode response.");
+                toastr("Failed decode response.")
             end
         else
             toastr('Times ' .. i .. " - " .. tostring(error), 2)
@@ -940,10 +940,10 @@ function getMailDomainOwnerConfirmCode()
                 if response.code ~= '' then
                     return response.code
                 else
-                    toastr("Empty response code.");
+                    toastr("Empty response code.")
                 end
             else 
-                toastr("Failed decode response.");
+                toastr("Failed decode response.")
             end
         else
             toastr('Times ' .. i .. " - " .. tostring(error), 2)
@@ -982,10 +982,10 @@ function getMailDomainAddConfirmCode()
                 if response.code ~= '' then
                     return response.code
                 else
-                    toastr("Empty response code.");
+                    toastr("Empty response code.")
                 end
             else 
-                toastr("Failed decode response.");
+                toastr("Failed decode response.")
             end
         else
             toastr('Times ' .. i .. " - " .. tostring(error), 2)
@@ -1015,10 +1015,10 @@ function get2FACode()
                 if response.token then
                     return response.token
                 else
-                    toastr("Empty response get 2FA OTP.");
+                    toastr("Empty response get 2FA OTP.")
                 end
             else 
-                toastr("Failed decode response.");
+                toastr("Failed decode response.")
             end  
         else
             toastr('Times ' .. i .. " - " .. tostring(error), 2)
@@ -1128,13 +1128,14 @@ function getConfigServer()
                     LOGIN_WITH_CODE          = tonumber(config.login_with_code) ~= 0
                     DUMMY_MODE               = tonumber(config.reg_phone_first)
                     TSPROXY_ID               = tonumber(config.tsproxy_id)
+                    TSPROXY_PORT             = tonumber(config.tsproxy_port)
 
                     return true
                 else
                     toastr(response.info)
                 end
             else 
-                toastr("Failed decode response.");
+                toastr("Failed decode response.")
             end  
         else
             toastr('Times ' .. i .. " - " .. tostring(error), 2)
@@ -1188,7 +1189,7 @@ function checkProxyAvailable()
                     return false
                 end
             else 
-                toastr("Failed decode response.");
+                toastr("Failed decode response.")
             end  
         else
             toastr('Times ' .. i .. " - " .. tostring(error), 2)
@@ -1201,7 +1202,7 @@ end
 
 function reloadTsproxy()
     if (not TSPROXY_ID or TSPROXY_ID == '') then alert('Empty TSPROXY_ID') exit() end 
-    toast('reloadTsproxy', 9)
+    toast('reloadTsproxy', 5)
 
     local tries = 1
     for i = 1, tries do 
@@ -1227,7 +1228,7 @@ function reloadTsproxy()
                     toastr(response.message)
                 end
             else 
-                toastr("Failed decode response.");
+                toastr("Failed decode response.")
             end  
         else
             toastr('Times ' .. i .. " - " .. tostring(error), 2)
@@ -1273,7 +1274,7 @@ function waitforTsproxyReady(timeout)
                     toastr(response.message)
                 end
             else 
-                toastr("Failed decode response.");
+                toastr("Failed decode response.")
             end  
         else
             toastr('waitforTsproxyReady times ' .. i)
@@ -1312,21 +1313,20 @@ end
 function checkSuspended()
     if waitImageVisible(confirm_human, 1) then
         toastr('Die')
-
         failedCurrentAccount('282')
 
-        -- press(680, 90) -- help text
-        -- if waitImageVisible(logout_suspend_icon, 10) then
-        --     findAndClickByImage(logout_suspend_icon)
-        --     press(520, 840) sleep(1) --logout text
+        press(680, 90) -- help text
+        if waitImageVisible(logout_suspend_icon, 10) then
+            findAndClickByImage(logout_suspend_icon)
+            press(520, 840) sleep(1) --logout text
 
-        --     if waitImageVisible(logout_btn) then
-        --         findAndClickByImage(logout_btn)
-        --         sleep(3)
+            if waitImageVisible(logout_btn) then
+                findAndClickByImage(logout_btn)
+                sleep(2)
 
-        --         removeAccount()
-        --     end
-        -- end
+                if waitImageVisible(create_new_account) then removeAccount() end 
+            end
+        end
         return true
     end
 
@@ -1645,16 +1645,22 @@ function getNextProxyInText()
     return nil
 end 
 
-function rotateProxyText(proxyString)
+function getTsproxy()
+    if not TSPROXY_PORT then alert('Empty tsproxy Port') exit() end
+    return 'chip.tsproxy.xyz:' .. TSPROXY_PORT
+end 
+
+function addProxyShadowRocket(proxyString)
     if not proxyString then 
-        proxyString = getNextProxyInText() 
+        if IP_ROTATE_MODE == 3 then proxyString = getTsproxy() end
+        if IP_ROTATE_MODE == 4 then proxyString = getNextProxyInText() end
     end 
 
     local dirPath = rootDir() .. "/Facebook/Remote/images/"
     local shadowrocket_logo = {dirPath .. "shadowrocket_logo.png"}
+    local shadowrocket_add = {dirPath .. "shadowrocket_add.png"}
     local shadowrocket_on = {dirPath .. "shadowrocket_on.png"}
     local shadowrocket_off = {dirPath .. "shadowrocket_off.png"}
-    local shadowrocket_add = {dirPath .. "shadowrocket_add.png"}
     local shadowrocket_xoa = {dirPath .. "shadowrocket_xoa.png"}
     local shadowrocket_xoa_confirm = {dirPath .. "shadowrocket_xoa_confirm.png"}
     
@@ -1672,6 +1678,7 @@ function rotateProxyText(proxyString)
 
     local mime = require("mime")
     local b64 = mime.b64(socks5)
+
     copyText("http://" .. b64)
 
     sleep(1)
@@ -1679,28 +1686,149 @@ function rotateProxyText(proxyString)
     sleep(3)
 
     if appState("com.liguangming.Shadowrocket") == "ACTIVATED" then
+        ::label_onshadowrocket::
+        sleep(2)
+
         if waitImageVisible(shadowrocket_add) then
-            findAndClickByImage(shadowrocket_add) sleep(2)
-            press(250, 640) sleep(1) -- first proxy
+            findAndClickByImage(shadowrocket_add) sleep(1)
+        end 
+        if waitImageVisible(shadowrocket_off) then
+            findAndClickByImage(shadowrocket_off) sleep(3)
+        elseif waitImageVisible(shadowrocket_on, 2) then 
+            findAndClickByImage(shadowrocket_on) sleep(1)
+            findAndClickByImage(shadowrocket_off) sleep(3)
+        end
 
-            ::label_onshadowrocket::
-            if waitImageVisible(shadowrocket_on) then 
-                findAndClickByImage(shadowrocket_on) sleep(1)
-                findAndClickByImage(shadowrocket_off) sleep(2)
-            elseif waitImageVisible(shadowrocket_off, 2) then
-                findAndClickByImage(shadowrocket_off) sleep(2)
+        if checkImageIsExists(shadowrocket_on) then 
+            sleep(1)
+            return true
+        else 
+            goto label_onshadowrocket
+        end 
+    end
+end
+
+function wipeapp(bundleid)
+    toast('wipeapp', 2)
+    if not bundleid then bundleid = nil end 
+
+    local lfs = require('lfs')
+    function isDir(name)
+        if type(name) ~= "string" then
+            return false
+        end
+        local cd = lfs.currentdir()
+        local is = lfs.chdir(name) and true or false
+        lfs.chdir(cd)
+        return is
+    end
+    function deletedir(dir, rmdir)
+        if (isDir(dir)) then
+            for file in lfs.dir(dir) do
+                local file_path = dir .. '/' .. file
+                if file ~= "." and file ~= ".." then
+                    if lfs.attributes(file_path, 'mode') == 'file' then
+                        os.remove(file_path)
+                    elseif lfs.attributes(file_path, 'mode') == 'directory' then
+                        deletedir(file_path, 1)
+                    else
+                        os.remove(file_path)
+                    end
+                end
             end
-
-            if checkImageIsExists(shadowrocket_on) then 
-                swipe(520, 720, 350, 720)
-                if waitImageVisible(shadowrocket_xoa) then 
-                    findAndClickByImage(shadowrocket_xoa) sleep(1)
-                    findAndClickByImage(shadowrocket_xoa_confirm) sleep(1)
-                end 
-                return true
-            else 
-                goto label_onshadowrocket
-            end 
+            if (rmdir == 1) then
+                lfs.rmdir(dir)
+            end
         end
     end
+    if bundleid then appKill(bundleid) end
+    appKill("com.apple.mobilesafari")
+    appKill("com.apple.Preferences")
+
+    io.popen("echo 1 | sudo -u root -S killall -9 MobileSafari")
+
+    -- clean SystemCaches   
+    io.popen("echo 1 | sudo -u root -S rm -rf /var/MobileSoftwareUpdate/*")
+    io.popen("echo 1 | sudo -u root -S rm -rf /var/mobile/Library/Logs/*.log")
+    io.popen("echo 1 | sudo -u root -S rm -rf /var/logs/*.log*")
+    io.popen("echo 1 | sudo -u root -S rm -rf /var/logs/AppleSupport/*.log")
+    io.popen("echo 1 | sudo -u root -S rm -rf /var/logs/CrashReporter/*")
+    io.popen("echo 1 | sudo -u root -S rm -rf /var/root/.bash_history")
+    io.popen("echo 1 | sudo -u root -S rm -rf /var/db/diagnostics/shutdown.log")
+    io.popen("echo 1 | sudo -u root -S rm -rf /var/Keychains/keychain-2.db-corrupt")
+    io.popen("echo 1 | sudo -u root -S rm -rf /var/root/Library/Logs/*")
+    io.popen("echo 1 | sudo -u root -S rm -rf /var/mobile/Downloads/*")
+    io.popen("echo 1 | sudo -u root -S rm -rf /var/mobile/Library/Caches/Snapshots/*")
+    io.popen("echo 1 | sudo -u root -S rm -rf /var/mobile/Library/Caches/com.apple.Safari.SafeBrowsing/*")
+    io.popen("echo 1 | sudo -u root -S rm -rf /var/mobile/Library/Caches/com.apple.WebKit.Networking/*")
+    io.popen("echo 1 | sudo -u root -S rm -rf /var/mobile/Library/Caches/com.apple.WebKit.WebContent/*")
+    io.popen("echo 1 | sudo -u root -S rm -rf /var/mobile/Library/com.apple.WebKit/*")
+    io.popen("echo 1 | sudo -u root -S rm -rf /var/mobile/Library/CrashReporter/*")
+    io.popen("echo 1 | sudo -u root -S rm -rf /var/mobile/Library/Logs/AppleSupport/*")
+    io.popen("echo 1 | sudo -u root -S rm -rf /var/mobile/Library/Logs/CrashReporter/*")
+    io.popen("echo 1 | sudo -u root -S rm -rf /var/mobile/Library/Recents/*")
+    io.popen("echo 1 | sudo -u root -S rm -rf /var/mobile/Library/Safari/*")
+    io.popen("echo 1 | sudo -u root -S rm -rf /var/mobile/Library/SafariSafeBrowsing/*")
+    io.popen("echo 1 | sudo -u root -S rm -rf /var/mobile/Library/WebClips/*")
+    io.popen("echo 1 | sudo -u root -S rm -rf /var/mobile/Library/WebKit/*")
+    io.popen("echo 1 | sudo -u root -S rm -rf /var/mobile/Media/Downloads/*")
+    io.popen("echo 1 | sudo -u root -S rm -rf /private/var/mobile/Library/Caches/com.apple.mobilesafari")
+    io.popen("echo 1 | sudo -u root -S rm -rf /private/var/mobile/Library/Caches/Safari")
+    io.popen("echo 1 | sudo -u root -S rm /private/var/mobile/Library/Cookies/Cookies.binarycookies")
+    io.popen("echo 1 | sudo -u root -S rm /private/var/root/Library/Cookies/Cookies.binarycookies")
+
+    -- cleanPasteBoard
+    -- io.popen("echo 1 | sudo -u root -S killall -9 pasted")
+    -- io.popen("echo 1 | sudo -u root -S killall -9 pasteboardd")
+
+    -- [self unloadServices:@"com.apple.UIKit.pasteboardd.plist;com.apple.pasteboard.pasted.plist"];	
+    -- io.popen("echo 1 | sudo -u root -S launchctl unload -w /System/Library/LaunchDaemons/com.apple.UIKit.pasteboardd.plist")
+    -- io.popen("echo 1 | sudo -u root -S launchctl unload -w /System/Library/LaunchDaemons/com.apple.pasteboard.pasted.plist")
+    -- deletedir('private/var/mobile/Library/Caches/com.apple.UIKit.pboard')
+    -- deletedir('private/var/mobile/Library/Caches/com.apple.Pasteboard')
+
+    -- [self loadServices:@"com.apple.UIKit.pasteboardd.plist;com.apple.pasteboard.pasted.plist"];	
+    -- io.popen("echo 1 | sudo -u root -S launchctl load -w /System/Library/LaunchDaemons/com.apple.UIKit.pasteboardd.plist")
+    -- io.popen("echo 1 | sudo -u root -S launchctl load -w /System/Library/LaunchDaemons/com.apple.pasteboard.pasted.plist")
+
+    -- clean LsdIdentity
+    deletedir('private/var/db/lsd/com.apple.lsdidentifiers.plist')
+
+    -- clean itunesstored
+    io.popen("echo 1 | sudo -u root -S rm -rf /private/var/mobile/Library/Caches/com.apple.itunesstored/fsCachedData")
+
+    if bundleid then 
+        -- clean AppData	
+        local result = appInfo(bundleid, 0)
+        -- print(table.tostring(result))
+        deletedir(result["dataContainerPath"]:gsub("file:///", "") .. 'CloudKit', 0)
+        deletedir(result["dataContainerPath"]:gsub("file:///", "") .. 'Documents', 0)
+        deletedir(result["dataContainerPath"]:gsub("file:///", "") .. 'Library', 0)
+        deletedir(result["dataContainerPath"]:gsub("file:///", "") .. 'SystemData', 0)
+        deletedir(result["dataContainerPath"]:gsub("file:///", "") .. 'tmp', 0)
+        deletedir(result["dataContainerPath"]:gsub("file:///", "") .. '//CloudKit', 0)
+        deletedir(result["dataContainerPath"]:gsub("file:///", "") .. '//Documents', 0)
+        deletedir(result["dataContainerPath"]:gsub("file:///", "") .. '//Library', 0)
+        deletedir(result["dataContainerPath"]:gsub("file:///", "") .. '//SystemData', 0)
+        deletedir(result["dataContainerPath"]:gsub("file:///", "") .. '//tmp', 0)
+    end
+
+    -- clean AppGroup	
+    -- deletedir('private/var/mobile/Containers/Shared/AppGroup/')
+
+    io.popen("echo 1 | sudo -u root -S killall -9 itunesstored itunescloudd appstored")
+    io.popen("echo 1 | sudo -u root -S killall -9 locationd Maps")
+
+    deletedir('private/var/mobile/Library/Safari/')
+    deletedir('private/var/mobile/Library/WebKit/')
+
+    -- clean Pasteboard	
+    -- deletedir('private/var/mobile/Library/Caches/com.apple.UIKit.pboard')
+    -- deletedir('private/var/mobile/Library/Caches/com.apple.Pasteboard')
+
+    -- clean ItunesCache
+    deletedir('private/var/mobile/Library/Caches/com.apple.itunesstored/fsCachedData')
+
+    io.popen("echo 1 | sudo -u root -S killall -9 securityd")
+    sleep(1)
 end
