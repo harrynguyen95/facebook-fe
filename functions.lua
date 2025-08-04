@@ -25,7 +25,7 @@ function initCurrentAccountCode()
     local accounts = readFile(accountFilePath)
     local code = readFile(accountCodeFilePath)
     if code == nil or code[#code] == nil or code[#code] == '' then
-        alert('Empty UID and OTP')
+        alert('Empty accounts_code.txt')
         exit()
     end
 
@@ -40,14 +40,15 @@ function initCurrentAccountCode()
 
             info.status = 'INPROGRESS'
             info.profileUid = splittedCode[1]
-            info.mailLogin = splittedCode[2]
-            info.mailRegister = splittedCode[2]
-            info.mailPrice = 'otp'
+            info.mailLogin = nil
+            info.mailRegister = nil
+            info.mailPrice = 'nvr'
             info.password = splittedCode[3]
             info.hotmailPassword = splittedCode[4]
             info.hotmailRefreshToken = splittedCode[5]
             info.hotmailClientId = splittedCode[6]
             info.verifyCode = splittedCode[7]
+            info.twoFA = '-nvr'
 
             local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.mailOrderId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '')
             accounts[#accounts] = line
@@ -62,14 +63,15 @@ function initCurrentAccountCode()
         info.uuid = newUuid
         info.status = 'INPROGRESS'
         info.profileUid = splittedCode[1]
-        info.mailLogin = splittedCode[2]
-        info.mailRegister = splittedCode[2]
-        info.mailPrice = 'otp'
+        info.mailLogin = nil
+        info.mailRegister = nil
+        info.mailPrice = 'nvr'
         info.password = splittedCode[3]
         info.hotmailPassword = splittedCode[4]
         info.hotmailRefreshToken = splittedCode[5]
         info.hotmailClientId = splittedCode[6]
         info.verifyCode = splittedCode[7]
+        info.twoFA = '-nvr'
 
         local line = (info.uuid or '') .. "|" .. (info.status or '') .. "|" .. (info.mailLogin or '') .. "|" .. (info.password or '') .. "|" .. (info.profileUid or '') .. "|" .. (info.twoFA or '') .. "|" .. (info.mailRegister or '') .. "|" .. (info.mailOrderId or '') .. "|" .. (info.mailPrice or '') .. "|" .. (info.hotmailRefreshToken or '') .. "|" .. (info.hotmailClientId or '') .. "|" .. (info.hotmailPassword or '') .. "|" .. (info.verifyCode or '')
         addLineToFile(accountFilePath, line)
@@ -142,7 +144,7 @@ function finishCurrentAccount()
     if HOTMAIL_SOURCE_FROM_FILE and info.mailLogin and info.mailLogin ~= '' then 
         removeLineFromFile(hotmailSourceFilePath, info.mailLogin)
     end 
-    if LOGIN_WITH_CODE then 
+    if LOGIN_NO_VERIFY then 
         removeLineFromFile(accountCodeFilePath, info.profileUid)
     end 
     if ENTER_VERIFY_CODE then saveAccToGoogleForm() else saveNoVerifyToGoogleForm() end
@@ -169,7 +171,7 @@ function failedCurrentAccount(code)
     if HOTMAIL_SOURCE_FROM_FILE and info.mailLogin and info.mailLogin ~= '' then 
         removeLineFromFile(hotmailSourceFilePath, info.mailLogin)
     end 
-    if LOGIN_WITH_CODE then 
+    if LOGIN_NO_VERIFY then 
         removeLineFromFile(accountCodeFilePath, info.profileUid)
     end 
     saveAccToGoogleForm()
@@ -180,14 +182,14 @@ end
 function saveAccToGoogleForm()
     if (info.checkpoint == 282 or info.checkpoint == '282') and (info.mailLogin == '' or info.mailLogin == nil) then return nil end
     if (info.checkpoint == 282 or info.checkpoint == '282') and (info.profileUid == '' or info.profileUid == nil) then return nil end
-    -- info.localIP = localIP[#localIP] .. " | " .. ACCOUNT_REGION .. " | " .. LANGUAGE .. " | " .. (LOGIN_WITH_CODE and 'otp' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-'))))
+    -- info.localIP = localIP[#localIP] .. " | " .. ACCOUNT_REGION .. " | " .. LANGUAGE .. " | " .. (LOGIN_NO_VERIFY and 'nvr' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-'))))
 
     local typeReg = '-'
     if TSPROXY_ID > 35 then typeReg = 'FPT' elseif (TSPROXY_ID > 0 and TSPROXY_ID < 36) then typeReg = 'Viettel' else typeReg = '-' end
     if IP_ROTATE_MODE == 2 then typeReg = 'Sim' end 
     if IP_ROTATE_MODE == 4 then typeReg = 'Text' end 
 
-    local dummy = VERIFY_PHONE and 'verify_phone' or (LOGIN_WITH_CODE and 'otp' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-'))))
+    local dummy = VERIFY_PHONE and 'verify_phone' or (LOGIN_NO_VERIFY and 'nvr' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-'))))
     local localIP = readFile(localIPFilePath)
     info.localIP = localIP[#localIP] .. " | " .. typeReg .. " | " .. dummy
 
@@ -218,7 +220,7 @@ function saveNoVerifyToGoogleForm()
     if IP_ROTATE_MODE == 2 then typeReg = 'Sim' end 
     if IP_ROTATE_MODE == 4 then typeReg = 'Text' end 
 
-    local dummy = VERIFY_PHONE and 'verify_phone' or (LOGIN_WITH_CODE and 'otp' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-'))))
+    local dummy = VERIFY_PHONE and 'verify_phone' or (LOGIN_NO_VERIFY and 'nvr' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-'))))
     local localIP = readFile(localIPFilePath)
     info.localIP = localIP[#localIP] .. " | " .. typeReg .. " | " .. dummy
 
@@ -249,7 +251,7 @@ function saveMailToGoogleForm()
     if IP_ROTATE_MODE == 2 then typeReg = 'Sim' end 
     if IP_ROTATE_MODE == 4 then typeReg = 'Text' end 
 
-    local dummy = VERIFY_PHONE and 'verify_phone' or (LOGIN_WITH_CODE and 'otp' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-'))))
+    local dummy = VERIFY_PHONE and 'verify_phone' or (LOGIN_NO_VERIFY and 'nvr' or (DUMMY_PHONE and 'phone' or (DUMMY_GMAIL and 'gmail' or (DUMMY_ICLOUD and 'icloud' or '-'))))
     local localIP = readFile(localIPFilePath)
     info.localIP = localIP[#localIP] .. " | " .. typeReg .. " | " .. dummy
     
@@ -1125,7 +1127,7 @@ function getConfigServer()
                     PHONE_IRONSIM_API_KEY    = config.api_key_ironsim
                     LOCAL_SERVER             = config.local_server
                     DESTINATION_FILENAME     = config.destination_filename
-                    LOGIN_WITH_CODE          = tonumber(config.login_with_code) ~= 0
+                    LOGIN_NO_VERIFY          = tonumber(config.login_with_code) ~= 0
                     DUMMY_MODE               = tonumber(config.reg_phone_first)
                     TSPROXY_ID               = tonumber(config.tsproxy_id)
 

@@ -44,7 +44,7 @@ MAIL_THUEMAILS_API_KEY = "94a3a21c-40b5-4c48-a690-f1584c390e3e" -- Hải
 MAIL_DONGVANFB_API_KEY = "iFI7ppA8JNDJ52yVedbPlMpSh" -- Hải
 MAIL_GMAIL66_API_KEY = "odjYxf6OURH6O7L4Fg57uJzDDwl9PcZT" -- Nam
 PHONE_IRONSIM_API_KEY = "5ebn3408jldmw7ajk86or521o10pz316" -- Hải
-LOGIN_WITH_CODE = false
+LOGIN_NO_VERIFY = false
 DUMMY_MODE = 0
 
 if not waitForInternet(2) then alert("No Internet 1. RESPRING NOW!!") exit() end
@@ -69,7 +69,7 @@ function main()
     ::label_continue::
     log('------------ Main running ------------')
     archiveCurrentAccount()
-    if LOGIN_WITH_CODE then initCurrentAccountCode() end 
+    if LOGIN_NO_VERIFY then initCurrentAccountCode() end 
     log(info, 'Main')
 
     goto debug
@@ -150,7 +150,7 @@ function main()
             goto label_continue
         end
 
-        if LOGIN_WITH_CODE then 
+        if LOGIN_NO_VERIFY then 
             findAndClickByImage(mobile_or_email)
             typeNumberLongSpace(info.profileUid)
             findAndClickByImage(login_password)
@@ -195,7 +195,7 @@ function main()
     if checkImageIsExists(agree_facebook_term) then goto label_agree end
     if checkImageIsExists(what_on_your_mind) then goto label_whatisonyourmind end
 
-    if LOGIN_WITH_CODE then 
+    if LOGIN_NO_VERIFY then 
         if waitImageVisible(wrong_credentials, 3) then 
             failedCurrentAccount('wrong_cre')
             goto label_continue
@@ -478,14 +478,31 @@ function main()
         end
     end
 
-    if checkImageIsExists(create_a_password) then goto label_createpassword end 
-    if checkSuspended() then goto label_continue end
-
     ::label_enterconfirmcodedummy::
-    if SHOULD_DUMMY then 
+    if SHOULD_DUMMY or LOGIN_NO_VERIFY then 
+        if LOGIN_NO_VERIFY then 
+            findAndClickByImage(no_receive_code)
+            if VERIFY_PHONE then 
+                alert('Can not verify by Phone now.') exit()
+            else 
+                if waitImageVisible(confirm_via_change_email, 10) then 
+                    findAndClickByImage(confirm_via_change_email)
+                    sleep(2)
+                end
+            end  
+        end 
         if DUMMY_PHONE then
             if waitImageVisible(enter_confirm_code_phone, 10) then
                 toastr("enter_confirm_code_phone")
+
+                if not ENTER_VERIFY_CODE then 
+                    info.profileUid = getUIDFBLogin()
+                    info.mailPrice = 'dummy'
+                    finishCurrentAccount()
+                    resetInfoObject()
+                    goto label_continue
+                end
+
                 findAndClickByImage(no_receive_code)
                 if waitImageVisible(confirm_via_email, 10) then 
                     findAndClickByImage(confirm_via_email)
@@ -495,7 +512,16 @@ function main()
         end
         if DUMMY_GMAIL or DUMMY_ICLOUD then
             if waitImageVisible(enter_the_confirmation_code, 10) then
-                toastr("enter_the_confirmation_code gmail|iloud")
+                toastr("enter_the_confirmation_code gmail|icloud")
+
+                if not ENTER_VERIFY_CODE then 
+                    info.profileUid = getUIDFBLogin()
+                    info.mailPrice = 'dummy'
+                    finishCurrentAccount()
+                    resetInfoObject()
+                    goto label_continue
+                end
+
                 findAndClickByImage(no_receive_code)
                 if waitImageVisible(confirm_via_change_email, 10) then 
                     findAndClickByImage(confirm_via_change_email)
@@ -592,24 +618,29 @@ function main()
                 toast('confirm_via_sms')
             end
         end
-        if not LOGIN_WITH_CODE then info.verifyCode = nil end
+        if not LOGIN_NO_VERIFY then info.verifyCode = nil end
 
         if waitImageVisible(dont_allow, 1) then findAndClickByImage(dont_allow) end
         info.profileUid = getUIDFBLogin()
 
-        local OTPcode = nil
-        if (info.verifyCode and info.verifyCode ~= '') then
-            OTPcode = info.verifyCode
-        else
-            OTPcode = getCodeMailRegister()
-        end 
+        if not ENTER_VERIFY_CODE then 
+            info.mailPrice = 'dummy'
+            finishCurrentAccount()
+            resetInfoObject()
+            goto label_continue
+        else 
+            local OTPcode = nil
+            if (info.verifyCode and info.verifyCode ~= '') then
+                OTPcode = info.verifyCode
+            else
+                OTPcode = getCodeMailRegister()
+            end 
 
-        toastr('OTPcode: ' .. (OTPcode or '-'))
-        if OTPcode then 
-            info.verifyCode = OTPcode
-            archiveCurrentAccount()
+            toastr('OTPcode: ' .. (OTPcode or '-'))
+            if OTPcode then 
+                info.verifyCode = OTPcode
+                archiveCurrentAccount()
 
-            if ENTER_VERIFY_CODE then 
                 findAndClickByImage(input_confirm_code)
                 findAndClickByImage(x_input_icon)
                 typeText(OTPcode) sleep(1)
@@ -620,19 +651,15 @@ function main()
                     goto label_continue
                 end 
                 sleep(2)
-            else 
-                finishCurrentAccount()
-                resetInfoObject()
-                goto label_continue
-            end 
-        else
-            toastr('empty OTP', 6) sleep(3)
-            press(55, 90) sleep(1) -- X back icon
-            press(240, 820) sleep(1) -- Leave btn
+            else
+                toastr('empty OTP', 6) sleep(3)
+                press(55, 90) sleep(1) -- X back icon
+                press(240, 820) sleep(1) -- Leave btn
 
-            failedCurrentAccount('empty_code')
-            goto label_continue
-        end
+                failedCurrentAccount('empty_code')
+                goto label_continue
+            end
+        end 
         
         if waitImageNotVisible(enter_the_confirmation_code, 20) then 
             if waitImageVisible(setting_up_for_fb, 2) then
@@ -647,6 +674,9 @@ function main()
         toastr("UID: " .. (info.profileUid or '-'))
         archiveCurrentAccount()
     end
+
+    if checkImageIsExists(create_a_password) then goto label_createpassword end 
+    if checkSuspended() then goto label_continue end
 
     ::label_profilepicture::
     if waitImageVisible(profile_picture) then
@@ -1120,7 +1150,7 @@ function main()
                 waitImageNotVisible(reenter_password)
             end
 
-            if LOGIN_WITH_CODE then 
+            if LOGIN_NO_VERIFY then 
                 if waitImageVisible(continue_code_mail) then
                     toast('continue_code_mail')
                     findAndClickByImage(continue_code_mail)
@@ -1184,7 +1214,7 @@ function main()
                 waitImageNotVisible(help_protect_account)
             end
 
-            if LOGIN_WITH_CODE then 
+            if LOGIN_NO_VERIFY then 
                 if waitImageVisible(what_app, 2) then
                     failedCurrentAccount('other_device')
                     goto label_continue
