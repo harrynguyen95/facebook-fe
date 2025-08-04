@@ -178,3 +178,4 @@ fb_logo_home = {dirPath .. "fb_logo_home.png"}
 add_your_email_address = {dirPath .. "add_your_email_address.png"}
 enter_confirm_code_whatsapp = {dirPath .. "enter_confirm_code_whatsapp.png"}
 confirm_via_sms = {dirPath .. "confirm_via_sms.png"}
+ban_ko_the_su_dung = {dirPath .. "ban_ko_the_su_dung.png"}

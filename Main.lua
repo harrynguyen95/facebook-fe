@@ -467,7 +467,13 @@ function main()
             failedCurrentAccount('can_not_agree')
             goto label_continue
         end 
+        
         if not waitImageNotVisible(agree_facebook_term, 90) then 
+            if checkImageIsExists(ban_ko_the_su_dung) then 
+                failedCurrentAccount('can_not_agree')
+                goto label_continue
+            end
+            
             toastr('Can not next')
             swipeCloseApp()
             goto label_openfacebook
