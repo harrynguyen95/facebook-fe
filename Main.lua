@@ -80,7 +80,7 @@ function main()
 
     if info.mailRegister == nil or info.mailRegister == '' then 
         homeAndUnlockScreen()
-        if TIMES_XOA_INFO == 0 then wipeapp() end
+        if TIMES_XOA_INFO == 0 then wipeApp() end
 
         if IP_ROTATE_MODE == 1 then 
             alert('Mode not support now.') exit()

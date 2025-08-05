@@ -1777,8 +1777,8 @@ function addProxyShadowRocket(proxyString)
     end
 end
 
-function wipeapp(bundleid)
-    toast('wipeapp', 2)
+function wipeApp(bundleid)
+    toast('wipeApp', 2)
     if not bundleid then bundleid = nil end 
 
     local lfs = require('lfs')
@@ -1880,10 +1880,18 @@ function wipeapp(bundleid)
         deletedir(result["dataContainerPath"]:gsub("file:///", "") .. '//Library', 0)
         deletedir(result["dataContainerPath"]:gsub("file:///", "") .. '//SystemData', 0)
         deletedir(result["dataContainerPath"]:gsub("file:///", "") .. '//tmp', 0)
+        deletedir(result["bundleContainerPath"]:gsub("file://", ""), 0)
     end
 
-    -- clean AppGroup	
-    -- deletedir('private/var/mobile/Containers/Shared/AppGroup/')
+    if GMAIL_REGISTER then 
+        log('private/var/mobile/Containers/Shared/AppGroup/')
+        -- clean AppGroup	
+        deletedir('private/var/mobile/Containers/Shared/AppGroup/')
+
+        -- Google cache
+        io.popen("echo 1 | sudo -u root -S rm -rf /var/mobile/Library/Preferences/com.google.*")
+        io.popen("echo 1 | sudo -u root -S rm -rf /var/mobile/Containers/Data/Application/*/Library/Preferences/com.google.*")
+    end
 
     io.popen("echo 1 | sudo -u root -S killall -9 itunesstored itunescloudd appstored")
     io.popen("echo 1 | sudo -u root -S killall -9 locationd Maps")
@@ -1908,6 +1916,18 @@ function resetGmailSetting()
     toast('resetGmailSetting')
     swipeCloseApp()
     appRun("com.apple.Preferences")
+
+    -- if waitImageVisible(airplane_icon) then 
+    --     toast('airplane_icon')
+    --     if waitImageVisible(airplane_on, 3) then 
+    --         findAndClickByImage(airplane_off) sleep(1)
+    --     elseif waitImageVisible(airplane_off, 3) then 
+    --         findAndClickByImage(airplane_off) sleep(1)
+    --         findAndClickByImage(airplane_on) sleep(1)
+    --     end 
+    -- else 
+    --     goto label_startreset
+    -- end
 
     if waitImageVisible(airplane_icon) then 
         toast('airplane_icon')
@@ -1959,12 +1979,11 @@ function resetGmailSetting()
         press(90, 90) sleep(1) -- back to setting
         swipe(600, 650, 610, 1200) sleep(1)
         swipe(600, 900, 610, 1200) sleep(3)
-
-        if waitImageVisible(airplane_icon, 3) then
-            toast('airplane_icon')
-            if waitImageVisible(airplane_on, 3) then findAndClickByImage(airplane_on) sleep(1) end
-        end 
     end
+    if waitImageVisible(airplane_icon, 3) then
+        toast('airplane_icon')
+        if waitImageVisible(airplane_on, 3) then findAndClickByImage(airplane_on) sleep(1) end
+    end 
 
     sleep(1)
 end 

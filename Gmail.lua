@@ -33,7 +33,8 @@ function mainGmail()
     log('------------ Gmail Main running ------------')
 
     homeAndUnlockScreen()
-    if IP_ROTATE_MODE == 2 then 
+    if IP_ROTATE_MODE == 2 then
+        wipeApp("com.google.Gmail")
         resetGmailSetting()
     else
         alert('Mode not support in Gmail.') exit()
@@ -47,17 +48,28 @@ function mainGmail()
     appRun("com.google.Gmail")
     sleep(3)
 
+    if waitImageVisible(gmail_welcome) then
+        press(380, 1220) sleep(1) -- btn dang nhap
+        if waitImageVisible(quan_ly_tai_khoan) then
+            swipe(600, 1200, 610, 900) sleep(math.random(1, 3))
+            swipe(600, 1000, 610, 500) sleep(1)
+        end 
+    end 
+
     if waitImageVisible(tim_trong_thu) then 
         press(660, 110) sleep(1) -- icon logo user
-        swipe(600, 1200, 610, 1000) 
-        swipe(600, 1200, 610, 1000)
-        sleep(3)
-        if waitImageVisible(them_tai_khoan_khac) then 
-            findAndClickByImage(them_tai_khoan_khac)
-            if waitImageVisible(page_them_tai_khoan) then 
-                press(150, 450) sleep(2) -- google add
-                press(500, 790) sleep(1) -- tiep tuc btn
-            end 
+        swipe(600, 1200, 610, 1000) sleep(1)
+        swipe(600, 1200, 610, 1000) sleep(1)
+    end 
+
+    if waitImageVisible(them_tai_khoan_khac) then 
+        findAndClickByImage(them_tai_khoan_khac)
+        if waitImageVisible(page_them_tai_khoan) then 
+            sleep(math.random(1, 3))
+            findAndClickByImage(google_option)
+            sleep(math.random(1, 3))
+            if waitImageVisible(tiep_tuc) then findAndClickByImage(tiep_tuc) end
+            waitImageNotVisible(page_them_tai_khoan)
         end 
     end 
 
@@ -71,9 +83,11 @@ function mainGmail()
         toast('dang_nhap')
         if waitImageVisible(tao_tai_khoan) then 
             findAndClickByImage(tao_tai_khoan)
+            sleep(math.random(1, 3))
             if waitImageVisible(danh_cho_ca_nhan) then findAndClickByImage(danh_cho_ca_nhan) end
         else 
             press(140, 1050) -- btn tao tai khoan
+            sleep(math.random(1, 3))
             if waitImageVisible(danh_cho_ca_nhan) then findAndClickByImage(danh_cho_ca_nhan) end
         end
     end 
@@ -84,9 +98,9 @@ function mainGmail()
         info.gmail_lastname = getRandomLineInFile(rootDir() .. "/Facebook/input/lastname_google.txt")
         sleep(1)
         findAndClickByImage(first_name_input) sleep(1)
-        typeText(info.gmail_firstname) sleep(1)
+        typeText(info.gmail_firstname) sleep(math.random(1, 3))
         findAndClickByImage(last_name_input) sleep(1)
-        typeText(info.gmail_lastname) sleep(2)
+        typeText(info.gmail_lastname) sleep(math.random(1, 3))
         findAndClickByImage(tiep_theo)
         waitImageNotVisible(nhap_ten_cua_ban)
     end 
@@ -108,15 +122,15 @@ function mainGmail()
                 if part == 3 then press(380, 1000) end
                 if part == 4 then press(380, 1100) end
             elseif section == 2 then 
-                swipe(360, 1120, 370, 790) sleep(2)
+                swipe(360, 1120, 370, 990) sleep(2)
                 local part = math.random(1, 4)
                 if part == 1 then press(380, 800) end
                 if part == 2 then press(380, 900) end
                 if part == 3 then press(380, 1000) end
                 if part == 4 then press(380, 1100) end
             elseif section == 3 then 
-                swipe(360, 1120, 370, 790) sleep(1)
-                swipe(360, 1120, 370, 790) sleep(2)
+                swipe(360, 1120, 370, 990) sleep(1)
+                swipe(360, 1120, 370, 990) sleep(2)
                 local part = math.random(1, 4)
                 if part == 1 then press(380, 800) end
                 if part == 2 then press(380, 900) end
@@ -126,16 +140,16 @@ function mainGmail()
             sleep(1)
         end 
         
-        press(580, 680) sleep(1)
-        typeText(math.random(1998, 2002)) sleep(1)
-        findAndClickByImage(xong) sleep(1)
+        press(580, 680) sleep(math.random(1, 3))
+        typeText(math.random(2000, 2000)) sleep(math.random(1, 3))
+        findAndClickByImage(xong) sleep(math.random(1, 3))
 
         if waitImageVisible(gioi_tinh_input, 2) then
-            findAndClickByImage(gioi_tinh_input) sleep(1)
+            findAndClickByImage(gioi_tinh_input) sleep(math.random(1, 3))
             local part = math.random(1, 2)
             if part == 1 then press(200, 420) end
             if part == 2 then press(220, 510) end
-            sleep(1)
+            sleep(math.random(1, 3))
         end 
 
         findAndClickByImage(tiep_theo)
@@ -148,7 +162,8 @@ function mainGmail()
         info.gmail_address = addressPrefix .. "@gmail.com"
 
         press(220, 720) sleep(1)
-        typeText(addressPrefix) sleep(1)
+        typeText(addressPrefix)
+        sleep(math.random(1, 3))
         findAndClickByImage(tiep_theo)
     end
 
@@ -159,16 +174,19 @@ function mainGmail()
 
         swipe(550, 1000, 550, 700) sleep(2)
         findAndClickByImage(tao_dia_chi_gmail_rieng) sleep(2)
-        typeText(addressPrefix) sleep(1)
+        typeText(addressPrefix)
+        sleep(math.random(1, 3))
         findAndClickByImage(tiep_theo)
     end 
 
     if waitImageVisible(tao_mot_mat_khau) then 
         toast('tao_mot_mat_khau')
-        info.gmail_password = getRandomLineInFile(defaultPasswordFilePath)
+        -- info.gmail_password = getRandomLineInFile(defaultPasswordFilePath)
+        info.gmail_password = 'Supermoney12@'
 
         press(190, 800) sleep(1)
         typeText(info.gmail_password)
+        sleep(math.random(1, 3))
         findAndClickByImage(tiep_theo)
     end 
 
@@ -178,6 +196,26 @@ function mainGmail()
         saveGmailToGoogleSheet('robot')
         goto label_continue
     end
+
+    if waitImageVisible(xem_lai_thong_tin) then
+        toast('xem_lai_thong_tin')
+        sleep(math.random(1, 3))
+        findAndClickByImage(tiep_theo) sleep(2)
+    end 
+
+    if waitImageVisible(quyen_rieng_tu) then
+        toast('quyen_rieng_tu')
+        swipe(600, 1200, 610, 900) sleep(1)
+        swipe(600, 1000, 610, 500) sleep(1)
+        sleep(math.random(1, 3))
+        findAndClickByImage(toi_dong_y) sleep(5)
+
+        if waitImageVisible(page_them_tai_khoan, 20) then 
+            saveGmailToGoogleSheet()
+            toast('+1 Gmail')
+            goto label_continue
+        end 
+    end 
 
     toast('Last line.')
     goto label_continue
