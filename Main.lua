@@ -127,6 +127,7 @@ function main()
     findAndClickByImage(accept)
     if checkSuspended() then goto label_continue end
     if checkPageNotAvailable() then goto label_continue end
+    if checkImageIsExists(what_on_your_mind) then goto label_whatisonyourmind end
     if checkImageIsExists(what_is_birthday) then goto label_birthday end
     if checkImageIsExists(what_is_mobile_number) then goto label_whatisyourmobile end
     if checkImageIsExists(enter_an_email, 1) then goto label_enterconfirmcodedummy end 
@@ -141,7 +142,6 @@ function main()
     if checkImageIsExists(add_phone_number) then goto label_addphonenumber end
     if checkImageIsExists(add_your_email_address) then goto label_addyouremailaddress end
     if checkImageIsExists(agree_facebook_term) then goto label_agree end
-    if checkImageIsExists(what_on_your_mind) then goto label_whatisonyourmind end
 
     ::label_createnewaccount::
     showIphoneModel()
@@ -183,6 +183,7 @@ function main()
     end
 
     if checkImageIsExists(logo_fb_modern) then toastr('not_support_this_FB_mode') swipeCloseApp() goto label_continue end
+    if checkImageIsExists(what_on_your_mind) then goto label_whatisonyourmind end
     if checkImageIsExists(what_is_birthday) then goto label_birthday end
     if checkImageIsExists(what_is_mobile_number) then goto label_whatisyourmobile end
     if checkImageIsExists(enter_an_email) then goto label_enterconfirmcodedummy end 
@@ -197,7 +198,6 @@ function main()
     if checkImageIsExists(add_phone_number) then goto label_addphonenumber end
     if checkImageIsExists(add_your_email_address) then goto label_addyouremailaddress end
     if checkImageIsExists(agree_facebook_term) then goto label_agree end
-    if checkImageIsExists(what_on_your_mind) then goto label_whatisonyourmind end
 
     if LOGIN_NO_VERIFY then 
         if waitImageVisible(wrong_credentials, 3) then 
