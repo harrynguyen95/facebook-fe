@@ -510,6 +510,11 @@ function main()
                     info.mailPrice = 'dummy'
                     finishCurrentAccount()
                     resetInfoObject()
+
+                    press(55, 90) sleep(1) -- X back icon
+                    press(240, 820) sleep(1) -- Leave btn
+
+                    if TIMES_XOA_INFO == 0 then removeAccount() end
                     goto label_continue
                 end
 
@@ -529,6 +534,11 @@ function main()
                     info.mailPrice = 'dummy'
                     finishCurrentAccount()
                     resetInfoObject()
+                    
+                    press(55, 90) sleep(1) -- X back icon
+                    press(240, 820) sleep(1) -- Leave btn
+
+                    if TIMES_XOA_INFO == 0 then removeAccount() end
                     goto label_continue
                 end
 
