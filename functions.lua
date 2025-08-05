@@ -296,6 +296,11 @@ function resetInfoObject()
         finishChangeInfo = nil,
         finishAddFriend = nil,
         ipRegister = nil,
+        gmail_status = nil,
+        gmail_firstname = nil,
+        gmail_lastname = nil,
+        gmail_address = nil,
+        gmail_password = nil,
     }
     sleep(1)
 end
@@ -1895,4 +1900,104 @@ function wipeapp(bundleid)
 
     io.popen("echo 1 | sudo -u root -S killall -9 securityd")
     sleep(1)
+end
+
+function resetGmailSetting()
+    ::label_startreset::
+
+    toast('resetGmailSetting')
+    swipeCloseApp()
+    appRun("com.apple.Preferences")
+
+    if waitImageVisible(airplane_icon) then 
+        toast('airplane_icon')
+        if waitImageVisible(airplane_off, 3) then findAndClickByImage(airplane_off) sleep(1) end 
+    else 
+        goto label_startreset
+    end
+
+    swipe(600, 1200, 610, 900) sleep(1)
+    swipe(600, 1200, 610, 680) sleep(3)
+    if waitImageVisible(safari_icon, 3) then
+        toast('safari_icon')
+        findAndClickByImage(safari_icon) 
+        sleep(2)
+        swipe(600, 1200, 610, 640)
+        sleep(3)
+    else 
+        goto label_startreset
+    end 
+
+    if not waitImageVisible(xoa_lich_su_du_lieu, 3) or not waitImageVisible(an_dia_chi_ip, 3) then goto label_startreset end 
+    
+    if waitImageVisible(xoa_lich_su_du_lieu, 3) then
+        toast('xoa_lich_su_du_lieu 1')
+        findAndClickByImage(xoa_lich_su_du_lieu) sleep(2)
+        press(390, 1130) sleep(1) -- xoa du lieu
+        press(390, 1130) sleep(1) -- dong cac tab
+    end 
+    if waitImageVisible(an_dia_chi_ip, 3) then 
+        toast('an_dia_chi_ip 1')
+        findAndClickByImage(an_dia_chi_ip) sleep(2)
+        press(500, 350) sleep(1) -- tat 
+        press(500, 250) sleep(1) -- tu trinh theo doi
+        press(90, 90) sleep(1) -- back
+    end 
+    if waitImageVisible(xoa_lich_su_du_lieu, 3) then 
+        toast('xoa_lich_su_du_lieu 2')
+        findAndClickByImage(xoa_lich_su_du_lieu) sleep(2)
+        press(390, 1130) sleep(1) -- xoa du lieu
+        press(390, 1130) sleep(1) -- dong cac tab
+    end 
+    if waitImageVisible(an_dia_chi_ip, 3) then 
+        toast('an_dia_chi_ip 2')
+        findAndClickByImage(an_dia_chi_ip) sleep(2)
+        press(500, 350) sleep(1) -- tat 
+        press(500, 250) sleep(1) -- tu trinh theo doi
+        press(90, 90) sleep(1) -- back
+
+        press(90, 90) sleep(1) -- back to setting
+        swipe(600, 650, 610, 1200) sleep(1)
+        swipe(600, 900, 610, 1200) sleep(3)
+
+        if waitImageVisible(airplane_icon, 3) then
+            toast('airplane_icon')
+            if waitImageVisible(airplane_on, 3) then findAndClickByImage(airplane_on) sleep(1) end
+        end 
+    end
+
+    sleep(1)
+end 
+
+
+function saveGmailToGoogleSheet(code)
+    if not code then code = "OK" end
+
+    local typeReg = '-'
+    if TSPROXY_ID and TSPROXY_ID > 35 then typeReg = 'FPT' elseif TSPROXY_ID and (TSPROXY_ID > 0 and TSPROXY_ID < 36) then typeReg = 'Viettel' else typeReg = '-' end
+    if IP_ROTATE_MODE == 2 then typeReg = 'Sim' end 
+    if IP_ROTATE_MODE == 4 then typeReg = 'Text' end 
+
+    local localIP = readFile(localIPFilePath)
+    info.localIP = localIP[#localIP] .. " | " .. typeReg
+
+    local tries = 3
+    for i = 1, tries do 
+        local response, error = httpRequest {
+            url = PHP_SERVER .. "gmail_account_google_form.php",
+            method = "POST",
+            headers = {
+                ["Content-Type"] = "application/json",
+            },
+            data = info
+        }
+
+        if response then
+            return true
+        else
+            toastr('Times ' .. i .. " - " .. tostring(error), 2)
+            log("Failed request gmail_account_google_form. Times ".. i ..  " - " .. tostring(error))
+        end
+        sleep(3)
+    end
 end

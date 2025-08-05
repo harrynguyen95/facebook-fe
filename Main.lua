@@ -1,5 +1,5 @@
 -- ====== LIB REQUIRED ======
-require(rootDir() ..  "/Facebook/utils")
+require(rootDir() .. "/Facebook/utils")
 require(rootDir() .. "/Facebook/functions")
 clearAlert()
 
@@ -41,6 +41,7 @@ TSPROXY_ID = nil
 TSPROXY_PORT = nil
 PROVIDER_MAIL_THUEMAILS = 1 
 TIMES_XOA_INFO = 2 
+GMAIL_REGISTER = false 
 MAIL_THUEMAILS_API_KEY = "94a3a21c-40b5-4c48-a690-f1584c390e3e" -- Hải
 MAIL_DONGVANFB_API_KEY = "iFI7ppA8JNDJ52yVedbPlMpSh" -- Hải
 MAIL_GMAIL66_API_KEY = "odjYxf6OURH6O7L4Fg57uJzDDwl9PcZT" -- Nam

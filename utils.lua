@@ -447,6 +447,19 @@ function randomMailDomain()
     return part1 .. part2 .. part3
 end
 
+function randomGmailPrefix()
+    if not info.gmail_lastname or not info.gmail_lastname then alert('Empty firstname lastname') exit() end 
+    local fullname = info.gmail_firstname .. info.gmail_lastname 
+    local part1 = string.lower(fullname:gsub("%s+", ""))
+    local digits = "0123456789"
+    local part2 = ""
+    for i = 1, 6 do
+        local idx = math.random(1, #digits)
+        part2 = part2 .. digits:sub(idx, idx)
+    end
+    return part1 .. part2
+end
+
 function randomGmail()
     local letters = "abcdefghijklmnopqrstuvwxyz"
     local digits = "0123456789"
@@ -768,12 +781,18 @@ function typeText(text)
         typeNumber(text)
     elseif checkImageIsExists(space_short) then
         -- toastr('short keyboard')
-        -- typeTextShortSpace(text)
-        inputText(text)
+        if not GMAIL_REGISTER then 
+            inputText(text)
+        else
+            typeTextShortSpace(text) 
+        end
     else 
         -- toastr('long keyboard')
-        -- typeTextLongSpace(text)
-        inputText(text)
+        if not GMAIL_REGISTER then 
+            inputText(text)
+        else
+            typeTextLongSpace(text) 
+        end
     end
     usleep(300000)
 end
@@ -814,9 +833,9 @@ function typeTextShortSpace(text)
         usleep(math.random(300000, 400000))
     end
 
-    if waitImageVisible(shift_keyboard_on, 1) then
+    if waitImageVisible(shift_keyboard_on, 2) then
         randomTap(shiftKey) -- click shift
-        sleep(0.5)
+        sleep(1)
     end
 
     for i = 1, #text do
@@ -876,9 +895,9 @@ function typeTextLongSpace(text)
         usleep(math.random(350000, 400000))
     end
 
-    if waitImageVisible(shift_keyboard_on, 1) then
+    if waitImageVisible(shift_keyboard_on, 2) then
         randomTap(shiftKey) -- click shift
-        sleep(0.5)
+        sleep(1)
     end
 
     for i = 1, #text do
