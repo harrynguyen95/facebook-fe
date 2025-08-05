@@ -425,7 +425,7 @@ function randomMailDomain()
     local firstname = getRandomLineInFile(rootDir() .. "/Facebook/input/firstname.txt")
     local lastname = getRandomLineInFile(rootDir() .. "/Facebook/input/lastname.txt")
     local fullname = lastname .. firstname
-    local part1 = removeVietnameseTones(string.lower(fullname):gsub("%s+", ""))
+    local part1 = removeVietnameseTones(string.lower(fullname:gsub("%s+", "")))
 
     local digits = "0123456789"
     local part2 = ""
