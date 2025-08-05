@@ -1707,6 +1707,7 @@ function rotateProxyText(proxyString)
             end 
         end
     end
+end
 
 function getTsproxy()
     if not TSPROXY_PORT then alert('Empty tsproxy Port') exit() end
