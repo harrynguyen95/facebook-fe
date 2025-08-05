@@ -70,6 +70,7 @@ function main()
     ::label_continue::
     log('------------ Main running ------------')
     archiveCurrentAccount()
+
     if LOGIN_NO_VERIFY then initCurrentAccountCode() end 
     log(info, 'Main')
 
@@ -636,6 +637,11 @@ function main()
             info.mailPrice = 'dummy'
             finishCurrentAccount()
             resetInfoObject()
+
+            press(55, 90) sleep(1) -- X back icon
+            press(240, 820) sleep(1) -- Leave btn
+
+            if TIMES_XOA_INFO == 0 then removeAccount() end
             goto label_continue
         else 
             local OTPcode = nil
@@ -662,10 +668,11 @@ function main()
                 sleep(2)
             else
                 toastr('empty OTP', 6) sleep(3)
+                failedCurrentAccount('empty_code')
+
                 press(55, 90) sleep(1) -- X back icon
                 press(240, 820) sleep(1) -- Leave btn
-
-                failedCurrentAccount('empty_code')
+                if TIMES_XOA_INFO == 0 then removeAccount() end
                 goto label_continue
             end
         end 
