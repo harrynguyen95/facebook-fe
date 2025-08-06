@@ -2008,7 +2008,7 @@ function resetSafariData()
     end
     if waitImageVisible(airplane_icon) then
         if waitImageVisible(airplane_on) then 
-            findAndClickByImage(airplane_off) sleep(1)
+            findAndClickByImage(airplane_on) sleep(1)
         elseif waitImageVisible(airplane_off) then 
             findAndClickByImage(airplane_off) sleep(1)
             findAndClickByImage(airplane_on) sleep(1)
