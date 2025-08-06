@@ -41,7 +41,6 @@ function mainGmail()
 
     homeAndUnlockScreen()
     if IP_ROTATE_MODE == 2 then
-        onOffAirplaneGmail()
         resetSafariData()
     else
         alert('Mode not support in Gmail.') exit()
@@ -70,7 +69,7 @@ function mainGmail()
 
         if waitImageVisible(quan_ly_tai_khoan) then
             if waitImageVisible(them_tai_khoan_khac, 2) then goto label_them_tai_khoan_khac end
-            swipe(600, 1200, 610, 900) sleep(math.random(1, 2))
+            swipe(600, 1200, 610, 900) sleep(math.random(1, 3))
             swipe(600, 1000, 610, 500) sleep(1)
         end 
     end 
@@ -88,9 +87,9 @@ function mainGmail()
 
     ::label_page_them_tai_khoan::
     if waitImageVisible(page_them_tai_khoan) then 
-        sleep(math.random(1, 2))
+        sleep(math.random(1, 3))
         findAndClickByImage(google_option)
-        sleep(math.random(1, 2))
+        sleep(math.random(1, 3))
         if waitImageVisible(tiep_tuc) then findAndClickByImage(tiep_tuc) end
         waitImageNotVisible(page_them_tai_khoan)
     end 
@@ -99,11 +98,11 @@ function mainGmail()
         toast('dang_nhap')
         if waitImageVisible(tao_tai_khoan) then 
             findAndClickByImage(tao_tai_khoan)
-            sleep(math.random(1, 2))
+            sleep(math.random(1, 3))
             if waitImageVisible(danh_cho_ca_nhan) then findAndClickByImage(danh_cho_ca_nhan) end
         else 
             press(140, 1050) -- btn tao tai khoan
-            sleep(math.random(1, 2))
+            sleep(math.random(1, 3))
             if waitImageVisible(danh_cho_ca_nhan) then findAndClickByImage(danh_cho_ca_nhan) end
         end
     end 
@@ -115,9 +114,9 @@ function mainGmail()
         info.gmail_lastname = getRandomLineInFile(rootDir() .. "/Facebook/input/lastname_google.txt")
         sleep(1)
         findAndClickByImage(first_name_input) sleep(1)
-        typeText(info.gmail_firstname) sleep(math.random(1, 2))
+        typeText(info.gmail_firstname) sleep(math.random(1, 3))
         findAndClickByImage(last_name_input) sleep(1)
-        typeText(info.gmail_lastname) sleep(math.random(1, 2))
+        typeText(info.gmail_lastname) sleep(math.random(1, 3))
         findAndClickByImage(tiep_theo)
         waitImageNotVisible(nhap_ten_cua_ban)
     end 
@@ -126,17 +125,17 @@ function mainGmail()
     if waitImageVisible(nhap_ngay_sinh) then 
         toast('nhap_ngay_sinh')
 
-        if waitImageVisible(ngay_input) then findAndClickByImage(ngay_input) sleep(math.random(1, 2)) end
+        if waitImageVisible(ngay_input) then findAndClickByImage(ngay_input) sleep(math.random(1, 3)) end
         typeText(math.random(1, 28)) sleep(1)
 
-        if waitImageVisible(thang_input) then findAndClickByImage(thang_input) sleep(math.random(1, 2)) end
+        if waitImageVisible(thang_input) then findAndClickByImage(thang_input) sleep(math.random(1, 3)) end
         selectThangSinhNhat()
 
-        if waitImageVisible(nam_input) then findAndClickByImage(nam_input) sleep(math.random(1, 2)) end
-        typeText(math.random(1998, 2002)) sleep(math.random(1, 2))
+        if waitImageVisible(nam_input) then findAndClickByImage(nam_input) sleep(math.random(1, 3)) end
+        typeText(math.random(1998, 2002)) sleep(math.random(1, 3))
 
         if waitImageVisible(gioi_tinh_input) then
-            findAndClickByImage(gioi_tinh_input) sleep(math.random(1, 2))
+            findAndClickByImage(gioi_tinh_input) sleep(math.random(1, 3))
             local part = math.random(1, 2)
             if part == 1 then findAndClickByImage(gioitinh_nu_option) end
             if part == 2 then findAndClickByImage(gioitinh_nam_option) end
@@ -156,7 +155,7 @@ function mainGmail()
 
         findAndClickByImage(tao_dia_chi_gmail_rieng) sleep(2)
         typeText(addressPrefix)
-        sleep(math.random(1, 2))
+        sleep(math.random(1, 3))
         findAndClickByImage(tiep_theo)
     else
         if waitImageVisible(cach_ban_dang_nhap) then
@@ -164,9 +163,14 @@ function mainGmail()
             local addressPrefix = randomGmailPrefix()
             info.gmail_address = addressPrefix .. "@gmail.com"
 
-            findAndClickByImage(ten_nguoi_dung) sleep(1)
+            if waitImageVisible(ten_nguoi_dung) then 
+                findAndClickByImage(ten_nguoi_dung) sleep(2)
+            else 
+                press(150, 720) sleep(2)
+            end 
             typeText(addressPrefix)
-            sleep(math.random(1, 2))
+            sleep(math.random(1, 3))
+            findAndClickByImage(xong) sleep(1)
             findAndClickByImage(tiep_theo)
         end
     end
@@ -180,13 +184,13 @@ function mainGmail()
 
         findAndClickByImage(mat_khau_input) sleep(1)
         typeText(info.gmail_password)
-        sleep(math.random(1, 2))
+        sleep(math.random(1, 3))
 
         if waitImageVisible(xac_nhan_input) then
             toast('xac_nhan_input')
             findAndClickByImage(xac_nhan_input) sleep(1)
             typeText(info.gmail_password)
-            sleep(math.random(1, 2))
+            sleep(math.random(1, 3))
         end 
         findAndClickByImage(tiep_theo)
     end 
@@ -194,7 +198,7 @@ function mainGmail()
     ::label_them_mail_khoi_phuc::
     if waitImageVisible(them_mail_khoi_phuc, 3) then
         toastr('them_mail_khoi_phuc')
-        sleep(math.random(1, 2))
+        sleep(math.random(1, 3))
         findAndClickByImage(bo_qua) sleep(2)
     end 
 
@@ -206,7 +210,7 @@ function mainGmail()
 
     if waitImageVisible(xem_lai_thong_tin) then
         toast('xem_lai_thong_tin')
-        sleep(math.random(1, 2))
+        sleep(math.random(1, 3))
         findAndClickByImage(tiep_theo) sleep(2)
     end 
 
@@ -216,7 +220,7 @@ function mainGmail()
         swipe(600, 900, 610, 600) sleep(1)
         swipe(600, 800, 610, 600) sleep(1)
         swipe(600, 850, 610, 620) sleep(1)
-        sleep(math.random(1, 2))
+        sleep(math.random(1, 3))
         if waitImageVisible(toi_dong_y) then 
             findAndClickByImage(toi_dong_y) sleep(2)
 

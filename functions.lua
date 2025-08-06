@@ -1994,7 +1994,19 @@ function resetSafariData()
     end 
 
     if not waitImageVisible(xoa_lich_su_du_lieu, 3) or not waitImageVisible(an_dia_chi_ip, 3) then goto label_startreset end 
-    
+    if waitImageVisible(xoa_lich_su_du_lieu, 3) then 
+        toast('xoa_lich_su_du_lieu 1')
+        findAndClickByImage(xoa_lich_su_du_lieu) sleep(2)
+        press(390, 1130) sleep(1) -- xoa du lieu
+        press(390, 1130) sleep(1) -- dong cac tab
+    end 
+    if waitImageVisible(an_dia_chi_ip, 3) then 
+        toast('an_dia_chi_ip 1')
+        findAndClickByImage(an_dia_chi_ip) sleep(2)
+        press(500, 350) sleep(1) -- tat 
+        press(500, 250) sleep(1) -- tu trinh theo doi
+        press(90, 90) sleep(1) -- back
+    end
     if waitImageVisible(xoa_lich_su_du_lieu, 3) then 
         toast('xoa_lich_su_du_lieu 2')
         findAndClickByImage(xoa_lich_su_du_lieu) sleep(2)
@@ -2012,9 +2024,9 @@ function resetSafariData()
         swipe(600, 650, 610, 1200) sleep(1)
         swipe(600, 900, 610, 1200) sleep(3)
     end
-    if waitImageVisible(airplane_icon, 3) then
+    if waitImageVisible(airplane_icon) then
         toast('airplane_icon')
-        if waitImageVisible(airplane_on, 3) then findAndClickByImage(airplane_on) sleep(1) end
+        if waitImageVisible(airplane_on) then findAndClickByImage(airplane_on) sleep(1) end
     end 
 
     sleep(1)
