@@ -96,7 +96,7 @@ fb_logo_2 = {dirPath .. "fb_logo_2.png"}
 xoainfo_logo = {dirPath .. "xoainfo_logo.png"}
 xoainfo_reset_data = {dirPath .. "xoainfo_reset_data.png"}
 xoainfo_info_fake = {dirPath .. "xoainfo_info_fake.png"}
-logo_facebook_login = {dirPath .. "logo_facebook_login2.png", dirPath .. "logo_facebook_login.png"}
+logo_facebook_login = {dirPath .. "logo_facebook_login2.png", dirPath .. "logo_facebook_login3.png", dirPath .. "logo_facebook_login.png"}
 logo_fb_modern = {dirPath .. "logo_fb_modern.png"}
 page_not_available_now = {dirPath .. "page_not_available_now.png", dirPath .. "page_not_available_now2.png", 
     dirPath .. "page_not_available_now3.png", dirPath .. "page_not_available_now4.png",
@@ -179,3 +179,4 @@ add_your_email_address = {dirPath .. "add_your_email_address.png"}
 enter_confirm_code_whatsapp = {dirPath .. "enter_confirm_code_whatsapp.png"}
 confirm_via_sms = {dirPath .. "confirm_via_sms.png"}
 ban_ko_the_su_dung = {dirPath .. "ban_ko_the_su_dung.png"}
+three_dot_icon = {dirPath .. "three_dot_icon.png"}
