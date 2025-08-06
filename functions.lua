@@ -1296,7 +1296,7 @@ end
 -- ====== FE FUNCTION ======
 function removeAccount()
     sleep(2)
-    if waitImageVisible(create_new_account) then
+    if waitImageVisible(create_new_account) or waitImageVisible(logo_facebook_login) then
         if LANGUAGE == 'VN' then 
             press(695, 90) -- three dots icon
             if waitImageVisible(remove_account_from_device, 10) then 
@@ -1332,7 +1332,7 @@ function checkSuspended()
                     findAndClickByImage(logout_btn)
                     sleep(2)
 
-                    if waitImageVisible(create_new_account) then removeAccount() end 
+                    if waitImageVisible(create_new_account) or waitImageVisible(logo_facebook_login) then removeAccount() end 
                 end
             end
         end
@@ -1815,6 +1815,7 @@ function wipeApp(bundleid)
     appKill("com.apple.Preferences")
 
     io.popen("echo 1 | sudo -u root -S killall -9 MobileSafari")
+    io.popen("echo 1 | sudo -u root -S launchctl remove com.apple.mobilesafari")
 
     -- clean SystemCaches   
     io.popen("echo 1 | sudo -u root -S rm -rf /var/MobileSoftwareUpdate/*")
@@ -1845,6 +1846,7 @@ function wipeApp(bundleid)
     io.popen("echo 1 | sudo -u root -S rm -rf /private/var/mobile/Library/Caches/Safari")
     io.popen("echo 1 | sudo -u root -S rm /private/var/mobile/Library/Cookies/Cookies.binarycookies")
     io.popen("echo 1 | sudo -u root -S rm /private/var/root/Library/Cookies/Cookies.binarycookies")
+    io.popen("echo 1 | sudo -u root -S security delete-keychain login.keychain")
 
     -- cleanPasteBoard
     -- io.popen("echo 1 | sudo -u root -S killall -9 pasted")
@@ -1884,7 +1886,6 @@ function wipeApp(bundleid)
     end
 
     if GMAIL_REGISTER then 
-        log('private/var/mobile/Containers/Shared/AppGroup/')
         -- clean AppGroup	
         deletedir('private/var/mobile/Containers/Shared/AppGroup/')
 
@@ -1907,31 +1908,75 @@ function wipeApp(bundleid)
     deletedir('private/var/mobile/Library/Caches/com.apple.itunesstored/fsCachedData')
 
     io.popen("echo 1 | sudo -u root -S killall -9 securityd")
+    io.popen("echo 1 | sudo -u root -S dscacheutil -flushcache")
     sleep(1)
 end
 
-function resetGmailSetting()
+function selectThangSinhNhat()
+    if waitImageVisible(thang_4) then 
+        if REG_SOURCE == 2 then
+            local section = math.random(1, 2)
+            if section == 2 then swipe(360, 1000, 370, 800) sleep(2) end 
+
+            local part = math.random(1, 6)
+            if part == 1 then press(380, 525) end
+            if part == 2 then press(380, 625) end
+            if part == 3 then press(380, 725) end
+            if part == 4 then press(380, 825) end
+            if part == 5 then press(380, 925) end
+            if part == 6 then press(380, 1025) end
+        else
+            local section = math.random(1, 3)
+            if section == 1 then 
+            elseif section == 2 then 
+                swipe(360, 1120, 370, 990) sleep(2)
+            elseif section == 3 then 
+                swipe(360, 1120, 370, 990) sleep(1)
+                swipe(360, 1120, 370, 990) sleep(2)
+            end 
+
+            local part = math.random(1, 4)
+            if part == 1 then press(380, 800) end
+            if part == 2 then press(380, 900) end
+            if part == 3 then press(380, 1000) end
+            if part == 4 then press(380, 1100) end
+        end 
+
+        sleep(1)
+    end 
+end
+
+function onOffAirplaneGmail()
     ::label_startreset::
 
-    toast('resetGmailSetting')
+    toast('onOffAirplaneGmail')
     swipeCloseApp()
     appRun("com.apple.Preferences")
+    sleep(2)
 
-    -- if waitImageVisible(airplane_icon) then 
-    --     toast('airplane_icon')
-    --     if waitImageVisible(airplane_on, 3) then 
-    --         findAndClickByImage(airplane_off) sleep(1)
-    --     elseif waitImageVisible(airplane_off, 3) then 
-    --         findAndClickByImage(airplane_off) sleep(1)
-    --         findAndClickByImage(airplane_on) sleep(1)
-    --     end 
-    -- else 
-    --     goto label_startreset
-    -- end
+    if waitImageVisible(airplane_icon) then 
+        if waitImageVisible(airplane_on) then 
+            findAndClickByImage(airplane_off) sleep(1)
+        elseif waitImageVisible(airplane_off) then 
+            findAndClickByImage(airplane_off) sleep(1)
+            findAndClickByImage(airplane_on) sleep(1)
+        end 
+    else 
+        goto label_startreset
+    end
+end
+
+function resetSafariData()
+    ::label_startreset::
+
+    toast('resetSafariData')
+    swipeCloseApp()
+    appRun("com.apple.Preferences")
+    sleep(3)
 
     if waitImageVisible(airplane_icon) then 
         toast('airplane_icon')
-        if waitImageVisible(airplane_off, 3) then findAndClickByImage(airplane_off) sleep(1) end 
+        if waitImageVisible(airplane_off) then findAndClickByImage(airplane_off) sleep(1) end 
     else 
         goto label_startreset
     end
@@ -1950,19 +1995,6 @@ function resetGmailSetting()
 
     if not waitImageVisible(xoa_lich_su_du_lieu, 3) or not waitImageVisible(an_dia_chi_ip, 3) then goto label_startreset end 
     
-    if waitImageVisible(xoa_lich_su_du_lieu, 3) then
-        toast('xoa_lich_su_du_lieu 1')
-        findAndClickByImage(xoa_lich_su_du_lieu) sleep(2)
-        press(390, 1130) sleep(1) -- xoa du lieu
-        press(390, 1130) sleep(1) -- dong cac tab
-    end 
-    if waitImageVisible(an_dia_chi_ip, 3) then 
-        toast('an_dia_chi_ip 1')
-        findAndClickByImage(an_dia_chi_ip) sleep(2)
-        press(500, 350) sleep(1) -- tat 
-        press(500, 250) sleep(1) -- tu trinh theo doi
-        press(90, 90) sleep(1) -- back
-    end 
     if waitImageVisible(xoa_lich_su_du_lieu, 3) then 
         toast('xoa_lich_su_du_lieu 2')
         findAndClickByImage(xoa_lich_su_du_lieu) sleep(2)
@@ -1991,6 +2023,7 @@ end
 
 function saveGmailToGoogleSheet(code)
     if not code then code = "OK" end
+    info.gmail_checkpoint = code
 
     local typeReg = '-'
     if TSPROXY_ID and TSPROXY_ID > 35 then typeReg = 'FPT' elseif TSPROXY_ID and (TSPROXY_ID > 0 and TSPROXY_ID < 36) then typeReg = 'Viettel' else typeReg = '-' end

@@ -1,6 +1,6 @@
 require(rootDir() .. '/Facebook/utils')
 require(rootDir() .. '/Facebook/functions')
-require(rootDir() .. "/Facebook/images_vn")
+require(rootDir() .. "/Facebook/img/images_vn")
 
 homeAndUnlockScreen()
 

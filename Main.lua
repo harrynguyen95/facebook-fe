@@ -53,9 +53,9 @@ if not waitForInternet(2) then alert("No Internet. RESPRING NOW!") exit() end
 if not getConfigServer() then alert("No config from server!") exit() end
 
 -- ====== VARIABLE REQUIRED ======
-if LANGUAGE == 'ES' then require(rootDir() .. "/Facebook/images_es") end
-if LANGUAGE == 'EN' then require(rootDir() .. "/Facebook/images_en") end
-if LANGUAGE == 'VN' then require(rootDir() .. "/Facebook/images_vn") end
+if LANGUAGE == 'ES' then require(rootDir() .. "/Facebook/img/images_es") end
+if LANGUAGE == 'EN' then require(rootDir() .. "/Facebook/img/images_en") end
+if LANGUAGE == 'VN' then require(rootDir() .. "/Facebook/img/images_vn") end
 SHOULD_DUMMY = DUMMY_MODE ~= 0
 DUMMY_PHONE = DUMMY_MODE == 1
 DUMMY_GMAIL = DUMMY_MODE == 2
@@ -796,6 +796,8 @@ function main()
     if ADD_MAIL_DOMAIN == 0 then info.finishSettingMail = 'true' end
 
     ::label_whatisonyourmind::
+    local forceLogout = false
+    if info.status == 'INPROGRESS' and (info.mailRegister == nil or info.mailRegister == '') then forceLogout = true goto label_logout end
     if waitImageVisible(fb_logo_home, 1) or checkModeMenuLeft() then swipe(600, 600, 610, 900) modeMenuLeft = checkModeMenuLeft() else goto label_lastcheck end
 
     ::label_settingmail::
@@ -1342,7 +1344,7 @@ function main()
     end
 
     ::label_logout::
-    if info.finishAddFriend == 'true' and ((CHANGE_INFO and info.finishChangeInfo == 'true') or not CHANGE_INFO) and ((ADD_MAIL_DOMAIN > 0 and info.finishSettingMail == 'true') or ADD_MAIL_DOMAIN == 0) and (info.twoFA ~= nil and info.twoFA ~= '') then 
+    if forceLogout or (info.finishAddFriend == 'true' and ((CHANGE_INFO and info.finishChangeInfo == 'true') or not CHANGE_INFO) and ((ADD_MAIL_DOMAIN > 0 and info.finishSettingMail == 'true') or ADD_MAIL_DOMAIN == 0) and (info.twoFA ~= nil and info.twoFA ~= '')) then 
         swipe(600, 600, 610, 900) 
         if waitImageVisible(what_on_your_mind) then 
             toastr('logout what_on_your_mind')

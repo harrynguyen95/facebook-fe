@@ -37,6 +37,11 @@ function dd(value)
     toastr(value, 5) exit()
 end 
 
+function dd2(value)
+    sleep(1)
+    log(value) exit()
+end 
+
 function showIphoneModel()
     local fh = io.popen("uname -m", "r")
     local model = fh:read("*l")
@@ -448,7 +453,7 @@ function randomMailDomain()
 end
 
 function randomGmailPrefix()
-    if not info.gmail_lastname or not info.gmail_lastname then alert('Empty firstname lastname') exit() end 
+    if not info.gmail_firstname or not info.gmail_lastname then alert('Empty firstname lastname') exit() end 
     local fullname = info.gmail_firstname .. info.gmail_lastname 
     local part1 = string.lower(fullname:gsub("%s+", ""))
     local digits = "0123456789"
@@ -1126,6 +1131,8 @@ end
 function offWifi()
     toast('offWifi')
     appRun("com.apple.Preferences")
+    sleep(3)
+
     if waitImageVisible(wifi_icon, 2) then 
         toast('wifi_icon')
         findAndClickByImage(wifi_icon)
