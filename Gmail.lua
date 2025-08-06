@@ -125,14 +125,20 @@ function mainGmail()
     if waitImageVisible(nhap_ngay_sinh) then 
         toast('nhap_ngay_sinh')
 
-        if waitImageVisible(ngay_input) then findAndClickByImage(ngay_input) sleep(math.random(1, 3)) end
-        typeText(math.random(1, 28)) sleep(1)
+        if waitImageVisible(ngay_input) then 
+            findAndClickByImage(ngay_input) sleep(math.random(1, 3))
+            typeText(math.random(1, 28)) sleep(1)
+        end
 
-        if waitImageVisible(thang_input) then findAndClickByImage(thang_input) sleep(math.random(1, 3)) end
-        selectThangSinhNhat()
+        if waitImageVisible(thang_input) then
+            findAndClickByImage(thang_input) sleep(math.random(1, 3))
+            selectThangSinhNhat()
+        end
 
-        if waitImageVisible(nam_input) then findAndClickByImage(nam_input) sleep(math.random(1, 3)) end
-        typeText(math.random(1998, 2002)) sleep(math.random(1, 3))
+        if waitImageVisible(nam_input) then
+            findAndClickByImage(nam_input) sleep(math.random(1, 3))
+            typeText(math.random(1998, 2002)) sleep(math.random(1, 3))
+        end
 
         if waitImageVisible(gioi_tinh_input) then
             findAndClickByImage(gioi_tinh_input) sleep(math.random(1, 3))
