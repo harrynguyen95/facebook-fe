@@ -385,6 +385,7 @@ function main()
                     if waitImageVisible(continue_creating_account, 3) then
                         toastr("email_has_account")
                         failedCurrentAccount('email_has_account')
+                        swipeCloseApp()
                         goto label_continue
                     end
                 else 
@@ -610,6 +611,7 @@ function main()
                     if waitImageVisible(continue_creating_account, 3) then
                         toastr("email_has_account")
                         failedCurrentAccount('email_has_account')
+                        swipeCloseApp()
                         goto label_continue
                     end
                 else 
