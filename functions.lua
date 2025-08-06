@@ -1969,13 +1969,11 @@ end
 function resetSafariData()
     ::label_startreset::
 
-    toast('resetSafariData')
     swipeCloseApp()
     appRun("com.apple.Preferences")
     sleep(3)
 
     if waitImageVisible(airplane_icon) then 
-        toast('airplane_icon')
         if waitImageVisible(airplane_off) then findAndClickByImage(airplane_off) sleep(1) end 
     else 
         goto label_startreset
@@ -1984,7 +1982,6 @@ function resetSafariData()
     swipe(600, 1200, 610, 900) sleep(1)
     swipe(600, 1200, 610, 680) sleep(3)
     if waitImageVisible(safari_icon, 3) then
-        toast('safari_icon')
         findAndClickByImage(safari_icon) 
         sleep(2)
         swipe(600, 1200, 610, 640)
@@ -1994,27 +1991,12 @@ function resetSafariData()
     end 
 
     if not waitImageVisible(xoa_lich_su_du_lieu, 3) or not waitImageVisible(an_dia_chi_ip, 3) then goto label_startreset end 
-    -- if waitImageVisible(xoa_lich_su_du_lieu, 3) then 
-    --     toast('xoa_lich_su_du_lieu 1')
-    --     findAndClickByImage(xoa_lich_su_du_lieu) sleep(2)
-    --     press(390, 1130) sleep(1) -- xoa du lieu
-    --     press(390, 1130) sleep(1) -- dong cac tab
-    -- end 
-    -- if waitImageVisible(an_dia_chi_ip, 3) then 
-    --     toast('an_dia_chi_ip 1')
-    --     findAndClickByImage(an_dia_chi_ip) sleep(2)
-    --     press(500, 350) sleep(1) -- tat 
-    --     press(500, 250) sleep(1) -- tu trinh theo doi
-    --     press(90, 90) sleep(1) -- back
-    -- end
     if waitImageVisible(xoa_lich_su_du_lieu, 3) then 
-        toast('xoa_lich_su_du_lieu 2')
         findAndClickByImage(xoa_lich_su_du_lieu) sleep(2)
         press(390, 1130) sleep(1) -- xoa du lieu
         press(390, 1130) sleep(1) -- dong cac tab
     end 
     if waitImageVisible(an_dia_chi_ip, 3) then 
-        toast('an_dia_chi_ip 2')
         findAndClickByImage(an_dia_chi_ip) sleep(2)
         press(500, 350) sleep(1) -- tat 
         press(500, 250) sleep(1) -- tu trinh theo doi
@@ -2025,13 +2007,15 @@ function resetSafariData()
         swipe(600, 900, 610, 1200) sleep(3)
     end
     if waitImageVisible(airplane_icon) then
-        toast('airplane_icon')
-        if waitImageVisible(airplane_on) then findAndClickByImage(airplane_on) sleep(1) end
+        if waitImageVisible(airplane_on) then 
+            findAndClickByImage(airplane_off) sleep(1)
+        elseif waitImageVisible(airplane_off) then 
+            findAndClickByImage(airplane_off) sleep(1)
+            findAndClickByImage(airplane_on) sleep(1)
+        end 
     end 
-
     sleep(1)
 end 
-
 
 function saveGmailToGoogleSheet(code)
     if not code then code = "OK" end
