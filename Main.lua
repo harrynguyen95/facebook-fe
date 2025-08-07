@@ -367,6 +367,7 @@ function main()
                 if waitImageVisible(exist_account_in_mail, 3) or waitImageVisible(red_warning_icon, 3) then
                     toastr('email_has_account')
                     failedCurrentAccount('email_has_account')
+                    swipeCloseApp()
                     goto label_continue
                 end
             else
@@ -593,6 +594,7 @@ function main()
                 if waitImageVisible(exist_account_in_mail, 3) or waitImageVisible(red_warning_icon, 3) then
                     toastr('email_has_account')
                     failedCurrentAccount('email_has_account')
+                    swipeCloseApp()
                     goto label_continue
                 end
             else
