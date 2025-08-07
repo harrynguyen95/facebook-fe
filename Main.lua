@@ -480,6 +480,11 @@ function main()
             failedCurrentAccount('can_not_agree')
             goto label_continue
         end 
+
+        if waitImageVisible(can_use_this_feature) then 
+            failedCurrentAccount('can_not_agree')
+            goto label_continue
+        end 
         
         if not waitImageNotVisible(agree_facebook_term, 90) then 
             if checkImageIsExists(ban_ko_the_su_dung) then 

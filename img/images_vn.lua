@@ -182,3 +182,4 @@ enter_confirm_code_whatsapp = {dirPath .. "enter_confirm_code_whatsapp.png"}
 confirm_via_sms = {dirPath .. "confirm_via_sms.png"}
 ban_ko_the_su_dung = {dirPath .. "ban_ko_the_su_dung.png"}
 three_dot_icon = {dirPath .. "three_dot_icon.png"}
+can_use_this_feature = {dirPath .. "can_use_this_feature.png"}
