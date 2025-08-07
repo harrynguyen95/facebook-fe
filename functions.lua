@@ -1973,6 +1973,7 @@ function resetSafariData()
     appRun("com.apple.Preferences")
     sleep(3)
 
+    findAndClickByImage(accept)
     if waitImageVisible(airplane_icon) then 
         if waitImageVisible(airplane_off) then findAndClickByImage(airplane_off) sleep(1) end 
     else 
@@ -1990,6 +1991,7 @@ function resetSafariData()
         goto label_startreset
     end 
 
+    findAndClickByImage(accept)
     if not waitImageVisible(xoa_lich_su_du_lieu, 3) or not waitImageVisible(an_dia_chi_ip, 3) then goto label_startreset end 
     if waitImageVisible(xoa_lich_su_du_lieu, 3) then 
         findAndClickByImage(xoa_lich_su_du_lieu) sleep(2)
@@ -2008,10 +2010,10 @@ function resetSafariData()
     end
     if waitImageVisible(airplane_icon) then
         if waitImageVisible(airplane_on) then 
-            findAndClickByImage(airplane_on) sleep(1)
+            findAndClickByImage(airplane_on) sleep(3)
         elseif waitImageVisible(airplane_off) then 
             findAndClickByImage(airplane_off) sleep(1)
-            findAndClickByImage(airplane_on) sleep(1)
+            findAndClickByImage(airplane_on) sleep(3)
         end 
     end 
     sleep(1)

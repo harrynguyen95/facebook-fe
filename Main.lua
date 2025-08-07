@@ -283,6 +283,11 @@ function main()
     if waitImageVisible(register_by_phone, 2) and waitImageVisible(what_is_your_email, 2) then
         findAndClickByImage(register_by_phone)
     end
+    if checkImageIsExists(join_facebook) then 
+        toastr('not_support_this_FB_mode', 2)
+        swipeCloseApp()
+        goto label_continue
+    end
 
     ::label_whatisyourmobile::
     if waitImageVisible(what_is_mobile_number) or waitImageVisible(sign_up_with_email) then
@@ -1337,7 +1342,8 @@ function main()
                 if waitImageVisible(x_icon_search, 2) then
                     findAndClickByImage(x_icon_search)
                 else 
-                    press(600, 90);
+                    press(45, 90) -- back
+                    press(600, 90) -- x icon
                 end
             else
                 press(60, 1290) -- back to homepage

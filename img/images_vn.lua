@@ -80,7 +80,7 @@ add_a_phone_number = {dirPath .. "add_a_phone_number2.png"}
 email_used_added = {dirPath .. "email_used_added.png"}
 add_phone_number = {dirPath .. "add_phone_number2.png"}
 add_phone_number_home = {dirPath .. "add_phone_number_home.png"}
-join_facebook = {dirPath .. "join_facebook.png", dirPath .. "we_will_help.png"}
+join_facebook = {dirPath .. "join_facebook2.png", dirPath .. "we_will_help2.png"}
 exist_account_in_mail = {dirPath .. "exist_account_in_mail2.png", dirPath .. "email_used_added.png"}
 red_warning_icon = {dirPath .. "red_warning_icon.png"}
 you_are_logged_in = {dirPath .. "you_are_logged_in.png"}
@@ -111,7 +111,7 @@ setting_up_for_fb = {dirPath .. "setting_up_for_fb.png"}
 x_input_icon = {dirPath .. "x_input_icon.png"}
 gender_options = {dirPath .. "gender_options.png"}
 first_name_invalid = {dirPath .. "first_name_invalid.png"}
-accept = {dirPath .. "accept1.png", dirPath .. "accept2.png", dirPath .. "accept3.png", dirPath .. "accept4.png"}
+accept = {dirPath .. "accept5.png", dirPath .. "accept4.png"}
 can_not_agree = {dirPath .. "can_not_agree3.png", dirPath .. "can_not_agree2.png"}
 fb_logo_menu_left = {dirPath .. "fb_logo_menu_left.png"}
 
