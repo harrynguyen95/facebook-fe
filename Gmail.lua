@@ -19,7 +19,7 @@ info = {
 GMAIL_REGISTER = true 
 IP_ROTATE_MODE = 2
 REG_SOURCE = 3 -- 1|2|3 Gmail|Safari|gugo
-u = math.random(1, 3)
+u = math.random(1, 2)
 
 function mainGmail()
     -- info.gmail_firstname = "Nguyen Thi"
@@ -30,10 +30,8 @@ function mainGmail()
     goto debug
     ::debug::
 
-    if IP_ROTATE_MODE == 2 then
-        offWifi()
-        swipeCloseApp()
-    end
+    offWifi()
+    swipeCloseApp()
 
     ::label_continue::
     findAndClickByImage(accept)
@@ -41,15 +39,12 @@ function mainGmail()
     log('------------ Gmail Main running ------------')
 
     homeAndUnlockScreen()
-    if IP_ROTATE_MODE == 2 then
-        resetSafariData()
-    else
-        alert('Mode not support in Gmail.') exit()
-    end
+    resetSafariData()
 
     if not waitForInternet(1) then 
         toast("No Internet 3", 5)
-        if IP_ROTATE_MODE == 2 then onOffAirplaneGmail() sleep(2) waitForInternet(1) end
+        swipeCloseApp()
+        onOffAirplane() sleep(2) waitForInternet(1)
     end 
 
     if REG_SOURCE == 1 then 
@@ -161,6 +156,8 @@ function mainGmail()
 
         findAndClickByImage(tao_dia_chi_gmail_rieng) sleep(u)
         typeText(addressPrefix) sleep(u)
+
+        findAndClickByImage(xong) sleep(1)
         findAndClickByImage(tiep_theo)
     else
         if waitImageVisible(cach_ban_dang_nhap) then
@@ -174,6 +171,7 @@ function mainGmail()
                 press(150, 720) sleep(u)
             end 
             typeText(addressPrefix) sleep(u)
+
             findAndClickByImage(xong) sleep(1)
             findAndClickByImage(tiep_theo)
         end
@@ -194,6 +192,8 @@ function mainGmail()
             findAndClickByImage(xac_nhan_input) sleep(1)
             typeText(info.gmail_password) sleep(u)
         end 
+
+        findAndClickByImage(xong) sleep(1)
         findAndClickByImage(tiep_theo)
     end 
 

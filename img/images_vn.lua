@@ -135,6 +135,8 @@ select_your_name = {dirPath .. "select_your_name2.png"}
 airplane_icon = {dirPath .. "airplane_icon.png"}
 airplane_off = {dirPath .. "airplane_off.png"}
 airplane_on = {dirPath .. "airplane_on.png"}
+airplane_on_icon = {dirPath .. "airplane_on2.png"}
+airplane_off_icon = {dirPath .. "airplane_off2.png"}
 
 welcome_to_profile = {dirPath .. "welcome_to_profile.png"}
 lock_profile_page = {dirPath .. "lock_profile_page.png"}

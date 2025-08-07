@@ -1083,32 +1083,44 @@ end
 
 function onOffAirplane()
     appRun("com.apple.Preferences")
-    if waitImageVisible(airplane_icon) then 
-        if waitImageVisible(airplane_off) then
-            local off = findImage(airplane_off[#airplane_off], 1, threshold, nil, DEBUG_IMAGE, 1)
-            if #off > 0 then 
-                local img = off[1]
-                local x = img[1] local y = img[2] -- 375, 689 -> 625, 689
-                press(x + 250, y) sleep(2) -- on air
 
-                if waitImageVisible(airplane_on) then
-                    local off = findImage(airplane_on[#airplane_on], 1, threshold, nil, DEBUG_IMAGE, 1)
-                    if #off > 0 then 
-                        local img = off[1]
-                        local x = img[1] local y = img[2]
-                        press(x + 250, y) sleep(2) -- off air
+    if isGreaterThan800() then 
+        if waitImageVisible(airplane_icon) then 
+            if waitImageVisible(airplane_off) then
+                local off = findImage(airplane_off[#airplane_off], 1, threshold, nil, DEBUG_IMAGE, 1)
+                if #off > 0 then 
+                    local img = off[1]
+                    local x = img[1] local y = img[2] -- 375, 689 -> 625, 689
+                    press(x + 250, y) sleep(2) -- on air
+
+                    if waitImageVisible(airplane_on) then
+                        local off = findImage(airplane_on[#airplane_on], 1, threshold, nil, DEBUG_IMAGE, 1)
+                        if #off > 0 then 
+                            local img = off[1]
+                            local x = img[1] local y = img[2]
+                            press(x + 250, y) sleep(2) -- off air
+                        end
                     end
+                end 
+            elseif waitImageVisible(airplane_on) then
+                local off = findImage(airplane_on[#airplane_on], 1, threshold, nil, DEBUG_IMAGE, 1)
+                if #off > 0 then 
+                    local img = off[1]
+                    local x = img[1] local y = img[2]
+                    press(x + 250, y) sleep(2) -- off air
                 end
-            end 
-        elseif waitImageVisible(airplane_on) then
-            local off = findImage(airplane_on[#airplane_on], 1, threshold, nil, DEBUG_IMAGE, 1)
-            if #off > 0 then 
-                local img = off[1]
-                local x = img[1] local y = img[2]
-                press(x + 250, y) sleep(2) -- off air
             end
+            sleep(5)
+        end 
+    else
+        if waitImageVisible(airplane_icon) then 
+            if waitImageVisible(airplane_on_icon) then 
+                findAndClickByImage(airplane_off_icon) sleep(1)
+            elseif waitImageVisible(airplane_off_icon) then 
+                findAndClickByImage(airplane_off_icon) sleep(1)
+                findAndClickByImage(airplane_on_icon) sleep(1)
+            end 
         end
-        sleep(5)
     end 
 end
 
@@ -1295,3 +1307,29 @@ function hasUppercase(email)
     end
     return false
 end
+
+function isGreaterThan800()
+    local version = getVersion()
+    
+    local function splitVersion(v)
+        local t = {}
+        for num in v:gmatch("%d+") do
+            table.insert(t, tonumber(num))
+        end
+        return t
+    end
+
+    local input = splitVersion(version)
+    local base = {8, 0, 0}
+    local maxLen = math.max(#input, #base)
+
+    for i = 1, maxLen do
+        local iv = input[i] or 0
+        local bv = base[i] or 0
+        if iv > bv then return true end
+        if iv < bv then return false end
+    end
+
+    return false -- bằng nhau
+end
+

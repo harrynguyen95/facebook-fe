@@ -36,8 +36,8 @@ xin_chao = {dirPath .. "xin_chao.png", dirPath .. "xin_chao2.png"}
 robot_confirm = {dirPath .. "robot_confirm.png"}
 
 airplane_icon = {dirPath .. "airplane_icon.png"}
-airplane_on = {dirPath .. "airplane_on2.png"}
-airplane_off = {dirPath .. "airplane_off2.png"}
+airplane_on_icon = {dirPath .. "airplane_on2.png"}
+airplane_off_icon = {dirPath .. "airplane_off2.png"}
 
 chon_dia_chi_email = {dirPath .. "chon_dia_chi_email.png"}
 tao_dia_chi_gmail_rieng = {dirPath .. "tao_dia_chi_gmail_rieng.png", dirPath .. "tao_dia_chi_gmail_rieng2.png"}

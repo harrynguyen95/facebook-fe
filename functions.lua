@@ -1947,39 +1947,25 @@ function selectThangSinhNhat()
 end
 
 function onOffAirplaneGmail()
-    ::label_startreset::
-
-    toast('onOffAirplaneGmail')
-    swipeCloseApp()
-    appRun("com.apple.Preferences")
-    sleep(2)
-
     if waitImageVisible(airplane_icon) then 
-        if waitImageVisible(airplane_on) then 
-            findAndClickByImage(airplane_off) sleep(1)
-        elseif waitImageVisible(airplane_off) then 
-            findAndClickByImage(airplane_off) sleep(1)
-            findAndClickByImage(airplane_on) sleep(1)
+        if waitImageVisible(airplane_on_icon) then 
+            findAndClickByImage(airplane_off_icon) sleep(1)
+        elseif waitImageVisible(airplane_off_icon) then 
+            findAndClickByImage(airplane_off_icon) sleep(1)
+            findAndClickByImage(airplane_on_icon) sleep(1)
         end 
-    else 
-        goto label_startreset
     end
 end
 
 function resetSafariData()
     ::label_startreset::
+    toast('resetSafariData')
 
     swipeCloseApp()
     appRun("com.apple.Preferences")
-    sleep(3)
+    sleep(1)
 
     findAndClickByImage(accept)
-    if waitImageVisible(airplane_icon) then 
-        if waitImageVisible(airplane_off) then findAndClickByImage(airplane_off) sleep(1) end 
-    else 
-        goto label_startreset
-    end
-
     swipe(600, 1200, 610, 900) sleep(1)
     swipe(600, 1200, 610, 680) sleep(3)
     if waitImageVisible(safari_icon, 3) then
@@ -1994,11 +1980,13 @@ function resetSafariData()
     findAndClickByImage(accept)
     if not waitImageVisible(xoa_lich_su_du_lieu, 3) or not waitImageVisible(an_dia_chi_ip, 3) then goto label_startreset end 
     if waitImageVisible(xoa_lich_su_du_lieu, 3) then 
+        toast('xoa_lich_su_du_lieu')
         findAndClickByImage(xoa_lich_su_du_lieu) sleep(2)
         press(390, 1130) sleep(1) -- xoa du lieu
         press(390, 1130) sleep(1) -- dong cac tab
     end 
     if waitImageVisible(an_dia_chi_ip, 3) then 
+        toast('an_dia_chi_ip')
         findAndClickByImage(an_dia_chi_ip) sleep(2)
         press(500, 350) sleep(1) -- tat 
         press(500, 250) sleep(1) -- tu trinh theo doi
@@ -2006,15 +1994,45 @@ function resetSafariData()
 
         press(90, 90) sleep(1) -- back to setting
         swipe(600, 650, 610, 1200) sleep(1)
-        swipe(600, 900, 610, 1200) sleep(3)
+        swipe(600, 700, 610, 1200) sleep(3)
     end
+
     if waitImageVisible(airplane_icon) then
-        if waitImageVisible(airplane_on) then 
-            findAndClickByImage(airplane_on) sleep(3)
-        elseif waitImageVisible(airplane_off) then 
-            findAndClickByImage(airplane_off) sleep(1)
-            findAndClickByImage(airplane_on) sleep(3)
-        end 
+        toast('airplane_icon')
+
+        if isGreaterThan800() then 
+            if waitImageVisible(airplane_off) then
+                local off = findImage(airplane_off[#airplane_off], 1, threshold, nil, DEBUG_IMAGE, 1)
+                if #off > 0 then 
+                    local img = off[1]
+                    local x = img[1] local y = img[2] -- 375, 689 -> 625, 689
+                    press(x + 250, y) sleep(2) -- on air
+
+                    if waitImageVisible(airplane_on) then
+                        local off = findImage(airplane_on[#airplane_on], 1, threshold, nil, DEBUG_IMAGE, 1)
+                        if #off > 0 then 
+                            local img = off[1]
+                            local x = img[1] local y = img[2]
+                            press(x + 250, y) sleep(2) -- off air
+                        end
+                    end
+                end 
+            elseif waitImageVisible(airplane_on) then
+                local off = findImage(airplane_on[#airplane_on], 1, threshold, nil, DEBUG_IMAGE, 1)
+                if #off > 0 then 
+                    local img = off[1]
+                    local x = img[1] local y = img[2]
+                    press(x + 250, y) sleep(2) -- off air
+                end
+            end
+        else 
+            if waitImageVisible(airplane_off_icon) then 
+                findAndClickByImage(airplane_off_icon) sleep(1)
+                findAndClickByImage(airplane_on_icon) sleep(2)
+            elseif waitImageVisible(airplane_on_icon) then 
+                findAndClickByImage(airplane_off_icon) sleep(2)
+            end
+        end
     end 
     sleep(1)
 end 
