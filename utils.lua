@@ -1309,7 +1309,7 @@ function hasUppercase(email)
 end
 
 function isGreaterThan800()
-    local version = getVersion()
+    local version = getVersion() or "7.1.6"
     
     local function splitVersion(v)
         local t = {}
