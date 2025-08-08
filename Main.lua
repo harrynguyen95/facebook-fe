@@ -111,10 +111,7 @@ function main()
     else 
         swipeCloseApp()
     end
-    if not waitForInternet(1) then 
-        toast("No Internet 3", 5)
-        if IP_ROTATE_MODE == 2 then onOffAirplane() sleep(2) waitForInternet(1) end
-    end 
+    if not waitForInternet(1) then onOffAirplane() sleep(2) waitForInternet(1) end 
    
     ::label_openfacebook::
     openFacebook()
@@ -225,7 +222,7 @@ function main()
         goto label_continue
     end
 
-    if waitForInternet(1) then archiveCurrentAccount() else alert("No Internet 4. RESPRING NOW!!") exit() end 
+    if waitForInternet(1) then archiveCurrentAccount() else onOffAirplane() sleep(2) waitForInternet(1) end 
 
     ::label_createnewaccountblue::
     if waitImageVisible(create_new_account_blue) then
@@ -1025,7 +1022,7 @@ function main()
             if waitImageVisible(add_coverphoto, 2) then findAndClickByImage(skip) sleep(1) end
             if waitImageVisible(profile_add_avatar, 2) then 
                 findAndClickByImage(profile_add_avatar)
-                if not saveRandomServerAvatar() then alert('RESPRING NOW!!') exit() end
+                if not saveRandomServerAvatar() then alert('Error save Avt, Respring now.') exit() end
                 sleep(3)
                 if waitImageVisible(chon_anh_dai_dien) then findAndClickByImage(chon_anh_dai_dien) end
                 if waitImageVisible(allow_access) then 
