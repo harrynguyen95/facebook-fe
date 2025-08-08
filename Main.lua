@@ -80,6 +80,7 @@ function main()
 
     if info.mailRegister == nil or info.mailRegister == '' then 
         homeAndUnlockScreen()
+        swipeCloseApp()
         if TIMES_XOA_INFO == 0 then wipeApp() end
 
         if IP_ROTATE_MODE == 1 then 
@@ -118,7 +119,6 @@ function main()
 
     if waitImageVisible(logo_fb_modern) then
         toastr('not_support_this_FB_mode')
-        swipeCloseApp()
         goto label_continue
     end
 
@@ -149,7 +149,6 @@ function main()
 
         if waitImageVisible(logo_fb_modern, 3) then
             toastr('not_support_this_FB_mode')
-            swipeCloseApp()
             goto label_continue
         end
 
@@ -181,7 +180,7 @@ function main()
         if checkSuspended() then goto label_continue end
     end
 
-    if checkImageIsExists(logo_fb_modern) then toastr('not_support_this_FB_mode') swipeCloseApp() goto label_continue end
+    if checkImageIsExists(logo_fb_modern) then toastr('not_support_this_FB_mode') goto label_continue end
     if checkImageIsExists(what_on_your_mind) then goto label_whatisonyourmind end
     if checkImageIsExists(what_is_birthday) then goto label_birthday end
     if checkImageIsExists(what_is_mobile_number) then goto label_whatisyourmobile end
@@ -218,7 +217,6 @@ function main()
 
     if checkImageIsExists(join_facebook) then 
         toastr('not_support_this_FB_mode', 2)
-        swipeCloseApp()
         goto label_continue
     end
 
@@ -282,7 +280,6 @@ function main()
     end
     if checkImageIsExists(join_facebook) then 
         toastr('not_support_this_FB_mode', 2)
-        swipeCloseApp()
         goto label_continue
     end
 
@@ -364,7 +361,6 @@ function main()
                 if waitImageVisible(exist_account_in_mail, 3) or waitImageVisible(red_warning_icon, 3) then
                     toastr('email_has_account')
                     failedCurrentAccount('email_has_account')
-                    swipeCloseApp()
                     goto label_continue
                 end
             else
@@ -596,7 +592,6 @@ function main()
                 if waitImageVisible(exist_account_in_mail, 3) or waitImageVisible(red_warning_icon, 3) then
                     toastr('email_has_account')
                     failedCurrentAccount('email_has_account')
-                    swipeCloseApp()
                     goto label_continue
                 end
             else
@@ -620,7 +615,6 @@ function main()
                     if waitImageVisible(continue_creating_account, 3) then
                         toastr("email_has_account")
                         failedCurrentAccount('email_has_account')
-                        swipeCloseApp()
                         goto label_continue
                     end
                 else 
