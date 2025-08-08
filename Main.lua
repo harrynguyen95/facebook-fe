@@ -125,7 +125,6 @@ function main()
     findAndClickByImage(accept)
     if checkSuspended() then goto label_continue end
     if checkPageNotAvailable() then goto label_continue end
-    if waitImageVisible(three_dot_icon) then removeAccount() end 
     if checkImageIsExists(what_on_your_mind) then goto label_whatisonyourmind end
     if checkImageIsExists(what_is_birthday) then goto label_birthday end
     if checkImageIsExists(what_is_mobile_number) then goto label_whatisyourmobile end
@@ -141,6 +140,14 @@ function main()
     if checkImageIsExists(add_phone_number) then goto label_addphonenumber end
     if checkImageIsExists(add_your_email_address) then goto label_addyouremailaddress end
     if checkImageIsExists(agree_facebook_term) then goto label_agree end
+
+    if waitImageVisible(dang_nhap_bang_tk_khac) then 
+        removeAccount()
+        if waitImageVisible(dang_nhap_bang_tk_khac) then
+            removeAccount()
+            if waitImageVisible(dang_nhap_bang_tk_khac) then removeAccount() end
+        end
+    end 
 
     ::label_createnewaccount::
     showIphoneModel()
