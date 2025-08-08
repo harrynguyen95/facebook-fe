@@ -446,7 +446,7 @@ function randomMailDomain()
     elseif MAIL_DOMAIN_TYPE == 2 then 
         part3 = "@supermoney9x.com"
     elseif MAIL_DOMAIN_TYPE == 3 then 
-        local arr = { "@yagisongs.com", "@supermoney9x.com" }
+        local arr = { "@yagisongs.com", "@supermoney9x.com", "@bkav.online", "@mobifone.space", "@thanhnien.site", "@tuoitre.store", "@vccorp.website", "@vietnamnet.shop" }
         part3 = arr[math.random(1, #arr)]
     end
     return part1 .. part2 .. part3
