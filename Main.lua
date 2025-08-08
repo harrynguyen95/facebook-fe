@@ -141,11 +141,13 @@ function main()
     if checkImageIsExists(add_your_email_address) then goto label_addyouremailaddress end
     if checkImageIsExists(agree_facebook_term) then goto label_agree end
 
-    if waitImageVisible(dang_nhap_bang_tk_khac) then 
+    if waitImageVisible(dang_nhap_bang_tk_khac) then
+        toast('dang_nhap_bang_tk_khac 1')
         removeAccount()
         if waitImageVisible(dang_nhap_bang_tk_khac) then
+            toast('dang_nhap_bang_tk_khac 2')
             removeAccount()
-            if waitImageVisible(dang_nhap_bang_tk_khac) then removeAccount() end
+            if waitImageVisible(dang_nhap_bang_tk_khac) then toast('dang_nhap_bang_tk_khac 3') removeAccount() end
         end
     end 
 
