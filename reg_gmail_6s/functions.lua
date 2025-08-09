@@ -1824,3 +1824,34 @@ function useProxyRootless(proxyString)
         -- goto setup_proxy
     end
 end
+
+function readFile(path)
+    local file = io.open(path, "r")
+    if not file then
+        log("File không tồn tại, tạo mới: " .. path, 3)
+
+        file = io.open(path, "w")
+        if not file then
+            log("Không thể tạo file: " .. path, 3)
+            return {}
+        end
+        file:close()
+
+        file = io.open(path, "r")
+        if not file then
+            log("Không thể mở file vừa tạo: " .. path, 3)
+            return {}
+        end
+    end
+
+    local lines = {}
+    for line in file:lines() do
+        line = line:gsub("\r", ""):gsub("^%s*(.-)%s*$", "%1")
+        
+        if line ~= "" then
+            table.insert(lines, line)
+        end
+    end
+    file:close()
+    return lines
+end
