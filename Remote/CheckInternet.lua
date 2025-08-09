@@ -49,7 +49,7 @@ require(rootDir() .. '/Facebook/utils')
 local folderName = "Facebook"
 local rootDir = rootDir()
 
-local tokens = readFile(rootDir .. "/Device/token.txt)
+local tokens = readFile(rootDir .. "/Device/token.txt")
 local token = tokens[#tokens]
 
 local gitUrl = "https://".. token .."@github.com/harrynguyen95/facebook-fe.git"
@@ -80,7 +80,7 @@ require(rootDir() .. '/Facebook/utils')
 local folderName = "Facebook"
 local rootDir = rootDir()
 
-local tokens = readFile(rootDir .. "/Device/token.txt)
+local tokens = readFile(rootDir .. "/Device/token.txt")
 local token = tokens[#tokens]
 
 local gitUrl = "https://".. token .."@github.com/harrynguyen95/facebook-fe.git"
