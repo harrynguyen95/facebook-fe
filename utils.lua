@@ -1086,6 +1086,7 @@ function onOffAirplane()
 
     if isGreaterThan800() then 
         if waitImageVisible(airplane_icon) then 
+            ::label_start::
             if waitImageVisible(airplane_off) then
                 local off = findImage(airplane_off[#airplane_off], 1, threshold, nil, DEBUG_IMAGE, 1)
                 if #off > 0 then 
@@ -1110,16 +1111,20 @@ function onOffAirplane()
                     press(x + 250, y) sleep(2) -- off air
                 end
             end
-            sleep(5)
+            sleep(2)
+            if checkImageIsExists(airplane_on) then goto label_start end 
         end 
     else
         if waitImageVisible(airplane_icon) then 
+            ::label_start::
             if waitImageVisible(airplane_on_icon) then 
                 findAndClickByImage(airplane_off_icon) sleep(1)
             elseif waitImageVisible(airplane_off_icon) then 
                 findAndClickByImage(airplane_off_icon) sleep(1)
                 findAndClickByImage(airplane_on_icon) sleep(1)
             end 
+            sleep(2)
+            if checkImageIsExists(airplane_on_icon) then goto label_start end 
         end
     end 
 end

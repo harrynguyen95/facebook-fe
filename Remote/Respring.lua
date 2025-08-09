@@ -1,24 +1,28 @@
 require(rootDir() .. '/Facebook/utils')
 require(rootDir() .. '/Facebook/functions')
 
+::label_start::
 homeAndUnlockScreen()
+swipeCloseApp()
+toastr('respringAutotouch')
 
 local dirPath = currentDir() .. "/images/"
-xoainfo_reset_data = {dirPath .. "xoainfo_reset_data.png"}
+att_icon = {dirPath .. "att_icon.png"}
+att_respring = {dirPath .. "att_respring.png"}
 
-toastr('respringXoainfo')
-appRun("com.ienthach.XoaInfo")
-sleep(1)
-
-if waitImageVisible(xoainfo_reset_data, 10) then
-    press(700, 80) -- menu xoainfo
-    sleep(1)
-    press(450, 410) -- menu Add on
-    sleep(1)
-    swipe(600, 900, 610, 500) 
-    sleep(2)
-    press(380, 740) -- respring button
-end
+if waitImageVisible(att_icon) then 
+    findAndClickByImage(att_icon) sleep(2)
+    press(640, 1280) sleep(1) -- btn setting
+    swipe(600, 600, 610, 400) sleep(2)
+    if waitImageVisible(att_respring) then 
+        findAndClickByImage(att_respring) sleep(1)
+        press(500, 790)
+    else 
+        goto label_start
+    end 
+else 
+    alert('Not found Logo Att in home')
+end 
 
 -- usleep(math.random(1000000, 2000000));
 -- io.popen('killall -9 SpringBoard');
