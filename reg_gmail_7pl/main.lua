@@ -44,10 +44,12 @@ is_off = {currentPath() .. "/images/is_off.png"}
 gmailcom = {currentPath() .. "/safari/gmail.com.png"}
 da_co_su_co_xay_ra = {currentPath() .. "/images/da_co_su_co_xay_ra.png"}
 
-local packages = {"com.google.Maps", "com.google.Gmail", "com.google.GoogleMobile", "com.google.FamilyLink",
-                  "com.google.Docs", "com.google.Translate", "com.google.GoogleDigitalEditions", "com.google.Sheets",
-                  "com.google.Classroom", "com.google.calendar", "com.google.Dynamite", "com.google.fit",
-                  "com.google.photos"}
+-- local packages = {"com.google.Maps", "com.google.Gmail", "com.google.GoogleMobile", "com.google.FamilyLink",
+--                   "com.google.Docs", "com.google.Translate", "com.google.GoogleDigitalEditions", "com.google.Sheets",
+--                   "com.google.Classroom", "com.google.calendar", "com.google.Dynamite", "com.google.fit",
+--                   "com.google.photos"}
+
+local packages = {"com.google.Maps"}
 
 local total = 0
 local success = 0
@@ -93,7 +95,6 @@ for i = 1, 10, 1 do
      end
  end
 
--- print(currentPath() .. "/images/mui_gio.png")
 openURL("App-Prefs:SAFARI&path=CLEAR_HISTORY_AND_DATA")
 for i = 1, 10, 1 do
     if checkImageIsExists(xoa_lich_su_va_du_lieu) then
@@ -142,15 +143,15 @@ local state = 0
 
 appActivate(selectedPackage)
 for i = 1, 50, 1 do
-    -- toast("-- " .. state .. " -- " .. i .. " --", 1)
-    -- toast("-- " .. state .. " -- icon_user", 1)
+    toast("-- " .. state .. " -- " .. i .. " --", 1)
+    toast("-- " .. state .. " -- icon_user", 1)
     if state < 1 and checkImageIsExists(icon_user) then
         findAndClickByImage(icon_user)
         sleep(2)
         state = 1
     end
 
-    -- toast("-- " .. state .. " -- dang_nhap", 1)
+    toast("-- " .. state .. " -- dang_nhap", 1)
     if state < 2 and checkImageIsExists(dang_nhap) then
         findAndClickByImage(dang_nhap)
 
@@ -185,20 +186,20 @@ for i = 1, 50, 1 do
         end
     end
 
-    -- toast("-- " .. state .. " -- tiep_tuc", 1)
+    toast("-- " .. state .. " -- tiep_tuc", 1)
 
     if checkImageIsExists(tiep_tuc) then
         findAndClickByImage(tiep_tuc)
     end
 
-    -- toast("-- " .. state .. " -- tao_tai_khoan", 1)
+    toast("-- " .. state .. " -- tao_tai_khoan", 1)
 
     if state < 3 and checkImageIsExists(tao_tai_khoan) then
         findAndClickByImage(tao_tai_khoan)
         waitImageVisible(danh_cho_muc_dich_ca_nhan_cua_toi, 5)
     end
 
-    -- toast("-- " .. state .. " -- danh_cho_muc_dich_ca_nhan_cua_toi", 1)
+    toast("-- " .. state .. " -- danh_cho_muc_dich_ca_nhan_cua_toi", 1)
 
     if state < 3 and checkImageIsExists(danh_cho_muc_dich_ca_nhan_cua_toi) then
         findAndClickByImage(danh_cho_muc_dich_ca_nhan_cua_toi)
@@ -206,7 +207,7 @@ for i = 1, 50, 1 do
         state = 3
     end
 
-    -- toast("-- " .. state .. " -- ho", 1)
+    toast("-- " .. state .. " -- ho", 1)
 
     if (state == 3 or state == 2) and checkImageIsExists(ho) then
         findAndClickByImage(ho)
@@ -228,7 +229,7 @@ for i = 1, 50, 1 do
         sleep(0.016)
     end
 
-    -- toast("-- " .. state .. " -- nhap_ngay_sinh_va_gioi_tinh", 1)
+    toast("-- " .. state .. " -- nhap_ngay_sinh_va_gioi_tinh", 1)
 
     if state == 4 and checkImageIsExists(nhap_ngay_sinh_va_gioi_tinh) then
         findAndClickByImage(ngay)
@@ -255,19 +256,19 @@ for i = 1, 50, 1 do
         state = 5
     end
 
-    -- toast("-- " .. state .. " -- tao_dia_chi_gmail_cua_rieng_ban", 1)
+    toast("-- " .. state .. " -- tao_dia_chi_gmail_cua_rieng_ban", 1)
 
     if state == 5 and checkImageIsExists(tao_dia_chi_gmail_cua_rieng_ban) then
         findAndClickByImage(tao_dia_chi_gmail_cua_rieng_ban)
     end
 
-    -- toast("-- " .. state .. " -- gmailcom", 1)
+    toast("-- " .. state .. " -- gmailcom", 1)
 
     if state == 5 and checkImageIsExists(gmailcom) then
         findAndClickByImage(gmailcom)
     end
 
-    -- toast("-- " .. state .. " -- ten_nguoi_dung", 1)
+    toast("-- " .. state .. " -- ten_nguoi_dung", 1)
 
     if state == 5 and checkImageIsExists(ten_nguoi_dung) or checkImageIsExists(tao_mot_dia_chi_gmail) then
         findAndClickByImage(ten_nguoi_dung)
@@ -285,7 +286,7 @@ for i = 1, 50, 1 do
         state = 6
     end
 
-    -- toast("-- " .. state .. " -- tao_mot_mat_khau", 1)
+    toast("-- " .. state .. " -- tao_mot_mat_khau", 1)
 
     if state == 6 and checkImageIsExists(tao_mot_mat_khau) then
         findAndClickByImage(mat_khau)
@@ -303,45 +304,48 @@ for i = 1, 50, 1 do
         state = 7
     end
 
-    -- toast("-- " .. state .. " -- xem_lai_thong_tin_tai_khoan", 1)
+    toast("-- " .. state .. " -- xem_lai_thong_tin_tai_khoan", 1)
 
     if state >= 7 and checkImageIsExists(xem_lai_thong_tin_tai_khoan) then
         findAndClickByImage(tiep_theo)
     end
 
-    -- toast("-- " .. state .. " -- quyen_rieng_tu", 1)
+    toast("-- " .. state .. " -- quyen_rieng_tu", 1)
 
     if state >= 7 and checkImageIsExists(quyen_rieng_tu) then
         swipeVertically(7)
     end
 
-    -- toast("-- " .. state .. " -- toi_dong_y", 1)
+    toast("-- " .. state .. " -- toi_dong_y", 1)
 
     if state >= 7 and checkImageIsExists(toi_dong_y) then
         findAndClickByImage(toi_dong_y)
         local full_ten = txtHo .. ' ' .. txtTenDem .. ' ' .. txtTen
+        local row = username .. '|' .. password .. '1!@#' .. '|' .. txtNgay .. '/3/' .. txtNam .. '|' .. full_ten .. '|' .. time .. '|' .. selectedPackage
 
-        writetxt("account.txt",
-            username .. '|' .. password .. '1!@#' .. '|' .. txtNgay .. '/3/' .. txtNam .. '|' .. full_ten .. '|' .. time ..
-                '|' .. selectedPackage, "a", 1000000, 1)
-        writetxt("time_success.txt", time, "a", 1000000, 1)
-        print(username .. '|' .. password .. '1!@#' .. '|' .. txtNgay .. '/3/' .. txtNam .. '|' .. full_ten)
+        writetxt(currentPath() .. "/account.txt", row, "a", 1000000, 1)
+        writetxt(currentPath() .. "/time_success.txt", time, "a", 1000000, 1)
         sleep(5)
         success = success + 1
 
-        ::post_data::
+        local localIP = readFile(rootDir() .. "/Device/local_ip.txt")
+        local info = {
+            gmail_checkpoint = 'OK',
+            gmail_address    = username,
+            gmail_password   = password .. '1!@#',
+            localIP          = localIP[#localIP],
+        }
 
+        waitForInternet()
+
+        ::post_data::
         local response, err = httpRequest {
-            url = "https://hihi.thuemails.com/api/login-jobs",
+            url = "https://tuongtacthongminh.com/reg_clone/gmail_account_google_form.php",
             method = "POST",
             headers = {
                 ["Content-Type"] = "application/json"
             },
-            data = {
-                ["fb_email"] = username,
-                ["fb_password"] = password .. '1!@#',
-                ["fb_2fa_code"] = "123456"
-            }
+            data = info
         }
 
         if response then
@@ -359,6 +363,36 @@ for i = 1, 50, 1 do
 
     if state >= 7 and checkImageIsExists(robot) then
         faild = faild + 1
+
+        local localIP = readFile(rootDir() .. "/Device/local_ip.txt")
+        local info = {
+            gmail_checkpoint = 'Robot',
+            gmail_address    = username,
+            gmail_password   = password .. '1!@#',
+            localIP          = localIP[#localIP],
+        }
+
+        waitForInternet()
+
+        ::post_data::
+        local response, err = httpRequest {
+            url = "https://tuongtacthongminh.com/reg_clone/gmail_account_google_form.php",
+            method = "POST",
+            headers = {
+                ["Content-Type"] = "application/json"
+            },
+            data = info
+        }
+
+        if response then
+            toast("Request sent successfully!", 2)
+            sleep(2)
+        else
+            toast("Error: Failed to send request.", 2)
+            sleep(2)
+            goto post_data
+        end
+
         goto start
         return
     end
