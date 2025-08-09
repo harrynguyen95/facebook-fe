@@ -42,10 +42,11 @@ su_dung_tk_khac = {currentPath() .. "/images/su_dung_tk_khac.png"}
 
 
 
-local packages = {"com.google.Maps", "com.google.Gmail", "com.google.GoogleMobile", "com.google.FamilyLink",
-                  "com.google.Docs", "com.google.Translate", "com.google.GoogleDigitalEditions", "com.google.Sheets",
-                  "com.google.Classroom", "com.google.calendar", "com.google.Dynamite", "com.google.fit",
-                  "com.google.photos"}
+-- local packages = {"com.google.Maps", "com.google.Gmail", "com.google.GoogleMobile", "com.google.FamilyLink",
+--                   "com.google.Docs", "com.google.Translate", "com.google.GoogleDigitalEditions", "com.google.Sheets",
+--                   "com.google.Classroom", "com.google.calendar", "com.google.Dynamite", "com.google.fit",
+--                   "com.google.photos"}
+local packages = {"com.google.Maps", "com.google.Gmail"}
 
 local total = 0
 local success = 0
