@@ -4,19 +4,7 @@ dong_cac_tab = {currentPath() .. "/images/dong_cac_tab.png"}
 mui_gio = {currentPath() .. "/images/mui_gio.png"}
 xoa_lich_su_va_du_lieu = {currentPath() .. "/images/xoa_lich_su_va_du_lieu.png"}
 
-icon_user = {currentPath() .. "/images/icon_user.png", currentPath() .. "/images/icon_user_google.png"}
-
-dang_nhap = {currentPath() .. "/images/dang_nhap.png", currentPath() .. "/images/dang_nhap_fit.png",
-             currentPath() .. "/images/bat_dau.png", currentPath() .. "/images/dang_nhap_photo.png",
-             currentPath() .. "/images/bat_dau_chat.png", currentPath() .. "/images/bat_dat_classroom.png",
-             currentPath() .. "/images/dang_nhap_sheet.png", currentPath() .. "/images/dang_nhap_family_link.png",
-             currentPath() .. "/images/dang_nhap_news.png"}
-
 tiep_tuc = {currentPath() .. "/images/tiep_tuc.png", currentPath() .. "/images/tiep_tuc2.png"}
-
-google = {currentPath() .. "/images/google.png"}
-them_tai_khoan_khac = {currentPath() .. "/images/them_tai_khoan_khac.png"}
-
 tao_tai_khoan = {currentPath() .. "/images/tao_tai_khoan.png"}
 email_hoac_so_dien_thoai = {currentPath() .. "/images/email_hoac_so_dien_thoai.png"}
 tiep_theo = {currentPath() .. "/images/tiep_theo.png"}
@@ -38,11 +26,23 @@ ten_nguoi_dung = {currentPath() .. "/images/ten_nguoi_dung.png"}
 xem_lai_thong_tin_tai_khoan = {currentPath() .. "/images/xem_lai_thong_tin_tai_khoan.png"}
 quyen_rieng_tu = {currentPath() .. "/images/quyen_rieng_tu.png"}
 toi_dong_y = {currentPath() .. "/images/toi_dong_y.png"}
+icon_user = {currentPath() .. "/images/icon_user.png"}
+dang_nhap = {currentPath() .. "/images/dang_nhap.png"}
 airplan = {currentPath() .. "/images/airplan.png"}
 is_on = {currentPath() .. "/images/is_on.png"}
 is_off = {currentPath() .. "/images/is_off.png"}
 gmailcom = {currentPath() .. "/safari/gmail.com.png"}
-da_co_su_co_xay_ra = {currentPath() .. "/images/da_co_su_co_xay_ra.png"}
+
+
+
+
+
+
+
+
+
+
+
 
 -- local packages = {"com.google.Maps", "com.google.Gmail", "com.google.GoogleMobile", "com.google.FamilyLink",
 --                   "com.google.Docs", "com.google.Translate", "com.google.GoogleDigitalEditions", "com.google.Sheets",
@@ -122,7 +122,7 @@ sleep(1)
 time = getRandomLineInFile(currentPath() .. "/input/time.txt")
 inputText(time)
 sleep(1)
-tap(353, 286)
+tap(200, 200)
 sleep(2)
 
 ------random package
@@ -142,7 +142,7 @@ local txtNam = randomInt(1950, 2000)
 local state = 0
 
 appActivate(selectedPackage)
-for i = 1, 50, 1 do
+for i = 1, 100, 1 do
     toast("-- " .. state .. " -- " .. i .. " --", 1)
     toast("-- " .. state .. " -- icon_user", 1)
     if state < 1 and checkImageIsExists(icon_user) then
@@ -177,7 +177,7 @@ for i = 1, 50, 1 do
             sleep(0.016)
         else
             sleep(5)
-            tap(819, 1286)
+            tap(550, 788)
             sleep(0.016)
         end
 
@@ -212,39 +212,39 @@ for i = 1, 50, 1 do
     if (state == 3 or state == 2) and checkImageIsExists(ho) then
         findAndClickByImage(ho)
         sleep(2)
-        inputText(txtHo)
+        dieninfo(txtHo)
         sleep(2)
 
         findAndClickByImage(ten)
         sleep(2)
-        inputText(txtTenDem .. ' ' .. txtTen)
+        dieninfo(txtTenDem .. ' ' .. txtTen)
         sleep(2)
         findAndClickByImage(tiep_theo)
         waitImageVisible(nhap_ngay_sinh_va_gioi_tinh, 5)
         state = 4
     end
 
-    if checkImageIsExists(da_co_su_co_xay_ra) then
-        tap(1163, 201)
-        sleep(0.016)
-    end
+    -- if checkImageIsExists(da_co_su_co_xay_ra) then
+    --     tap(1163, 201)
+    --     sleep(0.016)
+    -- end
 
     toast("-- " .. state .. " -- nhap_ngay_sinh_va_gioi_tinh", 1)
 
     if state == 4 and checkImageIsExists(nhap_ngay_sinh_va_gioi_tinh) then
         findAndClickByImage(ngay)
         sleep(2)
-        inputText(txtNgay)
+        dienso(txtNgay)
         sleep(2)
 
         findAndClickByImage(thang)
         sleep(2)
-        tap(595, 1482)
+        tap(375, 973)
         sleep(2)
 
         findAndClickByImage(nam)
         sleep(2)
-        inputText(txtNam)
+        dienso(txtNam)
         sleep(2)
 
         findAndClickByImage(gioi_tinh)
@@ -277,7 +277,7 @@ for i = 1, 50, 1 do
         if isNullOrEmpty(username) then
             username = txtHo .. txtTenDem .. txtTen .. randomInt(100000, 9999999)
         end
-        inputText(username)
+        dieninfo(username)
         sleep(2)
         tap(369, 725)
         sleep(2)
@@ -294,7 +294,7 @@ for i = 1, 50, 1 do
         if isNullOrEmpty(password) then
             password = txtHo .. txtTen .. txtTenDem
         end
-        inputText(password)
+        dieninfo(password)
         inputText('1!@#')
         sleep(2)
         tap(369, 725)
@@ -313,7 +313,7 @@ for i = 1, 50, 1 do
     toast("-- " .. state .. " -- quyen_rieng_tu", 1)
 
     if state >= 7 and checkImageIsExists(quyen_rieng_tu) then
-        swipeVertically(7)
+        swipeVertically(5)
     end
 
     toast("-- " .. state .. " -- toi_dong_y", 1)
@@ -323,8 +323,8 @@ for i = 1, 50, 1 do
         local full_ten = txtHo .. ' ' .. txtTenDem .. ' ' .. txtTen
         local row =  username .. '|' .. password .. '1!@#' .. '|' .. txtNgay .. '/3/' .. txtNam .. '|' .. full_ten .. '|' .. time .. '|' .. selectedPackage
 
-        writetxt("Device/gmail_account_6s.txt", row, "a", 1000000, 1)
-        writetxt("Device/time_success_6s.txt", time, "a", 1000000, 1)
+        writetxt("Device/gmail_account_7pl.txt", row, "a", 1000000, 1)
+        writetxt("Device/time_success_7pl.txt", time, "a", 1000000, 1)
         success = success + 1
 
         local localIP = readFile(rootDir() .. "/Device/local_ip.txt")
@@ -402,7 +402,7 @@ for i = 1, 50, 1 do
         return
     end
 
-    sleep(1)
+    sleep(2)
 end
 
 toast("Hello I'm a toast!", 5); -- Show message for 5 seconds.

@@ -878,9 +878,45 @@ function hasInternetConnection()
     return false
 end
 
+-- function waitForInternet(timeout)
+--     for i = 1, timeout, 1 do
+--         if hasInternetConnection() then
+--             return true
+--         end
+--         sleep(1)
+--     end
+--     return false
+-- end
+
+
+function checkIP()
+    local response, error = httpRequest { url = 'https://ipv4.icanhazip.com' }
+    response = (response and string.gsub(response, "\n", "")) or nil
+    toast('v4 check: ' .. (response or '-'), 2)
+    sleep(2)
+    if response then
+        info.ipRegister = response
+        return true
+    else 
+        sleep(1)
+        local response, error = httpRequest { url = 'https://ipv6.icanhazip.com' }
+        response = (response and string.gsub(response, "\n", "")) or nil
+        toast('v6 check: ' .. (response or '-'), 2)
+        sleep(2)
+        if response then
+            info.ipRegister = response
+            return true
+        end 
+    end
+    info.ipRegister = nil
+    return false
+end
+
 function waitForInternet(timeout)
+    sleep(1)
     for i = 1, timeout, 1 do
-        if hasInternetConnection() then
+        if checkIP() then
+            sleep(1)
             return true
         end
         sleep(1)

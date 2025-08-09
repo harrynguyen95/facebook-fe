@@ -41,12 +41,49 @@ removeFolderIfExists(folderPath)
 removeFolderIfExists(filePath)
 
 --------------------------------------------------------------------------------------------------------
+local filePath = rootDir() .. "/Device/Setup.lua" 
+
+local content = [[
+require(rootDir() .. '/Facebook/utils')
+
+local folderName = "Facebook"
+local rootDir = rootDir()
+
+local tokens = readFile(rootDir .. "/Device/token.txt)
+local token = tokens[#tokens]
+
+local gitUrl = "https://".. token .."@github.com/harrynguyen95/facebook-fe.git"
+
+io.popen("cd " .. rootDir .. " && rm -rf " .. folderName .. " && mkdir " .. folderName)
+usleep(1000000)
+io.popen("cd " .. rootDir .. "/" .. folderName .. " && git clone " .. gitUrl .. " .")
+
+usleep(2000000)
+]]
+
+local file = io.open(filePath, "w")
+
+if file then
+    file:write(content)
+    file:close()
+    toastr("✅ Đã ghi nội dung vào file: " .. filePath)
+else
+    toastr("❌ Không thể tạo hoặc ghi vào file.")
+end
+
+--------------------------------------------------------------------------------------------------------
 local filePath = rootDir() .. "/PullCode.lua" 
 
 local content = [[
+require(rootDir() .. '/Facebook/utils')
+
 local folderName = "Facebook"
 local rootDir = rootDir()
-local gitUrl = "https://github.com/harrynguyen95/facebook-fe.git"
+
+local tokens = readFile(rootDir .. "/Device/token.txt)
+local token = tokens[#tokens]
+
+local gitUrl = "https://".. token .."@github.com/harrynguyen95/facebook-fe.git"
 
 io.popen("cd " .. rootDir .. " && rm -rf " .. folderName .. " && mkdir " .. folderName)
 usleep(1000000)
@@ -118,9 +155,7 @@ if waitImageVisible(xoainfo_reset_data, 10) then
     sleep(1)
     press(450, 410) -- menu Add on
     sleep(1)
-    swipe(600, 800, 610, 500) 
-    sleep(1)
-    swipe(600, 800, 610, 500) 
+    swipe(600, 900, 610, 500) 
     sleep(2)
     press(380, 740) -- respring button
 end
