@@ -2,7 +2,7 @@
 require(rootDir() .. "/Facebook/utils")
 require(rootDir() .. "/Facebook/functions")
 require(rootDir() .. "/Facebook/images/images_vn")
-require(rootDir() .. "/Facebook/images/images_google")
+require(rootDir() .. "/Facebook/reg_gmail_hiennd/images_google")
 clearAlert()
 
 -- ====== INFO ======

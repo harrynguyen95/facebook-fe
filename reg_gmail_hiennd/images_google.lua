@@ -1,4 +1,4 @@
-local dirPath = rootDir() .. "/Facebook/images/images_google/"
+local dirPath = rootDir() .. "/Facebook/reg_gmail_hiennd/images_google/"
 
 safari_icon = {dirPath .. "safari_icon.png"}
 xoa_lich_su_du_lieu = {dirPath .. "xoa_lich_su_du_lieu.png"}
