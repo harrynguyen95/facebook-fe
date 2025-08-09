@@ -44,7 +44,36 @@ removeFolderIfExists(filePath)
 local filePath = rootDir() .. "/Device/Setup.lua" 
 
 local content = [[
-require(rootDir() .. '/Facebook/utils')
+function readFile(path)
+    local file = io.open(path, "r")
+    if not file then
+        print("File không tồn tại, tạo mới: " .. path)
+
+        file = io.open(path, "w")
+        if not file then
+            print("Không thể tạo file: " .. path)
+            return {}
+        end
+        file:close()
+
+        file = io.open(path, "r")
+        if not file then
+            print("Không thể mở file vừa tạo: " .. path)
+            return {}
+        end
+    end
+
+    local lines = {}
+    for line in file:lines() do
+        line = line:gsub("\r", ""):gsub("^%s*(.-)%s*$", "%1")
+        
+        if line ~= "" then
+            table.insert(lines, line)
+        end
+    end
+    file:close()
+    return lines
+end
 
 local folderName = "Facebook"
 local rootDir = rootDir()
@@ -75,7 +104,36 @@ end
 local filePath = rootDir() .. "/PullCode.lua" 
 
 local content = [[
-require(rootDir() .. '/Facebook/utils')
+function readFile(path)
+    local file = io.open(path, "r")
+    if not file then
+        print("File không tồn tại, tạo mới: " .. path)
+
+        file = io.open(path, "w")
+        if not file then
+            print("Không thể tạo file: " .. path)
+            return {}
+        end
+        file:close()
+
+        file = io.open(path, "r")
+        if not file then
+            print("Không thể mở file vừa tạo: " .. path)
+            return {}
+        end
+    end
+
+    local lines = {}
+    for line in file:lines() do
+        line = line:gsub("\r", ""):gsub("^%s*(.-)%s*$", "%1")
+        
+        if line ~= "" then
+            table.insert(lines, line)
+        end
+    end
+    file:close()
+    return lines
+end
 
 local folderName = "Facebook"
 local rootDir = rootDir()
