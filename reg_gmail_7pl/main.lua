@@ -119,7 +119,7 @@ for i = 1, 10, 1 do
     sleep(1)
 end
 sleep(1)
-time = getRandomLineInFile(currentPath() .. "/time.txt")
+time = getRandomLineInFile(currentPath() .. "/input/time.txt")
 inputText(time)
 sleep(1)
 tap(353, 286)
@@ -134,9 +134,9 @@ local package = appInfo(selectedPackage, 0)
 wipeDataAppManager(package.displayName)
 local username = ''
 local password = ''
-local txtHo = getRandomLineInFile(currentPath() .. "/ho.txt")
-local txtTenDem = getRandomLineInFile(currentPath() .. "/tendem.txt")
-local txtTen = getRandomLineInFile(currentPath() .. "/ten.txt")
+local txtHo = getRandomLineInFile(currentPath() .. "/input/ho.txt")
+local txtTenDem = getRandomLineInFile(currentPath() .. "/input/tendem.txt")
+local txtTen = getRandomLineInFile(currentPath() .. "/input/ten.txt")
 local txtNgay = randomInt(1, 28)
 local txtNam = randomInt(1950, 2000)
 local state = 0
@@ -321,22 +321,23 @@ for i = 1, 50, 1 do
     if state >= 7 and checkImageIsExists(toi_dong_y) then
         findAndClickByImage(toi_dong_y)
         local full_ten = txtHo .. ' ' .. txtTenDem .. ' ' .. txtTen
-        local row = username .. '|' .. password .. '1!@#' .. '|' .. txtNgay .. '/3/' .. txtNam .. '|' .. full_ten .. '|' .. time .. '|' .. selectedPackage
+        local row =  username .. '|' .. password .. '1!@#' .. '|' .. txtNgay .. '/3/' .. txtNam .. '|' .. full_ten .. '|' .. time .. '|' .. selectedPackage
 
-        writetxt(currentPath() .. "/account.txt", row, "a", 1000000, 1)
-        writetxt(currentPath() .. "/time_success.txt", time, "a", 1000000, 1)
+        writetxt("Device/gmail_account_7pl.txt", row, "a", 1000000, 1)
+        writetxt("Device/time_success_7pl.txt", time, "a", 1000000, 1)
         sleep(5)
         success = success + 1
 
         local localIP = readFile(rootDir() .. "/Device/local_ip.txt")
-        local info = {
+        info = {
             gmail_checkpoint = 'OK',
-            gmail_address    = username,
+            gmail_address    = username .. '@gmail.com',
             gmail_password   = password .. '1!@#',
             localIP          = localIP[#localIP],
+            gmailData        = row
         }
 
-        waitForInternet()
+        waitForInternet(2)
 
         ::post_data::
         local response, err = httpRequest {
@@ -364,15 +365,19 @@ for i = 1, 50, 1 do
     if state >= 7 and checkImageIsExists(robot) then
         faild = faild + 1
 
+        local full_ten = txtHo .. ' ' .. txtTenDem .. ' ' .. txtTen
+        local row =  username .. '|' .. password .. '1!@#' .. '|' .. txtNgay .. '/3/' .. txtNam .. '|' .. full_ten .. '|' .. time .. '|' .. selectedPackage
+
         local localIP = readFile(rootDir() .. "/Device/local_ip.txt")
-        local info = {
+        info = {
             gmail_checkpoint = 'Robot',
-            gmail_address    = username,
+            gmail_address    = username .. '@gmail.com',
             gmail_password   = password .. '1!@#',
             localIP          = localIP[#localIP],
+            gmailData        = row
         }
 
-        waitForInternet()
+        waitForInternet(2)
 
         ::post_data::
         local response, err = httpRequest {
