@@ -32,7 +32,7 @@ airplan = {currentPath() .. "/images/airplan.png"}
 is_on = {currentPath() .. "/images/is_on.png"}
 is_off = {currentPath() .. "/images/is_off.png"}
 gmailcom = {currentPath() .. "/safari/gmail.com.png"}
-
+google_map_giao_dien_moi = {currentPath() .. "/images/google_map_giao_dien_moi.png"}
 
 
 
@@ -191,6 +191,8 @@ for i = 1, 100, 1 do
     if checkImageIsExists(tiep_tuc) then
         findAndClickByImage(tiep_tuc)
     end
+
+    if checkImageIsExists(google_map_giao_dien_moi) then press(380, 1280) end
 
     toast("-- " .. state .. " -- tao_tai_khoan", 1)
 
