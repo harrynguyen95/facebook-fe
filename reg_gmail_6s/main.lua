@@ -33,12 +33,10 @@ is_on = {currentPath() .. "/images/is_on.png"}
 is_off = {currentPath() .. "/images/is_off.png"}
 gmailcom = {currentPath() .. "/safari/gmail.com.png"}
 google_map_giao_dien_moi = {currentPath() .. "/images/google_map_giao_dien_moi.png"}
-
-
-
-
-
-
+google = {currentPath() .. "/images/google.png"}
+them_tai_khoan_khac = {currentPath() .. "/images/them_tai_khoan_khac.png"}
+chon_tai_khoan = {currentPath() .. "/images/chon_tai_khoan.png"}
+su_dung_tk_khac = {currentPath() .. "/images/su_dung_tk_khac.png"}
 
 
 
@@ -193,6 +191,15 @@ for i = 1, 100, 1 do
     end
 
     if checkImageIsExists(google_map_giao_dien_moi) then sleep(1) tap(380, 1280) sleep(1) end
+
+    if checkImageIsExists(chon_tai_khoan) then 
+        if checkImageIsExists(su_dung_tk_khac) then 
+            findAndClickByImage(su_dung_tk_khac)
+        else 
+            swipeVertically(5) sleep(1)
+            if checkImageIsExists(su_dung_tk_khac) then findAndClickByImage(su_dung_tk_khac) end 
+        end  
+    end 
 
     toast("-- " .. state .. " -- tao_tai_khoan", 1)
 
