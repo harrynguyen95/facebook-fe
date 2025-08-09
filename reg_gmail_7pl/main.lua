@@ -44,12 +44,10 @@ is_off = {currentPath() .. "/images/is_off.png"}
 gmailcom = {currentPath() .. "/safari/gmail.com.png"}
 da_co_su_co_xay_ra = {currentPath() .. "/images/da_co_su_co_xay_ra.png"}
 
--- local packages = {"com.google.Maps", "com.google.Gmail", "com.google.GoogleMobile", "com.google.FamilyLink",
---                   "com.google.Docs", "com.google.Translate", "com.google.GoogleDigitalEditions", "com.google.Sheets",
---                   "com.google.Classroom", "com.google.calendar", "com.google.Dynamite", "com.google.fit",
---                   "com.google.photos"}
-
-local packages = {"com.google.Maps"}
+local packages = {"com.google.Maps", "com.google.Gmail", "com.google.GoogleMobile", "com.google.FamilyLink",
+                  "com.google.Docs", "com.google.Translate", "com.google.GoogleDigitalEditions", "com.google.Sheets",
+                  "com.google.Classroom", "com.google.calendar", "com.google.Dynamite", "com.google.fit",
+                  "com.google.photos"}
 
 local total = 0
 local success = 0
@@ -126,10 +124,12 @@ tap(353, 286)
 sleep(2)
 
 ------random package
+::random_package::
 math.randomseed(os.time())
 local randomIndex = math.random(1, #packages)
 local selectedPackage = packages[randomIndex]
 local package = appInfo(selectedPackage, 0)
+if not package then goto random_package end
 
 wipeDataAppManager(package.displayName)
 local username = ''
