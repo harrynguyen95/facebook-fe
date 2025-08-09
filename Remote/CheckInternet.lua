@@ -7,9 +7,9 @@ homeAndUnlockScreen()
 swipeCloseApp()
 
 if not waitForInternet(5) then
-toast('-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- No Internet ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- ', 5)
+toast('--1------------------- No Internet ------------------------------ ', 5)
 else 
-toast('-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- OK ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- ', 5)
+toast('--------------------- OK ----------------------------- ', 5)
 end
 
 local filePath = rootDir() .. "/Run.lua" 
@@ -49,7 +49,7 @@ require(rootDir() .. '/Facebook/utils')
 local folderName = "Facebook"
 local rootDir = rootDir()
 
-local tokens = readFile(rootDir .. "/Device/token.txt")
+local tokens = readFile(rootDir .. "/Device/github_token.txt")
 local token = tokens[#tokens]
 
 local gitUrl = "https://".. token .."@github.com/harrynguyen95/facebook-fe.git"
@@ -80,7 +80,7 @@ require(rootDir() .. '/Facebook/utils')
 local folderName = "Facebook"
 local rootDir = rootDir()
 
-local tokens = readFile(rootDir .. "/Device/token.txt")
+local tokens = readFile(rootDir .. "/Device/github_token.txt")
 local token = tokens[#tokens]
 
 local gitUrl = "https://".. token .."@github.com/harrynguyen95/facebook-fe.git"
