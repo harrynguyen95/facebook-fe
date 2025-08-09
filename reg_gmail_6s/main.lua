@@ -192,7 +192,7 @@ for i = 1, 100, 1 do
         findAndClickByImage(tiep_tuc)
     end
 
-    if checkImageIsExists(google_map_giao_dien_moi) then press(380, 1280) end
+    if checkImageIsExists(google_map_giao_dien_moi) then sleep(1) tap(380, 1280) sleep(1) end
 
     toast("-- " .. state .. " -- tao_tai_khoan", 1)
 
