@@ -53,9 +53,9 @@ if not waitForInternet(2) then alert("No Internet. RESPRING NOW!") exit() end
 if not getConfigServer() then alert("No config from server!") exit() end
 
 -- ====== VARIABLE REQUIRED ======
-if LANGUAGE == 'ES' then require(rootDir() .. "/Facebook/img/images_es") end
-if LANGUAGE == 'EN' then require(rootDir() .. "/Facebook/img/images_en") end
-if LANGUAGE == 'VN' then require(rootDir() .. "/Facebook/img/images_vn") end
+if LANGUAGE == 'ES' then require(rootDir() .. "/Facebook/images/images_es") end
+if LANGUAGE == 'EN' then require(rootDir() .. "/Facebook/images/images_en") end
+if LANGUAGE == 'VN' then require(rootDir() .. "/Facebook/images/images_vn") end
 SHOULD_DUMMY = DUMMY_MODE ~= 0
 DUMMY_PHONE = DUMMY_MODE == 1
 DUMMY_GMAIL = DUMMY_MODE == 2
@@ -393,7 +393,6 @@ function main()
                     if waitImageVisible(continue_creating_account, 3) then
                         toastr("email_has_account")
                         failedCurrentAccount('email_has_account')
-                        swipeCloseApp()
                         goto label_continue
                     end
                 else 

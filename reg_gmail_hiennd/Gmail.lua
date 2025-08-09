@@ -1,8 +1,8 @@
 -- ====== LIB REQUIRED ======
 require(rootDir() .. "/Facebook/utils")
 require(rootDir() .. "/Facebook/functions")
-require(rootDir() .. "/Facebook/img/images_vn")
-require(rootDir() .. "/Facebook/img/images_google")
+require(rootDir() .. "/Facebook/images/images_vn")
+require(rootDir() .. "/Facebook/images/images_google")
 clearAlert()
 
 -- ====== INFO ======
